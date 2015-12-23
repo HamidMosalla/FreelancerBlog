@@ -135,13 +135,18 @@ namespace WebFor.Models
                 .OnDelete(DeleteBehavior.Cascade);
             //****************************************//
             //One Parent ArticleComment, many Child ArticleComment
-            builder.Entity<ArticleComment>(entity =>
-            {
-                entity
-                    .HasMany(e => e.ArticleCommentChilds)
-                    .WithOne(e => e.ArticleCommentParent) //Each comment from Replies points back to its parent
-                    .HasForeignKey(e => e.ArticleCommentParentId);
-            });
+            //builder.Entity<ArticleComment>(entity =>
+            //{
+            //    entity
+            //        .HasMany(e => e.ArticleCommentChilds)
+            //        .WithOne(e => e.ArticleCommentParent) //Each comment from Replies points back to its parent
+            //        .HasForeignKey(e => e.ArticleCommentParentId);
+            //});
+
+            builder.Entity<ArticleComment>()
+                   .HasMany(e => e.ArticleCommentChilds)
+                   .WithOne(e => e.ArticleCommentParent) //Each comment from Replies points back to its parent
+                   .HasForeignKey(e => e.ArticleCommentParentId);
             //****************************************//
 
             #endregion
