@@ -24,7 +24,7 @@ namespace WebFor.Models
         public string UserSpeciality { get; set; }
         public string UserFavourites { get; set; }
         public DateTime UserRegisteredDate { get; set; }
-        public DateTime UserBanEndDate { get; set; }
+        public DateTime? UserBanEndDate { get; set; }
         public DateTime? UserDateOfBirth { get; set; }
         public string UserHowFindUs { get; set; }
 

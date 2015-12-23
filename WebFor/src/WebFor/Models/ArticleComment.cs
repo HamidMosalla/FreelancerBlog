@@ -7,8 +7,15 @@ namespace WebFor.Models
 {
     public class ArticleComment
     {
+        public ArticleComment()
+        {
+            ArticleCommentChilds = new HashSet<ArticleComment>();
+        }
+
         public int ArticleCommentId { get; set; }
         public int? ArticleCommentParentId { get; set; }
+        public ArticleComment ArticleCommentParent { get; set; }
+        public virtual ICollection<ArticleComment> ArticleCommentChilds { get; set; }
         public DateTime ArticleDateCreated  { get; set; }
         public string ArticleCommentName { get; set; }
         public string ArticleCommentEmail { get; set; }
@@ -17,7 +24,7 @@ namespace WebFor.Models
 
         //[ForeignKey("UserIDfk")]   
         public virtual ApplicationUser ApplicationUser { get; set; }
-        public string UserIDfk { get; set; }
+        public Guid? UserIDfk { get; set; }
 
         public int ArticleIDfk { get; set; }
         //[ForeignKey("ArticleIDfk")]   

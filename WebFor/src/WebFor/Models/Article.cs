@@ -24,16 +24,16 @@ namespace WebFor.Models
         public string ArticleFileUrl { get; set; }
         public string ArticleThumbnailUrl { get; set; }
         public DateTime ArticleDateCreated { get; set; }
-        public DateTime ArticleDateModified { get; set; }
+        public DateTime? ArticleDateModified { get; set; }
         public string ArticleBody { get; set; }
-        public Int64 ArticleViewCount { get; set; }
+        public Int64? ArticleViewCount { get; set; }
 
         public string ArticleStatus { get; set; }
 
 
         //[ForeignKey("ArticleUserIDfk")]   
         public virtual ApplicationUser ApplicationUser { get; set; }
-        public string UserIDfk { get; set; }
+        public Guid UserIDfk { get; set; }
 
 
     }

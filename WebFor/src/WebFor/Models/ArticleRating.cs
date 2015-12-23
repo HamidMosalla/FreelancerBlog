@@ -12,7 +12,7 @@ namespace WebFor.Models
 
         //[ForeignKey("UserIDfk")]   
         public virtual ApplicationUser ApplicationUser { get; set; }
-        public string UserIDfk { get; set; }
+        public Guid UserIDfk { get; set; }
 
         public int ArticleIDfk { get; set; }
         //[ForeignKey("ArticleIDfk")]   

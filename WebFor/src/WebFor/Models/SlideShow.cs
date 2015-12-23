@@ -9,7 +9,7 @@ namespace WebFor.Models
     {
         public int SlideShowId { get; set; }
         public DateTime SlideShowDateCreated { get; set; }
-        public int SlideShowPriority { get; set; }
+        public int? SlideShowPriority { get; set; }
         public string SlideShowTitle { get; set; }
         public string SlideShowDescription { get; set; }
         public string SlideShowPictrure { get; set; }
