@@ -26,16 +26,8 @@ namespace WebFor.Models
             base.OnModelCreating(builder);
 
 
-            ////all tables take this schema
-            //builder.HasDefaultSchema("MainDb");
-
-            ////change the identity table schema to this
-            //builder.Entity<ApplicationUser>().ToTable("AspNetUsers", "IdentityDb");
-            //builder.Entity<IdentityRole>().ToTable("AspNetRoles", "IdentityDb");
-            //builder.Entity<IdentityUserClaim>().ToTable("AspNetUserClaims", "IdentityDb");
-            //builder.Entity<IdentityRoleClaims>().ToTable("AspNetRoleClaims", "IdentityDb");
-            //builder.Entity<IdentityUserLogin>().ToTable("AspNetUserLogins", "IdentityDb");
-            //builder.Entity<IdentityUserRole>().ToTable("AspNetUserRoles", "IdentityDb");
+            //all tables take this schema
+            builder.HasDefaultSchema("MainDb");
 
 
             #region part dealing with required fields 
@@ -50,9 +42,9 @@ namespace WebFor.Models
 
             builder.Entity<ArticleComment>().Property(t => t.ArticleCommentName).IsRequired();
             builder.Entity<ArticleComment>().Property(t => t.ArticleCommentEmail).IsRequired();
-            builder.Entity<ArticleComment>().Property(t => t.ArticleDateCreated).IsRequired();
+            builder.Entity<ArticleComment>().Property(t => t.ArticleCommentDateCreated).IsRequired();
             builder.Entity<ArticleComment>().Property(t => t.ArticleIDfk).IsRequired();
-            builder.Entity<ArticleComment>().Property(t => t.AricleCommentBody).IsRequired();
+            builder.Entity<ArticleComment>().Property(t => t.ArticleCommentBody).IsRequired();
 
 
             builder.Entity<ArticleRating>().Property(t => t.ArticleRatingScore).IsRequired();
@@ -78,7 +70,7 @@ namespace WebFor.Models
 
             builder.Entity<SlideShow>().Property(t => t.SlideShowTitle).IsRequired();
             builder.Entity<SlideShow>().Property(t => t.SlideShowPictrure).IsRequired();
-            builder.Entity<SlideShow>().Property(t => t.SlideShowDescription).IsRequired();
+            builder.Entity<SlideShow>().Property(t => t.SlideShowBody).IsRequired();
             builder.Entity<SlideShow>().Property(t => t.SlideShowDateCreated).IsRequired();
 
             //stupid mistake caused an entity validation error on migration, 

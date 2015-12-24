@@ -16,11 +16,11 @@ namespace WebFor.Models
         public int? ArticleCommentParentId { get; set; }
         public ArticleComment ArticleCommentParent { get; set; }
         public virtual ICollection<ArticleComment> ArticleCommentChilds { get; set; }
-        public DateTime ArticleDateCreated  { get; set; }
+        public DateTime ArticleCommentDateCreated { get; set; }
         public string ArticleCommentName { get; set; }
         public string ArticleCommentEmail { get; set; }
         public string ArticleCommentWebSite { get; set; }
-        public string AricleCommentBody { get; set; }
+        public string ArticleCommentBody { get; set; }
 
         //[ForeignKey("UserIDfk")]   
         public virtual ApplicationUser ApplicationUser { get; set; }
