@@ -25,10 +25,7 @@ namespace WebFor.Models
 
             base.OnModelCreating(builder);
 
-
-            //all tables take this schema
             builder.HasDefaultSchema("MainDb");
-
 
             #region part dealing with required fields 
 
@@ -127,18 +124,13 @@ namespace WebFor.Models
                 .OnDelete(DeleteBehavior.Cascade);
             //****************************************//
             //One Parent ArticleComment, many Child ArticleComment
-            //builder.Entity<ArticleComment>(entity =>
-            //{
-            //    entity
-            //        .HasMany(e => e.ArticleCommentChilds)
-            //        .WithOne(e => e.ArticleCommentParent) //Each comment from Replies points back to its parent
-            //        .HasForeignKey(e => e.ArticleCommentParentId);
-            //});
-
             builder.Entity<ArticleComment>()
                    .HasMany(e => e.ArticleCommentChilds)
-                   .WithOne(e => e.ArticleCommentParent) //Each comment from Replies points back to its parent
+                   .WithOne(e => e.ArticleCommentParent)
                    .HasForeignKey(e => e.ArticleCommentParentId);
+            //****************************************//
+            //Setting a composite key for many to many rel between Article and Tag
+            builder.Entity<ArticleArticleTag>().HasKey(x => new { x.ArticleId, x.ArticleTagId });
             //****************************************//
 
             #endregion

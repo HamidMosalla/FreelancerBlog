@@ -7,13 +7,7 @@ namespace WebFor.Models
 {
     public class Article
     {
-        public Article()
-        {
-            this.ArticleTags = new HashSet<ArticleTag>();
-        }
-
-        public virtual ICollection<ArticleTag> ArticleTags { get; set; }
-
+        public virtual ICollection<ArticleArticleTag> ArticleArticleTags { get; set; }
         public virtual ICollection<ArticleRating> ArticleRatings { get; set; }
         public virtual ICollection<ArticleComment> ArticleComments { get; set; }
 
@@ -33,7 +27,7 @@ namespace WebFor.Models
 
         //[ForeignKey("ArticleUserIDfk")]   
         public virtual ApplicationUser ApplicationUser { get; set; }
-        public Guid UserIDfk { get; set; }
+        public string UserIDfk { get; set; }
 
 
     }

@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 
 namespace WebFor.Models
 {
-    public class ArticleTag
+    public class ArticleArticleTag
     {
-        public virtual ICollection<ArticleArticleTag> ArticleArticleTags { get; set; }
-
+        public int ArticleId { get; set; }
         public int ArticleTagId { get; set; }
-        public string ArticleTagName { get; set; }
+        public Article Article { get; set; }
+        public ArticleTag ArticleTag { get; set; }
+
+
 
     }
 }
