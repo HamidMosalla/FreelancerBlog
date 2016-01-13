@@ -55,5 +55,6 @@ namespace WebFor.Models
         public bool? SiteOrderDoesHaveCommenting { get; set; }
         public bool? SiteOrderDoesHaveDocumentation { get; set; }
         public bool? SiteOrderDoesHaveComplexFooter { get; set; }
+        public bool? SiteOrderIsAsync { get; set; }
     }
 }
