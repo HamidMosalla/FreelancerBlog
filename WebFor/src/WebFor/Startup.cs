@@ -42,11 +42,11 @@ namespace WebFor
             // Add framework services.
             services.AddEntityFramework()
                 .AddSqlServer()
-                .AddDbContext<ApplicationDbContext>(options =>
+                .AddDbContext<WebForDbContext>(options =>
                     options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<WebForDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
@@ -55,10 +55,11 @@ namespace WebFor
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<WebForDbContextSeedData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, WebForDbContextSeedData seeder)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -79,7 +80,7 @@ namespace WebFor
                     using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
                         .CreateScope())
                     {
-                        serviceScope.ServiceProvider.GetService<ApplicationDbContext>()
+                        serviceScope.ServiceProvider.GetService<WebForDbContext>()
                              .Database.Migrate();
                     }
                 }
@@ -100,6 +101,8 @@ namespace WebFor
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            seeder.SeedAdminUser();
         }
 
         // Entry point for the application.

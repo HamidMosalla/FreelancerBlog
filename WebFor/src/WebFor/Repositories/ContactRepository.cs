@@ -8,9 +8,9 @@ namespace WebFor.Repositories
 {
     public class ContactRepository:IContactRepository
     {
-        private ApplicationDbContext _context;
+        private WebForDbContext _context;
 
-        public ContactRepository(ApplicationDbContext context)
+        public ContactRepository(WebForDbContext context)
         {
             _context = context;
         }

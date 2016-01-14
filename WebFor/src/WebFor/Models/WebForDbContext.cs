@@ -9,7 +9,7 @@ using Microsoft.Data.Entity.Metadata;
 
 namespace WebFor.Models
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class WebForDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Article> Articles { get; set; }
         public DbSet<ArticleComment> ArticleComments { get; set; }

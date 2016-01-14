@@ -9,9 +9,9 @@ namespace WebFor.Repositories
     public class UnitOfWork : IUnitOfWork
     {
 
-        private readonly ApplicationDbContext _context;
+        private readonly WebForDbContext _context;
 
-        public UnitOfWork(ApplicationDbContext context)
+        public UnitOfWork(WebForDbContext context)
         {
             _context = context;
         }

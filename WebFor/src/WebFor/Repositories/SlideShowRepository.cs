@@ -8,9 +8,9 @@ namespace WebFor.Repositories
 {
     public class SlideShowRepository : ISlideShowRepository
     {
-        private ApplicationDbContext _context;
+        private WebForDbContext _context;
 
-        public SlideShowRepository(ApplicationDbContext context)
+        public SlideShowRepository(WebForDbContext context)
         {
             _context = context;
         }

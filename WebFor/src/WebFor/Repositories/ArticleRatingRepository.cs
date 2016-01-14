@@ -8,9 +8,9 @@ namespace WebFor.Repositories
 {
     public class ArticleRatingRepository:IArticleRatingRepository
     {
-        private ApplicationDbContext _context;
+        private WebForDbContext _context;
 
-        public ArticleRatingRepository(ApplicationDbContext context)
+        public ArticleRatingRepository(WebForDbContext context)
         {
             _context = context;
         }

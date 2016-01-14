@@ -8,9 +8,9 @@ namespace WebFor.Repositories
 {
     public class SiteOrderRepository:ISiteOrderRepository
     {
-        private ApplicationDbContext _context;
+        private WebForDbContext _context;
 
-        public SiteOrderRepository(ApplicationDbContext context)
+        public SiteOrderRepository(WebForDbContext context)
         {
             _context = context;
         }

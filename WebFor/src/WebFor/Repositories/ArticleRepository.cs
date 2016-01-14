@@ -9,9 +9,9 @@ namespace WebFor.Repositories
 {
     public class ArticleRepository : IArticleRepository
     {
-        private ApplicationDbContext _context;
+        private WebForDbContext _context;
 
-        public ArticleRepository(ApplicationDbContext context)
+        public ArticleRepository(WebForDbContext context)
         {
             _context = context;
         }

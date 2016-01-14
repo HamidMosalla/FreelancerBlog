@@ -8,9 +8,9 @@ namespace WebFor.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private ApplicationDbContext _context;
+        private WebForDbContext _context;
 
-        public UserRepository(ApplicationDbContext context)
+        public UserRepository(WebForDbContext context)
         {
             _context = context;
         }

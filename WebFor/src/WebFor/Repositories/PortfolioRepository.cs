@@ -8,9 +8,9 @@ namespace WebFor.Repositories
 {
     public class PortfolioRepository:IPortfolioRepository
     {
-        private ApplicationDbContext _context;
+        private WebForDbContext _context;
 
-        public PortfolioRepository(ApplicationDbContext context)
+        public PortfolioRepository(WebForDbContext context)
         {
             _context = context;
         }
