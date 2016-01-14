@@ -9,7 +9,13 @@ namespace WebFor.Controllers
 {
     public class HomeController : Controller
     {
-        
+        private IUnitOfWork _db;
+
+        public HomeController(IUnitOfWork uw)
+        {
+            _db = uw;
+        }
+
         public IActionResult Index()
         {
             return View();

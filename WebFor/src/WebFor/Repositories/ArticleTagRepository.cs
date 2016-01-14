@@ -29,7 +29,7 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ArticleTag> GetAll(Func<ArticleTag, bool> predicate)
+        public IEnumerable<ArticleTag> GetAll()
         {
             throw new NotImplementedException();
         }

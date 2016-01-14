@@ -29,7 +29,7 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<SiteOrder> GetAll(Func<SiteOrder, bool> predicate)
+        public IEnumerable<SiteOrder> GetAll()
         {
             throw new NotImplementedException();
         }

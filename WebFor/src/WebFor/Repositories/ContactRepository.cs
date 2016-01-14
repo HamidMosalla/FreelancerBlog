@@ -29,7 +29,7 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Contact> GetAll(Func<Contact, bool> predicate)
+        public IEnumerable<Contact> GetAll()
         {
             throw new NotImplementedException();
         }

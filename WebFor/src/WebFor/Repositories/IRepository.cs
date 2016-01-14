@@ -11,7 +11,7 @@ namespace WebFor.Repositories
         void Add(T entity);
         void Remove(T entity);
         T FindById(TKey id);
-        IEnumerable<T> GetAll(Func<T, bool> predicate);
+        IEnumerable<T> GetAll();
 
         //void Update(T entity); redundant, Unit Of Work will handle it
         //void Save(); redundant, redundant, Unit Of Work will handle it

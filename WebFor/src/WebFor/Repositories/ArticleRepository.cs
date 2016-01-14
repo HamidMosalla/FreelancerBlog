@@ -17,22 +17,22 @@ namespace WebFor.Repositories
         }
         public void Add(Article entity)
         {
-            throw new NotImplementedException();
+            _context.Articles.Add(entity);
         }
 
         public void Remove(Article entity)
         {
-            throw new NotImplementedException();
+            _context.Articles.Remove(entity);
         }
 
         public Article FindById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Articles.Single(a => a.ArticleId == id);
         }
 
-        public IEnumerable<Article> GetAll(Func<Article, bool> predicate)
+        public IEnumerable<Article> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Articles.ToList();
         }
     }
 }

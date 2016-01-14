@@ -29,7 +29,7 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
-        public IEnumerable<SlideShow> GetAll(Func<SlideShow, bool> predicate)
+        public IEnumerable<SlideShow> GetAll()
         {
             throw new NotImplementedException();
         }

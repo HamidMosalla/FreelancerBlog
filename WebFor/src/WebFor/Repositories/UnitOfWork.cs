@@ -6,10 +6,16 @@ using WebFor.Models;
 
 namespace WebFor.Repositories
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
 
-        private readonly ApplicationDbContext _context = new ApplicationDbContext();
+        private readonly ApplicationDbContext _context;
+
+        public UnitOfWork(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         private IArticleRepository _articleRepository;
         private IUserRepository _userRepository;
         private IArticleCommentRepository _articleCommentRepository;
