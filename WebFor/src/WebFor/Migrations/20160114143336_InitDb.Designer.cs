@@ -8,8 +8,8 @@ using WebFor.Models;
 namespace WebFor.Migrations
 {
     [DbContext(typeof(WebForDbContext))]
-    [Migration("20160114132645_DbInit")]
-    partial class DbInit
+    [Migration("20160114143336_InitDb")]
+    partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

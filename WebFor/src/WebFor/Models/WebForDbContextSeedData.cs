@@ -22,9 +22,12 @@ namespace WebFor.Models
             var user = new ApplicationUser
             {
                 UserName = "Xellarix@gmail.com",
+                NormalizedUserName = "xellarix@gmail.com",
                 Email = "Xellarix@gmail.com",
+                NormalizedEmail = "xellarix@gmail.com",
                 EmailConfirmed = true,
                 LockoutEnabled = false,
+                SecurityStamp = Guid.NewGuid().ToString(),
                 UserRegisteredDate = DateTime.Now,
                 UserFullName = "Hamid Mosalla",
                 UserGender = "Male"
@@ -34,7 +37,7 @@ namespace WebFor.Models
 
             if (!_context.Roles.Any(r => r.Name == "admin"))
             {
-                await roleStore.CreateAsync(new IdentityRole("admin"));
+                await roleStore.CreateAsync(new IdentityRole { Name = "admin", NormalizedName = "admin" });
             }
 
             if (!_context.Users.Any(u => u.UserName == user.UserName))
