@@ -8,9 +8,10 @@ using WebFor.Models;
 namespace WebFor.Migrations
 {
     [DbContext(typeof(WebForDbContext))]
-    partial class WebForDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160117170229_ChangeOnArticle")]
+    partial class ChangeOnArticle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")

@@ -14,9 +14,6 @@ namespace WebFor.Models
         public int ArticleId { get; set; }
         public string ArticleTitle { get; set; }
         public string ArticleSummary { get; set; }
-        public string ArticleVideoUrl { get; set; }
-        public string ArticleFileUrl { get; set; }
-        public string ArticleThumbnailUrl { get; set; }
         public DateTime ArticleDateCreated { get; set; }
         public DateTime? ArticleDateModified { get; set; }
         public string ArticleBody { get; set; }
