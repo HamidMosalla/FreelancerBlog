@@ -97,7 +97,7 @@ namespace WebFor
 
             app.UseMvc(routes =>
             {
-                 routes.MapRoute(name: "AdminAreaRoute",
+                 routes.MapRoute(name: "AreaRoute",
                  template: "{area:exists}/{controller}/{action}",
                  defaults: new { controller = "Home", action = "Index" });
 
