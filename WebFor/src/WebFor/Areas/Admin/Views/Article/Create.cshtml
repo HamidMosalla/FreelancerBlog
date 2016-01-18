@@ -1,22 +1,19 @@
-@model WebFor.ViewModels.ArticleViewModel
+﻿@model WebFor.ViewModels.ArticleViewModel
 
 @{
-    ViewData["Title"] = "????? ?????";
+    ViewData["Title"] = "ایجاد مقاله";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
-
 <form asp-action="Create">
     <div class="form-horizontal">
-        <h4>Article</h4>
         <hr />
         <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
 
         <div class="form-group">
             <label asp-for="ArticleTitle" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="ArticleTitle" class="form-control"/>
+                <input asp-for="ArticleTitle" class="form-control" />
                 <span asp-validation-for="ArticleTitle" class="text-danger" />
             </div>
         </div>
@@ -24,7 +21,7 @@
         <div class="form-group">
             <label asp-for="ArticleSummary" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="ArticleSummary" class="form-control"/>
+                <textarea asp-for="ArticleSummary" cols="16" rows="10" style="max-width: 480px;" class="form-control" ></textarea>
                 <span asp-validation-for="ArticleSummary" class="text-danger" />
             </div>
         </div>
@@ -38,9 +35,17 @@
         </div>
 
         <div class="form-group">
+            <label asp-for="ArticleTags" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ArticleTags" class="form-control" />
+                <span asp-validation-for="ArticleTags" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
             <label asp-for="ArticleStatus" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="ArticleStatus" class="form-control"/>
+                <input asp-for="ArticleStatus" class="form-control" />
                 <span asp-validation-for="ArticleStatus" class="text-danger" />
             </div>
         </div>
@@ -48,7 +53,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="ارسال" class="btn btn-lg btn-default" />
             </div>
         </div>
     </div>
@@ -58,4 +63,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/components/ckeditor/ckeditor.js"></script>
+    <script src="~/js/site.ckeditor.js"></script>
 }
