@@ -45,7 +45,11 @@
         <div class="form-group">
             <label asp-for="ArticleStatus" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="ArticleStatus" class="form-control" />
+                <select asp-for="ArticleStatus">
+                    <option value="Draft">چرک نویس</option>
+                    <option value="TopArticle">مقالات انتخابی</option>
+                    <option value="Archived">ارشیو شده</option>
+                </select>
                 <span asp-validation-for="ArticleStatus" class="text-danger" />
             </div>
         </div>

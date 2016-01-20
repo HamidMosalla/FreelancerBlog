@@ -5,6 +5,12 @@
     "bootstrap": "3.3.5",
     "jquery": "2.1.4",
     "jquery-validation": "1.14.0",
-    "jquery-validation-unobtrusive": "3.2.4"
+    "jquery-validation-unobtrusive": "3.2.4",
+    "isotope": "~2.2.2",
+    "respondJs": "~1.4.2",
+    "modernizr": "3.0.0",
+    "animate.css": "3.4.0",
+    "jquery-prettyPhoto": "~3.1.6",
+    "font-awesome": "4.4.0"
   }
 }
