@@ -1,4 +1,3 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,700,300);
 .clearfix {
   *zoom: 1;
 }
@@ -41,6 +40,11 @@ h5,
 h6 {
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
+}
+input,
+select,
+textarea {
+    max-width: 380px;
 }
 a {
   color: #34495e;
