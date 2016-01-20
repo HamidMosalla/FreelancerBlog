@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<form asp-action="Create">
+<form asp-action="Create" id="ArticleForm" enctype="multipart/form-data">
     <div class="form-horizontal">
         <hr />
         <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
@@ -46,7 +46,8 @@
             <label asp-for="ArticleStatus" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <select asp-for="ArticleStatus">
-                    <option value="" selected>انتخاب وضعیت</option>
+                    <option value="" selected>لطفا یک وضعیت انتخاب کنید</option>
+                    <option value="Published">منتشر شده</option>
                     <option value="Draft">چرک نویس</option>
                     <option value="TopArticle">مقالات انتخابی</option>
                     <option value="Archived">ارشیو شده</option>
@@ -68,6 +69,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/components/ckeditor/ckeditor.js"></script>
+    <script src="~/lib/ckeditor/ckeditor.js"></script>
     <script src="~/js/site.ckeditor.js"></script>
 }

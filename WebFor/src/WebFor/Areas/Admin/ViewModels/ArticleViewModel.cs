@@ -34,13 +34,9 @@ namespace WebFor.ViewModels
         public string ArticleBody { get; set; }
 
 
-        public Int64? ArticleViewCount { get; set; }
-
-
         [Required(ErrorMessage = "انتخاب یک مورد اجباری میباشد.")]
         [Display(Name = "وضعیت مقاله")]
         public string ArticleStatus { get; set; }
-
 
 
         [Display(Name = "برچسب های مقاله")]

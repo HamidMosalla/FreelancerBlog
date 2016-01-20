@@ -1,23 +1,14 @@
-﻿(function() {
+﻿(function () {
+    $.validator.setDefaults({ ignore: '' });
     $(function() {
         "use strict";
 
+        $("#ArticleForm").validate({
+            ignore: []
+        });
+
         var editor = CKEDITOR.replace('ArticleBody');
-
-        if ($('.text-editor')) {
-            $('.text-editor').ckeditor();
-            $('input[type=submit]').bind('click', function () {
-                $('.text-editor').ckeditorGet().updateElement();
-            });
-        }
-
-
-
-
-
-
-
-
+        
 
     });
 })();

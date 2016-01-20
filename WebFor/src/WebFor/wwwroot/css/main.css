@@ -25,12 +25,20 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+@font-face {
+    font-family: 'yekan';
+    src: url('../fonts/persianfonts/yekan.eot') format('embedded-opentype'), url('../fonts/persianfonts/yekan.ttf') format('truetype'), url('../fonts/persianfonts/yekan.woff') format('woff');
+}
+@font-face {
+    font-family: 'royabold';
+    src: url('../fonts/persianfonts/royabold.otf') format('opentype'), url('../fonts/persianfonts/royabold.ttf') format('truetype');
+}
 body {
   padding-top: 52px;
   color: #34495e;
   background: #f5f5f5;
-  font-family: 'Roboto', sans-serif;
   font-weight: 300;
+  font-family: "yekan",Arial,Tahoma,Verdana, Geneva, Tahoma, sans-serif;
 }
 h1,
 h2,
@@ -38,7 +46,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Roboto', sans-serif;
+  font-family: "yekan",Arial,Tahoma,Verdana, Geneva, Tahoma, sans-serif;
   font-weight: 400;
 }
 input,
@@ -717,7 +725,6 @@ ul.tag-cloud li {
   border: none;
 }
 .navbar-inverse .navbar-brand {
-  font-family: 'Bubbler One', sans-serif;
   font-size: 36px;
   line-height: 50px;
   color: #fff;

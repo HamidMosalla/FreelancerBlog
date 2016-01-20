@@ -13,7 +13,6 @@
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link href="~/lib/bootstrap/dist/css/bootstrap-rtl.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/css/site.css" />
         <link href="~/lib/animate.css/animate.css" rel="stylesheet" />
         <link href="~/css/main.css" rel="stylesheet" />
         <link href="~/lib/jquery-prettyphoto/css/prettyphoto.css" rel="stylesheet" />
@@ -67,7 +66,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="logo"></a>
+                <a class="navbar-brand" href="index.html"><img src="~/images/logo.png" alt="logo"></a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -111,36 +110,36 @@
                     <p>وب برای ایران با هدف ارائه دادن بهترین کیفیت در زمینه طراحی و ساخت سیستم های مدیریت محتوا و صفحات دینامیک وب و همچنین بهینه سازی آنها برای موتورهای جستجو (سئو) در حال شکل گیری است.</p>
                     <p>خدماتی که این وب سایت ارائه خواهد کرد شامل ساخت و پشتیبانی سیستم های اتوماسیون تحت وب، ساخت وب سایت های دینامیک شخصی و اداری، مشاوره در زمینه انتخاب بهترین روش ها و تکنولوژی های ممکن برای حل مسائل تجاری متناسب با نیاز و بودجه می باشد.</p>
                 </div><!--/.col-md-3-->
-                <div class="col-md-3 col-sm-6">
+                <div class="col-md-2 col-sm-4">
                     <h4>کمپانی</h4>
                     <div>
                         <ul>
-                            <li class="fa fa-chevron-left">    <a href="#">درباره کمپانی</a></li>
-                            <br />
-                            <li class="fa fa-chevron-left">    <a href="#">ملاقات با تیم</a></li>
-                            <br />
-                            <li class="fa fa-chevron-left">    <a href="#">شرکای تجاری</a></li>
-                            <br />
-                            <li class="fa fa-chevron-left">    <a href="#">سرویس های ما</a></li>
-                            <br />
-                            <li class="fa fa-chevron-left">    <a href="#">سوالات متداول</a></li>
-                            <br />
-                            <li class="fa fa-chevron-left">    <a href="#">تماس با ما</a></li>
-                            <br />
-                            <li class="fa fa-chevron-left">    <a href="#">حریم خصوصی</a></li>
-                            <br />
-                            <li class="fa fa-chevron-left">    <a href="#">شرایط استفاده</a></li>
-                            <br />
-                            <li class="fa fa-chevron-left">    <a href="#">کپی رایت</a></li>
+                            <li class="fa fa-chevron-left"></li> <a href="#">درباره کمپانی</a>
+                            <br />                               
+                            <li class="fa fa-chevron-left"></li> <a href="#">ملاقات با تیم</a>
+                            <br />                               
+                            <li class="fa fa-chevron-left"></li> <a href="#">شرکای تجاری</a>
+                            <br />                               
+                            <li class="fa fa-chevron-left"></li> <a href="#">سرویس های ما</a>
+                            <br />                               
+                            <li class="fa fa-chevron-left"></li> <a href="#">سوالات متداول</a>
+                            <br />                               
+                            <li class="fa fa-chevron-left"></li> <a href="#">تماس با ما</a>
+                            <br />                               
+                            <li class="fa fa-chevron-left"></li> <a href="#">حریم خصوصی</a>
+                            <br />                               
+                            <li class="fa fa-chevron-left"></li> <a href="#">شرایط استفاده</a>
+                            <br />                               
+                            <li class="fa fa-chevron-left"></li> <a href="#">کپی رایت</a>
                         </ul>
                     </div>
                 </div><!--/.col-md-3-->
-                <div class="col-md-3 col-sm-6">
+                <div class="col-md-4 col-sm-8">
                     <h4>آخرین مطالب بلاگ</h4>
                     <div>
                         <div class="media">
                             <div class="pull-left">
-                                <img src="images/blog/thumb1.jpg" alt="">
+                                <img src="~/images/blog/thumb1.jpg" alt="">
                             </div>
                             <div class="media-body">
                                 <span class="media-heading"><a href="#">آخرین تغییرات در فریم ورک جدید مایکروسافت</a></span>
@@ -149,7 +148,7 @@
                         </div>
                         <div class="media">
                             <div class="pull-left">
-                                <img src="images/blog/thumb2.jpg" alt="">
+                                <img src="~/images/blog/thumb2.jpg" alt="">
                             </div>
                             <div class="media-body">
                                 <span class="media-heading"><a href="#">تگ هلپر سلام، اچ تی ام ال هلپر خداخافظ</a></span>
@@ -158,7 +157,7 @@
                         </div>
                         <div class="media">
                             <div class="pull-left">
-                                <img src="images/blog/thumb3.jpg" alt="">
+                                <img src="~/images/blog/thumb3.jpg" alt="">
                             </div>
                             <div class="media-body">
                                 <span class="media-heading"><a href="#">جدیدترین ویژگی ها سی شارپ شش</a></span>
@@ -216,6 +215,7 @@
         <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-prettyphoto/js/jquery.prettyphoto.js"></script>
         <script src="~/js/main.js"></script>
+        <script src="~/lib/isotope/dist/isotope.pkgd.js"></script>
     </environment>
 
     <environment names="Staging,Production">
@@ -231,6 +231,7 @@
 
 
         </script>
+        <script src="~/lib/isotope/dist/isotope.pkgd.min.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-prettyphoto/js/jquery.prettyphoto.js"></script>
         <script src="~/js/main.js"></script>

@@ -8,10 +8,11 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.language = 'fa';
 	// config.uiColor = '#AADC6E';
 
-	config.contentsLangDirection = 'rtl';
-	config.extraAllowedContent = '*(*);*{*}';
-	//config.extraPlugins = 'popup';
-	//config.extraPlugins = 'filebrowser';
+    config.contentsLangDirection = 'rtl';
+    config.height = 450;
+    config.extraAllowedContent = '*(*);*{*}';
+    //config.extraPlugins = 'popup';
+    //config.extraPlugins = 'filebrowser';
 
-	config.filebrowserImageUploadUrl = '/Home/UploadImage';
+    config.filebrowserImageUploadUrl = '/Admin/Article/UploadImage';
 };
