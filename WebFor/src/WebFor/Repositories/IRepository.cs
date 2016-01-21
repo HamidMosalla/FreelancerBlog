@@ -9,9 +9,16 @@ namespace WebFor.Repositories
     public interface IRepository<T, in TKey> where T : class
     {
         void Add(T entity);
+        void AddAsync(T entity);
+
         void Remove(T entity);
+        void RemoveAsync(T entity);
+
         T FindById(TKey id);
+        Task<T> FindByIdAsync(TKey id);
+
         IEnumerable<T> GetAll();
+        Task <List<T>> GetAllAsync();
 
         //void Update(T entity); redundant, Unit Of Work will handle it
         //void Save(); redundant, redundant, Unit Of Work will handle it

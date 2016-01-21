@@ -9,6 +9,7 @@ using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Net.Http.Headers;
 using WebFor.Models;
 using WebFor.Repositories;
+using WebFor.ViewModels;
 
 namespace WebFor.Areas.Admin.Controllers
 {
@@ -45,7 +46,7 @@ namespace WebFor.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Article article)
+        public async Task<IActionResult> Create(ArticleViewModel viewModel)
         {
             return View();
         }
@@ -70,11 +71,12 @@ namespace WebFor.Areas.Admin.Controllers
         }
 
 
-        public ActionResult TagLookup(string term)
+        public async Task<ActionResult> TagLookup(string term)
         {
             var tags = new List<string>();
+            var model = await _uw.ArticleTagRepository.GetAllAsync();
 
-            foreach (var item in _uw.ArticleTagRepository.GetAll())
+            foreach (var item in model)
             {
                 tags.Add(item.ArticleTagName);
             }

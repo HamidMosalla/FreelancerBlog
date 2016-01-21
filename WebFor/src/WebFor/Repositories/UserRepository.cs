@@ -19,7 +19,17 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
+        public void AddAsync(ApplicationUser entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Remove(ApplicationUser entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAsync(ApplicationUser entity)
         {
             throw new NotImplementedException();
         }
@@ -29,7 +39,17 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<ApplicationUser> FindByIdAsync(string id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<ApplicationUser> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ApplicationUser>> GetAllAsync()
         {
             throw new NotImplementedException();
         }

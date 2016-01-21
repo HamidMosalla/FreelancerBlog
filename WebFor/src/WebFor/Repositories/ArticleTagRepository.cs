@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +20,17 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
+        public void AddAsync(ArticleTag entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Remove(ArticleTag entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAsync(ArticleTag entity)
         {
             throw new NotImplementedException();
         }
@@ -29,9 +40,19 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<ArticleTag> FindByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<ArticleTag> GetAll()
         {
             return _context.ArticleTags.ToList();
+        }
+
+        public Task<List<ArticleTag>> GetAllAsync()
+        {
+            return _context.ArticleTags.ToListAsync();
         }
     }
 }

@@ -140,6 +140,11 @@ namespace WebFor.Repositories
             _context.SaveChanges();
         }
 
+        public void SaveAsync()
+        {
+            _context.SaveChangesAsync();
+        }
+
         private bool _disposed = false;
 
         protected virtual void Dispose(bool disposing)

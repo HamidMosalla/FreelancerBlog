@@ -19,7 +19,17 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
+        public void AddAsync(Contact entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Remove(Contact entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAsync(Contact entity)
         {
             throw new NotImplementedException();
         }
@@ -29,7 +39,17 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<Contact> FindByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Contact> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Contact>> GetAllAsync()
         {
             throw new NotImplementedException();
         }

@@ -19,7 +19,17 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
+        public void AddAsync(SiteOrder entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Remove(SiteOrder entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAsync(SiteOrder entity)
         {
             throw new NotImplementedException();
         }
@@ -29,7 +39,17 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<SiteOrder> FindByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<SiteOrder> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<SiteOrder>> GetAllAsync()
         {
             throw new NotImplementedException();
         }

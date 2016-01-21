@@ -19,7 +19,17 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
+        public void AddAsync(Portfolio entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Remove(Portfolio entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAsync(Portfolio entity)
         {
             throw new NotImplementedException();
         }
@@ -29,7 +39,17 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<Portfolio> FindByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Portfolio> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Portfolio>> GetAllAsync()
         {
             throw new NotImplementedException();
         }

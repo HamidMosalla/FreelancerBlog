@@ -19,7 +19,17 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
+        public void AddAsync(SlideShow entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Remove(SlideShow entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAsync(SlideShow entity)
         {
             throw new NotImplementedException();
         }
@@ -29,7 +39,17 @@ namespace WebFor.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<SlideShow> FindByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<SlideShow> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<SlideShow>> GetAllAsync()
         {
             throw new NotImplementedException();
         }
