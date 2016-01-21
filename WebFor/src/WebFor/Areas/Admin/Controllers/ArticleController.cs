@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
@@ -14,13 +15,13 @@ namespace WebFor.Areas.Admin.Controllers
     [Area("Admin")]
     public class ArticleController : Controller
     {
-        private IUnitOfWork _db;
+        private IUnitOfWork _uw;
         private IHostingEnvironment _environment;
 
         public ArticleController(IUnitOfWork uw, IHostingEnvironment environment)
         {
-            _db = uw;
-            _environment = environment; 
+            _uw = uw;
+            _environment = environment;
         }
 
 
@@ -69,6 +70,18 @@ namespace WebFor.Areas.Admin.Controllers
         }
 
 
+        public ActionResult TagLookup(string term)
+        {
+            var tags = new List<string>();
+
+            foreach (var item in _uw.ArticleTagRepository.GetAll())
+            {
+                tags.Add(item.ArticleTagName);
+            }
+            //var results = tags.Where(n => n.ToLower().Contains(term.ToLower()));
+            return Json(tags.ToArray());
+        }
+
         [HttpPost]
         public async Task<ActionResult> UploadImage(IFormFile upload, string CKEditorFuncNum, string CKEditor,
            string langCode)
@@ -82,8 +95,11 @@ namespace WebFor.Areas.Admin.Controllers
             {
                 if (upload != null && upload.Length > 0)
                 {
-                    var vFileName = DateTime.Now.ToString("yyyyMMdd-HHMMssff") + " - " + ContentDispositionHeaderValue.Parse(upload.ContentDisposition).FileName.Trim('"');
-                    var vFolderPath = Path.Combine(_environment.WebRootPath, "/Files/ArticleUploads");
+                    var fileName = Path.GetFileNameWithoutExtension(ContentDispositionHeaderValue.Parse(upload.ContentDisposition).FileName.Trim('"'));
+                    var extension = Path.GetExtension(ContentDispositionHeaderValue.Parse(upload.ContentDisposition).FileName.Trim('"'));
+
+                    var vFileName = fileName + " - " + DateTime.Now.ToString("yyyyMMdd-HHMMssff") + extension;
+                    var vFolderPath = Path.Combine(_environment.WebRootPath, "Files", "ArticleUploads");
 
                     if (!Directory.Exists(vFolderPath))
                     {
@@ -91,8 +107,8 @@ namespace WebFor.Areas.Admin.Controllers
                     }
 
                     vFilePath = Path.Combine(vFolderPath, vFileName);
-                     await upload.SaveAsAsync(vFilePath);
-                    vImagePath = Url.Content("/Upload/" + vFileName);
+                    await upload.SaveAsAsync(vFilePath);
+                    vImagePath = Url.Content("/Files/ArticleUploads/" + vFileName);
                     vMessage = "The file uploaded successfully.";
                 }
             }
@@ -101,7 +117,7 @@ namespace WebFor.Areas.Admin.Controllers
                 vMessage = "There was an issue uploading:" + e.Message;
             }
             vOutput = @"<html><body><script>window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ", \"" + vImagePath + "\", \"" + vMessage + "\");</script></body></html>";
-            return Content(vOutput);
+            return Content(vOutput, "text/html");
         }
     }
 }

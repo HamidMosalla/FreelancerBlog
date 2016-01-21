@@ -5,6 +5,10 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
+@section styles{
+    <link href="~/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
+}
+
 <form asp-action="Create" id="ArticleForm" enctype="multipart/form-data">
     <div class="form-horizontal">
         <hr />
@@ -21,7 +25,7 @@
         <div class="form-group">
             <label asp-for="ArticleSummary" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <textarea asp-for="ArticleSummary" cols="16" rows="10" style="max-width: 480px;" class="form-control" ></textarea>
+                <textarea asp-for="ArticleSummary" cols="16" rows="10" style="max-width: 480px;" class="form-control"></textarea>
                 <span asp-validation-for="ArticleSummary" class="text-danger" />
             </div>
         </div>
@@ -37,7 +41,7 @@
         <div class="form-group">
             <label asp-for="ArticleTags" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="ArticleTags" class="form-control" />
+                <input asp-for="ArticleTags" class="form-control" autocomplete="off" />
                 <span asp-validation-for="ArticleTags" class="text-danger" />
             </div>
         </div>
@@ -66,9 +70,11 @@
 </form>
 
 @section Scripts {
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/ckeditor/ckeditor.js"></script>
     <script src="~/js/site.ckeditor.js"></script>
+    <script src="~/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="~/lib/bootstrap3-typeahead/bootstrap3-typeahead.min.js"></script>
+    <script src="~/js/site.typeahead.js"></script>
 }

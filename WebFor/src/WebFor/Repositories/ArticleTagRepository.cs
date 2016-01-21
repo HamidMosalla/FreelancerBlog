@@ -31,7 +31,7 @@ namespace WebFor.Repositories
 
         public IEnumerable<ArticleTag> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.ArticleTags.ToList();
         }
     }
 }
