@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebFor.Tests", "WebFor.Tests\WebFor.Tests.csproj", "{237899A4-459F-4BD4-8DD2-8246F5A6E266}"
-EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.Core", "src\WebFor.Core\WebFor.Core.xproj", "{19D59DD9-1914-4CD6-8FBD-DD17F5C95AE1}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.Infrastructure", "src\WebFor.Infrastructure\WebFor.Infrastructure.xproj", "{280B4AC9-9385-49E2-B595-F039D78A7F02}"
@@ -26,10 +24,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{237899A4-459F-4BD4-8DD2-8246F5A6E266}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{237899A4-459F-4BD4-8DD2-8246F5A6E266}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{237899A4-459F-4BD4-8DD2-8246F5A6E266}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{237899A4-459F-4BD4-8DD2-8246F5A6E266}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19D59DD9-1914-4CD6-8FBD-DD17F5C95AE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19D59DD9-1914-4CD6-8FBD-DD17F5C95AE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19D59DD9-1914-4CD6-8FBD-DD17F5C95AE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,36 +45,31 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{237899A4-459F-4BD4-8DD2-8246F5A6E266} = {BC33B627-F20B-4CFE-8F5F-D2087DD4693A}
 		{19D59DD9-1914-4CD6-8FBD-DD17F5C95AE1} = {BC33B627-F20B-4CFE-8F5F-D2087DD4693A}
 		{280B4AC9-9385-49E2-B595-F039D78A7F02} = {BC33B627-F20B-4CFE-8F5F-D2087DD4693A}
 		{CA4780A0-5275-4C72-93C8-4EA4D7C9A68D} = {BC33B627-F20B-4CFE-8F5F-D2087DD4693A}
 		{05D5D33E-D84A-4D57-8919-D0EF360B5552} = {BC33B627-F20B-4CFE-8F5F-D2087DD4693A}
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://xellarixtfs.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
-		SccProjectUniqueName1 = WebFor.Tests\\WebFor.Tests.csproj
+		SccProjectUniqueName1 = src\\WebFor.Core\\WebFor.Core.xproj
 		SccProjectTopLevelParentUniqueName1 = WebFor.sln
-		SccProjectName1 = WebFor.Tests
-		SccLocalPath1 = WebFor.Tests
-		SccProjectUniqueName2 = src\\WebFor.Core\\WebFor.Core.xproj
+		SccProjectName1 = src/WebFor.Core
+		SccLocalPath1 = src\\WebFor.Core
+		SccProjectUniqueName2 = src\\WebFor.Infrastructure\\WebFor.Infrastructure.xproj
 		SccProjectTopLevelParentUniqueName2 = WebFor.sln
-		SccProjectName2 = src/WebFor.Core
-		SccLocalPath2 = src\\WebFor.Core
-		SccProjectUniqueName3 = src\\WebFor.Infrastructure\\WebFor.Infrastructure.xproj
+		SccProjectName2 = src/WebFor.Infrastructure
+		SccLocalPath2 = src\\WebFor.Infrastructure
+		SccProjectUniqueName3 = src\\WebFor.DependencyInjection\\WebFor.DependencyInjection.xproj
 		SccProjectTopLevelParentUniqueName3 = WebFor.sln
-		SccProjectName3 = src/WebFor.Infrastructure
-		SccLocalPath3 = src\\WebFor.Infrastructure
-		SccProjectUniqueName4 = src\\WebFor.DependencyInjection\\WebFor.DependencyInjection.xproj
+		SccProjectName3 = src/WebFor.DependencyInjection
+		SccLocalPath3 = src\\WebFor.DependencyInjection
+		SccProjectUniqueName4 = src\\WebFor.Web\\WebFor.Web.xproj
 		SccProjectTopLevelParentUniqueName4 = WebFor.sln
-		SccProjectName4 = src/WebFor.DependencyInjection
-		SccLocalPath4 = src\\WebFor.DependencyInjection
-		SccProjectUniqueName5 = src\\WebFor.Web\\WebFor.Web.xproj
-		SccProjectTopLevelParentUniqueName5 = WebFor.sln
-		SccProjectName5 = src/WebFor.Web
-		SccLocalPath5 = src\\WebFor.Web
+		SccProjectName4 = src/WebFor.Web
+		SccLocalPath4 = src\\WebFor.Web
 	EndGlobalSection
 EndGlobal
