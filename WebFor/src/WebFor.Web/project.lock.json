@@ -2093,14 +2093,14 @@
       },
       "WebFor.Core/1.0.0": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Autofac": "4.0.0-rc1-177",
           "Autofac.Extensions.DependencyInjection": "4.0.0-rc1-177",
@@ -2110,8 +2110,9 @@
       },
       "WebFor.Infrastructure/1.0.0": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
+          "EntityFramework.Commands": "7.0.0-rc1-final",
           "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
           "WebFor.Core": "1.0.0"
@@ -4877,42 +4878,28 @@
       },
       "WebFor.Core/1.0.0": {
         "type": "project",
-        "framework": ".NETPlatform,Version=v5.4",
+        "framework": "DNXCore,Version=v5.0",
         "dependencies": {
-          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
-          "Microsoft.CSharp": "4.0.1-beta-23516",
-          "System.Collections": "4.0.11-beta-23516",
-          "System.Linq": "4.0.1-beta-23516",
-          "System.Runtime": "4.0.21-beta-23516",
-          "System.Threading": "4.0.11-beta-23516"
+          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
         "type": "project",
-        "framework": ".NETPlatform,Version=v5.4",
+        "framework": "DNXCore,Version=v5.0",
         "dependencies": {
           "Autofac": "4.0.0-rc1-177",
           "Autofac.Extensions.DependencyInjection": "4.0.0-rc1-177",
-          "Microsoft.CSharp": "4.0.1-beta-23516",
-          "System.Collections": "4.0.11-beta-23516",
-          "System.Linq": "4.0.1-beta-23516",
-          "System.Runtime": "4.0.21-beta-23516",
-          "System.Threading": "4.0.11-beta-23516",
           "WebFor.Core": "1.0.0",
           "WebFor.Infrastructure": "1.0.0"
         }
       },
       "WebFor.Infrastructure/1.0.0": {
         "type": "project",
-        "framework": ".NETPlatform,Version=v5.4",
+        "framework": "DNXCore,Version=v5.0",
         "dependencies": {
+          "EntityFramework.Commands": "7.0.0-rc1-final",
           "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
-          "Microsoft.CSharp": "4.0.1-beta-23516",
-          "System.Collections": "4.0.11-beta-23516",
-          "System.Linq": "4.0.1-beta-23516",
-          "System.Runtime": "4.0.21-beta-23516",
-          "System.Threading": "4.0.11-beta-23516",
           "WebFor.Core": "1.0.0"
         }
       }
@@ -7011,14 +6998,14 @@
       },
       "WebFor.Core/1.0.0": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Autofac": "4.0.0-rc1-177",
           "Autofac.Extensions.DependencyInjection": "4.0.0-rc1-177",
@@ -7028,8 +7015,9 @@
       },
       "WebFor.Infrastructure/1.0.0": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
+          "EntityFramework.Commands": "7.0.0-rc1-final",
           "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
           "WebFor.Core": "1.0.0"
@@ -9130,14 +9118,14 @@
       },
       "WebFor.Core/1.0.0": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Autofac": "4.0.0-rc1-177",
           "Autofac.Extensions.DependencyInjection": "4.0.0-rc1-177",
@@ -9147,8 +9135,9 @@
       },
       "WebFor.Infrastructure/1.0.0": {
         "type": "project",
-        "framework": ".NETFramework,Version=v4.5.1",
+        "framework": "DNX,Version=v4.5.1",
         "dependencies": {
+          "EntityFramework.Commands": "7.0.0-rc1-final",
           "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
           "WebFor.Core": "1.0.0"
@@ -12421,42 +12410,28 @@
       },
       "WebFor.Core/1.0.0": {
         "type": "project",
-        "framework": ".NETPlatform,Version=v5.4",
+        "framework": "DNXCore,Version=v5.0",
         "dependencies": {
-          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
-          "Microsoft.CSharp": "4.0.1-beta-23516",
-          "System.Collections": "4.0.11-beta-23516",
-          "System.Linq": "4.0.1-beta-23516",
-          "System.Runtime": "4.0.21-beta-23516",
-          "System.Threading": "4.0.11-beta-23516"
+          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
         "type": "project",
-        "framework": ".NETPlatform,Version=v5.4",
+        "framework": "DNXCore,Version=v5.0",
         "dependencies": {
           "Autofac": "4.0.0-rc1-177",
           "Autofac.Extensions.DependencyInjection": "4.0.0-rc1-177",
-          "Microsoft.CSharp": "4.0.1-beta-23516",
-          "System.Collections": "4.0.11-beta-23516",
-          "System.Linq": "4.0.1-beta-23516",
-          "System.Runtime": "4.0.21-beta-23516",
-          "System.Threading": "4.0.11-beta-23516",
           "WebFor.Core": "1.0.0",
           "WebFor.Infrastructure": "1.0.0"
         }
       },
       "WebFor.Infrastructure/1.0.0": {
         "type": "project",
-        "framework": ".NETPlatform,Version=v5.4",
+        "framework": "DNXCore,Version=v5.0",
         "dependencies": {
+          "EntityFramework.Commands": "7.0.0-rc1-final",
           "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
-          "Microsoft.CSharp": "4.0.1-beta-23516",
-          "System.Collections": "4.0.11-beta-23516",
-          "System.Linq": "4.0.1-beta-23516",
-          "System.Runtime": "4.0.21-beta-23516",
-          "System.Threading": "4.0.11-beta-23516",
           "WebFor.Core": "1.0.0"
         }
       }
@@ -15727,42 +15702,28 @@
       },
       "WebFor.Core/1.0.0": {
         "type": "project",
-        "framework": ".NETPlatform,Version=v5.4",
+        "framework": "DNXCore,Version=v5.0",
         "dependencies": {
-          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
-          "Microsoft.CSharp": "4.0.1-beta-23516",
-          "System.Collections": "4.0.11-beta-23516",
-          "System.Linq": "4.0.1-beta-23516",
-          "System.Runtime": "4.0.21-beta-23516",
-          "System.Threading": "4.0.11-beta-23516"
+          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
         "type": "project",
-        "framework": ".NETPlatform,Version=v5.4",
+        "framework": "DNXCore,Version=v5.0",
         "dependencies": {
           "Autofac": "4.0.0-rc1-177",
           "Autofac.Extensions.DependencyInjection": "4.0.0-rc1-177",
-          "Microsoft.CSharp": "4.0.1-beta-23516",
-          "System.Collections": "4.0.11-beta-23516",
-          "System.Linq": "4.0.1-beta-23516",
-          "System.Runtime": "4.0.21-beta-23516",
-          "System.Threading": "4.0.11-beta-23516",
           "WebFor.Core": "1.0.0",
           "WebFor.Infrastructure": "1.0.0"
         }
       },
       "WebFor.Infrastructure/1.0.0": {
         "type": "project",
-        "framework": ".NETPlatform,Version=v5.4",
+        "framework": "DNXCore,Version=v5.0",
         "dependencies": {
+          "EntityFramework.Commands": "7.0.0-rc1-final",
           "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
-          "Microsoft.CSharp": "4.0.1-beta-23516",
-          "System.Collections": "4.0.11-beta-23516",
-          "System.Linq": "4.0.1-beta-23516",
-          "System.Runtime": "4.0.21-beta-23516",
-          "System.Threading": "4.0.11-beta-23516",
           "WebFor.Core": "1.0.0"
         }
       }
