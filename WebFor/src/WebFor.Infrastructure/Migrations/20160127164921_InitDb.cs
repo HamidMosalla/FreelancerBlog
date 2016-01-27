@@ -1,8 +1,9 @@
 using System;
-using Microsoft.Data.Entity.Metadata;
+using System.Collections.Generic;
 using Microsoft.Data.Entity.Migrations;
+using Microsoft.Data.Entity.Metadata;
 
-namespace WebFor.Infrastructure.EntityFramework.Migrations
+namespace WebFor.Infrastructure.Migrations
 {
     public partial class InitDb : Migration
     {
@@ -294,12 +295,9 @@ namespace WebFor.Infrastructure.EntityFramework.Migrations
                     ArticleBody = table.Column<string>(nullable: false),
                     ArticleDateCreated = table.Column<DateTime>(nullable: false),
                     ArticleDateModified = table.Column<DateTime>(nullable: true),
-                    ArticleFileUrl = table.Column<string>(nullable: true),
                     ArticleStatus = table.Column<string>(nullable: false),
                     ArticleSummary = table.Column<string>(nullable: false),
-                    ArticleThumbnailUrl = table.Column<string>(nullable: true),
                     ArticleTitle = table.Column<string>(nullable: false),
-                    ArticleVideoUrl = table.Column<string>(nullable: true),
                     ArticleViewCount = table.Column<long>(nullable: true),
                     UserIDfk = table.Column<string>(nullable: false)
                 },

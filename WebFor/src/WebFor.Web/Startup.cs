@@ -53,14 +53,12 @@ namespace WebFor.Web
 
             services.AddMvc();
 
-            // Add application services.
-            services.AddTransient<WebForDbContextSeedData>();
-
+            // Autofac container configuration and modules
             var containerBuilder = new ContainerBuilder();
 
             containerBuilder.RegisterModule<UnitOfWorkModule>();
             containerBuilder.RegisterModule<AuthMessageSenderModule>();
-            //containerBuilder.RegisterModule<WebForDbContextSeedDataModule>();
+            containerBuilder.RegisterModule<WebForDbContextSeedDataModule>();
 
             containerBuilder.Populate(services);
             var container = containerBuilder.Build();

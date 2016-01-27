@@ -2,13 +2,16 @@ using System;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
 using Microsoft.Data.Entity.Metadata;
+using Microsoft.Data.Entity.Migrations;
+using WebFor.Infrastructure.EntityFramework;
 
-namespace WebFor.Infrastructure.EntityFramework.Migrations
+namespace WebFor.Infrastructure.Migrations
 {
     [DbContext(typeof(WebForDbContext))]
-    partial class WebForDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160127164921_InitDb")]
+    partial class InitDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -97,7 +100,7 @@ namespace WebFor.Infrastructure.EntityFramework.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("WebFor.Models.ApplicationUser", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.ApplicationUser", b =>
                 {
                     b.Property<string>("Id");
 
@@ -183,7 +186,7 @@ namespace WebFor.Infrastructure.EntityFramework.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
                 });
 
-            modelBuilder.Entity("WebFor.Models.Article", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.Article", b =>
                 {
                     b.Property<int>("ArticleId")
                         .ValueGeneratedOnAdd();
@@ -212,7 +215,7 @@ namespace WebFor.Infrastructure.EntityFramework.Migrations
                     b.HasKey("ArticleId");
                 });
 
-            modelBuilder.Entity("WebFor.Models.ArticleArticleTag", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.ArticleArticleTag", b =>
                 {
                     b.Property<int>("ArticleId");
 
@@ -221,7 +224,7 @@ namespace WebFor.Infrastructure.EntityFramework.Migrations
                     b.HasKey("ArticleId", "ArticleTagId");
                 });
 
-            modelBuilder.Entity("WebFor.Models.ArticleComment", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.ArticleComment", b =>
                 {
                     b.Property<int>("ArticleCommentId")
                         .ValueGeneratedOnAdd();
@@ -248,7 +251,7 @@ namespace WebFor.Infrastructure.EntityFramework.Migrations
                     b.HasKey("ArticleCommentId");
                 });
 
-            modelBuilder.Entity("WebFor.Models.ArticleRating", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.ArticleRating", b =>
                 {
                     b.Property<int>("ArticleRatingId")
                         .ValueGeneratedOnAdd();
@@ -263,7 +266,7 @@ namespace WebFor.Infrastructure.EntityFramework.Migrations
                     b.HasKey("ArticleRatingId");
                 });
 
-            modelBuilder.Entity("WebFor.Models.ArticleTag", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.ArticleTag", b =>
                 {
                     b.Property<int>("ArticleTagId")
                         .ValueGeneratedOnAdd();
@@ -274,7 +277,7 @@ namespace WebFor.Infrastructure.EntityFramework.Migrations
                     b.HasKey("ArticleTagId");
                 });
 
-            modelBuilder.Entity("WebFor.Models.Contact", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.Contact", b =>
                 {
                     b.Property<int>("ContactId")
                         .ValueGeneratedOnAdd();
@@ -295,7 +298,7 @@ namespace WebFor.Infrastructure.EntityFramework.Migrations
                     b.HasKey("ContactId");
                 });
 
-            modelBuilder.Entity("WebFor.Models.Portfolio", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.Portfolio", b =>
                 {
                     b.Property<int>("PortfolioId")
                         .ValueGeneratedOnAdd();
@@ -320,7 +323,7 @@ namespace WebFor.Infrastructure.EntityFramework.Migrations
                     b.HasKey("PortfolioId");
                 });
 
-            modelBuilder.Entity("WebFor.Models.SiteOrder", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.SiteOrder", b =>
                 {
                     b.Property<int>("SiteOrderId")
                         .ValueGeneratedOnAdd();
@@ -428,7 +431,7 @@ namespace WebFor.Infrastructure.EntityFramework.Migrations
                     b.HasKey("SiteOrderId");
                 });
 
-            modelBuilder.Entity("WebFor.Models.SlideShow", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.SlideShow", b =>
                 {
                     b.Property<int>("SlideShowId")
                         .ValueGeneratedOnAdd();
@@ -460,14 +463,14 @@ namespace WebFor.Infrastructure.EntityFramework.Migrations
 
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("WebFor.Models.ApplicationUser")
+                    b.HasOne("WebFor.Core.Domain.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("WebFor.Models.ApplicationUser")
+                    b.HasOne("WebFor.Core.Domain.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
@@ -478,51 +481,51 @@ namespace WebFor.Infrastructure.EntityFramework.Migrations
                         .WithMany()
                         .HasForeignKey("RoleId");
 
-                    b.HasOne("WebFor.Models.ApplicationUser")
+                    b.HasOne("WebFor.Core.Domain.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("WebFor.Models.Article", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.Article", b =>
                 {
-                    b.HasOne("WebFor.Models.ApplicationUser")
+                    b.HasOne("WebFor.Core.Domain.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserIDfk");
                 });
 
-            modelBuilder.Entity("WebFor.Models.ArticleArticleTag", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.ArticleArticleTag", b =>
                 {
-                    b.HasOne("WebFor.Models.Article")
+                    b.HasOne("WebFor.Core.Domain.Article")
                         .WithMany()
                         .HasForeignKey("ArticleId");
 
-                    b.HasOne("WebFor.Models.ArticleTag")
+                    b.HasOne("WebFor.Core.Domain.ArticleTag")
                         .WithMany()
                         .HasForeignKey("ArticleTagId");
                 });
 
-            modelBuilder.Entity("WebFor.Models.ArticleComment", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.ArticleComment", b =>
                 {
-                    b.HasOne("WebFor.Models.ArticleComment")
+                    b.HasOne("WebFor.Core.Domain.ArticleComment")
                         .WithMany()
                         .HasForeignKey("ArticleCommentParentId");
 
-                    b.HasOne("WebFor.Models.Article")
+                    b.HasOne("WebFor.Core.Domain.Article")
                         .WithMany()
                         .HasForeignKey("ArticleIDfk");
 
-                    b.HasOne("WebFor.Models.ApplicationUser")
+                    b.HasOne("WebFor.Core.Domain.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserIDfk");
                 });
 
-            modelBuilder.Entity("WebFor.Models.ArticleRating", b =>
+            modelBuilder.Entity("WebFor.Core.Domain.ArticleRating", b =>
                 {
-                    b.HasOne("WebFor.Models.Article")
+                    b.HasOne("WebFor.Core.Domain.Article")
                         .WithMany()
                         .HasForeignKey("ArticleIDfk");
 
-                    b.HasOne("WebFor.Models.ApplicationUser")
+                    b.HasOne("WebFor.Core.Domain.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserIDfk");
                 });

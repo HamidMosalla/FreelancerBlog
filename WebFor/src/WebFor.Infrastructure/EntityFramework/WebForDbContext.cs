@@ -20,8 +20,15 @@ namespace WebFor.Infrastructure.EntityFramework
         public DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<SiteOrder> SiteOrders { get; set; }
         public DbSet<SlideShow> SlideShows { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=WebForDb;Trusted_Connection=True;MultipleActiveResultSets=true");
+            base.OnConfiguring(optionsBuilder); 
+        }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            //dnvm upgrade -r coreclr
             //dnx ef migrations add Initial
             //dnx ef database update
 
