@@ -13,12 +13,11 @@ using WebFor.Infrastructure.Services.Shared;
 
 namespace WebFor.DependencyInjection.Modules
 {
-    public class AuthMessageSenderModule : Module
+    public class CkEditorFileUploderModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<AuthMessageSender>().As<IEmailSender>();
-            builder.RegisterType<AuthMessageSender>().As<ISmsSender>();
+            builder.RegisterType<CkEditorFileUploder>().As<ICkEditorFileUploder>();
         }
     }
 }

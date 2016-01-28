@@ -355,6 +355,44 @@
           "lib/net451/Microsoft.AspNet.Identity.EntityFramework.dll": {}
         }
       },
+      "Microsoft.AspNet.Mvc.Abstractions/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Routing": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Mvc.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Mvc.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Routing.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Routing.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -1030,6 +1068,37 @@
         },
         "runtime": {
           "lib/dotnet5.4/Microsoft.AspNet.Identity.EntityFramework.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Mvc.Abstractions/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Routing": "1.0.0-rc1-final",
+          "Microsoft.CSharp": "4.0.1-beta-23516",
+          "System.ComponentModel.TypeConverter": "4.0.1-beta-23516",
+          "System.Reflection.Extensions": "4.0.1-beta-23516",
+          "System.Text.Encoding.Extensions": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Mvc.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Mvc.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final",
+          "System.Text.RegularExpressions": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Routing.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Routing.dll": {}
         }
       },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
@@ -2452,6 +2521,44 @@
           "lib/net451/Microsoft.AspNet.Identity.EntityFramework.dll": {}
         }
       },
+      "Microsoft.AspNet.Mvc.Abstractions/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Routing": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Mvc.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Mvc.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Routing.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Routing.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -3153,6 +3260,44 @@
           "lib/net451/Microsoft.AspNet.Identity.EntityFramework.dll": {}
         }
       },
+      "Microsoft.AspNet.Mvc.Abstractions/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Routing": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Mvc.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Mvc.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Routing.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Routing.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -3828,6 +3973,37 @@
         },
         "runtime": {
           "lib/dotnet5.4/Microsoft.AspNet.Identity.EntityFramework.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Mvc.Abstractions/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Routing": "1.0.0-rc1-final",
+          "Microsoft.CSharp": "4.0.1-beta-23516",
+          "System.ComponentModel.TypeConverter": "4.0.1-beta-23516",
+          "System.Reflection.Extensions": "4.0.1-beta-23516",
+          "System.Text.Encoding.Extensions": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Mvc.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Mvc.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final",
+          "System.Text.RegularExpressions": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Routing.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Routing.dll": {}
         }
       },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
@@ -5634,6 +5810,37 @@
           "lib/dotnet5.4/Microsoft.AspNet.Identity.EntityFramework.dll": {}
         }
       },
+      "Microsoft.AspNet.Mvc.Abstractions/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Routing": "1.0.0-rc1-final",
+          "Microsoft.CSharp": "4.0.1-beta-23516",
+          "System.ComponentModel.TypeConverter": "4.0.1-beta-23516",
+          "System.Reflection.Extensions": "4.0.1-beta-23516",
+          "System.Text.Encoding.Extensions": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Mvc.Abstractions.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Mvc.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Extensions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final",
+          "System.Text.RegularExpressions": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Routing.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Routing.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -7354,6 +7561,34 @@
         "Microsoft.AspNet.Identity.EntityFramework.3.0.0-rc1-final.nupkg",
         "Microsoft.AspNet.Identity.EntityFramework.3.0.0-rc1-final.nupkg.sha512",
         "Microsoft.AspNet.Identity.EntityFramework.nuspec"
+      ]
+    },
+    "Microsoft.AspNet.Mvc.Abstractions/6.0.0-rc1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "xJH5D+h/C6KFA3XjUshgpMEznL7h018f/G4exZY76HhCfABMHmoqb5xrGKvwjKlaCwnSWPDTHeOowsGPmYZ6yQ==",
+      "files": [
+        "lib/dotnet5.4/Microsoft.AspNet.Mvc.Abstractions.dll",
+        "lib/dotnet5.4/Microsoft.AspNet.Mvc.Abstractions.xml",
+        "lib/net451/Microsoft.AspNet.Mvc.Abstractions.dll",
+        "lib/net451/Microsoft.AspNet.Mvc.Abstractions.xml",
+        "Microsoft.AspNet.Mvc.Abstractions.6.0.0-rc1-final.nupkg",
+        "Microsoft.AspNet.Mvc.Abstractions.6.0.0-rc1-final.nupkg.sha512",
+        "Microsoft.AspNet.Mvc.Abstractions.nuspec"
+      ]
+    },
+    "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "kIDLp1Icd+l2Z5jFGZf5rAKALS2btMKdP+a+zOepiE4oZJCAJ5tWms+MyMkMJ8hD9/5O6fF4CzckBBcA6pxNUQ==",
+      "files": [
+        "lib/dotnet5.4/Microsoft.AspNet.Routing.dll",
+        "lib/dotnet5.4/Microsoft.AspNet.Routing.xml",
+        "lib/net451/Microsoft.AspNet.Routing.dll",
+        "lib/net451/Microsoft.AspNet.Routing.xml",
+        "Microsoft.AspNet.Routing.1.0.0-rc1-final.nupkg",
+        "Microsoft.AspNet.Routing.1.0.0-rc1-final.nupkg.sha512",
+        "Microsoft.AspNet.Routing.nuspec"
       ]
     },
     "Microsoft.AspNet.WebUtilities/1.0.0-rc1-final": {
@@ -10603,7 +10838,8 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "Microsoft.AspNet.Identity.EntityFramework >= 3.0.0-rc1-final"
+      "Microsoft.AspNet.Identity.EntityFramework >= 3.0.0-rc1-final",
+      "Microsoft.AspNet.Mvc.Abstractions >= 6.0.0-rc1-final"
     ],
     "DNX,Version=v4.5.1": [],
     "DNXCore,Version=v5.0": []

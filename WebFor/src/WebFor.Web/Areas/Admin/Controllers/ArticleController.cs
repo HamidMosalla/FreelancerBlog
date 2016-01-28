@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
@@ -9,6 +10,8 @@ using WebFor.Web.Areas.Admin.ViewModels;
 using WebFor.Web.Areas.Admin.ViewModels.Article;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
+using WebFor.Core.Services.Shared;
+using WebFor.Web.Services;
 
 namespace WebFor.Web.Areas.Admin.Controllers
 {
@@ -16,15 +19,13 @@ namespace WebFor.Web.Areas.Admin.Controllers
     public class ArticleController : Controller
     {
         private IUnitOfWork _uw;
-        private IHostingEnvironment _environment;
+        private ICkEditorFileUploder _ckEditorFileUploader;
 
-        public ArticleController(IUnitOfWork uw, IHostingEnvironment environment)
+        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader)
         {
             _uw = uw;
-            _environment = environment;
+            _ckEditorFileUploader = ckEditorFileUploader;
         }
-
-
 
         public async Task<IActionResult> Index()
         {
@@ -47,6 +48,8 @@ namespace WebFor.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ArticleViewModel viewModel)
         {
+            var model = AutoMapperConfiguration.Mapper.Map<Article>(viewModel);
+
             return View();
         }
 
@@ -70,7 +73,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
         }
 
 
-        public async Task<ActionResult> TagLookup()
+        public async Task<IActionResult> TagLookup()
         {
             var model = await _uw.ArticleTagRepository.GetAllTagNamesArrayAsync();
 
@@ -78,40 +81,17 @@ namespace WebFor.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> UploadImage(IFormFile upload, string CKEditorFuncNum, string CKEditor,
+        public async Task<IActionResult> CkEditorFileUploder(IFormFile upload, string CKEditorFuncNum, string CKEditor,
            string langCode)
         {
-            string vImagePath = String.Empty;
-            string vMessage = String.Empty;
-            string vFilePath = String.Empty;
-            string vOutput = String.Empty;
+            string vOutput = await _ckEditorFileUploader.UploadAsync(
+                                   upload,
+                                   new List<string>() { "Files", "ArticleUploads" },
+                                   "/Files/ArticleUploads/",
+                                   CKEditorFuncNum,
+                                   CKEditor,
+                                   langCode);
 
-            try
-            {
-                if (upload != null && upload.Length > 0)
-                {
-                    var fileName = Path.GetFileNameWithoutExtension(ContentDispositionHeaderValue.Parse(upload.ContentDisposition).FileName.Trim('"'));
-                    var extension = Path.GetExtension(ContentDispositionHeaderValue.Parse(upload.ContentDisposition).FileName.Trim('"'));
-
-                    var vFileName = fileName + " - " + DateTime.Now.ToString("yyyyMMdd-HHMMssff") + extension;
-                    var vFolderPath = Path.Combine(_environment.WebRootPath, "Files", "ArticleUploads");
-
-                    if (!Directory.Exists(vFolderPath))
-                    {
-                        Directory.CreateDirectory(vFolderPath);
-                    }
-
-                    vFilePath = Path.Combine(vFolderPath, vFileName);
-                    await upload.SaveAsAsync(vFilePath);
-                    vImagePath = Url.Content("/Files/ArticleUploads/" + vFileName);
-                    vMessage = "The file uploaded successfully.";
-                }
-            }
-            catch (Exception e)
-            {
-                vMessage = "There was an issue uploading:" + e.Message;
-            }
-            vOutput = @"<html><body><script>window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ", \"" + vImagePath + "\", \"" + vMessage + "\");</script></body></html>";
             return Content(vOutput, "text/html");
         }
     }

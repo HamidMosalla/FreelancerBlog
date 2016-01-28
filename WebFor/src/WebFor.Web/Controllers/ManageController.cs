@@ -9,6 +9,7 @@ using WebFor.Core;
 using WebFor.Core.Repository;
 using WebFor.Core.Services;
 using WebFor.Core.Domain;
+using WebFor.Core.Services.Shared;
 using WebFor.Web.ViewModels.Manage;
 
 namespace WebFor.Web.Controllers

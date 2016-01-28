@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using WebFor.Core.Services;
+using WebFor.Core.Services.Shared;
 
-namespace WebFor.Infrastructure.Services
+namespace WebFor.Infrastructure.Services.Shared
 {
     // This class is used by the application to send Email and SMS
     // when you turn on two-factor authentication in ASP.NET Identity.

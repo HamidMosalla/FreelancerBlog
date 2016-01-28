@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace WebFor.Core.Services
+namespace WebFor.Core.Services.Shared
 {
     public interface ISmsSender
     {

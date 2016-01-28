@@ -10,6 +10,7 @@
     "dnxcore50": { }
   },
   "dependencies": {
-    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
+    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
+    "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final"
   }
 }

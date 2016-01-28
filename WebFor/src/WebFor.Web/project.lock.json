@@ -37,6 +37,21 @@
           "lib/net451/Autofac.Extensions.DependencyInjection.dll": {}
         }
       },
+      "AutoMapper/4.2.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AutoMapper.dll": {}
+        }
+      },
       "EntityFramework.Commands/7.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -2095,7 +2110,8 @@
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
-          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
+          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
@@ -2115,6 +2131,18 @@
           "EntityFramework.Commands": "7.0.0-rc1-final",
           "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
+          "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
+          "Microsoft.Extensions.CodeGenerators.Mvc": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.FileProviderExtensions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
           "WebFor.Core": "1.0.0"
         }
       }
@@ -2158,6 +2186,40 @@
         },
         "runtime": {
           "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
+      "AutoMapper/4.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.0",
+          "System.Collections": "4.0.10",
+          "System.Collections.Concurrent": "4.0.10",
+          "System.Collections.Specialized": "4.0.0",
+          "System.ComponentModel.TypeConverter": "4.0.0",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Dynamic.Runtime": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Linq.Expressions": "4.0.10",
+          "System.Linq.Queryable": "4.0.0",
+          "System.ObjectModel": "4.0.10",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Emit": "4.0.0",
+          "System.Reflection.Emit.ILGeneration": "4.0.0",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Threading.Tasks": "4.0.10"
+        },
+        "compile": {
+          "lib/dotnet5.1/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.1/AutoMapper.dll": {}
         }
       },
       "EntityFramework.Commands/7.0.0-rc1-final": {
@@ -3887,6 +3949,24 @@
           "lib/dotnet/System.Collections.NonGeneric.dll": {}
         }
       },
+      "System.Collections.Specialized/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections.NonGeneric": "4.0.0",
+          "System.Globalization": "4.0.10",
+          "System.Globalization.Extensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Threading": "4.0.10"
+        },
+        "compile": {
+          "ref/dotnet/System.Collections.Specialized.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/System.Collections.Specialized.dll": {}
+        }
+      },
       "System.ComponentModel/4.0.1-beta-23516": {
         "type": "package",
         "dependencies": {
@@ -4880,7 +4960,8 @@
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
-          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
+          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
@@ -4900,6 +4981,18 @@
           "EntityFramework.Commands": "7.0.0-rc1-final",
           "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
+          "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
+          "Microsoft.Extensions.CodeGenerators.Mvc": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.FileProviderExtensions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
           "WebFor.Core": "1.0.0"
         }
       }
@@ -4937,6 +5030,21 @@
         },
         "runtime": {
           "lib/net451/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
+      "AutoMapper/4.2.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AutoMapper.dll": {}
         }
       },
       "EntityFramework.Commands/7.0.0-rc1-final": {
@@ -7000,7 +7108,8 @@
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
-          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
+          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
@@ -7020,6 +7129,18 @@
           "EntityFramework.Commands": "7.0.0-rc1-final",
           "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
+          "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
+          "Microsoft.Extensions.CodeGenerators.Mvc": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.FileProviderExtensions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
           "WebFor.Core": "1.0.0"
         }
       }
@@ -7057,6 +7178,21 @@
         },
         "runtime": {
           "lib/net451/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
+      "AutoMapper/4.2.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/net45/AutoMapper.dll": {}
         }
       },
       "EntityFramework.Commands/7.0.0-rc1-final": {
@@ -9120,7 +9256,8 @@
         "type": "project",
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
-          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
+          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
@@ -9140,6 +9277,18 @@
           "EntityFramework.Commands": "7.0.0-rc1-final",
           "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
+          "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
+          "Microsoft.Extensions.CodeGenerators.Mvc": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.FileProviderExtensions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
           "WebFor.Core": "1.0.0"
         }
       }
@@ -9183,6 +9332,40 @@
         },
         "runtime": {
           "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
+      "AutoMapper/4.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.0",
+          "System.Collections": "4.0.10",
+          "System.Collections.Concurrent": "4.0.10",
+          "System.Collections.Specialized": "4.0.0",
+          "System.ComponentModel.TypeConverter": "4.0.0",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Dynamic.Runtime": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Linq.Expressions": "4.0.10",
+          "System.Linq.Queryable": "4.0.0",
+          "System.ObjectModel": "4.0.10",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Emit": "4.0.0",
+          "System.Reflection.Emit.ILGeneration": "4.0.0",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Threading.Tasks": "4.0.10"
+        },
+        "compile": {
+          "lib/dotnet5.1/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.1/AutoMapper.dll": {}
         }
       },
       "EntityFramework.Commands/7.0.0-rc1-final": {
@@ -11286,6 +11469,24 @@
           "lib/dotnet/System.Collections.NonGeneric.dll": {}
         }
       },
+      "System.Collections.Specialized/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections.NonGeneric": "4.0.0",
+          "System.Globalization": "4.0.10",
+          "System.Globalization.Extensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Threading": "4.0.10"
+        },
+        "compile": {
+          "ref/dotnet/System.Collections.Specialized.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/System.Collections.Specialized.dll": {}
+        }
+      },
       "System.ComponentModel/4.0.1-beta-23516": {
         "type": "package",
         "dependencies": {
@@ -12412,7 +12613,8 @@
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
-          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
+          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
@@ -12432,6 +12634,18 @@
           "EntityFramework.Commands": "7.0.0-rc1-final",
           "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
+          "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
+          "Microsoft.Extensions.CodeGenerators.Mvc": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.FileProviderExtensions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
           "WebFor.Core": "1.0.0"
         }
       }
@@ -12475,6 +12689,40 @@
         },
         "runtime": {
           "lib/dotnet5.4/Autofac.Extensions.DependencyInjection.dll": {}
+        }
+      },
+      "AutoMapper/4.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.0.0",
+          "System.Collections": "4.0.10",
+          "System.Collections.Concurrent": "4.0.10",
+          "System.Collections.Specialized": "4.0.0",
+          "System.ComponentModel.TypeConverter": "4.0.0",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Dynamic.Runtime": "4.0.10",
+          "System.Globalization": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Linq.Expressions": "4.0.10",
+          "System.Linq.Queryable": "4.0.0",
+          "System.ObjectModel": "4.0.10",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Emit": "4.0.0",
+          "System.Reflection.Emit.ILGeneration": "4.0.0",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.Primitives": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Threading.Tasks": "4.0.10"
+        },
+        "compile": {
+          "lib/dotnet5.1/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.1/AutoMapper.dll": {}
         }
       },
       "EntityFramework.Commands/7.0.0-rc1-final": {
@@ -14578,6 +14826,24 @@
           "lib/dotnet/System.Collections.NonGeneric.dll": {}
         }
       },
+      "System.Collections.Specialized/4.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections.NonGeneric": "4.0.0",
+          "System.Globalization": "4.0.10",
+          "System.Globalization.Extensions": "4.0.0",
+          "System.Resources.ResourceManager": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Threading": "4.0.10"
+        },
+        "compile": {
+          "ref/dotnet/System.Collections.Specialized.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/System.Collections.Specialized.dll": {}
+        }
+      },
       "System.ComponentModel/4.0.1-beta-23516": {
         "type": "package",
         "dependencies": {
@@ -15704,7 +15970,8 @@
         "type": "project",
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
-          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
+          "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
@@ -15724,6 +15991,18 @@
           "EntityFramework.Commands": "7.0.0-rc1-final",
           "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
+          "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Tooling.Razor": "1.0.0-rc1-final",
+          "Microsoft.Extensions.CodeGenerators.Mvc": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.FileProviderExtensions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
           "WebFor.Core": "1.0.0"
         }
       }
@@ -15772,6 +16051,21 @@
         "lib/net451/Autofac.Extensions.DependencyInjection.xml",
         "lib/netcore50/Autofac.Extensions.DependencyInjection.dll",
         "lib/netcore50/Autofac.Extensions.DependencyInjection.xml"
+      ]
+    },
+    "AutoMapper/4.2.0": {
+      "type": "package",
+      "sha512": "8U0T1cD7z1oQRaKvaFTp2ufN3mG10Hbmoq30AHPhy4uWLl3Vx1/7BV6QhYtFo7rKrMkTKWgUAVDUDlc9Pd5TSA==",
+      "files": [
+        "AutoMapper.4.2.0.nupkg",
+        "AutoMapper.4.2.0.nupkg.sha512",
+        "AutoMapper.nuspec",
+        "lib/dotnet5.1/AutoMapper.dll",
+        "lib/dotnet5.1/AutoMapper.xml",
+        "lib/net45/AutoMapper.dll",
+        "lib/net45/AutoMapper.xml",
+        "lib/portable-net45+win+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10/AutoMapper.dll",
+        "lib/portable-net45+win+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10/AutoMapper.xml"
       ]
     },
     "EntityFramework.Commands/7.0.0-rc1-final": {
@@ -17891,6 +18185,38 @@
         "System.Collections.NonGeneric.4.0.0.nupkg",
         "System.Collections.NonGeneric.4.0.0.nupkg.sha512",
         "System.Collections.NonGeneric.nuspec"
+      ]
+    },
+    "System.Collections.Specialized/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "poJFwQCUOoXqvdoGxx+3p8Z63yawcYKPBSFP67Z2jICeOINvEIQZN7mVOAnC7gsVF0WU+A2wtVwfhagC7UCgAg==",
+      "files": [
+        "lib/dotnet/System.Collections.Specialized.dll",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Collections.Specialized.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "ref/dotnet/de/System.Collections.Specialized.xml",
+        "ref/dotnet/es/System.Collections.Specialized.xml",
+        "ref/dotnet/fr/System.Collections.Specialized.xml",
+        "ref/dotnet/it/System.Collections.Specialized.xml",
+        "ref/dotnet/ja/System.Collections.Specialized.xml",
+        "ref/dotnet/ko/System.Collections.Specialized.xml",
+        "ref/dotnet/ru/System.Collections.Specialized.xml",
+        "ref/dotnet/System.Collections.Specialized.dll",
+        "ref/dotnet/System.Collections.Specialized.xml",
+        "ref/dotnet/zh-hans/System.Collections.Specialized.xml",
+        "ref/dotnet/zh-hant/System.Collections.Specialized.xml",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/System.Collections.Specialized.dll",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "System.Collections.Specialized.4.0.0.nupkg",
+        "System.Collections.Specialized.4.0.0.nupkg.sha512",
+        "System.Collections.Specialized.nuspec"
       ]
     },
     "System.ComponentModel/4.0.1-beta-23516": {
@@ -21635,7 +21961,8 @@
       "Microsoft.VisualStudio.Web.BrowserLink.Loader >= 14.0.0-rc1-final",
       "WebFor.Core >= 1.0.0-*",
       "WebFor.Infrastructure >= 1.0.0-*",
-      "WebFor.DependencyInjection >= 1.0.0-*"
+      "WebFor.DependencyInjection >= 1.0.0-*",
+      "AutoMapper >= 4.2.0"
     ],
     "DNX,Version=v4.5.1": [],
     "DNXCore,Version=v5.0": []

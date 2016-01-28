@@ -13,7 +13,11 @@ using WebFor.DependencyInjection;
 using WebFor.Infrastructure.EntityFramework;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
+using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Routing;
 using WebFor.DependencyInjection.Modules;
+using WebFor.Web.Services;
 
 namespace WebFor.Web
 {
@@ -52,6 +56,7 @@ namespace WebFor.Web
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+            services.AddTransient<IUrlHelper, UrlHelper>();
 
             // Autofac container configuration and modules
             var containerBuilder = new ContainerBuilder();
@@ -59,6 +64,7 @@ namespace WebFor.Web
             containerBuilder.RegisterModule<UnitOfWorkModule>();
             containerBuilder.RegisterModule<AuthMessageSenderModule>();
             containerBuilder.RegisterModule<WebForDbContextSeedDataModule>();
+            containerBuilder.RegisterModule<CkEditorFileUploderModule>();
 
             containerBuilder.Populate(services);
             var container = containerBuilder.Build();

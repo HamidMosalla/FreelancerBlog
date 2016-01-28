@@ -28,7 +28,8 @@
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
     "WebFor.Core": "1.0.0-*",
     "WebFor.Infrastructure": "1.0.0-*",
-    "WebFor.DependencyInjection": "1.0.0-*"
+    "WebFor.DependencyInjection": "1.0.0-*",
+    "AutoMapper": "4.2.0"
   },
 
   "commands": {

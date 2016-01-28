@@ -14,5 +14,5 @@ CKEDITOR.editorConfig = function( config ) {
     //config.extraPlugins = 'popup';
     //config.extraPlugins = 'filebrowser';
 
-    config.filebrowserImageUploadUrl = '/Admin/Article/UploadImage';
+    config.filebrowserImageUploadUrl = '/Admin/Article/CkEditorFileUploder';
 };

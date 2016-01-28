@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using WebFor.Core;
 using WebFor.Core.Services;
 using WebFor.Core.Domain;
+using WebFor.Core.Services.Shared;
 using WebFor.Web.ViewModels.Account;
 
 namespace WebFor.Web.Controllers
