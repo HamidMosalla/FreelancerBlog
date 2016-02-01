@@ -1,8 +1,10 @@
 ﻿@using System.Collections.Generic
+@using System.Threading.Tasks
 @using Microsoft.AspNet.Http
 @using Microsoft.AspNet.Http.Authentication
-@using WebFor.Web.Models
-@model LoginViewModel
+@using WebFor.Core.Domain
+@using WebFor.Web.ViewModels.Account
+@model WebFor.Web.ViewModels.Account.LoginViewModel
 @inject SignInManager<ApplicationUser> SignInManager
 
 @{

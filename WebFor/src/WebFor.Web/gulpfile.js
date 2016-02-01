@@ -35,11 +35,31 @@ gulp.task("min:js", function () {
         .pipe(gulp.dest("."));
 });
 
+gulp.task("min:js-custom", function () {
+    return gulp.src([
+        paths.webroot + "lib/jquery/dist/jquery.js",
+        paths.webroot + "lib/bootstrap/dist/js/bootstrap.js"
+    ], { base: "." })
+                .pipe(concat("mins.js"))
+                .pipe(uglify())
+                .pipe(gulp.dest(paths.webroot + "/js/mins"));
+});
+
 gulp.task("min:css", function () {
     return gulp.src([paths.css, "!" + paths.minCss])
         .pipe(concat(paths.concatCssDest))
         .pipe(cssmin())
         .pipe(gulp.dest("."));
+});
+
+gulp.task("min:css-custom", function () {
+    return gulp.src([
+        paths.webroot + "lib/bootstrap/dist/css/bootstrap.css",
+        paths.webroot + "lib/bootstrap/dist/css/bootstrap-theme.css"
+    ], { base: "." })
+        .pipe(concat("mins.css"))
+        .pipe(cssmin())
+        .pipe(gulp.dest(paths.webroot + "/css/mins"));
 });
 
 gulp.task("min", ["min:js", "min:css"]);

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -10,6 +10,7 @@ using WebFor.Web.Areas.Admin.ViewModels;
 using WebFor.Web.Areas.Admin.ViewModels.Article;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
+using WebFor.Core.Services.ArticleServices;
 using WebFor.Core.Services.Shared;
 using WebFor.Web.Services;
 
@@ -20,11 +21,15 @@ namespace WebFor.Web.Areas.Admin.Controllers
     {
         private IUnitOfWork _uw;
         private ICkEditorFileUploder _ckEditorFileUploader;
+        private IWebForMapper _webForMapper;
+        private IArticleCreator _articleCreator;
 
-        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader)
+        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IWebForMapper webForMapper, IArticleCreator articleCreator)
         {
             _uw = uw;
             _ckEditorFileUploader = ckEditorFileUploader;
+            _webForMapper = webForMapper;
+            _articleCreator = articleCreator;
         }
 
         public async Task<IActionResult> Index()
@@ -48,9 +53,25 @@ namespace WebFor.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ArticleViewModel viewModel)
         {
-            var model = AutoMapperConfiguration.Mapper.Map<Article>(viewModel);
+            if (ModelState.IsValid)
+            {
+                var model = _webForMapper.ArticleViewModelToArticle(viewModel);
 
-            return View();
+                int resultl = await _articleCreator.CreateNewArticle(model, viewModel.ArticleTags);
+
+                if (resultl > 0)
+                {
+                    TempData["ViewMessage"] = "مقاله با موفقیت ثبت شد.";
+
+                    return RedirectToAction("Index", "Article");
+                }
+
+                TempData["ViewMessage"] = "مشکلی در ثبت مقاله پیش آمده، مقاله با موفقیت ثبت نشد.";
+
+                return RedirectToAction("Index", "Article");
+            }
+
+            return View(viewModel);
         }
 
         public async Task<IActionResult> Edit(int? id)

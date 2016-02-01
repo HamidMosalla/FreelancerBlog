@@ -1,0 +1,14 @@
+@model IEnumerable<WebFor.Core.Domain.Article>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <div class="alert alert-warning alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h3>@TempData["ViewMessage"]</h3>
+    </div>
+</p>

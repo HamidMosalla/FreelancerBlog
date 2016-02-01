@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using WebFor.Core.Repository;
 using WebFor.Infrastructure.EntityFramework;
 
@@ -19,6 +20,7 @@ namespace WebFor.Infrastructure.Repository
         private IArticleCommentRepository _articleCommentRepository;
         private IArticleRatingRepository _articleRatingRepository;
         private IArticleTagRepository _articleTagRepository;
+        private IArticleArticleTagRepository _articleArticleTagRepository;
         private IContactRepository _contactRepository;
         private IPortfolioRepository _portfolioRepository;
         private ISiteOrderRepository _siteOrderRepository;
@@ -84,6 +86,18 @@ namespace WebFor.Infrastructure.Repository
                 return _articleTagRepository;
             }
         }
+        public IArticleArticleTagRepository ArticleArticleTagRepository
+        {
+            get
+            {
+
+                if (this._articleArticleTagRepository == null)
+                {
+                    this._articleArticleTagRepository = new ArticleArticleTagRepository(_context);
+                }
+                return _articleArticleTagRepository;
+            }
+        }
         public IContactRepository ContactRepository
         {
             get
@@ -133,14 +147,14 @@ namespace WebFor.Infrastructure.Repository
             }
         }
 
-        public void Save()
+        public int Save()
         {
-            _context.SaveChanges();
+            return _context.SaveChanges();
         }
 
-        public void SaveAsync()
+        public Task<int> SaveAsync()
         {
-            _context.SaveChangesAsync();
+            return _context.SaveChangesAsync();
         }
 
         private bool _disposed = false;

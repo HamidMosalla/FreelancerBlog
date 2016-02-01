@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 namespace WebFor.Core.Repository
 {
@@ -9,11 +10,13 @@ namespace WebFor.Core.Repository
         IArticleCommentRepository ArticleCommentRepository { get; }
         IArticleRatingRepository ArticleRatingRepository { get; }
         IArticleTagRepository ArticleTagRepository { get; }
+        IArticleArticleTagRepository ArticleArticleTagRepository { get; }
         IContactRepository ContactRepository { get; }
         IPortfolioRepository PortfolioRepository { get; }
         ISiteOrderRepository SiteOrderRepository { get; }
         ISlideShowRepository SlideShowRepository { get; }
-        void Save();
+        int Save();
+        Task<int> SaveAsync();
         new void Dispose();
     }
 }

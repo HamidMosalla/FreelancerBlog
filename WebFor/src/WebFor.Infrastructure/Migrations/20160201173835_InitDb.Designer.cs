@@ -8,7 +8,7 @@ using WebFor.Infrastructure.EntityFramework;
 namespace WebFor.Infrastructure.Migrations
 {
     [DbContext(typeof(WebForDbContext))]
-    [Migration("20160127164921_InitDb")]
+    [Migration("20160201173835_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

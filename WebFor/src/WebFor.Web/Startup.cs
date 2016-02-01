@@ -17,6 +17,7 @@ using AutoMapper;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Routing;
 using WebFor.DependencyInjection.Modules;
+using WebFor.DependencyInjection.Modules.Article;
 using WebFor.Web.Services;
 
 namespace WebFor.Web
@@ -56,6 +57,13 @@ namespace WebFor.Web
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+
+            services.AddCaching();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.CookieName = ".WebFor";
+            });
+
             services.AddTransient<IUrlHelper, UrlHelper>();
 
             // Autofac container configuration and modules
@@ -65,6 +73,8 @@ namespace WebFor.Web
             containerBuilder.RegisterModule<AuthMessageSenderModule>();
             containerBuilder.RegisterModule<WebForDbContextSeedDataModule>();
             containerBuilder.RegisterModule<CkEditorFileUploderModule>();
+            containerBuilder.RegisterModule<ArticleCreatorModule>();
+            containerBuilder.RegisterType<WebForMapper>().As<IWebForMapper>();
 
             containerBuilder.Populate(services);
             var container = containerBuilder.Build();
@@ -107,6 +117,8 @@ namespace WebFor.Web
             app.UseIdentity();
 
             // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

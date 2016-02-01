@@ -19,7 +19,7 @@ namespace WebFor.Infrastructure.Repository
         }
         public void Add(ArticleTag entity)
         {
-            throw new NotImplementedException();
+            _context.ArticleTags.Add(entity);
         }
 
         public void Remove(ArticleTag entity)
@@ -50,6 +50,11 @@ namespace WebFor.Infrastructure.Repository
         public Task<string[]> GetAllTagNamesArrayAsync()
         {
             return _context.ArticleTags.Select(a => a.ArticleTagName).ToArrayAsync();
+        }
+
+        public void AddRange(List<ArticleTag> tagList)
+        {
+            _context.ArticleTags.AddRange(tagList);
         }
     }
 }
