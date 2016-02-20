@@ -1,0 +1,68 @@
+﻿@model IEnumerable<WebFor.Web.Areas.Admin.ViewModels.Article.ArticleViewModel>
+
+@{
+    ViewData["Title"] = "مدیریت مقاله";
+}
+
+<h2>مدیریت مقاله</h2>
+
+@if (@TempData["ViewMessage"] != null)
+{
+    <p>
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h3>@TempData["ViewMessage"]</h3>
+        </div>
+    </p>
+}
+
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleTitle)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleStatus)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleDateCreated)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ArticleDateModified)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @item.ArticleTitle
+            </td>
+
+            <td>
+                @item.ArticleStatus
+            </td>
+
+            <td>
+                @item.ArticleDateCreated
+            </td>
+
+            <td>
+                @(item.ArticleDateModified ?? DateTime.MinValue)
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ArticleId" class="btn btn-warning">ویرایش</a> 
+                <a asp-action="Details" @*asp-route-area=""*@ asp-route-id="@item.ArticleId" asp-route-title="@item.ArticleTitle.Replace(' ', '-')" class="btn btn-default">جزئیات</a> 
+                <a asp-action="Delete" asp-route-id="@item.ArticleId" class="btn btn-danger">حذف</a>
+            </td>
+        </tr>
+    }
+</table>

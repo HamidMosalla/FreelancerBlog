@@ -8,11 +8,12 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.Net.Http.Headers;
 using WebFor.Web.Areas.Admin.ViewModels;
 using WebFor.Web.Areas.Admin.ViewModels.Article;
+using WebFor.Web.Services;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.ArticleServices;
 using WebFor.Core.Services.Shared;
-using WebFor.Web.Services;
+
 
 namespace WebFor.Web.Areas.Admin.Controllers
 {
@@ -35,6 +36,15 @@ namespace WebFor.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             return View();
+        }
+
+        public async Task<IActionResult> ManageArticle()
+        {
+            var articles = await _uw.ArticleRepository.GetAllAsync();
+
+            var articlesViewModel = _webForMapper.ArticleCollectionToArticleViewModelCollection(articles);
+
+            return View(articlesViewModel);
         }
 
         public async Task<IActionResult> Details(int? id)

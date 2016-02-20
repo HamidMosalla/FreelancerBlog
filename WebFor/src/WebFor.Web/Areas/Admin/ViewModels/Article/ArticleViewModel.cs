@@ -19,8 +19,10 @@ namespace WebFor.Web.Areas.Admin.ViewModels.Article
         public string ArticleSummary { get; set; }
 
 
-
+        [Display(Name = "تاریخ ایجاد")]
         public DateTime ArticleDateCreated { get; set; }
+
+        [Display(Name = "آخرین تاریخ ویرایش")]
         public DateTime? ArticleDateModified { get; set; }
 
 

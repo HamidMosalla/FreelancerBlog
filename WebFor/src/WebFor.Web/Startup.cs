@@ -123,12 +123,12 @@ namespace WebFor.Web
             app.UseMvc(routes =>
             {
                  routes.MapRoute(name: "AreaRoute",
-                 template: "{area:exists}/{controller}/{action}",
+                 template: "{area:exists}/{controller}/{action}/{id?}/{title?}",
                  defaults: new { controller = "Home", action = "Index" });
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}/{title?}");
 
 
             });
