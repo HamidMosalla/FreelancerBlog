@@ -8,5 +8,11 @@ namespace WebFor.Core.Repository
     {
         Task<string[]> GetAllTagNamesArrayAsync();
         void AddRange(List<ArticleTag> tagList);
+
+        Task<string> GetTagsByArticleIdAsync(int articleId);
+        Task<List<ArticleTag>> FindByTagsName(IEnumerable<string> exept);
+        Task<int> RemoveRange(List<ArticleTag> tagsToRemove);
+
+        Task<int> RemoveRangeFromArticle(List<ArticleTag> tagsToRemove, int articleId);
     }
 }

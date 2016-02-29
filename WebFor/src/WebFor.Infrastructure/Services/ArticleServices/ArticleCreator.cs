@@ -21,7 +21,7 @@ namespace WebFor.Infrastructure.Services.ArticleServices
             _uw = uw;
             this.contextAccessor = contextAccessor;
         }
-        public async Task<int> CreateNewArticle(Article article, string articleTags)
+        public async Task<int> CreateNewArticleAsync(Article article, string articleTags)
         {
             article.ArticleDateCreated = DateTime.Now;
             article.UserIDfk = contextAccessor.HttpContext.User.GetUserId();

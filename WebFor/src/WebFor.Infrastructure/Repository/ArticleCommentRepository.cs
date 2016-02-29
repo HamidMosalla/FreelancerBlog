@@ -25,6 +25,11 @@ namespace WebFor.Infrastructure.Repository
             throw new NotImplementedException();
         }
 
+        public void Update(ArticleComment entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public ArticleComment FindById(int id)
         {
             throw new NotImplementedException();

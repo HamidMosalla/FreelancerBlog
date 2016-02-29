@@ -25,6 +25,11 @@ namespace WebFor.Infrastructure.Repository
             throw new NotImplementedException();
         }
 
+        public void Update(ApplicationUser entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public ApplicationUser FindById(string id)
         {
             throw new NotImplementedException();

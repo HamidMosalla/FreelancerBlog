@@ -6,8 +6,8 @@ using WebFor.Core.Domain;
 
 namespace WebFor.Core.Services.ArticleServices
 {
-    public interface IArticleCreator
+    public interface IArticleEditor
     {
-        Task<int> CreateNewArticleAsync(Article article, string articleTags);
+        Task<int> EditArticleAsync(Article article, string articleTags);
     }
 }

@@ -27,7 +27,32 @@ namespace WebFor.Infrastructure.Repository
         {
             _context.Articles.Remove(entity);
         }
-        
+
+        public void Update(Article entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> UpdateArticleAsync(Article article)
+        {
+            _context.Articles.Attach(article, GraphBehavior.SingleObject);
+
+            var entity = _context.Entry(article);
+            entity.State = EntityState.Modified;
+
+            entity.Property(e => e.ArticleDateCreated).IsModified = false;
+            entity.Property(e => e.ArticleId).IsModified = false;
+            entity.Property(e => e.ArticleViewCount).IsModified = false;
+            entity.Property(e => e.UserIDfk).IsModified = false;
+
+            return _context.SaveChangesAsync();
+        }
+
+        public Task<List<ArticleTag>> GetCurrentArticleTagsAsync(int articleId)
+        {
+            return _context.ArticleArticleTags.Where(a => a.ArticleId == articleId).Join(_context.ArticleTags.ToList(), aat => aat.ArticleTagId, at => at.ArticleTagId, (aat, at) => at).ToListAsync();
+        }
+
         public Article FindById(int id)
         {
             return _context.Articles.Single(a => a.ArticleId == id);
@@ -35,7 +60,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<Article> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return _context.Articles.SingleAsync(a => a.ArticleId == id);
         }
 
         public IEnumerable<Article> GetAll()

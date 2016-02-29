@@ -24,18 +24,15 @@ namespace WebFor.Web.Areas.Admin.Controllers
         private ICkEditorFileUploder _ckEditorFileUploader;
         private IWebForMapper _webForMapper;
         private IArticleCreator _articleCreator;
+        private IArticleEditor _articleEditor;
 
-        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IWebForMapper webForMapper, IArticleCreator articleCreator)
+        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IWebForMapper webForMapper, IArticleCreator articleCreator, IArticleEditor articleEditor)
         {
             _uw = uw;
             _ckEditorFileUploader = ckEditorFileUploader;
             _webForMapper = webForMapper;
             _articleCreator = articleCreator;
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            return View();
+            _articleEditor = articleEditor;
         }
 
         public async Task<IActionResult> ManageArticle()
@@ -67,39 +64,75 @@ namespace WebFor.Web.Areas.Admin.Controllers
             {
                 var model = _webForMapper.ArticleViewModelToArticle(viewModel);
 
-                int resultl = await _articleCreator.CreateNewArticle(model, viewModel.ArticleTags);
+                int result = await _articleCreator.CreateNewArticleAsync(model, viewModel.ArticleTags);
 
-                if (resultl > 0)
+                if (result > 0)
                 {
                     TempData["ViewMessage"] = "مقاله با موفقیت ثبت شد.";
 
-                    return RedirectToAction("Index", "Article");
+                    return RedirectToAction("ManageArticle", "Article");
                 }
 
                 TempData["ViewMessage"] = "مشکلی در ثبت مقاله پیش آمده، مقاله با موفقیت ثبت نشد.";
 
-                return RedirectToAction("Index", "Article");
+                return RedirectToAction("ManageArticle", "Article");
             }
 
             return View(viewModel);
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            if (id == 0)
+            {
+                //return new HttpStatusCodeResult(StatusCodes.Status400BadRequest);
+                return HttpBadRequest();
+            }
+
+            var article = await _uw.ArticleRepository.FindByIdAsync(id);
+
+            if (article == null)
+            {
+                //return new HttpStatusCodeResult(StatusCodes.Status404NotFound);
+                return HttpNotFound();
+            }
+
+            var articleViewModel = await _webForMapper.ArticleToArticleViewModelWithTagsAsync(article);
+
+            return View(articleViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Article article)
+        public async Task<IActionResult> Edit(ArticleViewModel viewModel)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var article = _webForMapper.ArticleViewModelToArticle(viewModel);
+
+                int result = await _articleEditor.EditArticleAsync(article, viewModel.ArticleTags);
+
+                if (result > 0)
+                {
+                    TempData["ViewMessage"] = "مقاله با موفقیت ویرایش شد.";
+
+                    return RedirectToAction("ManageArticle", "Article");
+                }
+
+                TempData["ViewMessage"] = "مشکلی در ویرایش مقاله پیش آمده، مقاله با موفقیت ثبت نشد.";
+
+                return RedirectToAction("ManageArticle", "Article");
+            }
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
+
             return View();
         }
 

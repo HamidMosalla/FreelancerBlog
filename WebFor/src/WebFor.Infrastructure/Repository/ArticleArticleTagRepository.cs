@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,6 +29,11 @@ namespace WebFor.Infrastructure.Repository
             throw new NotImplementedException();
         }
 
+        public void Update(ArticleArticleTag entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public ArticleArticleTag FindById(int id)
         {
             throw new NotImplementedException();
@@ -45,7 +51,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<List<ArticleArticleTag>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _context.ArticleArticleTags.ToListAsync();
         }
 
         public void AddRange(List<ArticleArticleTag> joinTableArtTagList)

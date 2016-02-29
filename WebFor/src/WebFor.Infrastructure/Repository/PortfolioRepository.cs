@@ -25,6 +25,11 @@ namespace WebFor.Infrastructure.Repository
             throw new NotImplementedException();
         }
 
+        public void Update(Portfolio entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public Portfolio FindById(int id)
         {
             throw new NotImplementedException();

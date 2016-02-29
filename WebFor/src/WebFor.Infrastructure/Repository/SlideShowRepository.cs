@@ -25,6 +25,11 @@ namespace WebFor.Infrastructure.Repository
             throw new NotImplementedException();
         }
 
+        public void Update(SlideShow entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public SlideShow FindById(int id)
         {
             throw new NotImplementedException();

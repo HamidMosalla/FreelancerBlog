@@ -74,6 +74,7 @@ namespace WebFor.Web
             containerBuilder.RegisterModule<WebForDbContextSeedDataModule>();
             containerBuilder.RegisterModule<CkEditorFileUploderModule>();
             containerBuilder.RegisterModule<ArticleCreatorModule>();
+            containerBuilder.RegisterModule<ArticleEditorModule>();
             containerBuilder.RegisterType<WebForMapper>().As<IWebForMapper>();
 
             containerBuilder.Populate(services);

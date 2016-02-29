@@ -25,6 +25,11 @@ namespace WebFor.Infrastructure.Repository
             throw new NotImplementedException();
         }
 
+        public void Update(Contact entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public Contact FindById(int id)
         {
             throw new NotImplementedException();
