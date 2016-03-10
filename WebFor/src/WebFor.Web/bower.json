@@ -13,6 +13,8 @@
     "jquery-prettyPhoto": "~3.1.6",
     "font-awesome": "4.4.0",
     "bootstrap-tagsinput": "~0.7.1",
-    "bootstrap3-typeahead": "~4.0.0"
+    "bootstrap3-typeahead": "~4.0.0",
+    "pnotify": "~3.0.0",
+    "spin.js": "2.3.2"
   }
 }

@@ -15,54 +15,92 @@ namespace WebFor.Infrastructure.Services.ArticleServices
     {
         private IUnitOfWork _uw;
         private readonly IHttpContextAccessor contextAccessor;
+        public ArticleStatus ArticleStatus { get; }
 
         public ArticleCreator(IUnitOfWork uw, IHttpContextAccessor contextAccessor)
         {
             _uw = uw;
             this.contextAccessor = contextAccessor;
         }
-        public async Task<int> CreateNewArticleAsync(Article article, string articleTags)
+
+        public async Task<List<ArticleStatus>> CreateNewArticleAsync(Article article, string articleTags)
         {
+            var ArticleStatusList = new List<ArticleStatus>();
+            int addTagsResult = 0;
+            int addTagsToArticleResult = 0;
+
             article.ArticleDateCreated = DateTime.Now;
+
             article.UserIDfk = contextAccessor.HttpContext.User.GetUserId();
 
             _uw.ArticleRepository.Add(article);
-            //TODO: need to get decomposed, don't forget your solid heritage
 
-            var preExistringTags = await _uw.ArticleTagRepository.GetAllAsync();
-            var newTags = articleTags.Split(',');
+            int addArticleResult = await _uw.SaveAsync();
 
-            var tagList = new List<ArticleTag>();
-            var joinTableArtTagList = new List<ArticleArticleTag>();
-            ArticleTag tag;
-
-            foreach (var item in newTags)
+            if (!string.IsNullOrEmpty(articleTags))
             {
-                if (preExistringTags.All(p => p.ArticleTagName != item))
-                {
-                    tag = new ArticleTag { ArticleTagName = item };
-                    tagList.Add(tag);
+                var viewModelTags = articleTags.Split(',');
 
-                    
-                }
-                else
-                {
-                    tag = preExistringTags.Single(p => p.ArticleTagName == item);
-                }
+                addTagsResult = await _uw.ArticleTagRepository.AddRangeOfTags(viewModelTags);
 
-                var joinTableArticleTag = new ArticleArticleTag
-                {
-                    Article = article,
-                    ArticleTag = tag
-                };
-                joinTableArtTagList.Add(joinTableArticleTag);
+                var tagsToAddToArticle = await _uw.ArticleTagRepository.FindByTagsName(viewModelTags);
+
+                addTagsToArticleResult = await _uw.ArticleTagRepository.AddTagRangeToArticle(tagsToAddToArticle, article);
+
+                #region Throw away code after refactoring tags related operations
+                //var preExistringTags = await _uw.ArticleTagRepository.GetAllAsync();
+                //var newTags = articleTags.Split(',');
+
+                //var tagList = new List<ArticleTag>();
+                //var joinTableArtTagList = new List<ArticleArticleTag>();
+                //ArticleTag tag;
+
+                //foreach (var item in newTags)
+                //{
+                //    if (preExistringTags.All(p => p.ArticleTagName != item))
+                //    {
+                //        tag = new ArticleTag { ArticleTagName = item };
+                //        tagList.Add(tag);
+
+
+                //    }
+                //    else
+                //    {
+                //        tag = preExistringTags.Single(p => p.ArticleTagName == item);
+                //    }
+
+                //    var joinTableArticleTag = new ArticleArticleTag
+                //    {
+                //        Article = article,
+                //        ArticleTag = tag
+                //    };
+                //    joinTableArtTagList.Add(joinTableArticleTag);
+                //}
+
+                ////await _uw.ArticleTagRepository.AddRangeOfTags(tagList); just for now, it broke the create method
+
+                //_uw.ArticleArticleTagRepository.AddRange(joinTableArtTagList);
+                #endregion
+
             }
 
-            _uw.ArticleTagRepository.AddRange(tagList);
-            await _uw.SaveAsync();
+            if (addArticleResult > 0)
+            {
+                ArticleStatusList.Add(ArticleStatus.ArticleCreateSucess);
+            }
 
-            _uw.ArticleArticleTagRepository.AddRange(joinTableArtTagList);
-            return await _uw.SaveAsync();
+            if (addTagsResult > 0)
+            {
+                ArticleStatusList.Add(ArticleStatus.ArticleTagCreateSucess);
+            }
+
+            if (addTagsToArticleResult > 0)
+            {
+                ArticleStatusList.Add(ArticleStatus.ArticleArticleTagsCreateSucess);
+            }
+
+            return ArticleStatusList;
         }
+
     }
 }

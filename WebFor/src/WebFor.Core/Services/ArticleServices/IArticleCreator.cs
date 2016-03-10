@@ -6,8 +6,8 @@ using WebFor.Core.Domain;
 
 namespace WebFor.Core.Services.ArticleServices
 {
-    public interface IArticleCreator
+    public interface IArticleCreator : IArticleStatusEnum
     {
-        Task<int> CreateNewArticleAsync(Article article, string articleTags);
+        Task<List<ArticleStatus>> CreateNewArticleAsync(Article article, string articleTags);
     }
 }

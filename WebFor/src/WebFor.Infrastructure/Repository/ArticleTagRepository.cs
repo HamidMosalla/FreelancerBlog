@@ -57,9 +57,19 @@ namespace WebFor.Infrastructure.Repository
             return _context.ArticleTags.Select(a => a.ArticleTagName).ToArrayAsync();
         }
 
-        public void AddRange(List<ArticleTag> tagList)
+        public Task<int> AddRangeOfTags(IEnumerable<string> exceptAddedTags)
         {
-            _context.ArticleTags.AddRange(tagList);
+            var listOfAllTags = _context.ArticleTags.ToList();
+
+            foreach (var item in exceptAddedTags)
+            {
+                if (listOfAllTags.All(a => a.ArticleTagName != item))
+                {
+                    _context.ArticleTags.Add(new ArticleTag { ArticleTagName = item});
+                }
+            }
+
+           return _context.SaveChangesAsync();
         }
 
         public async Task<string> GetTagsByArticleIdAsync(int articleId)
@@ -72,9 +82,9 @@ namespace WebFor.Infrastructure.Repository
             return string.Join(",", arrayOfTags);
         }
 
-        public Task<List<ArticleTag>> FindByTagsName(IEnumerable<string> exept)
+        public Task<List<ArticleTag>> FindByTagsName(IEnumerable<string> delimitedTags)
         {
-            return _context.ArticleTags.Join(exept, a => a.ArticleTagName, e => e, (a, e) => a).ToListAsync();
+            return _context.ArticleTags.Join(delimitedTags, a => a.ArticleTagName, e => e, (a, e) => a).ToListAsync();
         }
 
         public Task<int> RemoveRange(List<ArticleTag> tagsToRemove)
@@ -83,11 +93,21 @@ namespace WebFor.Infrastructure.Repository
             return _context.SaveChangesAsync();
         }
 
-        public Task<int> RemoveRangeFromArticle(List<ArticleTag> tagsToRemove, int articleId)
+        public Task<int> RemoveTagRangeFromArticle(List<ArticleTag> tagsToRemove, int articleId)
         {
             var listOfaATags = _context.ArticleArticleTags.Join(tagsToRemove, a => a.ArticleTagId, t => t.ArticleTagId, (a, t) => a).Where(c => c.ArticleId == articleId).ToList();
 
             _context.ArticleArticleTags.RemoveRange(listOfaATags);
+
+            return _context.SaveChangesAsync();
+        }
+
+        public Task<int> AddTagRangeToArticle(List<ArticleTag> tagsToAdd, Article article)
+        {
+            foreach (var item in tagsToAdd)
+            {
+                _context.ArticleArticleTags.Add(new ArticleArticleTag {Article = article, ArticleTag = item});
+            }
 
             return _context.SaveChangesAsync();
         }

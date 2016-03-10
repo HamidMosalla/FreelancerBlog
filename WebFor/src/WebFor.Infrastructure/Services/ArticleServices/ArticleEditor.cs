@@ -14,16 +14,23 @@ namespace WebFor.Infrastructure.Services.ArticleServices
     public class ArticleEditor : IArticleEditor
     {
         private IUnitOfWork _uw;
+        public ArticleStatus ArticleStatus { get; }
 
         public ArticleEditor(IUnitOfWork uw)
         {
             _uw = uw;
         }
-        public async Task<int> EditArticleAsync(Article article, string articleTags)
+
+        public async Task<List<ArticleStatus>> EditArticleAsync(Article article, string articleTags)
         {
             article.ArticleDateModified = DateTime.Now;
+            var ArticleStatusList = new List<ArticleStatus>();
+            int addTagsResult = 0;
+            int removeTagsFromArticleResult = 0;
+            int addTagsToArticleResult = 0;
+            int tagsRemovalResult = 0;
 
-            #region Refactored Article Update
+            #region Leftover code related to article update
             //current approach is probably better, one less query to the database
             //var oldArticle = await _uw.ArticleRepository.FindByIdAsync(article.ArticleId);
 
@@ -35,62 +42,93 @@ namespace WebFor.Infrastructure.Services.ArticleServices
             #endregion
 
             int updateArticleResult = await _uw.ArticleRepository.UpdateArticleAsync(article);
-            //TODO: need to get decomposed, don't forget your solid heritage
-            
+
             var currentArticleTags = await _uw.ArticleRepository.GetCurrentArticleTagsAsync(article.ArticleId);
 
             if (!string.IsNullOrEmpty(articleTags))
             {
                 var viewModelTags = articleTags.Split(',');
 
-                var exept = currentArticleTags.Select(c => c.ArticleTagName).Except(viewModelTags);
+                var exceptRemovedTags = currentArticleTags.Select(c => c.ArticleTagName).Except(viewModelTags);
 
-                var tagsToRemoveFromArticle = await _uw.ArticleTagRepository.FindByTagsName(exept);
+                var exceptAddedTags = viewModelTags.Except(currentArticleTags.Select(c => c.ArticleTagName));
 
-                int tagsRemovalResult = await _uw.ArticleTagRepository.RemoveRangeFromArticle(tagsToRemoveFromArticle, article.ArticleId);
+                var tagsToRemoveFromArticle = await _uw.ArticleTagRepository.FindByTagsName(exceptRemovedTags);
 
-                var preExistingTags = await _uw.ArticleTagRepository.GetAllAsync();
+                addTagsResult = await _uw.ArticleTagRepository.AddRangeOfTags(exceptAddedTags);
 
-                var tagList = new List<ArticleTag>();
-                var joinTableArtTagList = new List<ArticleArticleTag>();
-                ArticleTag tag;
+                var tagsToAddToArticle = await _uw.ArticleTagRepository.FindByTagsName(exceptAddedTags);
 
-                foreach (var item in viewModelTags)
-                {
-                    if (preExistingTags.All(p => p.ArticleTagName != item))
-                    {
-                        tag = new ArticleTag { ArticleTagName = item };
-                        tagList.Add(tag);
-                    }
-                    else
-                    {
-                        tag = preExistingTags.Single(p => p.ArticleTagName == item);
-                    }
+                removeTagsFromArticleResult = await _uw.ArticleTagRepository.RemoveTagRangeFromArticle(tagsToRemoveFromArticle, article.ArticleId);
 
-                    if (currentArticleTags.All(c => c.ArticleTagId != tag.ArticleTagId))
-                    {
-                        var joinTableArticleTag = new ArticleArticleTag
-                        {
-                            Article = article,
-                            ArticleTag = tag
-                        };
-                        joinTableArtTagList.Add(joinTableArticleTag);
-                    }
+                addTagsToArticleResult = await _uw.ArticleTagRepository.AddTagRangeToArticle(tagsToAddToArticle, article);
 
-                }
+                #region Throw away code after refactoring tags related operations
+                //var preExistingTags = await _uw.ArticleTagRepository.GetAllAsync();
 
-                _uw.ArticleTagRepository.AddRange(tagList);
-                await _uw.SaveAsync();
+                //var tagList = new List<ArticleTag>();
+                //var joinTableArtTagList = new List<ArticleArticleTag>();
+                //ArticleTag tag;
 
-                _uw.ArticleArticleTagRepository.AddRange(joinTableArtTagList);
-                await _uw.SaveAsync();
+                //foreach (var item in viewModelTags)
+                //{
+                //    if (preExistingTags.All(p => p.ArticleTagName != item))
+                //    {
+                //        tag = new ArticleTag { ArticleTagName = item };
+                //        tagList.Add(tag);
+                //    }
+                //    else
+                //    {
+                //        tag = preExistingTags.Single(p => p.ArticleTagName == item);
+                //    }
+
+                //    if (currentArticleTags.All(c => c.ArticleTagId != tag.ArticleTagId))
+                //    {
+                //        var joinTableArticleTag = new ArticleArticleTag
+                //        {
+                //            Article = article,
+                //            ArticleTag = tag
+                //        };
+                //        joinTableArtTagList.Add(joinTableArticleTag);
+                //    }
+
+                //}
+
+                //_uw.ArticleTagRepository.AddRange(tagList);
+                //await _uw.SaveAsync();
+
+                //_uw.ArticleArticleTagRepository.AddRange(joinTableArtTagList);
+                //await _uw.SaveAsync();
+                #endregion
+
             }
             else
             {
-                int tagsRemovalResult = await _uw.ArticleTagRepository.RemoveRangeFromArticle(currentArticleTags, article.ArticleId);
+                tagsRemovalResult = await _uw.ArticleTagRepository.RemoveTagRangeFromArticle(currentArticleTags, article.ArticleId);
             }
 
-            return updateArticleResult;
+            if (updateArticleResult > 0)
+            {
+                ArticleStatusList.Add(ArticleStatus.ArticleEditSucess);
+            }
+
+            if (addTagsResult > 0)
+            {
+                ArticleStatusList.Add(ArticleStatus.ArticleTagCreateSucess);
+            }
+
+            if (removeTagsFromArticleResult > 0 || tagsRemovalResult > 0)
+            {
+                ArticleStatusList.Add(ArticleStatus.ArticleRemoveTagsFromArticleSucess);
+            }
+
+            if (addTagsToArticleResult > 0)
+            {
+                ArticleStatusList.Add(ArticleStatus.ArticleArticleTagsCreateSucess);
+            }
+
+            return ArticleStatusList;
         }
+
     }
 }

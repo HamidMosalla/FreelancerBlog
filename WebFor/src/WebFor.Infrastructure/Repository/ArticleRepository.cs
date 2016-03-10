@@ -28,6 +28,12 @@ namespace WebFor.Infrastructure.Repository
             _context.Articles.Remove(entity);
         }
 
+        public Task<int> DeleteArticleAsync(Article article)
+        {
+            _context.Articles.Remove(article);
+            return _context.SaveChangesAsync();
+        }
+
         public void Update(Article entity)
         {
             throw new NotImplementedException();
