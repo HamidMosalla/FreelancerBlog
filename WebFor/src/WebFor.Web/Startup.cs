@@ -14,11 +14,13 @@ using WebFor.Infrastructure.EntityFramework;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using cloudscribe.Web.Pagination;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Routing;
 using WebFor.DependencyInjection.Modules;
 using WebFor.DependencyInjection.Modules.Article;
 using WebFor.Web.Services;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace WebFor.Web
 {
@@ -65,6 +67,7 @@ namespace WebFor.Web
             });
 
             services.AddTransient<IUrlHelper, UrlHelper>();
+            services.TryAddTransient<IBuildPaginationLinks, PaginationLinkBuilder>();
 
             // Autofac container configuration and modules
             var containerBuilder = new ContainerBuilder();

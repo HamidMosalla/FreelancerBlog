@@ -46,6 +46,7 @@ namespace WebFor.Web.Services
             var articleViewModel = Mapper.Map<Article, ArticleViewModel>(article);
 
             articleViewModel.ArticleTags = await _uw.ArticleTagRepository.GetTagsByArticleIdAsync(article.ArticleId);
+            articleViewModel.ArticleTagsList = await _uw.ArticleRepository.GetCurrentArticleTagsAsync(article.ArticleId);
 
             return articleViewModel;
         }

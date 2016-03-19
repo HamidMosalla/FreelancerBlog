@@ -30,6 +30,7 @@ namespace WebFor.Infrastructure.Services.ArticleServices
             int addTagsToArticleResult = 0;
 
             article.ArticleDateCreated = DateTime.Now;
+            article.ArticleViewCount = 1;
 
             article.UserIDfk = contextAccessor.HttpContext.User.GetUserId();
 

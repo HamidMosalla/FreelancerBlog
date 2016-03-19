@@ -14,7 +14,7 @@ using WebFor.Core.Domain;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.ArticleServices;
 using WebFor.Core.Services.Shared;
-
+using cloudscribe.Web.Pagination;
 
 namespace WebFor.Web.Areas.Admin.Controllers
 {
@@ -36,13 +36,18 @@ namespace WebFor.Web.Areas.Admin.Controllers
             _articleEditor = articleEditor;
         }
 
-        public async Task<IActionResult> ManageArticle()
+
+        public async Task<IActionResult> ManageArticle(int? page)
         {
             var articles = await _uw.ArticleRepository.GetAllAsync();
 
             var articlesViewModel = _webForMapper.ArticleCollectionToArticleViewModelCollection(articles);
 
-            return View(articlesViewModel);
+            var pageNumber = page ?? 1;
+
+            var pagedArticle = articlesViewModel.ToPagedList(pageNumber - 1, 2);
+
+            return View(pagedArticle);
         }
 
         [HttpGet]

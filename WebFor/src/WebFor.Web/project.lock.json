@@ -52,6 +52,25 @@
           "lib/net45/AutoMapper.dll": {}
         }
       },
+      "cloudscribe.Web.Pagination/1.0.1-beta1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/cloudscribe.Web.Pagination.dll": {}
+        },
+        "runtime": {
+          "lib/net451/cloudscribe.Web.Pagination.dll": {}
+        }
+      },
       "EntityFramework.Commands/7.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -2242,6 +2261,25 @@
         },
         "runtime": {
           "lib/dotnet5.1/AutoMapper.dll": {}
+        }
+      },
+      "cloudscribe.Web.Pagination/1.0.1-beta1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
+          "Microsoft.CSharp": "4.0.1-beta-23516",
+          "System.Collections": "4.0.11-beta-23516",
+          "System.Linq": "4.0.1-beta-23516",
+          "System.Linq.Queryable": "4.0.1-beta-23516",
+          "System.Runtime": "4.0.21-beta-23516",
+          "System.Threading": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dnxcore50/cloudscribe.Web.Pagination.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/cloudscribe.Web.Pagination.dll": {}
         }
       },
       "EntityFramework.Commands/7.0.0-rc1-final": {
@@ -5086,6 +5124,25 @@
           "lib/net45/AutoMapper.dll": {}
         }
       },
+      "cloudscribe.Web.Pagination/1.0.1-beta1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/cloudscribe.Web.Pagination.dll": {}
+        },
+        "runtime": {
+          "lib/net451/cloudscribe.Web.Pagination.dll": {}
+        }
+      },
       "EntityFramework.Commands/7.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -7254,6 +7311,25 @@
         },
         "runtime": {
           "lib/net45/AutoMapper.dll": {}
+        }
+      },
+      "cloudscribe.Web.Pagination/1.0.1-beta1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/cloudscribe.Web.Pagination.dll": {}
+        },
+        "runtime": {
+          "lib/net451/cloudscribe.Web.Pagination.dll": {}
         }
       },
       "EntityFramework.Commands/7.0.0-rc1-final": {
@@ -9449,6 +9525,25 @@
         },
         "runtime": {
           "lib/dotnet5.1/AutoMapper.dll": {}
+        }
+      },
+      "cloudscribe.Web.Pagination/1.0.1-beta1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
+          "Microsoft.CSharp": "4.0.1-beta-23516",
+          "System.Collections": "4.0.11-beta-23516",
+          "System.Linq": "4.0.1-beta-23516",
+          "System.Linq.Queryable": "4.0.1-beta-23516",
+          "System.Runtime": "4.0.21-beta-23516",
+          "System.Threading": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dnxcore50/cloudscribe.Web.Pagination.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/cloudscribe.Web.Pagination.dll": {}
         }
       },
       "EntityFramework.Commands/7.0.0-rc1-final": {
@@ -12825,6 +12920,25 @@
           "lib/dotnet5.1/AutoMapper.dll": {}
         }
       },
+      "cloudscribe.Web.Pagination/1.0.1-beta1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.TagHelpers": "6.0.0-rc1-final",
+          "Microsoft.CSharp": "4.0.1-beta-23516",
+          "System.Collections": "4.0.11-beta-23516",
+          "System.Linq": "4.0.1-beta-23516",
+          "System.Linq.Queryable": "4.0.1-beta-23516",
+          "System.Runtime": "4.0.21-beta-23516",
+          "System.Threading": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dnxcore50/cloudscribe.Web.Pagination.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/cloudscribe.Web.Pagination.dll": {}
+        }
+      },
       "EntityFramework.Commands/7.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -16183,6 +16297,19 @@
         "lib/net45/AutoMapper.xml",
         "lib/portable-net45+win+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10/AutoMapper.dll",
         "lib/portable-net45+win+wpa81+MonoAndroid10+Xamarin.iOS10+MonoTouch10/AutoMapper.xml"
+      ]
+    },
+    "cloudscribe.Web.Pagination/1.0.1-beta1": {
+      "type": "package",
+      "sha512": "ZgXcNTVZ7JdqxvBinrRivEXiHLTnXniv/fDxjzsTZYLed8rb1suMYp+lBRrVl+TB9mMJ4mFd1AvmeISwayqw0A==",
+      "files": [
+        "cloudscribe.Web.Pagination.1.0.1-beta1.nupkg",
+        "cloudscribe.Web.Pagination.1.0.1-beta1.nupkg.sha512",
+        "cloudscribe.Web.Pagination.nuspec",
+        "lib/dnxcore50/cloudscribe.Web.Pagination.dll",
+        "lib/dnxcore50/cloudscribe.Web.Pagination.xml",
+        "lib/net451/cloudscribe.Web.Pagination.dll",
+        "lib/net451/cloudscribe.Web.Pagination.xml"
       ]
     },
     "EntityFramework.Commands/7.0.0-rc1-final": {
@@ -22095,7 +22222,8 @@
       "WebFor.Core >= 1.0.0-*",
       "WebFor.Infrastructure >= 1.0.0-*",
       "WebFor.DependencyInjection >= 1.0.0-*",
-      "AutoMapper >= 4.2.0"
+      "AutoMapper >= 4.2.0",
+      "cloudscribe.Web.Pagination >= 1.0.1-beta1"
     ],
     "DNX,Version=v4.5.1": [],
     "DNXCore,Version=v5.0": []

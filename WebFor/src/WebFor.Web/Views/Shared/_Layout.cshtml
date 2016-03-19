@@ -13,7 +13,6 @@
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link href="~/lib/bootstrap/dist/css/bootstrap-rtl.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/css/site.css" />
         <link href="~/lib/animate.css/animate.css" rel="stylesheet" />
         <link href="~/css/main.css" rel="stylesheet" />
         <link href="~/lib/jquery-prettyphoto/css/prettyphoto.css" rel="stylesheet" />
@@ -24,7 +23,6 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link href="~/lib/bootstrap/dist/css/bootstrap-rtl.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         <link href="~/lib/animate.css/animate.min.css" rel="stylesheet" />
 
         <link href="~/css/main.css" rel="stylesheet" />
@@ -99,11 +97,14 @@
     </header>
     <!--/header-->
 
-    <section id="BodyContent">
-        <div class="container body-content">
-            @RenderBody()
-        </div>
-    </section>
+@*<section id="BodyContent">
+    
+    <div class="container body-content">
+
+    </div>
+</section>*@
+
+    @RenderBody()
 
     <section id="bottom" class="wet-asphalt">
         <div class="container">

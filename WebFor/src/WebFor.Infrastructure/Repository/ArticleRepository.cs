@@ -59,6 +59,15 @@ namespace WebFor.Infrastructure.Repository
             return _context.ArticleArticleTags.Where(a => a.ArticleId == articleId).Join(_context.ArticleTags.ToList(), aat => aat.ArticleTagId, at => at.ArticleTagId, (aat, at) => at).ToListAsync();
         }
 
+        public async Task<int> IncreaseArticleViewCount(int articleId)
+        {
+            var article = await _context.Articles.SingleAsync(a => a.ArticleId == articleId);
+
+            article.ArticleViewCount += 1;
+
+            return await _context.SaveChangesAsync();
+        }
+
         public Article FindById(int id)
         {
             return _context.Articles.Single(a => a.ArticleId == id);
@@ -66,17 +75,17 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<Article> FindByIdAsync(int id)
         {
-            return _context.Articles.SingleAsync(a => a.ArticleId == id);
+            return _context.Articles.Include(a => a.ApplicationUser).SingleAsync(a => a.ArticleId == id);
         }
 
         public IEnumerable<Article> GetAll()
         {
-            return _context.Articles.ToList();
+            return _context.Articles.Include(a => a.ApplicationUser).ToList();
         }
 
         public Task<List<Article>> GetAllAsync()
         {
-            return _context.Articles.ToListAsync();
+            return _context.Articles.Include(a => a.ApplicationUser).ToListAsync();
         }
     }
 }

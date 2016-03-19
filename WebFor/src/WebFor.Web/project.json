@@ -31,7 +31,8 @@
     "WebFor.Core": "1.0.0-*",
     "WebFor.Infrastructure": "1.0.0-*",
     "WebFor.DependencyInjection": "1.0.0-*",
-    "AutoMapper": "4.2.0"
+    "AutoMapper": "4.2.0",
+    "cloudscribe.Web.Pagination": "1.0.1-beta1"
   },
 
   "commands": {

@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WebFor.Web.Areas.Admin.ViewModels.Article.ArticleViewModel>
+﻿@using System.Threading.Tasks
+@using cloudscribe.Web.Pagination
+@model cloudscribe.Web.Pagination.IPagedList<WebFor.Web.Areas.Admin.ViewModels.Article.ArticleViewModel>
 
 @{
     ViewData["Title"] = "مدیریت مقاله";
@@ -56,19 +58,19 @@
     <tr>
 
         <th>
-            @Html.DisplayNameFor(model => model.ArticleTitle)
+            @Html.DisplayNameFor(model => model.Single().ArticleTitle)
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.ArticleStatus)
+            @Html.DisplayNameFor(model => model.Single().ArticleStatus)
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.ArticleDateCreated)
+            @Html.DisplayNameFor(model => model.Single().ArticleDateCreated)
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.ArticleDateModified)
+            @Html.DisplayNameFor(model => model.Single().ArticleDateModified)
         </th>
 
         <th></th>
@@ -102,6 +104,18 @@
         </tr>
     }
 </table>
+
+<div class="text-center">
+    <cs-pager cs-paging-pagesize="@Model.PageSize"
+              cs-paging-pagenumber="@Model.PageNumber"
+              cs-paging-totalitems="@Model.TotalItemCount"
+              cs-pagenumber-param="page"
+              asp-controller="Article"
+              asp-action="ManageArticle">
+
+    </cs-pager>
+</div>
+
 @section scripts{
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
     <script src="~/js/webforscripts/admin.managearticle.js"></script>

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using WebFor.Core.Domain;
 
 namespace WebFor.Web.Areas.Admin.ViewModels.Article
 {
@@ -37,11 +39,15 @@ namespace WebFor.Web.Areas.Admin.ViewModels.Article
         [Display(Name = "وضعیت مقاله")]
         public string ArticleStatus { get; set; }
 
+        public Int64? ArticleViewCount { get; set; }
+
 
         [Display(Name = "برچسب های مقاله")]
         public string ArticleTags { get; set; }
 
+        public List<ArticleTag> ArticleTagsList { get; set; }
 
+        public virtual ApplicationUser ApplicationUser { get; set; }
         public string UserIDfk { get; set; }
     }
 }
