@@ -7,6 +7,7 @@ using Microsoft.AspNet.Mvc;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.ArticleServices;
 using WebFor.Web.Services;
+using System.Security.Claims;
 
 namespace WebFor.Web.Controllers
 {
@@ -56,6 +57,39 @@ namespace WebFor.Web.Controllers
             var articleViewModel = await _webForMapper.ArticleToArticleViewModelWithTagsAsync(article);
 
             return View(articleViewModel);
+        }
+
+        public async Task<JsonResult> RateArticle(int id, double rating)
+        {
+            var userId = User.GetUserId();
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Json(new { Status = "YouMustLogin" });
+            }
+
+            if (_uw.ArticleRatingRepository.IsRatedBefore(id, userId))
+            {
+                int updateRatingResult = await _uw.ArticleRatingRepository.UpdateArticleRating(id, rating, userId);
+
+                if (updateRatingResult > 0)
+                {
+                    return Json(new { Status = "UpdatedSuccessfully" });
+                }
+
+                return Json(new { Status = "SomeProblemWithSubmit" });
+            }
+
+            int addRatingResult = await _uw.ArticleRatingRepository.AddRatingForArticle(id, rating, userId);
+
+            if (addRatingResult > 0)
+            {
+                return Json(new { Status = "Success" });
+
+            }
+
+            return Json(new { Status = "SomeProblemWithSubmit" });
+
         }
     }
 }

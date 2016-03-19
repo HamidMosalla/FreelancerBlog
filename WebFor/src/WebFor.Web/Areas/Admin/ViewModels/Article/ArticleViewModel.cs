@@ -47,6 +47,12 @@ namespace WebFor.Web.Areas.Admin.ViewModels.Article
 
         public List<ArticleTag> ArticleTagsList { get; set; }
 
+        public double SumOfRating { get; set; }
+
+        public int NumberOfVoters { get; set; }
+
+        public ArticleRating CurrentUserRating { get; set; }
+
         public virtual ApplicationUser ApplicationUser { get; set; }
         public string UserIDfk { get; set; }
     }

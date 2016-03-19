@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNet.Http;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.Shared;
 using WebFor.Web.Areas.Admin.ViewModels.Article;
+using System.Security.Claims;
 
 namespace WebFor.Web.Services
 {
@@ -20,10 +22,12 @@ namespace WebFor.Web.Services
     {
 
         private IUnitOfWork _uw;
+        private readonly IHttpContextAccessor contextAccessor;
 
-        public WebForMapper(IUnitOfWork uw)
+        public WebForMapper(IUnitOfWork uw, IHttpContextAccessor contextAccessor)
         {
             _uw = uw;
+            this.contextAccessor = contextAccessor;
         }
 
         static readonly MapperConfiguration _autoMapperConfig = new MapperConfiguration(cfg =>
@@ -47,6 +51,9 @@ namespace WebFor.Web.Services
 
             articleViewModel.ArticleTags = await _uw.ArticleTagRepository.GetTagsByArticleIdAsync(article.ArticleId);
             articleViewModel.ArticleTagsList = await _uw.ArticleRepository.GetCurrentArticleTagsAsync(article.ArticleId);
+            articleViewModel.SumOfRating = _uw.ArticleRatingRepository.CalculateArticleRating(article.ArticleId);
+            articleViewModel.CurrentUserRating = await _uw.ArticleRatingRepository.GetCurrentUserRating(article.ArticleId, contextAccessor.HttpContext.User.GetUserId());
+            articleViewModel.NumberOfVoters = await _uw.ArticleRatingRepository.GetNumberOfVoters(article.ArticleId);
 
             return articleViewModel;
         }

@@ -32,7 +32,8 @@
     "WebFor.Infrastructure": "1.0.0-*",
     "WebFor.DependencyInjection": "1.0.0-*",
     "AutoMapper": "4.2.0",
-    "cloudscribe.Web.Pagination": "1.0.1-beta1"
+    "cloudscribe.Web.Pagination": "1.0.1-beta1",
+    "Microsoft.AspNet.Identity": "3.0.0-rc1-final"
   },
 
   "commands": {

@@ -3,7 +3,7 @@
     public class ArticleRating
     {
         public int ArticleRatingId { get; set; }
-        public int ArticleRatingScore { get; set; }
+        public double ArticleRatingScore { get; set; }
 
         //[ForeignKey("UserIDfk")]   
         public virtual ApplicationUser ApplicationUser { get; set; }

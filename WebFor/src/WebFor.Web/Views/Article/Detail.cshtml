@@ -12,6 +12,8 @@
     <link href="~/lib/pnotify/dist/pnotify.custom.min.css" rel="stylesheet" />
 }
 
+@Html.HiddenFor(model => model.ArticleId)
+
 <div class="blog">
     <div class="blog-item">
         @*<img width="100%" alt="" src="images/blog/blog2.jpg" class="img-responsive img-blog">*@
@@ -22,7 +24,12 @@
             <div class="entry-meta">
                 <span><i class="fa fa-user"></i> <a href="#">&nbsp;@Model.ApplicationUser.UserFullName</a></span>
                 <span><i class="fa fa-line-chart"></i> <a href="#">&nbsp;@(Model.ArticleViewCount ?? 0)</a></span>
-                <span><i class="fa fa-star"></i> &nbsp; 9/10</span>
+
+                @if (Model.SumOfRating.ToString() != "NaN")
+                {
+                    <span><i class="fa fa-star"></i> &nbsp; @Model.SumOfRating/10</span>
+                }
+
                 <span><i class="fa fa-calendar"></i>&nbsp;<span class="ArticleDateCreated">@Model.ArticleDateCreated.ToShortDateString()</span></span>
                 <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">&nbsp; نظرات 3</a></span>
             </div>
@@ -33,22 +40,35 @@
 
             <hr>
 
-            @if (Model.ArticleTagsList.Count != 0)
-            {
-                <div class="tags">
-                    <i class="fa fa-tags"></i> برچسب ها:
-                    @foreach (var item in Model.ArticleTagsList)
-                    {
-                        <a href="#" class="btn btn-xs btn-primary">@item.ArticleTagName</a>
-                    }
-                </div>
+            <div id="articleRatingContainer">
 
-                <br />
-            }
+                @if (Model.ArticleTagsList.Count != 0)
+                {
+                    <div class="tags">
+                        <i class="fa fa-tags fa-2x"></i> برچسب ها:
+                        @foreach (var item in Model.ArticleTagsList)
+                        {
+                            <a href="#" class="btn btn-xs btn-primary">@item.ArticleTagName</a>
+                        }
+                    </div>
 
+                    <br />
+                }
 
-            <label for="ArticleRating" class="control-label"><i class="fa fa-star"></i> امتیاز مقاله: </label>
-            <input type="hidden" id="ArticleRating" data-filled="fa fa-star fa-2x" data-empty="fa fa-star-o fa-2x" data-start="0" data-stop="10" data-step=".5" data-fractions="2" />
+                @if (Model.SumOfRating.ToString() != "NaN")
+                {
+                    <label for="ArticleRating" class="control-label"><i class="fa fa-star fa-2x"></i> امتیاز مقاله: </label>
+                    <span  style="padding-left: 20px;">&nbsp; @Model.SumOfRating/10 </span>
+                    <span style="padding-left: 20px;"><i class="fa fa-users fa-2x"></i> تعداد رای ها:  @Model.NumberOfVoters </span>
+                }
+
+                <label for="ArticleRating" class="control-label"> @(Model.CurrentUserRating == null ? "امتیاز بدهید: " : "امتیاز شما: ") </label>
+                <input type="hidden" id="ArticleRating" data-filled="fa fa-star fa-2x" data-empty="fa fa-star-o fa-2x" data-start="0" data-stop="10" data-step=".5" data-fractions="2" value="@(Model.CurrentUserRating?.ArticleRatingScore ?? 0)" />
+
+                
+
+            </div>
+
             <hr>
 
             <div class="author well">
@@ -151,6 +171,7 @@
     <script src="~/lib/bootstrap-rating/bootstrap-rating.min.js"></script>
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
     <script src="~/lib/spin.js/spin.min.js"></script>
+    <script src="~/lib/jquery.blockui/jquery.blockui.js"></script>
     <script src="~/js/utilities/spin.partofpage.js"></script>
     <script src="~/js/webforscripts/article.detail.js"></script>
 
