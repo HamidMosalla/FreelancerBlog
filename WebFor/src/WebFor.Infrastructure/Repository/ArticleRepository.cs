@@ -70,22 +70,22 @@ namespace WebFor.Infrastructure.Repository
 
         public Article FindById(int id)
         {
-            return _context.Articles.Single(a => a.ArticleId == id);
+            return _context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleRatings).Include(a => a.ArticleComments).Single(a => a.ArticleId == id);
         }
 
         public Task<Article> FindByIdAsync(int id)
         {
-            return _context.Articles.Include(a => a.ApplicationUser).SingleAsync(a => a.ArticleId == id);
+            return _context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleRatings).Include(a => a.ArticleComments).SingleAsync(a => a.ArticleId == id);
         }
 
         public IEnumerable<Article> GetAll()
         {
-            return _context.Articles.Include(a => a.ApplicationUser).ToList();
+            return _context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleRatings).Include(a => a.ArticleComments).ToList();
         }
 
         public Task<List<Article>> GetAllAsync()
         {
-            return _context.Articles.Include(a => a.ApplicationUser).ToListAsync();
+            return _context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleRatings).Include(a => a.ArticleComments).ToListAsync();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿@using System.Threading.Tasks
 @using cloudscribe.Web.Pagination
+@using WebFor.Core.Domain
 @model cloudscribe.Web.Pagination.IPagedList<WebFor.Web.Areas.Admin.ViewModels.Article.ArticleViewModel>
 
 @{
@@ -23,9 +24,14 @@
                 <div class="entry-meta">
                     <span><i class="fa fa-user"></i> <a href="#">&nbsp;@item.ApplicationUser.UserFullName</a></span>
                     <span><i class="fa fa-line-chart"></i> <a href="#">&nbsp;@(item.ArticleViewCount ?? 0)</a></span>
-                    <span><i class="fa fa-star"></i> &nbsp; 9/10</span>
+
+                    @if (item.ArticleRatings.Count != 0)
+                    {
+                        <span><i class="fa fa-star"></i> &nbsp; @(item.ArticleRatings.Sum(a => a.ArticleRatingScore) / item.ArticleRatings.Count)/10</span>
+                    }
+
                     <span><i class="fa fa-calendar"></i>&nbsp;<span class="ArticleDateCreated">@item.ArticleDateCreated.ToShortDateString()</span></span>
-                    <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">&nbsp; نظرات 3</a></span>
+                    <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">&nbsp; نظرات @item.ArticleComments.Count</a></span>
                 </div>
                 <p>@item.ArticleSummary</p>
                 <a class="btn btn-default" href="/Article/Detail/@item.ArticleId/@item.ArticleTitle.Replace(' ', '-')">خواندن ادامه <i class="fa fa-angle-left"></i></a>

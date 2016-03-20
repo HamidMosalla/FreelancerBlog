@@ -49,5 +49,12 @@ namespace WebFor.Infrastructure.Repository
         {
             throw new NotImplementedException();
         }
+
+        public Task<int> AddCommentToArticle(ArticleComment articleComment)
+        {
+            _context.ArticleComments.Add(articleComment);
+
+            return _context.SaveChangesAsync();
+        }
     }
 }

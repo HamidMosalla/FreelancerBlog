@@ -47,9 +47,11 @@ namespace WebFor.Web.Areas.Admin.ViewModels.Article
 
         public List<ArticleTag> ArticleTagsList { get; set; }
 
-        public double SumOfRating { get; set; }
+        public ICollection<ArticleRating> ArticleRatings { get; set; }
 
-        public int NumberOfVoters { get; set; }
+        public ICollection<ArticleComment> ArticleComments { get; set; }
+
+        public double SumOfRating { get; set; }
 
         public ArticleRating CurrentUserRating { get; set; }
 

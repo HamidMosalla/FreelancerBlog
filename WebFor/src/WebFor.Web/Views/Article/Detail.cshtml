@@ -1,5 +1,5 @@
-﻿@using System.Threading.Tasks
-@using cloudscribe.Web.Pagination
+﻿@using System.Security.Claims
+@using System.Threading.Tasks
 @model WebFor.Web.Areas.Admin.ViewModels.Article.ArticleViewModel
 
 @{
@@ -25,13 +25,13 @@
                 <span><i class="fa fa-user"></i> <a href="#">&nbsp;@Model.ApplicationUser.UserFullName</a></span>
                 <span><i class="fa fa-line-chart"></i> <a href="#">&nbsp;@(Model.ArticleViewCount ?? 0)</a></span>
 
-                @if (Model.SumOfRating.ToString() != "NaN")
+                @if (Model.ArticleRatings.Count != 0)
                 {
                     <span><i class="fa fa-star"></i> &nbsp; @Model.SumOfRating/10</span>
                 }
 
                 <span><i class="fa fa-calendar"></i>&nbsp;<span class="ArticleDateCreated">@Model.ArticleDateCreated.ToShortDateString()</span></span>
-                <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">&nbsp; نظرات 3</a></span>
+                <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">&nbsp; نظرات @Model.ArticleComments.Count</a></span>
             </div>
 
             <div>
@@ -55,17 +55,17 @@
                     <br />
                 }
 
-                @if (Model.SumOfRating.ToString() != "NaN")
+                @if (Model.ArticleRatings.Count != 0)
                 {
                     <label for="ArticleRating" class="control-label"><i class="fa fa-star fa-2x"></i> امتیاز مقاله: </label>
-                    <span  style="padding-left: 20px;">&nbsp; @Model.SumOfRating/10 </span>
-                    <span style="padding-left: 20px;"><i class="fa fa-users fa-2x"></i> تعداد رای ها:  @Model.NumberOfVoters </span>
+                    <span style="padding-left: 20px;">&nbsp; @Model.SumOfRating/10 </span>
+                    <span style="padding-left: 20px;"><i class="fa fa-users fa-2x"></i> تعداد رای ها:  @Model.ArticleRatings.Count </span>
                 }
 
                 <label for="ArticleRating" class="control-label"> @(Model.CurrentUserRating == null ? "امتیاز بدهید: " : "امتیاز شما: ") </label>
                 <input type="hidden" id="ArticleRating" data-filled="fa fa-star fa-2x" data-empty="fa fa-star-o fa-2x" data-start="0" data-stop="10" data-step=".5" data-fractions="2" value="@(Model.CurrentUserRating?.ArticleRatingScore ?? 0)" />
 
-                
+
 
             </div>
 
@@ -91,71 +91,109 @@
 
 
                 <div id="comments-list">
-                    <h3>3 نظر</h3>
-                    <div class="media">
-                        <div class="pull-left">
-                            <img alt="" src="~/images/blog/avatar1.png" class="avatar img-circle">
-                        </div>
-                        <div class="media-body">
-                            <div class="well">
-                                <div class="media-heading">
-                                    <strong>خالی بند فاضلی</strong>&nbsp; <small><span class="ArticleDateCreated">@Model.ArticleDateCreated.ToShortDateString()</span></small>
-                                    <a href="#" class="pull-left"><i class="fa fa-repeat"></i> پاسخ</a>
-                                </div>
-                                <p>متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت. </p>
+                    <h3>@Model.ArticleComments.Count نظر</h3>
+
+                    @*<div class="media">
+                            <div class="pull-left">
+                                <img alt="" src="~/images/blog/avatar1.png" class="avatar img-circle">
                             </div>
-                            <div class="media">
-                                <div class="pull-left">
-                                    <img alt="" src="~/images/blog/avatar3.png" class="avatar img-circle">
-                                </div>
-                                <div class="media-body">
-                                    <div class="well">
-                                        <div class="media-heading">
-                                            <strong>سام وان الس</strong>&nbsp; <small><span class="ArticleDateCreated">@Model.ArticleDateCreated.ToShortDateString()</span></small>
-                                            <a href="#" class="pull-left"><i class="fa fa-repeat"></i> پاسخ</a>
-                                        </div>
-                                        <p>متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.</p>
+                            <div class="media-body">
+                                <div class="well">
+                                    <div class="media-heading">
+                                        <strong>خالی بند فاضلی</strong>&nbsp; <small><span class="ArticleDateCreated">@Model.ArticleDateCreated.ToShortDateString()</span></small>
+                                        <a href="#" class="pull-left"><i class="fa fa-repeat"></i> پاسخ</a>
                                     </div>
+                                    <p>متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت. </p>
                                 </div>
-                            </div><!--/.media-->
-                        </div>
-                    </div><!--/.media-->
-                    <div class="media">
-                        <div class="pull-left">
-                            <img alt="" src="~/images/blog/avatar2.png" class="avatar img-circle">
-                        </div>
-                        <div class="media-body">
-                            <div class="well">
-                                <div class="media-heading">
-                                    <strong>خود خودش</strong>&nbsp; <small><span class="ArticleDateCreated">@Model.ArticleDateCreated.ToShortDateString()</span></small>
-                                    <a href="#" class="pull-left"><i class="fa fa-repeat"></i> پاسخ</a>
-                                </div>
-                                <p>متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.</p>
+
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <img alt="" src="~/images/blog/avatar3.png" class="avatar img-circle">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="well">
+                                            <div class="media-heading">
+                                                <strong>سام وان الس</strong>&nbsp; <small><span class="ArticleDateCreated">@Model.ArticleDateCreated.ToShortDateString()</span></small>
+                                                <a href="#" class="pull-left"><i class="fa fa-repeat"></i> پاسخ</a>
+                                            </div>
+                                            <p>متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.</p>
+                                        </div>
+                                    </div>
+                                </div><!--/.media-->
+
+
+
                             </div>
-                        </div>
-                    </div><!--/.media-->
+                        </div><!--/.media-->*@
+
+                    @foreach (var comment in Model.ArticleComments)
+                    {
+                        <div class="media">
+                            <div class="pull-left">
+                                <img alt="" src="@comment.ArticleCommentGravatar" class="avatar img-circle">
+                            </div>
+                            <div class="media-body">
+                                <div class="well">
+
+                                    <div class="media-heading">
+                                        
+                                        <strong>@comment.ArticleCommentName</strong>&nbsp;
+                                        <small><i class="fa fa-calendar"></i>&nbsp; <span class="ArticleDateCreated"> @comment.ArticleCommentDateCreated.ToShortDateString()</span></small>
+                                        <a href="#" class="pull-left replyButton" data-parent-id="@comment.ArticleCommentId" data-commentor-name="@comment.ArticleCommentName"><i class="fa fa-repeat"></i> پاسخ</a>
+
+                                    </div>
+
+                                    <div style="max-width: 540px; -ms-word-wrap: break-word; word-wrap: break-word; white-space: pre-wrap;"  class="text-justify">
+                                        <p>@comment.ArticleCommentBody</p>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+                        </div><!--/.media-->
+                    }
+
+
                 </div><!--/#comments-list-->
 
 
 
 
                 <div id="comment-form">
-                    <h3>نظر خود را ثبت کنید</h3>
-                    <form role="form" class="form-horizontal">
+                    <h3 id="commentHeader">نظر خود را ثبت کنید</h3>
+                    <form role="form" id="commentForm" class="form-horizontal">
+
+                        <input type="hidden" name="ArticleIDfk" value="@Model.ArticleId" />
+                        <input type="hidden" name="UserIDfk" value="@User.GetUserId()" />
+
                         <div class="form-group">
                             <div class="col-sm-6">
-                                <input type="text" placeholder="نام" class="form-control">
-                            </div>
-                            <div class="col-sm-6">
-                                <input type="email" placeholder="ایمیل" class="form-control">
+                                <input type="text" id="ArticleCommentName" name="ArticleCommentName" placeholder="نام" class="form-control" required>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <input type="email" id="ArticleCommentEmail" name="ArticleCommentEmail" placeholder="ایمیل" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <input type="url" id="ArticleCommentWebSite" name="ArticleCommentWebSite" placeholder="وبسایت" class="form-control">
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <textarea placeholder="متن نظر" class="form-control" rows="12"></textarea>
+                                <textarea placeholder="متن نظر" id="ArticleCommentBody" name="ArticleCommentBody" class="form-control" rows="12" required></textarea>
                             </div>
                         </div>
-                        <button id="submitComment" class="btn btn-danger btn-lg" type="submit">ثبت نظر</button>
+
+                        <div id="commentFormButtonsContainer" style="display: inline;">
+                            <button id="submitComment" class="btn btn-danger btn-lg"  type="submit">ثبت نظر</button>
+                        </div>
+
                     </form>
                 </div><!--/#comment-form-->
             </div><!--/#comments-->
@@ -172,6 +210,7 @@
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
     <script src="~/lib/spin.js/spin.min.js"></script>
     <script src="~/lib/jquery.blockui/jquery.blockui.js"></script>
+    <script src="~/lib/gravatar/gravatar.js"></script>
     <script src="~/js/utilities/spin.partofpage.js"></script>
     <script src="~/js/webforscripts/article.detail.js"></script>
 

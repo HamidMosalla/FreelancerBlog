@@ -80,18 +80,6 @@ namespace WebFor.Infrastructure.Repository
             return false;
         }
 
-        public double CalculateArticleRating(int id)
-        {
-            var articleRatings = _context.ArticleRatings.Where(a => a.ArticleIDfk == id).ToList();
-
-            return articleRatings.Sum(a => a.ArticleRatingScore)/articleRatings.Count;
-        }
-
-        public Task<ArticleRating> GetCurrentUserRating(int articleId, string userIDfk)
-        {
-            return _context.ArticleRatings.SingleOrDefaultAsync(a => a.ArticleIDfk == articleId && a.UserIDfk == userIDfk);
-        }
-
         public Task<int> UpdateArticleRating(int id, double rating, string userIDfk)
         {
             var articleRating = _context.ArticleRatings.Single(a => a.ArticleIDfk == id && a.UserIDfk == userIDfk);
@@ -99,11 +87,6 @@ namespace WebFor.Infrastructure.Repository
             articleRating.ArticleRatingScore = rating;
 
             return _context.SaveChangesAsync();
-        }
-
-        public Task<int> GetNumberOfVoters(int articleId)
-        {
-            return _context.ArticleRatings.Where(a => a.ArticleIDfk == articleId).CountAsync();
         }
     }
 }

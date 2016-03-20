@@ -8,6 +8,7 @@ using WebFor.Core.Repository;
 using WebFor.Core.Services.ArticleServices;
 using WebFor.Web.Services;
 using System.Security.Claims;
+using WebFor.Web.ViewModels.Article;
 
 namespace WebFor.Web.Controllers
 {
@@ -90,6 +91,29 @@ namespace WebFor.Web.Controllers
 
             return Json(new { Status = "SomeProblemWithSubmit" });
 
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> SubmitComment(ArticleCommentViewModel viewModel)
+        {
+
+            if (viewModel.ArticleCommentName == null || viewModel.ArticleCommentEmail == null ||
+                viewModel.ArticleCommentBody == null)
+            {
+                return Json(new {Status = "CannotHaveEmptyArgument"});
+            }
+
+            var articleComment = _webForMapper.ArticleCommentViewModelToArticleComment(viewModel);
+
+            int addArticleCommentResult = await _uw.ArticleCommentRepository.AddCommentToArticle(articleComment);
+
+            if (addArticleCommentResult > 0)
+            {
+                return Json(new {Status = "Success"});
+            }
+
+            return Json(new { Status = "ProblematicSubmit" });
         }
     }
 }

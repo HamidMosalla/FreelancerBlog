@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using WebFor.Core.Domain;
 
-namespace WebFor.Core.Domain
+namespace WebFor.Web.ViewModels.Article
 {
-    public class ArticleComment
+    public class ArticleCommentViewModel
     {
-        public ArticleComment()
+        public ArticleCommentViewModel()
         {
-            ArticleCommentChilds = new HashSet<ArticleComment>();
+            this.ArticleCommentDateCreated = DateTime.Now;
         }
-
         public int ArticleCommentId { get; set; }
         public int? ArticleCommentParentId { get; set; }
         public ArticleComment ArticleCommentParent { get; set; }
@@ -27,8 +29,7 @@ namespace WebFor.Core.Domain
 
         public int ArticleIDfk { get; set; }
         //[ForeignKey("ArticleIDfk")]   
-        public virtual Article Article { get; set; }
-
+        public virtual WebFor.Core.Domain.Article Article { get; set; }
 
     }
 }

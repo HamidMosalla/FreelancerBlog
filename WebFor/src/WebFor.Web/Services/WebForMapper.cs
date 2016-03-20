@@ -7,6 +7,8 @@ using WebFor.Core.Repository;
 using WebFor.Core.Services.Shared;
 using WebFor.Web.Areas.Admin.ViewModels.Article;
 using System.Security.Claims;
+using System.Linq;
+using WebFor.Web.ViewModels.Article;
 
 namespace WebFor.Web.Services
 {
@@ -16,6 +18,7 @@ namespace WebFor.Web.Services
         Task<ArticleViewModel> ArticleToArticleViewModelWithTagsAsync(Article article);
         Article ArticleViewModelToArticle(ArticleViewModel articleViewModel);
         List<ArticleViewModel> ArticleCollectionToArticleViewModelCollection(List<Article> articles);
+        ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel);
     }
 
     public class WebForMapper : IWebForMapper
@@ -34,6 +37,8 @@ namespace WebFor.Web.Services
         {
             cfg.CreateMap<Article, ArticleViewModel>();
             cfg.CreateMap<ArticleViewModel, Article>();
+            cfg.CreateMap<ArticleCommentViewModel, ArticleComment>();
+            cfg.CreateMap<ArticleComment, ArticleCommentViewModel>();
         });
 
         public IMapper Mapper = _autoMapperConfig.CreateMapper();
@@ -51,9 +56,10 @@ namespace WebFor.Web.Services
 
             articleViewModel.ArticleTags = await _uw.ArticleTagRepository.GetTagsByArticleIdAsync(article.ArticleId);
             articleViewModel.ArticleTagsList = await _uw.ArticleRepository.GetCurrentArticleTagsAsync(article.ArticleId);
-            articleViewModel.SumOfRating = _uw.ArticleRatingRepository.CalculateArticleRating(article.ArticleId);
-            articleViewModel.CurrentUserRating = await _uw.ArticleRatingRepository.GetCurrentUserRating(article.ArticleId, contextAccessor.HttpContext.User.GetUserId());
-            articleViewModel.NumberOfVoters = await _uw.ArticleRatingRepository.GetNumberOfVoters(article.ArticleId);
+
+
+            articleViewModel.SumOfRating = articleViewModel.ArticleRatings.Sum(a => a.ArticleRatingScore) / articleViewModel.ArticleRatings.Count;
+            articleViewModel.CurrentUserRating = articleViewModel.ArticleRatings.SingleOrDefault(a => a.UserIDfk == contextAccessor.HttpContext.User.GetUserId());
 
             return articleViewModel;
         }
@@ -61,6 +67,11 @@ namespace WebFor.Web.Services
         public List<ArticleViewModel> ArticleCollectionToArticleViewModelCollection(List<Article> articles)
         {
             return Mapper.Map<List<Article>, List<ArticleViewModel>>(articles);
+        }
+
+        public ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel)
+        {
+            return Mapper.Map<ArticleCommentViewModel, ArticleComment > (viewModel);
         }
 
         public Article ArticleViewModelToArticle(ArticleViewModel articleViewModel)
