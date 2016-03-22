@@ -30,6 +30,5 @@ namespace WebFor.Web.ViewModels.Article
         public int ArticleIDfk { get; set; }
         //[ForeignKey("ArticleIDfk")]   
         public virtual WebFor.Core.Domain.Article Article { get; set; }
-
     }
 }

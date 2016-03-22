@@ -93,7 +93,6 @@ namespace WebFor.Web.Controllers
 
         }
 
-
         [HttpPost]
         public async Task<JsonResult> SubmitComment(ArticleCommentViewModel viewModel)
         {

@@ -1,5 +1,6 @@
 ﻿@using System.Security.Claims
 @using System.Threading.Tasks
+@using WebFor.Web.ViewModels.Article
 @model WebFor.Web.Areas.Admin.ViewModels.Article.ArticleViewModel
 
 @{
@@ -93,69 +94,9 @@
                 <div id="comments-list">
                     <h3>@Model.ArticleComments.Count نظر</h3>
 
-                    @*<div class="media">
-                            <div class="pull-left">
-                                <img alt="" src="~/images/blog/avatar1.png" class="avatar img-circle">
-                            </div>
-                            <div class="media-body">
-                                <div class="well">
-                                    <div class="media-heading">
-                                        <strong>خالی بند فاضلی</strong>&nbsp; <small><span class="ArticleDateCreated">@Model.ArticleDateCreated.ToShortDateString()</span></small>
-                                        <a href="#" class="pull-left"><i class="fa fa-repeat"></i> پاسخ</a>
-                                    </div>
-                                    <p>متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت. </p>
-                                </div>
+                    @await Component.InvokeAsync("ArticleCommentsOnDetailPage", new ArticleCommentTreeViewModel { CommentSeed = null, Comments = Model.ArticleComments })
 
-                                <div class="media">
-                                    <div class="pull-left">
-                                        <img alt="" src="~/images/blog/avatar3.png" class="avatar img-circle">
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="well">
-                                            <div class="media-heading">
-                                                <strong>سام وان الس</strong>&nbsp; <small><span class="ArticleDateCreated">@Model.ArticleDateCreated.ToShortDateString()</span></small>
-                                                <a href="#" class="pull-left"><i class="fa fa-repeat"></i> پاسخ</a>
-                                            </div>
-                                            <p>متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.متن نمونه کامنت.</p>
-                                        </div>
-                                    </div>
-                                </div><!--/.media-->
-
-
-
-                            </div>
-                        </div><!--/.media-->*@
-
-                    @foreach (var comment in Model.ArticleComments)
-                    {
-                        <div class="media">
-                            <div class="pull-left">
-                                <img alt="" src="@comment.ArticleCommentGravatar" class="avatar img-circle">
-                            </div>
-                            <div class="media-body">
-                                <div class="well">
-
-                                    <div class="media-heading">
-                                        
-                                        <strong>@comment.ArticleCommentName</strong>&nbsp;
-                                        <small><i class="fa fa-calendar"></i>&nbsp; <span class="ArticleDateCreated"> @comment.ArticleCommentDateCreated.ToShortDateString()</span></small>
-                                        <a href="#" class="pull-left replyButton" data-parent-id="@comment.ArticleCommentId" data-commentor-name="@comment.ArticleCommentName"><i class="fa fa-repeat"></i> پاسخ</a>
-
-                                    </div>
-
-                                    <div style="max-width: 540px; -ms-word-wrap: break-word; word-wrap: break-word; white-space: pre-wrap;"  class="text-justify">
-                                        <p>@comment.ArticleCommentBody</p>
-                                    </div>
-                                    
-
-                                </div>
-                            </div>
-                        </div><!--/.media-->
-                    }
-
-
-                </div><!--/#comments-list-->
-
+                </div>
 
 
 
@@ -174,7 +115,7 @@
 
                         <div class="form-group">
                             <div class="col-sm-6">
-                                <input type="email" id="ArticleCommentEmail" name="ArticleCommentEmail" placeholder="ایمیل" class="form-control" required>
+                                <input type="email" id="ArticleCommentEmail" name="ArticleCommentEmail" placeholder="ایمیل  (صرفا برای نمایش گراواتار است)" class="form-control" required>
                             </div>
                         </div>
 
@@ -191,13 +132,21 @@
                         </div>
 
                         <div id="commentFormButtonsContainer" style="display: inline;">
-                            <button id="submitComment" class="btn btn-danger btn-lg"  type="submit">ثبت نظر</button>
+                            <button id="submitComment" class="btn btn-danger btn-lg" type="submit">ثبت نظر</button>
                         </div>
 
                     </form>
-                </div><!--/#comment-form-->
-            </div><!--/#comments-->
-        </div>
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+        </div><!--/.blog-content-->
 
 
     </div><!--/.blog-item-->

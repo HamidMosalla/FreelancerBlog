@@ -57,5 +57,6 @@ namespace WebFor.Web.Areas.Admin.ViewModels.Article
 
         public virtual ApplicationUser ApplicationUser { get; set; }
         public string UserIDfk { get; set; }
+        
     }
 }

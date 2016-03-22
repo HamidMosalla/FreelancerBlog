@@ -55,7 +55,7 @@
 
 
         //code responsible for submitting the rating and updating it and showing proper notification
-        $('#ArticleRating').on("change", function() {
+        $('#ArticleRating').on("change", function () {
 
             var $this = $(this);
 
@@ -194,7 +194,7 @@
         });
 
 
-        $(".replyButton").on("click", function(e) {
+        $(".replyButton").on("click", function (e) {
             e.preventDefault();
 
             var $this = $(this);
@@ -202,6 +202,10 @@
             var parentId = $this.data("parent-id");
             var commentorName = $this.data("commentor-name");
             //console.log(parentId);
+
+            if ($("#cancelReplyButton").length > 0) {
+                $("#cancelReplyButton").remove();
+            }
 
             var buttonElement = $('<a id="cancelReplyButton" style="padding-right:10px;" href="#">انصراف از پاسخ</a>');
 
@@ -213,17 +217,17 @@
 
             $("#commentForm").append(parentIdElement);
 
-            $this.closest(".well").append(commentForm);
+            $this.closest(".well").append(commentForm).hide().slideDown(500);
 
             $("#commentHeader").text("ارسال پاسخ به " + commentorName);
 
         });
 
 
-        $("body").on("click", "#cancelReplyButton", function(e) {
+        $("body").on("click", "#cancelReplyButton", function (e) {
             e.preventDefault();
 
-            $("#comments-list").append($("#comment-form"));
+            $("#comments-list").append($("#comment-form").hide().slideDown(500));
             $("#ArticleCommentParentId").remove();
             $("#cancelReplyButton").remove();
             $("#commentHeader").text("نظر خود را ثبت کنید");
