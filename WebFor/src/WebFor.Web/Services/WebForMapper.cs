@@ -20,6 +20,7 @@ namespace WebFor.Web.Services
         List<ArticleViewModel> ArticleCollectionToArticleViewModelCollection(List<Article> articles);
         ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel);
         List<ArticleCommentViewModel> ArticleCommentCollectionToArticleCommentViewModelCollection(List<ArticleComment> comments);
+        List<ArticleTagViewModel> ArticleTagCollectionToArticleTagViewModelCollection(List<ArticleTag> tags);
     }
 
     public class WebForMapper : IWebForMapper
@@ -40,6 +41,8 @@ namespace WebFor.Web.Services
             cfg.CreateMap<ArticleViewModel, Article>();
             cfg.CreateMap<ArticleCommentViewModel, ArticleComment>();
             cfg.CreateMap<ArticleComment, ArticleCommentViewModel>();
+            cfg.CreateMap<ArticleTag, ArticleTagViewModel>();
+            cfg.CreateMap<ArticleTagViewModel, ArticleTag>();
         });
 
         public IMapper Mapper = _autoMapperConfig.CreateMapper();
@@ -73,6 +76,11 @@ namespace WebFor.Web.Services
         public List<ArticleCommentViewModel> ArticleCommentCollectionToArticleCommentViewModelCollection(List<ArticleComment> comments)
         {
             return Mapper.Map<List<ArticleComment>, List<ArticleCommentViewModel>>(comments);
+        }
+
+        public List<ArticleTagViewModel> ArticleTagCollectionToArticleTagViewModelCollection(List<ArticleTag> tags)
+        {
+            return Mapper.Map<List<ArticleTag>, List<ArticleTagViewModel>>(tags);
         }
 
         public ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel)

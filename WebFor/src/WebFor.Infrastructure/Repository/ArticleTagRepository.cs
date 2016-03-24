@@ -39,7 +39,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<ArticleTag> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return _context.ArticleTags.SingleAsync(a => a.ArticleTagId.Equals(id));
         }
 
         public IEnumerable<ArticleTag> GetAll()
@@ -65,11 +65,11 @@ namespace WebFor.Infrastructure.Repository
             {
                 if (listOfAllTags.All(a => a.ArticleTagName != item))
                 {
-                    _context.ArticleTags.Add(new ArticleTag { ArticleTagName = item});
+                    _context.ArticleTags.Add(new ArticleTag { ArticleTagName = item });
                 }
             }
 
-           return _context.SaveChangesAsync();
+            return _context.SaveChangesAsync();
         }
 
         public async Task<string> GetTagsByArticleIdAsync(int articleId)
@@ -106,9 +106,22 @@ namespace WebFor.Infrastructure.Repository
         {
             foreach (var item in tagsToAdd)
             {
-                _context.ArticleArticleTags.Add(new ArticleArticleTag {Article = article, ArticleTag = item});
+                _context.ArticleArticleTags.Add(new ArticleArticleTag { Article = article, ArticleTag = item });
             }
 
+            return _context.SaveChangesAsync();
+        }
+
+        public Task<int> DeleteArticleTagAsync(ArticleTag model)
+        {
+            _context.ArticleTags.Remove(model);
+
+            return _context.SaveChangesAsync();
+        }
+
+        public Task<int> EditArticleTagAsync(ArticleTag model, string newTagName)
+        {
+            model.ArticleTagName = newTagName;
             return _context.SaveChangesAsync();
         }
     }

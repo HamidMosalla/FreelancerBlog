@@ -64,6 +64,20 @@ namespace WebFor.Web.Areas.Admin.Controllers
             return View(pagedArticleComment);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ManageArticleTag(int? page)
+        {
+            var tags = await _uw.ArticleTagRepository.GetAllAsync();
+
+            var tagsViewModel = _webForMapper.ArticleTagCollectionToArticleTagViewModelCollection(tags);
+
+            var pageNumber = page ?? 1;
+
+            var pagedArticleTag = tagsViewModel.ToPagedList(pageNumber - 1, 20);
+
+            return View(pagedArticleTag);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> DeleteArticleComment(int id)
@@ -97,6 +111,42 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "Error", eXMessage = eX.Message });
             }
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> DeleteArticleTag(int id)
+        {
+            if (id == default(int))
+            {
+                return Json(new { Status = "IdCannotBeNull" });
+            }
+
+            var model = await _uw.ArticleTagRepository.FindByIdAsync(id);
+
+            if (model == null)
+            {
+                return Json(new { Status = "ArticleCommentNotFound" });
+            }
+
+            try
+            {
+                int deleteArticleTagResult = await _uw.ArticleTagRepository.DeleteArticleTagAsync(model);
+
+                if (deleteArticleTagResult > 0)
+                {
+                    return Json(new { Status = "Deleted" });
+                }
+
+                return Json(new { Status = "NotDeletedSomeProblem" });
+            }
+
+            catch (Exception eX)
+            {
+                return Json(new { Status = "Error", eXMessage = eX.Message });
+            }
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -256,6 +306,40 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 int editCommentResult = await _uw.ArticleCommentRepository.EditArticleCommentAsync(model, newCommentBody);
 
                 if (editCommentResult > 0)
+                {
+                    return Json(new { Status = "Success" });
+                }
+
+                return Json(new { Status = "NotDeletedSomeProblem" });
+            }
+
+            catch (Exception eX)
+            {
+                return Json(new { Status = "Error", eXMessage = eX.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> EditArticleTag(int tagId, string newTagName)
+        {
+            if (tagId == default(int))
+            {
+                return Json(new { Status = "IdCannotBeNull" });
+            }
+
+            var model = await _uw.ArticleTagRepository.FindByIdAsync(tagId);
+
+            if (model == null)
+            {
+                return Json(new { Status = "ArticleTagNotFound" });
+            }
+
+            try
+            {
+                int editArticleTagResult = await _uw.ArticleTagRepository.EditArticleTagAsync(model, newTagName);
+
+                if (editArticleTagResult > 0)
                 {
                     return Json(new { Status = "Success" });
                 }

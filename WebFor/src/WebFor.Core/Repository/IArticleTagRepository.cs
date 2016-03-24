@@ -19,5 +19,7 @@ namespace WebFor.Core.Repository
         Task<int> RemoveTagRangeFromArticle(List<ArticleTag> tagsToRemove, int articleId);
 
         Task<int> AddTagRangeToArticle(List<ArticleTag> tagsToAdd, Article article);
+        Task<int> DeleteArticleTagAsync(ArticleTag model);
+        Task<int> EditArticleTagAsync(ArticleTag model, string newTagName);
     }
 }
