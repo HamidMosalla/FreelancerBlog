@@ -234,5 +234,20 @@
 
         });
 
+
+        // #region showing comment remaining character as user type
+
+        var textMax = 8000;
+        $('#remainingCharacter').html(textMax + ' کراکتر باقی مانده');
+
+        $('#ArticleCommentBody').keyup(function () {
+            var textLength = $('#ArticleCommentBody').val().length;
+            var textRemaining = textMax - textLength;
+
+            $('#remainingCharacter').html(textRemaining + ' کراکتر باقی مانده');
+        });
+
+        // #endregion
+
     });
 })();

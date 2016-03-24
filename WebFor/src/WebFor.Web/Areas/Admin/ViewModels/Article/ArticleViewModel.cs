@@ -39,6 +39,9 @@ namespace WebFor.Web.Areas.Admin.ViewModels.Article
         [Display(Name = "وضعیت مقاله")]
         public string ArticleStatus { get; set; }
 
+        [Display(Name = "باز بودن بخش نظر دهی")]
+        public bool IsOpenForComment { get; set; }
+
         public Int64? ArticleViewCount { get; set; }
 
 

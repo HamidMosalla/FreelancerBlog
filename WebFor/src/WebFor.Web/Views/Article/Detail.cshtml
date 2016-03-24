@@ -94,50 +94,59 @@
                 <div id="comments-list">
                     <h3>@Model.ArticleComments.Count نظر</h3>
 
-                    @await Component.InvokeAsync("ArticleCommentsOnDetailPage", new ArticleCommentTreeViewModel { CommentSeed = null, Comments = Model.ArticleComments })
+                    @await Component.InvokeAsync("ArticleCommentsOnDetailPage", new ArticleCommentTreeViewModel { CommentSeed = null, Comments = Model.ArticleComments.Where(m => m.IsCommentApproved).ToList() })
 
                 </div>
 
 
+                @if (Model.IsOpenForComment)
+                {
+                    <div id="comment-form">
+                        <h3 id="commentHeader">نظر خود را ثبت کنید</h3>
+                        <form role="form" id="commentForm" class="form-horizontal">
 
-                <div id="comment-form">
-                    <h3 id="commentHeader">نظر خود را ثبت کنید</h3>
-                    <form role="form" id="commentForm" class="form-horizontal">
+                            <input type="hidden" name="ArticleIDfk" value="@Model.ArticleId" />
+                            <input type="hidden" name="UserIDfk" value="@User.GetUserId()" />
 
-                        <input type="hidden" name="ArticleIDfk" value="@Model.ArticleId" />
-                        <input type="hidden" name="UserIDfk" value="@User.GetUserId()" />
-
-                        <div class="form-group">
-                            <div class="col-sm-6">
-                                <input type="text" id="ArticleCommentName" name="ArticleCommentName" placeholder="نام" class="form-control" required>
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <input type="text" id="ArticleCommentName" name="ArticleCommentName" placeholder="نام" maxlength="50" class="form-control" required>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-sm-6">
-                                <input type="email" id="ArticleCommentEmail" name="ArticleCommentEmail" placeholder="ایمیل  (صرفا برای نمایش گراواتار است)" class="form-control" required>
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <input type="email" id="ArticleCommentEmail" name="ArticleCommentEmail" placeholder="ایمیل  (صرفا برای نمایش گراواتار است)" maxlength="100" class="form-control" required>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-sm-6">
-                                <input type="url" id="ArticleCommentWebSite" name="ArticleCommentWebSite" placeholder="وبسایت" class="form-control">
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <input type="url" id="ArticleCommentWebSite" name="ArticleCommentWebSite" placeholder="وبسایت" maxlength="100" class="form-control">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <textarea placeholder="متن نظر" id="ArticleCommentBody" name="ArticleCommentBody" class="form-control" rows="12" required></textarea>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <textarea placeholder="متن نظر" id="ArticleCommentBody" name="ArticleCommentBody" class="form-control" rows="12" maxlength="8000" required></textarea>
+                                    <span id="remainingCharacter"></span>
+                                </div>
                             </div>
-                        </div>
 
-                        <div id="commentFormButtonsContainer" style="display: inline;">
-                            <button id="submitComment" class="btn btn-danger btn-lg" type="submit">ثبت نظر</button>
-                        </div>
+                            <div id="commentFormButtonsContainer" style="display: inline;">
+                                <button id="submitComment" class="btn btn-danger btn-lg" type="submit">ثبت نظر</button>
+                            </div>
 
-                    </form>
-                </div>
+                        </form>
+                    </div>
+                }
 
+                @if (!Model.IsOpenForComment)
+                {
+                    <div class="alert alert-info alert-dismissable">
+                        <strong style="font-size: large;">بخش نظرات برای این مقاله بسته شده است.</strong>
+                    </div>
+                }
 
 
 

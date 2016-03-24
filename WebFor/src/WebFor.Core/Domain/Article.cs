@@ -19,6 +19,8 @@ namespace WebFor.Core.Domain
 
         public string ArticleStatus { get; set; }
 
+        public bool IsOpenForComment { get; set; }
+
 
         //[ForeignKey("ArticleUserIDfk")]   
         public virtual ApplicationUser ApplicationUser { get; set; }

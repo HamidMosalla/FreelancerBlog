@@ -1,6 +1,6 @@
 ﻿@using System.Threading.Tasks
 @using WebFor.Web.ViewModels.Article
-@model WebFor.Web.ViewModels.Article.ArticleCommentTreeViewModel
+@model ArticleCommentTreeViewModel
 
 @if (Model.Comments.Any(s => s.ArticleCommentParentId == Model.CommentSeed))
 {
@@ -10,7 +10,7 @@
         {
             var inner = new ArticleCommentTreeViewModel { CommentSeed = node.ArticleCommentId, Comments = Model.Comments };
 
-            <div class="media">
+            <div class="media" id="@node.ArticleCommentId">
                 <div class="pull-left">
                     <img alt="" src="@node.ArticleCommentGravatar" class="avatar img-circle">
                 </div>

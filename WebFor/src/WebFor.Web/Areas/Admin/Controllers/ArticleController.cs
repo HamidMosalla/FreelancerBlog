@@ -36,7 +36,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
             _articleEditor = articleEditor;
         }
 
-
+        [HttpGet]
         public async Task<IActionResult> ManageArticle(int? page)
         {
             var articles = await _uw.ArticleRepository.GetAllAsync();
@@ -48,6 +48,88 @@ namespace WebFor.Web.Areas.Admin.Controllers
             var pagedArticle = articlesViewModel.ToPagedList(pageNumber - 1, 2);
 
             return View(pagedArticle);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ManageArticleComment(int? page)
+        {
+            var comments = await _uw.ArticleCommentRepository.GetAllAsync();
+
+            var commentsViewModel = _webForMapper.ArticleCommentCollectionToArticleCommentViewModelCollection(comments);
+
+            var pageNumber = page ?? 1;
+
+            var pagedArticleComment = commentsViewModel.ToPagedList(pageNumber - 1, 200);
+
+            return View(pagedArticleComment);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> DeleteArticleComment(int id)
+        {
+            if (id == default(int))
+            {
+                return Json(new { Status = "IdCannotBeNull" });
+            }
+
+            var model = await _uw.ArticleCommentRepository.FindByIdAsync(id);
+
+            if (model == null)
+            {
+                return Json(new { Status = "ArticleCommentNotFound" });
+            }
+
+            try
+            {
+                int deleteArticleResult = await _uw.ArticleCommentRepository.DeleteArticleCommentAsync(model);
+
+                if (deleteArticleResult > 0)
+                {
+                    return Json(new { Status = "Deleted" });
+                }
+
+                return Json(new { Status = "NotDeletedSomeProblem" });
+            }
+
+            catch (Exception eX)
+            {
+                return Json(new { Status = "Error", eXMessage = eX.Message });
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> ChangeArticleCommentApprovalStatus(int commentId)
+        {
+            if (commentId == default(int))
+            {
+                return Json(new { Status = "IdCannotBeNull" });
+            }
+
+            var model = await _uw.ArticleCommentRepository.FindByIdAsync(commentId);
+
+            if (model == null)
+            {
+                return Json(new { Status = "ArticleCommentNotFound" });
+            }
+
+            try
+            {
+                int toggleArticleCommentApprovalResult = await _uw.ArticleCommentRepository.ToggleArticleCommentApproval(model);
+
+                if (toggleArticleCommentApprovalResult > 0)
+                {
+                    return Json(new { Status = "Success" });
+                }
+
+                return Json(new { Status = "NotDeletedSomeProblem" });
+            }
+
+            catch (Exception eX)
+            {
+                return Json(new { Status = "Error", eXMessage = eX.Message });
+            }
         }
 
         [HttpGet]
@@ -151,6 +233,40 @@ namespace WebFor.Web.Areas.Admin.Controllers
             }
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> EditArticleComment(int commentId, string newCommentBody)
+        {
+            if (commentId == default(int))
+            {
+                return Json(new { Status = "IdCannotBeNull" });
+            }
+
+            var model = await _uw.ArticleCommentRepository.FindByIdAsync(commentId);
+
+            if (model == null)
+            {
+                return Json(new { Status = "ArticleCommentNotFound" });
+            }
+
+            try
+            {
+                int editCommentResult = await _uw.ArticleCommentRepository.EditArticleCommentAsync(model, newCommentBody);
+
+                if (editCommentResult > 0)
+                {
+                    return Json(new { Status = "Success" });
+                }
+
+                return Json(new { Status = "NotDeletedSomeProblem" });
+            }
+
+            catch (Exception eX)
+            {
+                return Json(new { Status = "Error", eXMessage = eX.Message });
+            }
         }
 
         [HttpPost]

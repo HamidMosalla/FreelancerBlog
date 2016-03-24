@@ -20,6 +20,7 @@ namespace WebFor.Core.Domain
         public string ArticleCommentWebSite { get; set; }
         public string ArticleCommentGravatar { get; set; }
         public string ArticleCommentBody { get; set; }
+        public bool IsCommentApproved { get; set; }
 
         //[ForeignKey("UserIDfk")]   
         public virtual ApplicationUser ApplicationUser { get; set; }

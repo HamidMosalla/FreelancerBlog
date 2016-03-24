@@ -19,6 +19,7 @@ namespace WebFor.Web.Services
         Article ArticleViewModelToArticle(ArticleViewModel articleViewModel);
         List<ArticleViewModel> ArticleCollectionToArticleViewModelCollection(List<Article> articles);
         ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel);
+        List<ArticleCommentViewModel> ArticleCommentCollectionToArticleCommentViewModelCollection(List<ArticleComment> comments);
     }
 
     public class WebForMapper : IWebForMapper
@@ -67,6 +68,11 @@ namespace WebFor.Web.Services
         public List<ArticleViewModel> ArticleCollectionToArticleViewModelCollection(List<Article> articles)
         {
             return Mapper.Map<List<Article>, List<ArticleViewModel>>(articles);
+        }
+
+        public List<ArticleCommentViewModel> ArticleCommentCollectionToArticleCommentViewModelCollection(List<ArticleComment> comments)
+        {
+            return Mapper.Map<List<ArticleComment>, List<ArticleCommentViewModel>>(comments);
         }
 
         public ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel)

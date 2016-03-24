@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Data.Entity;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
@@ -37,7 +39,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<ArticleComment> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return _context.ArticleComments.SingleAsync(a => a.ArticleCommentId.Equals(id));
         }
 
         public IEnumerable<ArticleComment> GetAll()
@@ -47,13 +49,32 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<List<ArticleComment>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _context.ArticleComments.OrderBy(a => a.IsCommentApproved).ThenByDescending(a => a.ArticleCommentDateCreated).Include(a => a.Article).Include(a => a.ApplicationUser).ToListAsync();
         }
 
         public Task<int> AddCommentToArticle(ArticleComment articleComment)
         {
             _context.ArticleComments.Add(articleComment);
 
+            return _context.SaveChangesAsync();
+        }
+
+        public Task<int> DeleteArticleCommentAsync(ArticleComment model)
+        {
+            _context.ArticleComments.Remove(model);
+            return _context.SaveChangesAsync();
+        }
+
+        public Task<int> ToggleArticleCommentApproval(ArticleComment model)
+        {
+            model.IsCommentApproved = !model.IsCommentApproved;
+
+            return _context.SaveChangesAsync();
+        }
+
+        public Task<int> EditArticleCommentAsync(ArticleComment model, string newCommentBody)
+        {
+            model.ArticleCommentBody = newCommentBody;
             return _context.SaveChangesAsync();
         }
     }

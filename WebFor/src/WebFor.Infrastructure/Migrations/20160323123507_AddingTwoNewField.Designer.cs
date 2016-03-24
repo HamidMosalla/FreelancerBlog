@@ -8,9 +8,10 @@ using WebFor.Infrastructure.EntityFramework;
 namespace WebFor.Infrastructure.Migrations
 {
     [DbContext(typeof(WebForDbContext))]
-    partial class WebForDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160323123507_AddingTwoNewField")]
+    partial class AddingTwoNewField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
