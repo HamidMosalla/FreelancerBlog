@@ -1,0 +1,14 @@
+﻿@using System.Threading.Tasks
+@using WebFor.Web.ViewModels.Article
+@using WebFor.Web.Areas.Admin.ViewModels.Article
+@model List<ArticleTagViewModel>
+
+<div class="widget tags">
+    <h3>برچسب ها</h3>
+    <ul class="tag-cloud">
+        @foreach (var tag in Model)
+        {
+            <li><a class="btn btn-xs btn-primary" href="/Article/Tag/@tag.ArticleTagId/@tag.ArticleTagName.Replace(' ', '-')">@tag.ArticleTagName</a></li>
+        }
+    </ul>
+</div>

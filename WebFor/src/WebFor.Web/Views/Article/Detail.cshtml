@@ -23,8 +23,8 @@
             <h3>@Model.ArticleTitle</h3>
 
             <div class="entry-meta">
-                <span><i class="fa fa-user"></i> <a href="#">&nbsp;@Model.ApplicationUser.UserFullName</a></span>
-                <span><i class="fa fa-line-chart"></i> <a href="#">&nbsp;@(Model.ArticleViewCount ?? 0)</a></span>
+                <span><i class="fa fa-user"></i> <a href="#author-well">&nbsp;@Model.ApplicationUser.UserFullName</a></span>
+                <span><i class="fa fa-line-chart"></i> <a href="javascript: void(0);">&nbsp;@(Model.ArticleViewCount ?? 0)</a></span>
 
                 @if (Model.ArticleRatings.Count != 0)
                 {
@@ -72,7 +72,7 @@
 
             <hr>
 
-            <div class="author well">
+            <div class="author well" id="author-well">
                 <div class="media">
                     <div class="pull-left">
                         <img alt="" src="~/images/blog/Avatar2016.jpg" class="avatar img-thumbnail">

@@ -68,6 +68,11 @@ namespace WebFor.Infrastructure.Repository
             return await _context.SaveChangesAsync();
         }
 
+        public Task<List<Article>> GetArticlesByTag(int tagId)
+        {
+            return _context.ArticleArticleTags.Where(a => a.ArticleTagId.Equals(tagId)).Join(_context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleComments).Include(a => a.ArticleRatings), left => left.ArticleId, right => right.ArticleId, (aat, a) => a).ToListAsync();
+        }
+
         public Article FindById(int id)
         {
             return _context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleRatings).Include(a => a.ArticleComments).Single(a => a.ArticleId == id);

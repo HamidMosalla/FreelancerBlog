@@ -12,5 +12,7 @@ namespace WebFor.Core.Repository
         Task<List<ArticleTag>> GetCurrentArticleTagsAsync(int articleId);
 
         Task<int> IncreaseArticleViewCount(int articleId);
+
+        Task<List<Article>> GetArticlesByTag(int tagId);
     }
 }

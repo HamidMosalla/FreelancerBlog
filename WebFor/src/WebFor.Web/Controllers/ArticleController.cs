@@ -38,9 +38,27 @@ namespace WebFor.Web.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Tag(int id, int? page)
+        {
+            if (id == 0)
+            {
+                return HttpBadRequest();
+            }
+
+            var articles = await _uw.ArticleRepository.GetArticlesByTag(id);
+
+            var articlesViewModel = _webForMapper.ArticleCollectionToArticleViewModelCollection(articles);
+
+            var pageNumber = page ?? 1;
+
+            var pagedArticle = articlesViewModel.ToPagedList(pageNumber - 1, 2);
+
+            return View(pagedArticle);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
-
             if (id == 0)
             {
                 return HttpBadRequest();
