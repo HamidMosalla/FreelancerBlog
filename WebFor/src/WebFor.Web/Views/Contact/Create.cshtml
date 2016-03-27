@@ -1,0 +1,108 @@
+﻿@model WebFor.Web.ViewModels.Contact.ContactViewModel
+
+@{
+    ViewData["Title"] = "تماس با ما";
+}
+
+@section styles{
+    <link href="~/lib/pnotify/dist/pnotify.custom.min.css" rel="stylesheet" />
+}
+
+@if (TempData["CreateContactMessage"] != null)
+{
+    <p>
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>@TempData["CreateContactMessage"]</h4>
+        </div>
+    </p>
+}
+
+<section id="title" class="emerald">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <h1>تماس با ما</h1>
+                <p>سوالات و مشکلات خود را از طریق فرم زیر با ما در میان بگذارید، ما در اسراع وقت با شما تماس خواهیم گرفت.</p>
+            </div>
+            <div class="col-sm-4">
+                <ul class="breadcrumb pull-right">
+                    <li><a href="index.html">خانه</a></li>
+                    <li class="active">تماس با ما</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="contact-page" class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            <h4>فرم تماس با ما</h4>
+            <div class="status alert alert-success" style="display: none"></div>
+
+
+            <form asp-action="Create" id="ContactForm" class="contact-form" method="post">
+                <div class="form-horizontal">
+                    <div class="row">
+
+                        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+
+                        <div class="col-sm-5">
+
+                            <div class="form-group">
+                                <input asp-for="ContactName" required="required" placeholder="نام و نام خانوادگی" class="form-control" />
+                                @* I'm using Html helper instead of Tag helper because tag helper doesn't work when javascript disabled, this might change in the future *@
+                                @*<span asp-validation-for="ContactName" class="text-danger" />*@
+                                @Html.ValidationMessageFor(model => model.ContactName)
+                            </div>
+
+                            <div class="form-group">
+                                <input asp-for="ContactPhone" placeholder="شماره تماس" class="form-control" />
+                                @Html.ValidationMessageFor(model => model.ContactPhone)
+                            </div>
+
+                            <div class="form-group">
+                                <input asp-for="ContactEmail" required="required" placeholder="ایمیل" class="form-control" />
+                                @Html.ValidationMessageFor(model => model.ContactEmail)
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="ارسال" class="btn btn-primary btn-lg" />
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-7">
+                            <textarea asp-for="ContactBody" rows="10" placeholder="متن پیغام" required="required" class="form-control"></textarea>
+                            @Html.ValidationMessageFor(model => model.ContactBody)
+                        </div>
+
+
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        
+        <div class="col-sm-4" id="YesScript" style="display:none;">
+            <h4>محل دفتر کار</h4>
+            <iframe width="100%" height="215" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com.au/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Dhaka,+Dhaka+Division,+Bangladesh&amp;aq=0&amp;oq=dhaka+ban&amp;sll=40.714353,-74.005973&amp;sspn=0.836898,1.815491&amp;ie=UTF8&amp;hq=&amp;hnear=Dhaka+Division,+Bangladesh&amp;t=m&amp;ll=24.542126,90.293884&amp;spn=0.124922,0.411301&amp;z=8&amp;output=embed"></iframe>
+        </div>
+
+
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
+    <script src="~/lib/jquery.blockui/jquery.blockui.js"></script>
+    <script src="~/lib/spin.js/spin.min.js"></script>
+    <script src="~/js/utilities/spin.partofpage.js"></script>
+    <script src="~/js/webforscripts/contact.create.js"></script>
+}

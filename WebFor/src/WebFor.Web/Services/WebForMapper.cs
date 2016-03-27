@@ -9,6 +9,7 @@ using WebFor.Web.Areas.Admin.ViewModels.Article;
 using System.Security.Claims;
 using System.Linq;
 using WebFor.Web.ViewModels.Article;
+using WebFor.Web.ViewModels.Contact;
 
 namespace WebFor.Web.Services
 {
@@ -21,6 +22,8 @@ namespace WebFor.Web.Services
         ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel);
         List<ArticleCommentViewModel> ArticleCommentCollectionToArticleCommentViewModelCollection(List<ArticleComment> comments);
         List<ArticleTagViewModel> ArticleTagCollectionToArticleTagViewModelCollection(List<ArticleTag> tags);
+        List<ContactViewModel> ContactCollectionToContactViewModelCollection(List<Contact> contacts);
+        Contact ContactViewModelToContact(ContactViewModel contactViewModel);
     }
 
     public class WebForMapper : IWebForMapper
@@ -43,6 +46,8 @@ namespace WebFor.Web.Services
             cfg.CreateMap<ArticleComment, ArticleCommentViewModel>();
             cfg.CreateMap<ArticleTag, ArticleTagViewModel>();
             cfg.CreateMap<ArticleTagViewModel, ArticleTag>();
+            cfg.CreateMap<Contact, ContactViewModel>();
+            cfg.CreateMap<ContactViewModel, Contact>();
         });
 
         public IMapper Mapper = _autoMapperConfig.CreateMapper();
@@ -81,6 +86,16 @@ namespace WebFor.Web.Services
         public List<ArticleTagViewModel> ArticleTagCollectionToArticleTagViewModelCollection(List<ArticleTag> tags)
         {
             return Mapper.Map<List<ArticleTag>, List<ArticleTagViewModel>>(tags);
+        }
+
+        public List<ContactViewModel> ContactCollectionToContactViewModelCollection(List<Contact> contacts)
+        {
+            return Mapper.Map<List<Contact>, List<ContactViewModel>>(contacts);
+        }
+
+        public Contact ContactViewModelToContact(ContactViewModel contactViewModel)
+        {
+            return Mapper.Map<ContactViewModel, Contact>(contactViewModel);
         }
 
         public ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel)

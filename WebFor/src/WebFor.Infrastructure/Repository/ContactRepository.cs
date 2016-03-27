@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.Entity;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebFor.Core.Domain;
@@ -37,7 +38,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<Contact> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return _context.Contacts.SingleAsync(c => c.ContactId.Equals(id));
         }
 
         public IEnumerable<Contact> GetAll()
@@ -47,7 +48,19 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<List<Contact>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _context.Contacts.ToListAsync();
+        }
+
+        public Task<int> AddNewContactAsync(Contact contact)
+        {
+            _context.Contacts.Add(contact);
+            return _context.SaveChangesAsync();
+        }
+
+        public Task<int> DeleteContactAsync(Contact model)
+        {
+            _context.Contacts.Remove(model);
+            return _context.SaveChangesAsync();
         }
     }
 }

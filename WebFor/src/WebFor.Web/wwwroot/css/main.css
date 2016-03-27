@@ -1098,3 +1098,10 @@ ul.faq li > div h3 {
   margin-top: 150px;
   margin-bottom: 150px;
 }
+
+#noscript {
+    text-align: center;
+    font-size:1.5em;
+    color: white;
+    background-color: firebrick;
+}

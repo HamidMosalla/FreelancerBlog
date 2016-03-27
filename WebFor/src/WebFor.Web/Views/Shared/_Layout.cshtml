@@ -2,7 +2,7 @@
 <html lang="fa">
 <head>
 
-
+    @RenderSection("MetaTags", required: false)
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="طراحی وب سایت های سفارشی، مقاله های متنوع در خصوص تکنولوژی های وب">
@@ -58,6 +58,13 @@
 
 
 <body>
+
+    <noscript>
+        <div id="noscript">
+            جاوا اسکریپت غیرفعال است، برای استفاده بهتر از امکانات سایت لطفا آن را فعال کنید.
+        </div>
+    </noscript>
+
     <header class="navbar navbar-inverse navbar-fixed-top wet-asphalt" role="banner">
         <div class="container">
             <div class="navbar-header">
@@ -96,13 +103,12 @@
         </div>
     </header>
     <!--/header-->
+    @*<section id="BodyContent">
 
-@*<section id="BodyContent">
-    
-    <div class="container body-content">
+            <div class="container body-content">
 
-    </div>
-</section>*@
+            </div>
+        </section>*@
 
     @RenderBody()
 
@@ -118,23 +124,23 @@
                     <h4>کمپانی</h4>
                     <div>
                         <ul>
-                            <li class="fa fa-chevron-left">    <a href="#">درباره کمپانی</a></li>
+                            <li class="fa fa-chevron-left"> <a href="#">درباره کمپانی</a></li>
                             <br />
-                            <li class="fa fa-chevron-left">    <a href="#">ملاقات با تیم</a></li>
+                            <li class="fa fa-chevron-left"> <a href="#">ملاقات با تیم</a></li>
                             <br />
-                            <li class="fa fa-chevron-left">    <a href="#">شرکای تجاری</a></li>
+                            <li class="fa fa-chevron-left"> <a href="#">شرکای تجاری</a></li>
                             <br />
-                            <li class="fa fa-chevron-left">    <a href="#">سرویس های ما</a></li>
+                            <li class="fa fa-chevron-left"> <a href="#">سرویس های ما</a></li>
                             <br />
-                            <li class="fa fa-chevron-left">    <a href="#">سوالات متداول</a></li>
+                            <li class="fa fa-chevron-left"> <a href="#">سوالات متداول</a></li>
                             <br />
-                            <li class="fa fa-chevron-left">    <a href="#">تماس با ما</a></li>
+                            <li class="fa fa-chevron-left"> <a href="#">تماس با ما</a></li>
                             <br />
-                            <li class="fa fa-chevron-left">    <a href="#">حریم خصوصی</a></li>
+                            <li class="fa fa-chevron-left"> <a href="#">حریم خصوصی</a></li>
                             <br />
-                            <li class="fa fa-chevron-left">    <a href="#">شرایط استفاده</a></li>
+                            <li class="fa fa-chevron-left"> <a href="#">شرایط استفاده</a></li>
                             <br />
-                            <li class="fa fa-chevron-left">    <a href="#">کپی رایت</a></li>
+                            <li class="fa fa-chevron-left"> <a href="#">کپی رایت</a></li>
                         </ul>
                     </div>
                 </div><!--/.col-md-3-->
@@ -216,7 +222,6 @@
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-prettyphoto/js/jquery.prettyphoto.js"></script>
         <script src="~/lib/isotope/dist/isotope.pkgd.js"></script>
         <script src="~/js/main.js"></script>
@@ -228,15 +233,16 @@
                 asp-fallback-test="window.jQuery">
 
 
+
         </script>
         <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
 
 
+
         </script>
         <script src="~/lib/isotope/dist/isotope.pkgd.min.js"></script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-prettyphoto/js/jquery.prettyphoto.js"></script>
         <script src="~/js/main.js"></script>
     </environment>
