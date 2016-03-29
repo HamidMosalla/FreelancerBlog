@@ -1,0 +1,62 @@
+@model IEnumerable<WebFor.Core.Domain.SlideShow>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SlideShowBody)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SlideShowDateCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SlideShowLink)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SlideShowPictrure)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SlideShowPriority)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SlideShowTitle)
+        </th>
+        <th></th>
+    </tr>
+    
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SlideShowBody)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SlideShowDateCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SlideShowLink)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SlideShowPictrure)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SlideShowPriority)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SlideShowTitle)
+        </td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.SlideShowId">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.SlideShowId">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.SlideShowId">Delete</a>
+        </td>
+    </tr>
+}
+</table>

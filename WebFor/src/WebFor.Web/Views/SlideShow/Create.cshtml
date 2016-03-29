@@ -1,0 +1,72 @@
+@model WebFor.Core.Domain.SlideShow
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>SlideShow</h4>
+        <hr />
+        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="SlideShowBody" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="SlideShowBody" class="form-control" />
+                <span asp-validation-for="SlideShowBody" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="SlideShowDateCreated" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="SlideShowDateCreated" class="form-control" />
+                <span asp-validation-for="SlideShowDateCreated" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="SlideShowLink" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="SlideShowLink" class="form-control" />
+                <span asp-validation-for="SlideShowLink" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="SlideShowPictrure" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="SlideShowPictrure" class="form-control" />
+                <span asp-validation-for="SlideShowPictrure" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="SlideShowPriority" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="SlideShowPriority" class="form-control" />
+                <span asp-validation-for="SlideShowPriority" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="SlideShowTitle" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="SlideShowTitle" class="form-control" />
+                <span asp-validation-for="SlideShowTitle" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

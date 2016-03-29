@@ -1,0 +1,54 @@
+@model WebFor.Core.Domain.SlideShow
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SlideShow</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SlideShowBody)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SlideShowBody)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SlideShowDateCreated)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SlideShowDateCreated)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SlideShowLink)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SlideShowLink)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SlideShowPictrure)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SlideShowPictrure)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SlideShowPriority)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SlideShowPriority)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SlideShowTitle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SlideShowTitle)
+        </dd>
+    </dl>
+</div>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.SlideShowId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</p>
