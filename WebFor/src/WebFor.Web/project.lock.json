@@ -2151,7 +2151,8 @@
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
-          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final"
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Core": "6.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
@@ -5037,7 +5038,8 @@
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
-          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final"
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Core": "6.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
@@ -7226,7 +7228,8 @@
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
-          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final"
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Core": "6.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
@@ -9415,7 +9418,8 @@
         "framework": "DNX,Version=v4.5.1",
         "dependencies": {
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
-          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final"
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Core": "6.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
@@ -12808,7 +12812,8 @@
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
-          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final"
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Core": "6.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {
@@ -16201,7 +16206,8 @@
         "framework": "DNXCore,Version=v5.0",
         "dependencies": {
           "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final",
-          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final"
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Core": "6.0.0-rc1-final"
         }
       },
       "WebFor.DependencyInjection/1.0.0": {

@@ -4,80 +4,7 @@
 }
 
 <section id="main-slider" class="no-margin">
-
-    <div id="IndexCarousel" class="carousel slide" data-ride="carousel">
-
-
-        <ol class="carousel-indicators">
-            <li data-target="#IndexCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#IndexCarousel" data-slide-to="1"></li>
-            <li data-target="#IndexCarousel" data-slide-to="2"></li>
-        </ol>
-
-
-        <div class="carousel-inner">
-
-
-            <div class="item active" style="background-image: url(/images/slider/bg1.jpg)">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="carousel-content center centered">
-                                <h2 class="boxed animation animated-item-1">Clean, Crisp, Powerful and Responsive Web Design</h2>
-                                <p class="boxed animation animated-item-2">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-                                <br>
-                                <a class="btn btn-md animation animated-item-3" href="#">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="item" style="background-image: url(/images/slider/bg2.jpg)">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="carousel-content center centered">
-                                <h2 class="boxed animation animated-item-1">Clean, Crisp, Powerful and Responsive Web Design</h2>
-                                <p class="boxed animation animated-item-2">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-                                <br>
-                                <a class="btn btn-md animation animated-item-3" href="#">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="item" style="background-image: url(/images/slider/bg3.jpg)">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="carousel-content center centered">
-                                <h2 class="boxed animation animated-item-1">Clean, Crisp, Powerful and Responsive Web Design</h2>
-                                <p class="boxed animation animated-item-2">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-                                <br>
-                                <a class="btn btn-md animation animated-item-3" href="#">Learn More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-
-        <a class="left carousel-control prev hidden-xs" href="#IndexCarousel" data-slide="prev">
-            <i class="fa fa-angle-left"></i>
-        </a>
-
-        <a class="right carousel-control next hidden-xs" href="#IndexCarousel" data-slide="next">
-            <i class="fa fa-angle-right"></i>
-        </a>
-
-    </div>
-
+    @await Component.InvokeAsync("HomeSlider")
 </section>
 
 <section id="services" class="emerald">
@@ -123,7 +50,7 @@
 <section id="recent-works">
     <div class="container">
         <div class="row">
-            
+
             <div class="col-md-3">
                 <h3>Our Latest Project</h3>
                 <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>

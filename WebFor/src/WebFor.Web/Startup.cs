@@ -76,6 +76,8 @@ namespace WebFor.Web
             containerBuilder.RegisterModule<AuthMessageSenderModule>();
             containerBuilder.RegisterModule<WebForDbContextSeedDataModule>();
             containerBuilder.RegisterModule<CkEditorFileUploderModule>();
+            containerBuilder.RegisterModule<FileUploderModule>();
+            containerBuilder.RegisterModule<FileDeleterModule>();
             containerBuilder.RegisterModule<ArticleCreatorModule>();
             containerBuilder.RegisterModule<ArticleEditorModule>();
             containerBuilder.RegisterType<WebForMapper>().As<IWebForMapper>();

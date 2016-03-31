@@ -80,7 +80,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<Article> FindByIdAsync(int id)
         {
-            return _context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleRatings).Include(a => a.ArticleComments).SingleAsync(a => a.ArticleId == id);
+            return _context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleRatings).Include(a => a.ArticleComments).SingleOrDefaultAsync(a => a.ArticleId == id);
         }
 
         public IEnumerable<Article> GetAll()

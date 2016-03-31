@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Linq;
 using WebFor.Web.ViewModels.Article;
 using WebFor.Web.ViewModels.Contact;
+using WebFor.Web.Areas.Admin.ViewModels.SlideShow;
 
 namespace WebFor.Web.Services
 {
@@ -19,11 +20,15 @@ namespace WebFor.Web.Services
         Task<ArticleViewModel> ArticleToArticleViewModelWithTagsAsync(Article article);
         Article ArticleViewModelToArticle(ArticleViewModel articleViewModel);
         List<ArticleViewModel> ArticleCollectionToArticleViewModelCollection(List<Article> articles);
+        List<SlideShowViewModel> SlideShowCollectionToSlideShowCollectionViewModel(List<SlideShow> slideShows);
         ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel);
         List<ArticleCommentViewModel> ArticleCommentCollectionToArticleCommentViewModelCollection(List<ArticleComment> comments);
         List<ArticleTagViewModel> ArticleTagCollectionToArticleTagViewModelCollection(List<ArticleTag> tags);
         List<ContactViewModel> ContactCollectionToContactViewModelCollection(List<Contact> contacts);
+        SlideShow SlideShowViewModelToSlideShow(SlideShowViewModel slideShowViewModel, string imagePath);
         Contact ContactViewModelToContact(ContactViewModel contactViewModel);
+        SlideShowViewModelEdit SlideShowToSlideShowViewModelEdit(SlideShow model);
+        SlideShow SlideShowViewModelEditToSlideShow(SlideShowViewModelEdit viewModel);
     }
 
     public class WebForMapper : IWebForMapper
@@ -48,6 +53,10 @@ namespace WebFor.Web.Services
             cfg.CreateMap<ArticleTagViewModel, ArticleTag>();
             cfg.CreateMap<Contact, ContactViewModel>();
             cfg.CreateMap<ContactViewModel, Contact>();
+            cfg.CreateMap<SlideShow, SlideShowViewModel>();
+            cfg.CreateMap<SlideShowViewModel, SlideShow>();
+            cfg.CreateMap<SlideShow, SlideShowViewModelEdit>();
+            cfg.CreateMap<SlideShowViewModelEdit, SlideShow>();
         });
 
         public IMapper Mapper = _autoMapperConfig.CreateMapper();
@@ -78,6 +87,11 @@ namespace WebFor.Web.Services
             return Mapper.Map<List<Article>, List<ArticleViewModel>>(articles);
         }
 
+        public List<SlideShowViewModel> SlideShowCollectionToSlideShowCollectionViewModel(List<SlideShow> slideShows)
+        {
+            return Mapper.Map<List<SlideShow>, List<SlideShowViewModel>>(slideShows);
+        }
+
         public List<ArticleCommentViewModel> ArticleCommentCollectionToArticleCommentViewModelCollection(List<ArticleComment> comments)
         {
             return Mapper.Map<List<ArticleComment>, List<ArticleCommentViewModel>>(comments);
@@ -93,9 +107,28 @@ namespace WebFor.Web.Services
             return Mapper.Map<List<Contact>, List<ContactViewModel>>(contacts);
         }
 
+        public SlideShow SlideShowViewModelToSlideShow(SlideShowViewModel slideShowViewModel, string imagePath)
+        {
+            var slideShow = Mapper.Map<SlideShowViewModel, SlideShow>(slideShowViewModel);
+
+            slideShow.SlideShowPictrure = imagePath;
+
+            return slideShow;
+        }
+
         public Contact ContactViewModelToContact(ContactViewModel contactViewModel)
         {
             return Mapper.Map<ContactViewModel, Contact>(contactViewModel);
+        }
+
+        public SlideShowViewModelEdit SlideShowToSlideShowViewModelEdit(SlideShow model)
+        {
+            return Mapper.Map<SlideShow, SlideShowViewModelEdit>(model);
+        }
+
+        public SlideShow SlideShowViewModelEditToSlideShow(SlideShowViewModelEdit viewModel)
+        {
+            return Mapper.Map< SlideShowViewModelEdit, SlideShow>(viewModel);
         }
 
         public ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel)

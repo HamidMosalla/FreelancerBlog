@@ -39,7 +39,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<ArticleTag> FindByIdAsync(int id)
         {
-            return _context.ArticleTags.SingleAsync(a => a.ArticleTagId.Equals(id));
+            return _context.ArticleTags.SingleOrDefaultAsync(a => a.ArticleTagId.Equals(id));
         }
 
         public IEnumerable<ArticleTag> GetAll()

@@ -39,7 +39,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<ArticleComment> FindByIdAsync(int id)
         {
-            return _context.ArticleComments.SingleAsync(a => a.ArticleCommentId.Equals(id));
+            return _context.ArticleComments.SingleOrDefaultAsync(a => a.ArticleCommentId.Equals(id));
         }
 
         public IEnumerable<ArticleComment> GetAll()

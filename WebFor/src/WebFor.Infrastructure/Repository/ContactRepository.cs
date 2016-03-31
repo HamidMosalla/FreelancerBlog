@@ -38,7 +38,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<Contact> FindByIdAsync(int id)
         {
-            return _context.Contacts.SingleAsync(c => c.ContactId.Equals(id));
+            return _context.Contacts.SingleOrDefaultAsync(c => c.ContactId.Equals(id));
         }
 
         public IEnumerable<Contact> GetAll()

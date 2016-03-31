@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Data.Entity;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
@@ -37,7 +39,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<SlideShow> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return _context.SlideShows.SingleOrDefaultAsync(s => s.SlideShowId.Equals(id));
         }
 
         public IEnumerable<SlideShow> GetAll()
@@ -47,7 +49,43 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<List<SlideShow>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _context.SlideShows.OrderByDescending(s => s.SlideShowDateCreated).ToListAsync();
+        }
+
+        public Task<int> AddNewSlideShow(SlideShow slideShow)
+        {
+            _context.SlideShows.Add(slideShow);
+            return _context.SaveChangesAsync();
+        }
+
+        public Task<int> DeleteSlideShowAsync(SlideShow model)
+        {
+            _context.SlideShows.Remove(model);
+
+            return _context.SaveChangesAsync();
+        }
+
+        public Task<List<SlideShow>> GetAllAsyncForHomePage()
+        {
+            return _context.SlideShows.OrderBy(s => s.SlideShowPriority).ThenByDescending(s => s.SlideShowDateCreated).Take(10).ToListAsync();
+        }
+
+        public Task<int> UpdateSlideShowAsync(SlideShow slideshow)
+        {
+            _context.SlideShows.Attach(slideshow, GraphBehavior.SingleObject);
+
+            var entity = _context.Entry(slideshow);
+            entity.State = EntityState.Modified;
+
+            entity.Property(e => e.SlideShowDateCreated).IsModified = false;
+            entity.Property(e => e.SlideShowPictrure).IsModified = slideshow.SlideShowPictrure != null;
+
+            return _context.SaveChangesAsync();
+        }
+
+        public void Detach(SlideShow model)
+        {
+            _context.Entry(model).State = EntityState.Detached;
         }
     }
 }

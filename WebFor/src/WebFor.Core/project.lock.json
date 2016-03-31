@@ -123,6 +123,26 @@
           "lib/net451/Microsoft.AspNet.Authentication.Cookies.dll": {}
         }
       },
+      "Microsoft.AspNet.Authorization/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Features": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Authorization.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Authorization.dll": {}
+        }
+      },
       "Microsoft.AspNet.Cryptography.Internal/1.0.0-rc1-final": {
         "type": "package",
         "frameworkAssemblies": [
@@ -373,6 +393,32 @@
           "lib/net451/Microsoft.AspNet.Mvc.Abstractions.dll": {}
         }
       },
+      "Microsoft.AspNet.Mvc.Core/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Authorization": "1.0.0-rc1-final",
+          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Hosting.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.MemoryPool": "1.0.0-rc1-final",
+          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
+          "System.Diagnostics.DiagnosticSource": "4.0.0-beta-23516"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core",
+          "System.Runtime"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Mvc.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Mvc.Core.dll": {}
+        }
+      },
       "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -570,6 +616,21 @@
         },
         "runtime": {
           "lib/net451/Microsoft.Extensions.Logging.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.MemoryPool/1.0.0-rc1-final": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.Extensions.MemoryPool.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.MemoryPool.dll": {}
         }
       },
       "Microsoft.Extensions.OptionsModel/1.0.0-rc1-final": {
@@ -837,6 +898,20 @@
           "lib/dotnet5.4/Microsoft.AspNet.Authentication.Cookies.dll": {}
         }
       },
+      "Microsoft.AspNet.Authorization/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Features": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Authorization.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Authorization.dll": {}
+        }
+      },
       "Microsoft.AspNet.Cryptography.Internal/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -1086,6 +1161,26 @@
           "lib/dotnet5.4/Microsoft.AspNet.Mvc.Abstractions.dll": {}
         }
       },
+      "Microsoft.AspNet.Mvc.Core/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Authorization": "1.0.0-rc1-final",
+          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Hosting.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.MemoryPool": "1.0.0-rc1-final",
+          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
+          "System.Diagnostics.DiagnosticSource": "4.0.0-beta-23516",
+          "System.Text.Encoding": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Mvc.Core.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Mvc.Core.dll": {}
+        }
+      },
       "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -1294,6 +1389,18 @@
         },
         "runtime": {
           "lib/dotnet5.4/Microsoft.Extensions.Logging.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.MemoryPool/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections.Concurrent": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.Extensions.MemoryPool.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.Extensions.MemoryPool.dll": {}
         }
       },
       "Microsoft.Extensions.OptionsModel/1.0.0-rc1-final": {
@@ -2289,6 +2396,26 @@
           "lib/net451/Microsoft.AspNet.Authentication.Cookies.dll": {}
         }
       },
+      "Microsoft.AspNet.Authorization/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Features": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Authorization.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Authorization.dll": {}
+        }
+      },
       "Microsoft.AspNet.Cryptography.Internal/1.0.0-rc1-final": {
         "type": "package",
         "frameworkAssemblies": [
@@ -2539,6 +2666,32 @@
           "lib/net451/Microsoft.AspNet.Mvc.Abstractions.dll": {}
         }
       },
+      "Microsoft.AspNet.Mvc.Core/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Authorization": "1.0.0-rc1-final",
+          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Hosting.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.MemoryPool": "1.0.0-rc1-final",
+          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
+          "System.Diagnostics.DiagnosticSource": "4.0.0-beta-23516"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core",
+          "System.Runtime"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Mvc.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Mvc.Core.dll": {}
+        }
+      },
       "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -2736,6 +2889,21 @@
         },
         "runtime": {
           "lib/net451/Microsoft.Extensions.Logging.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.MemoryPool/1.0.0-rc1-final": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.Extensions.MemoryPool.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.MemoryPool.dll": {}
         }
       },
       "Microsoft.Extensions.OptionsModel/1.0.0-rc1-final": {
@@ -3028,6 +3196,26 @@
           "lib/net451/Microsoft.AspNet.Authentication.Cookies.dll": {}
         }
       },
+      "Microsoft.AspNet.Authorization/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Features": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Authorization.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Authorization.dll": {}
+        }
+      },
       "Microsoft.AspNet.Cryptography.Internal/1.0.0-rc1-final": {
         "type": "package",
         "frameworkAssemblies": [
@@ -3278,6 +3466,32 @@
           "lib/net451/Microsoft.AspNet.Mvc.Abstractions.dll": {}
         }
       },
+      "Microsoft.AspNet.Mvc.Core/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Authorization": "1.0.0-rc1-final",
+          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Hosting.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.MemoryPool": "1.0.0-rc1-final",
+          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
+          "System.Diagnostics.DiagnosticSource": "4.0.0-beta-23516"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core",
+          "System.Runtime"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.AspNet.Mvc.Core.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.AspNet.Mvc.Core.dll": {}
+        }
+      },
       "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -3475,6 +3689,21 @@
         },
         "runtime": {
           "lib/net451/Microsoft.Extensions.Logging.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.MemoryPool/1.0.0-rc1-final": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.Extensions.MemoryPool.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Extensions.MemoryPool.dll": {}
         }
       },
       "Microsoft.Extensions.OptionsModel/1.0.0-rc1-final": {
@@ -3742,6 +3971,20 @@
           "lib/dotnet5.4/Microsoft.AspNet.Authentication.Cookies.dll": {}
         }
       },
+      "Microsoft.AspNet.Authorization/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Features": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Authorization.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Authorization.dll": {}
+        }
+      },
       "Microsoft.AspNet.Cryptography.Internal/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -3991,6 +4234,26 @@
           "lib/dotnet5.4/Microsoft.AspNet.Mvc.Abstractions.dll": {}
         }
       },
+      "Microsoft.AspNet.Mvc.Core/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Authorization": "1.0.0-rc1-final",
+          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Hosting.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.MemoryPool": "1.0.0-rc1-final",
+          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
+          "System.Diagnostics.DiagnosticSource": "4.0.0-beta-23516",
+          "System.Text.Encoding": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Mvc.Core.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Mvc.Core.dll": {}
+        }
+      },
       "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -4199,6 +4462,18 @@
         },
         "runtime": {
           "lib/dotnet5.4/Microsoft.Extensions.Logging.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.MemoryPool/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections.Concurrent": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.Extensions.MemoryPool.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.Extensions.MemoryPool.dll": {}
         }
       },
       "Microsoft.Extensions.OptionsModel/1.0.0-rc1-final": {
@@ -5577,6 +5852,20 @@
           "lib/dotnet5.4/Microsoft.AspNet.Authentication.Cookies.dll": {}
         }
       },
+      "Microsoft.AspNet.Authorization/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Http.Features": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Authorization.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Authorization.dll": {}
+        }
+      },
       "Microsoft.AspNet.Cryptography.Internal/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -5826,6 +6115,26 @@
           "lib/dotnet5.4/Microsoft.AspNet.Mvc.Abstractions.dll": {}
         }
       },
+      "Microsoft.AspNet.Mvc.Core/6.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Authorization": "1.0.0-rc1-final",
+          "Microsoft.AspNet.FileProviders.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Hosting.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.AspNet.Mvc.Abstractions": "6.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.MemoryPool": "1.0.0-rc1-final",
+          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
+          "System.Diagnostics.DiagnosticSource": "4.0.0-beta-23516",
+          "System.Text.Encoding": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.AspNet.Mvc.Core.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.AspNet.Mvc.Core.dll": {}
+        }
+      },
       "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -6034,6 +6343,18 @@
         },
         "runtime": {
           "lib/dotnet5.4/Microsoft.Extensions.Logging.Abstractions.dll": {}
+        }
+      },
+      "Microsoft.Extensions.MemoryPool/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections.Concurrent": "4.0.11-beta-23516"
+        },
+        "compile": {
+          "lib/dotnet5.4/Microsoft.Extensions.MemoryPool.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet5.4/Microsoft.Extensions.MemoryPool.dll": {}
         }
       },
       "Microsoft.Extensions.OptionsModel/1.0.0-rc1-final": {
@@ -7395,6 +7716,20 @@
         "Microsoft.AspNet.Authentication.Cookies.nuspec"
       ]
     },
+    "Microsoft.AspNet.Authorization/1.0.0-rc1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "zXQ4VHNDQkWzNpI05jt3laIHSlNIqROFuSbZPV7wprVi43sgeZSn9gBW5rQNcedODgsEvmsIMzl73mXzKf3TTA==",
+      "files": [
+        "lib/dotnet5.4/Microsoft.AspNet.Authorization.dll",
+        "lib/dotnet5.4/Microsoft.AspNet.Authorization.xml",
+        "lib/net451/Microsoft.AspNet.Authorization.dll",
+        "lib/net451/Microsoft.AspNet.Authorization.xml",
+        "Microsoft.AspNet.Authorization.1.0.0-rc1-final.nupkg",
+        "Microsoft.AspNet.Authorization.1.0.0-rc1-final.nupkg.sha512",
+        "Microsoft.AspNet.Authorization.nuspec"
+      ]
+    },
     "Microsoft.AspNet.Cryptography.Internal/1.0.0-rc1-final": {
       "type": "package",
       "serviceable": true,
@@ -7575,6 +7910,20 @@
         "Microsoft.AspNet.Mvc.Abstractions.6.0.0-rc1-final.nupkg",
         "Microsoft.AspNet.Mvc.Abstractions.6.0.0-rc1-final.nupkg.sha512",
         "Microsoft.AspNet.Mvc.Abstractions.nuspec"
+      ]
+    },
+    "Microsoft.AspNet.Mvc.Core/6.0.0-rc1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "s4RFVnKx+c49vxu0rK33kwaff9TydQI/LI9ApgAyfZPlrjDvmzzPyKVGpfKBh682scnllaUFeOV+hL9Q6a1zJw==",
+      "files": [
+        "lib/dotnet5.4/Microsoft.AspNet.Mvc.Core.dll",
+        "lib/dotnet5.4/Microsoft.AspNet.Mvc.Core.xml",
+        "lib/net451/Microsoft.AspNet.Mvc.Core.dll",
+        "lib/net451/Microsoft.AspNet.Mvc.Core.xml",
+        "Microsoft.AspNet.Mvc.Core.6.0.0-rc1-final.nupkg",
+        "Microsoft.AspNet.Mvc.Core.6.0.0-rc1-final.nupkg.sha512",
+        "Microsoft.AspNet.Mvc.Core.nuspec"
       ]
     },
     "Microsoft.AspNet.Routing/1.0.0-rc1-final": {
@@ -7797,6 +8146,20 @@
         "Microsoft.Extensions.Logging.Abstractions.1.0.0-rc1-final.nupkg",
         "Microsoft.Extensions.Logging.Abstractions.1.0.0-rc1-final.nupkg.sha512",
         "Microsoft.Extensions.Logging.Abstractions.nuspec"
+      ]
+    },
+    "Microsoft.Extensions.MemoryPool/1.0.0-rc1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "QaWADlihqf1DDDLqav1v5u7ObNF7qqPpt4CyN7xBwSx0/jhFjtDnFnKswNYgC/kNFJWZ+crF22AR19M3LlQRaQ==",
+      "files": [
+        "lib/dotnet5.4/Microsoft.Extensions.MemoryPool.dll",
+        "lib/dotnet5.4/Microsoft.Extensions.MemoryPool.xml",
+        "lib/net451/Microsoft.Extensions.MemoryPool.dll",
+        "lib/net451/Microsoft.Extensions.MemoryPool.xml",
+        "Microsoft.Extensions.MemoryPool.1.0.0-rc1-final.nupkg",
+        "Microsoft.Extensions.MemoryPool.1.0.0-rc1-final.nupkg.sha512",
+        "Microsoft.Extensions.MemoryPool.nuspec"
       ]
     },
     "Microsoft.Extensions.OptionsModel/1.0.0-rc1-final": {
@@ -10839,7 +11202,8 @@
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.AspNet.Identity.EntityFramework >= 3.0.0-rc1-final",
-      "Microsoft.AspNet.Mvc.Abstractions >= 6.0.0-rc1-final"
+      "Microsoft.AspNet.Mvc.Abstractions >= 6.0.0-rc1-final",
+      "Microsoft.AspNet.Mvc.Core >= 6.0.0-rc1-final"
     ],
     "DNX,Version=v4.5.1": [],
     "DNXCore,Version=v5.0": []

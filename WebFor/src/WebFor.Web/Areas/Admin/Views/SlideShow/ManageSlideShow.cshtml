@@ -1,0 +1,106 @@
+﻿@using System.Threading.Tasks
+@using cloudscribe.Web.Pagination
+@model cloudscribe.Web.Pagination.IPagedList<WebFor.Web.Areas.Admin.ViewModels.SlideShow.SlideShowViewModel>
+
+@{
+    ViewData["Title"] = "مدیریت اسلاید شو";
+}
+
+<h2>مدیریت مقاله</h2>
+
+@section styles{
+    <link href="~/lib/pnotify/dist/pnotify.custom.min.css" rel="stylesheet" />
+}
+
+@Html.AntiForgeryToken()
+
+@if (@TempData["SlideShowMessage"] != null)
+{
+    <p>
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>@TempData["SlideShowMessage"]</h4>
+        </div>
+    </p>
+}
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Single().SlideShowTitle)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Single().SlideShowDateCreated)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Single().SlideShowPriority)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                @item.SlideShowTitle
+            </td>
+
+            <td>
+                <span class="ArticleDateCreated">@item.SlideShowDateCreated.ToShortDateString()</span>
+            </td>
+
+            <td>
+                @item.SlideShowPriority
+            </td>
+
+            <td>
+
+                <a href="#" class="btn btn-default slideShowDetail" data-slideshow-picture="@item.SlideShowPictrure" data-slideshow-body="@item.SlideShowBody">جزئیات</a>
+                <a asp-action="Edit" asp-route-id="@item.SlideShowId" class="btn btn-warning">ویرایش</a>
+                <a asp-action="Delete" asp-route-id="@item.SlideShowId" class="btn btn-danger DeleteSlideShowButton">حذف</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="modal fade" id="SlideShowDetailModal" tabindex="-1" role="dialog" aria-labelledby="SlideShowDetailModal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="SlideShowDetailModal-label">جزتیات اسلاید شو</h4>
+            </div>
+
+            <div class="modal-body">
+                <img id="slideShowPicture" class="img-responsive" />
+                <p id="slideShowBodyModal" style="max-height: 600px; overflow: auto; -ms-word-wrap: break-word; word-wrap: break-word; white-space: pre-wrap;" class="text-justify"></p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+    <cs-pager cs-paging-pagesize="@Model.PageSize"
+              cs-paging-pagenumber="@Model.PageNumber"
+              cs-paging-totalitems="@Model.TotalItemCount"
+              cs-pagenumber-param="page"
+              asp-controller="SlideShow"
+              asp-action="ManageSlideShow">
+
+    </cs-pager>
+</div>
+
+@section scripts{
+    <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
+    <script src="~/lib/pesian-datetime/jalali.js"></script>
+    <script src="~/js/webforscripts/admin.manageslideshow.js"></script>
+}
