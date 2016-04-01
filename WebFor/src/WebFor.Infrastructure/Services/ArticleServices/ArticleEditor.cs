@@ -24,7 +24,7 @@ namespace WebFor.Infrastructure.Services.ArticleServices
         public async Task<List<ArticleStatus>> EditArticleAsync(Article article, string articleTags)
         {
             article.ArticleDateModified = DateTime.Now;
-            var ArticleStatusList = new List<ArticleStatus>();
+            var articleStatusList = new List<ArticleStatus>();
             int addTagsResult = 0;
             int removeTagsFromArticleResult = 0;
             int addTagsToArticleResult = 0;
@@ -109,25 +109,25 @@ namespace WebFor.Infrastructure.Services.ArticleServices
 
             if (updateArticleResult > 0)
             {
-                ArticleStatusList.Add(ArticleStatus.ArticleEditSucess);
+                articleStatusList.Add(ArticleStatus.ArticleEditSucess);
             }
 
             if (addTagsResult > 0)
             {
-                ArticleStatusList.Add(ArticleStatus.ArticleTagCreateSucess);
+                articleStatusList.Add(ArticleStatus.ArticleTagCreateSucess);
             }
 
             if (removeTagsFromArticleResult > 0 || tagsRemovalResult > 0)
             {
-                ArticleStatusList.Add(ArticleStatus.ArticleRemoveTagsFromArticleSucess);
+                articleStatusList.Add(ArticleStatus.ArticleRemoveTagsFromArticleSucess);
             }
 
             if (addTagsToArticleResult > 0)
             {
-                ArticleStatusList.Add(ArticleStatus.ArticleArticleTagsCreateSucess);
+                articleStatusList.Add(ArticleStatus.ArticleArticleTagsCreateSucess);
             }
 
-            return ArticleStatusList;
+            return articleStatusList;
         }
 
     }

@@ -22,14 +22,16 @@ namespace WebFor.Web.Areas.Admin.Controllers
         private IWebForMapper _webForMapper;
         private IFileUploader _fileUploader;
         private IFileDeleter _fileDeleter;
+        private IFileUploadValidator _fileValidator;
 
 
-        public SlideShowController(IUnitOfWork uw, IWebForMapper webForMapper, IFileUploader fileUploader, IFileDeleter fileDeleter)
+        public SlideShowController(IUnitOfWork uw, IWebForMapper webForMapper, IFileUploader fileUploader, IFileDeleter fileDeleter, IFileUploadValidator fileValidator)
         {
             _uw = uw;
             _webForMapper = webForMapper;
             _fileUploader = fileUploader;
             _fileDeleter = fileDeleter;
+            _fileValidator = fileValidator;
         }
 
         [HttpGet]
@@ -57,6 +59,11 @@ namespace WebFor.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Create(SlideShowViewModel slideShowViewModel)
         {
             if (!ModelState.IsValid)
+            {
+                return View(slideShowViewModel);
+            }
+
+            if (!_fileValidator.ValidateUploadedFile(slideShowViewModel.SlideShowPictrureFile, Core.Enums.UploadFileType.Image, 4, ModelState))
             {
                 return View(slideShowViewModel);
             }
@@ -106,7 +113,10 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return View(viewModel);
             }
 
-            //TODO: validate file formt here
+            if (!_fileValidator.ValidateUploadedFile(viewModel.SlideShowPictrureFile, Core.Enums.UploadFileType.Image, 4, ModelState))
+            {
+                return View(viewModel);
+            }
 
             var slideshow = _webForMapper.SlideShowViewModelEditToSlideShow(viewModel);
 
