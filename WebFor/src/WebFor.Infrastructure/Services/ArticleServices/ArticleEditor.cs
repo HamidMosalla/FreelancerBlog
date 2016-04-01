@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using WebFor.Core.Domain;
+using WebFor.Core.Enums;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.ArticleServices;
 
@@ -14,7 +15,6 @@ namespace WebFor.Infrastructure.Services.ArticleServices
     public class ArticleEditor : IArticleEditor
     {
         private IUnitOfWork _uw;
-        public ArticleStatus ArticleStatus { get; }
 
         public ArticleEditor(IUnitOfWork uw)
         {
