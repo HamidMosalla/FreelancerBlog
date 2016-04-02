@@ -12,7 +12,7 @@
 
 <form asp-action="Create" asp-controller="Article" id="ArticleForm" enctype="multipart/form-data">
     <div class="form-horizontal">
-        <hr/>
+        <hr />
         <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
 
         <div class="form-group">
@@ -64,7 +64,7 @@
         <div class="form-group">
             <label asp-for="IsOpenForComment" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="IsOpenForComment"/>
+                <input asp-for="IsOpenForComment" />
                 <span asp-validation-for="IsOpenForComment" class="text-danger" />
             </div>
         </div>
@@ -81,8 +81,8 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/ckeditor/ckeditor.js"></script>
-    <script src="~/js/site.ckeditor.js"></script>
+    <script src="~/js/webforscripts/admin.article.create.ckeditor.js"></script>
     <script src="~/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <script src="~/lib/bootstrap3-typeahead/bootstrap3-typeahead.min.js"></script>
-    <script src="~/js/site.typeahead.js"></script>
+    <script src="~/js/webforscripts/admin.article.create.typeahead.js"></script>
 }
