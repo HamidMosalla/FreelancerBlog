@@ -11,6 +11,7 @@ using System.Linq;
 using WebFor.Web.ViewModels.Article;
 using WebFor.Web.ViewModels.Contact;
 using WebFor.Web.Areas.Admin.ViewModels.SlideShow;
+using WebFor.Web.Areas.Admin.ViewModels.Portfolio;
 
 namespace WebFor.Web.Services
 {
@@ -27,8 +28,12 @@ namespace WebFor.Web.Services
         List<ContactViewModel> ContactCollectionToContactViewModelCollection(List<Contact> contacts);
         SlideShow SlideShowViewModelToSlideShow(SlideShowViewModel slideShowViewModel, string imagePath);
         Contact ContactViewModelToContact(ContactViewModel contactViewModel);
+        List<PortfolioViewModel> PortfolioCollectionToPortfolioViewModelCollection(List<Portfolio> portfolios);
         SlideShowViewModelEdit SlideShowToSlideShowViewModelEdit(SlideShow model);
+        Portfolio PortfolioViewModelToPorfolio(PortfolioViewModel viewModel, string thumbFileName);
         SlideShow SlideShowViewModelEditToSlideShow(SlideShowViewModelEdit viewModel);
+        PortfolioViewModelEdit PortfolioToPortfolioViewModelEdit(Portfolio model);
+        Portfolio PortfolioViewModelEditToPortfolio(PortfolioViewModelEdit viewModel);
     }
 
     public class WebForMapper : IWebForMapper
@@ -57,6 +62,10 @@ namespace WebFor.Web.Services
             cfg.CreateMap<SlideShowViewModel, SlideShow>();
             cfg.CreateMap<SlideShow, SlideShowViewModelEdit>();
             cfg.CreateMap<SlideShowViewModelEdit, SlideShow>();
+            cfg.CreateMap<Portfolio, PortfolioViewModel>();
+            cfg.CreateMap<PortfolioViewModel, Portfolio>();
+            cfg.CreateMap<Portfolio, PortfolioViewModelEdit>();
+            cfg.CreateMap<PortfolioViewModelEdit, Portfolio>();
         });
 
         public IMapper Mapper = _autoMapperConfig.CreateMapper();
@@ -121,14 +130,42 @@ namespace WebFor.Web.Services
             return Mapper.Map<ContactViewModel, Contact>(contactViewModel);
         }
 
+        public List<PortfolioViewModel> PortfolioCollectionToPortfolioViewModelCollection(List<Portfolio> portfolios)
+        {
+            return Mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios);
+        }
+
         public SlideShowViewModelEdit SlideShowToSlideShowViewModelEdit(SlideShow model)
         {
             return Mapper.Map<SlideShow, SlideShowViewModelEdit>(model);
         }
 
+        public Portfolio PortfolioViewModelToPorfolio(PortfolioViewModel viewModel, string thumbFileName)
+        {
+            var portfolio =  Mapper.Map<PortfolioViewModel, Portfolio>(viewModel);
+
+            portfolio.PortfolioThumbnail = thumbFileName;
+
+            return portfolio;
+        }
+
         public SlideShow SlideShowViewModelEditToSlideShow(SlideShowViewModelEdit viewModel)
         {
             return Mapper.Map< SlideShowViewModelEdit, SlideShow>(viewModel);
+        }
+
+        public PortfolioViewModelEdit PortfolioToPortfolioViewModelEdit(Portfolio model)
+        {
+            var portfolioViewModelEdit =  Mapper.Map<Portfolio, PortfolioViewModelEdit>(model);
+
+            portfolioViewModelEdit.CurrentThumbnail = model.PortfolioThumbnail;
+
+            return portfolioViewModelEdit;
+        }
+
+        public Portfolio PortfolioViewModelEditToPortfolio(PortfolioViewModelEdit viewModel)
+        {
+            return Mapper.Map<PortfolioViewModelEdit, Portfolio>(viewModel);
         }
 
         public ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.Entity;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebFor.Core.Domain;
@@ -7,7 +8,7 @@ using WebFor.Infrastructure.EntityFramework;
 
 namespace WebFor.Infrastructure.Repository
 {
-    public class PortfolioRepository:IPortfolioRepository
+    public class PortfolioRepository : IPortfolioRepository
     {
         private WebForDbContext _context;
 
@@ -37,7 +38,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<Portfolio> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return _context.Portfolios.SingleOrDefaultAsync(p=>p.PortfolioId.Equals(id));
         }
 
         public IEnumerable<Portfolio> GetAll()
@@ -47,7 +48,37 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<List<Portfolio>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _context.Portfolios.ToListAsync();
+        }
+
+        public Task<int> AddNewPortfolio(Portfolio portfolio)
+        {
+            _context.Portfolios.Add(portfolio);
+            return _context.SaveChangesAsync();
+        }
+
+        public Task<int> DeletePortfolioAsync(Portfolio model)
+        {
+            _context.Portfolios.Remove(model);
+            return _context.SaveChangesAsync();
+        }
+
+        public void Detach(Portfolio model)
+        {
+            _context.Entry(model).State = EntityState.Detached;
+        }
+
+        public Task<int> UpdatePortfolioAsync(Portfolio portfolio)
+        {
+            _context.Portfolios.Attach(portfolio, GraphBehavior.SingleObject);
+
+            var entity = _context.Entry(portfolio);
+            entity.State = EntityState.Modified;
+
+            entity.Property(e => e.PortfolioDateCreated).IsModified = false;
+            entity.Property(e => e.PortfolioThumbnail).IsModified = portfolio.PortfolioThumbnail != null;
+
+            return _context.SaveChangesAsync();
         }
     }
 }

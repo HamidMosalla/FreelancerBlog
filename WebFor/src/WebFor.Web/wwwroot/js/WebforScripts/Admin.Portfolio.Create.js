@@ -7,7 +7,7 @@
             ignore: []
         });
 
-        var editor = CKEDITOR.replace('PortfolioBody');
+        var editor = CKEDITOR.replace('PortfolioBody', { customConfig: '../../lib/ckeditor/config.portfolio.js' });
         
         $('#PortfolioDateBuilt').pikaday({ firstDay: 1, format: 'MM/DD/YYYY' });
 

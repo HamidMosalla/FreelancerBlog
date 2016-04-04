@@ -113,15 +113,16 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return View(viewModel);
             }
 
-            if (!_fileValidator.ValidateUploadedFile(viewModel.SlideShowPictrureFile, Core.Enums.UploadFileType.Image, 4, ModelState))
-            {
-                return View(viewModel);
-            }
-
             var slideshow = _webForMapper.SlideShowViewModelEditToSlideShow(viewModel);
 
             if (viewModel.SlideShowPictrureFile != null)
             {
+
+                if (!_fileValidator.ValidateUploadedFile(viewModel.SlideShowPictrureFile, Core.Enums.UploadFileType.Image, 4, ModelState))
+                {
+                    return View(viewModel);
+                }
+
                 var model = await _uw.SlideShowRepository.FindByIdAsync(viewModel.SlideShowId);
 
                 _uw.SlideShowRepository.Detach(model);

@@ -36,7 +36,7 @@ namespace WebFor.Infrastructure.Services.Shared
                     var fileName = Path.GetFileNameWithoutExtension(ContentDispositionHeaderValue.Parse(upload.ContentDisposition).FileName.Trim('"'));
                     var extension = Path.GetExtension(ContentDispositionHeaderValue.Parse(upload.ContentDisposition).FileName.Trim('"'));
 
-                    var vFileName = fileName + " - " + DateTime.Now.ToString("yyyyMMdd-HHMMssff") + extension;
+                    var vFileName = fileName + "-" + DateTime.Now.ToString("yyyyMMdd-HHMMssff") + extension;
 
                     webRootPath.Insert(0, _environment.WebRootPath);
 
