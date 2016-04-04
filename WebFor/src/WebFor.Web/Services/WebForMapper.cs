@@ -21,6 +21,7 @@ namespace WebFor.Web.Services
         Task<ArticleViewModel> ArticleToArticleViewModelWithTagsAsync(Article article);
         Article ArticleViewModelToArticle(ArticleViewModel articleViewModel);
         List<ArticleViewModel> ArticleCollectionToArticleViewModelCollection(List<Article> articles);
+        List<PortfolioViewModel> PortfolioCollectionToPortfolioCollectionViewModel(List<Portfolio> portfolios);
         List<SlideShowViewModel> SlideShowCollectionToSlideShowCollectionViewModel(List<SlideShow> slideShows);
         ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel);
         List<ArticleCommentViewModel> ArticleCommentCollectionToArticleCommentViewModelCollection(List<ArticleComment> comments);
@@ -94,6 +95,11 @@ namespace WebFor.Web.Services
         public List<ArticleViewModel> ArticleCollectionToArticleViewModelCollection(List<Article> articles)
         {
             return Mapper.Map<List<Article>, List<ArticleViewModel>>(articles);
+        }
+
+        public List<PortfolioViewModel> PortfolioCollectionToPortfolioCollectionViewModel(List<Portfolio> portfolios)
+        {
+            return Mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios);
         }
 
         public List<SlideShowViewModel> SlideShowCollectionToSlideShowCollectionViewModel(List<SlideShow> slideShows)
