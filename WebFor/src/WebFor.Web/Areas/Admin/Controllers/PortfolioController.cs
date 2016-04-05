@@ -169,6 +169,8 @@ namespace WebFor.Web.Areas.Admin.Controllers
             {
                 _fileDeleter.DeleteFile(model.PortfolioThumbnail, new List<string> { "images", "portfolio", "thumb" });
 
+                _fileDeleter.DeleteEditorImages(model.PortfolioBody, new List<string> {"images", "portfolio", "full" });
+
                 int deletePortfolioResult = await _uw.PortfolioRepository.DeletePortfolioAsync(model);
 
                 if (deletePortfolioResult > 0)

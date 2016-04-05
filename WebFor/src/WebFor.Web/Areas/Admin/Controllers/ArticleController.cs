@@ -27,14 +27,16 @@ namespace WebFor.Web.Areas.Admin.Controllers
         private IWebForMapper _webForMapper;
         private IArticleCreator _articleCreator;
         private IArticleEditor _articleEditor;
+        private IFileDeleter _fileDeleter;
 
-        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IWebForMapper webForMapper, IArticleCreator articleCreator, IArticleEditor articleEditor)
+        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IWebForMapper webForMapper, IArticleCreator articleCreator, IArticleEditor articleEditor, IFileDeleter fileDeleter)
         {
             _uw = uw;
             _ckEditorFileUploader = ckEditorFileUploader;
             _webForMapper = webForMapper;
             _articleCreator = articleCreator;
             _articleEditor = articleEditor;
+            _fileDeleter = fileDeleter;
         }
 
         [HttpGet]
@@ -371,6 +373,8 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
             try
             {
+                _fileDeleter.DeleteEditorImages(model.ArticleBody, new List<string> { "Files", "ArticleUploads" });
+
                 int deleteArticleResult = await _uw.ArticleRepository.DeleteArticleAsync(model);
 
                 if (deleteArticleResult > 0)
@@ -400,8 +404,8 @@ namespace WebFor.Web.Areas.Admin.Controllers
         {
             string vOutput = await _ckEditorFileUploader.UploadAsync(
                                    upload,
-                                   new List<string>() { "Files", "ArticleUploads" },
-                                   "/Files/ArticleUploads/",
+                                   new List<string>() { "images", "blog" },
+                                   "/images/blog/",
                                    CKEditorFuncNum,
                                    CKEditor,
                                    langCode);

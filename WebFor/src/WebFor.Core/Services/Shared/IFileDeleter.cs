@@ -11,5 +11,7 @@ namespace WebFor.Core.Services.Shared
     {
         IHostingEnvironment Environment { get; }
         void DeleteFile(string fileName, List<string> path);
+        void DeleteEditorImages(string bodyText, List<string> path);
+
     }
 }
