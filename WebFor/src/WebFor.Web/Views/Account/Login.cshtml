@@ -11,7 +11,23 @@
     ViewData["Title"] = "Log in";
 }
 
-<h2>@ViewData["Title"].</h2>
+<section id="title" class="emerald">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>ورود</h1>
+                <p>از طریق شبکه های اجتماعی به سایت وارد شوید، یا در صورت تمایل می توانید ثبت نام کنید.</p>
+            </div>
+            <div class="col-sm-6">
+                <ul class="breadcrumb pull-right">
+                    <li><a href="/Home/Index">خانه</a></li>
+                    <li class="active"><a href="/Account/Login">ورود</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
 <div class="row">
     <div class="col-md-8">
         <section>
@@ -47,10 +63,10 @@
                     </div>
                 </div>
                 <p>
-                    <a asp-action="Register">Register as a new user?</a>
+                    <a asp-action="Register">نام کاربری ندارید؟ ثبت نام کنید.</a>
                 </p>
                 <p>
-                    <a asp-action="ForgotPassword">Forgot your password?</a>
+                    <a asp-action="ForgotPassword">پسورد خود را فراموش کرده اید؟</a>
                 </p>
             </form>
         </section>

@@ -34,8 +34,11 @@ namespace WebFor.Web.Controllers
             return View();
         }
 
-        public IActionResult Error()
+        [Route("/Error/Status/{statusCode?}")]
+        public IActionResult Error(int statusCode)
         {
+            ViewBag.StatusCode = statusCode;
+
             return View();
         }
     }

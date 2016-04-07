@@ -102,7 +102,7 @@ namespace WebFor.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error/Status/{0}");
 
                 // For more details on creating database during deployment see http://go.microsoft.com/fwlink/?LinkID=615859
                 try
@@ -117,6 +117,8 @@ namespace WebFor.Web
                 catch { }
             }
 
+            app.UseStatusCodePagesWithRedirects("/Error/Status/{0}");
+
             app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
 
             app.UseStaticFiles();
@@ -124,6 +126,7 @@ namespace WebFor.Web
             app.UseIdentity();
 
             // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
+            
 
             app.UseSession();
 

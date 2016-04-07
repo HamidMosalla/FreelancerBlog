@@ -36,7 +36,9 @@
                                                     @portfolio.PortfolioTitle
                                                 </h5>
                                                 <div class="overlay">
-                                                    <a class="preview btn btn-danger" title="@portfolio.PortfolioTitle" href="~/images/portfolio/thumb/@portfolio.PortfolioThumbnail" ><i class="fa fa-eye"></i></a>
+                                                    <a class="preview btn btn-danger" href="/Portfolio/Detail/@portfolio.PortfolioId/@portfolio.PortfolioTitle.Replace(' ', '-')" data-toggle="tooltip" title="مشاهده جزئیات" target="_blank"><i class="fa fa-eye"></i></a>
+                                                    <a class="preview btn btn-primary" href="@portfolio.PortfolioSiteAddress" data-toggle="tooltip" title="مشاهده وب سایت" target="_blank"><i class="fa fa-globe"></i></a>
+                                                    <a class="preview btn btn-default" href="javascript:void(0)" data-toggle="tooltip" title="مشاهده گاری تصاویر"><i class="fa fa-image"></i></a>
                                                 </div>
                                             </div>
                                         </div>

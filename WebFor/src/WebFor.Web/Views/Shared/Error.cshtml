@@ -1,6 +1,23 @@
 ﻿@{
-    ViewData["Title"] = "Error";
+    ViewData["Title"] = "خطا";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+@if (ViewBag.StatusCode == 404)
+{
+    <section id="error" class="container">
+        <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+            <h1>404 یافت نشد.</h1>
+            <p style="font-size: medium;">صفحه مورد نظر شما یافت نشد، لطفا از درست بودن آدرس اطمینان حاصل فرمایید، اگر بار هم صفحه مورد نظر یافت نشد با مدیریت تماس بگیرید.</p>
+            <a class="btn btn-success" href="/Home/Index">بازگشت به خانه</a>
+        </div>
+    </section>
+}
+
+@if (ViewBag.StatusCode == 500 || ViewBag.StatusCode == 0)
+{
+    <section id="error" class="container">
+        <h1>خطا</h1>
+        <p style="font-size: medium;">خطایی در پردازش درخواست شما پیش آمده، لطفا پس از چند دقیقه دوباره تلاش کنید، اگر مشکل بر طرف نشد با مدیریت سایت تماس بگیرید.</p>
+        <a class="btn btn-success" href="/Home/Index">بازگشت به خانه</a>
+    </section>
+}
