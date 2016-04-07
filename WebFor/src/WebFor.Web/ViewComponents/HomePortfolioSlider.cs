@@ -26,7 +26,7 @@ namespace WebFor.Web.ViewComponents
         {
             var portfolios = await _uw.PortfolioRepository.GetAllAsync();
 
-            var portfoliosViewModel = _webForMapper.PortfolioCollectionToPortfolioCollectionViewModel(portfolios);
+            var portfoliosViewModel = _webForMapper.PortfolioCollectionToPortfolioViewModelCollection(portfolios);
 
             return View(portfoliosViewModel);
         }

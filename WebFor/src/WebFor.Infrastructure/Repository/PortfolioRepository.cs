@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.Entity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
@@ -48,7 +49,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<List<Portfolio>> GetAllAsync()
         {
-            return _context.Portfolios.ToListAsync();
+            return _context.Portfolios.OrderByDescending(p=>p.PortfolioDateCreated).ToListAsync();
         }
 
         public Task<int> AddNewPortfolio(Portfolio portfolio)

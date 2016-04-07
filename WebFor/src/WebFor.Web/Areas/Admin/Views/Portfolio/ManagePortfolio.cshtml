@@ -34,6 +34,10 @@
         </th>
 
         <th>
+            @Html.DisplayNameFor(model => model.Single().PortfolioSiteAddress)
+        </th>
+
+        <th>
             @Html.DisplayNameFor(model => model.Single().PortfolioDateCreated)
         </th>
 
@@ -45,7 +49,7 @@
         <tr>
 
             <td>
-                <a href="@item.PortfolioSiteAddress">@item.PortfolioTitle</a>
+                <a href="/Portfolio/Detail/@item.PortfolioId/@item.PortfolioTitle.Replace(" ", "-")">@item.PortfolioTitle</a>
             </td>
 
             <td>
@@ -53,12 +57,15 @@
             </td>
 
             <td>
-                <span class="ArticleDateCreated">@item.PortfolioDateCreated.ToShortDateString()</span>
+                <a href="@item.PortfolioSiteAddress">@item.PortfolioSiteAddress</a>
+            </td>
+
+            <td>
+                <span class="persianDate">@item.PortfolioDateCreated</span>
             </td>
 
             <td>
                 <a asp-action="Edit" asp-route-id="@item.PortfolioId" class="btn btn-warning">ویرایش</a>
-                <a asp-action="Details" asp-route-id="@item.PortfolioId" class="btn btn-default">جزئیات</a>
                 <a asp-action="Delete" asp-route-id="@item.PortfolioId" class="btn btn-danger DeletePortfolioButton">حذف</a>
             </td>
         </tr>
@@ -78,6 +85,5 @@
 
 @section scripts{
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
-    <script src="~/lib/pesian-datetime/jalali.js"></script>
     <script src="~/js/webforscripts/admin.manageportfolio.js"></script>
 }

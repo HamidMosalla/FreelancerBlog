@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Http;
 
@@ -37,10 +38,11 @@ namespace WebFor.Web.Areas.Admin.ViewModels.Portfolio
         [DataType(DataType.Url)]
         public string PortfolioSiteAddress { get; set; }
 
-
+        [Display(Name = "دسته بندی")]
+        public string PortfolioCategory { get; set; }
 
         [Display(Name = "دسته بندی")]
         [Required(ErrorMessage = "پر کردن این فیلد اجباری می باشد.")]
-        public string PortfolioCategory { get; set; }
+        public List<string> PortfolioCategoryList { get; set; }
     }
 }

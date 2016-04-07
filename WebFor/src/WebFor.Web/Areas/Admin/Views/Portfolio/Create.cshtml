@@ -7,6 +7,7 @@
 
 @section styles{
     <link href="~/lib/pickday/pikaday.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
 }
 
 <form asp-action="Create" asp-controller="Portfolio" id="PortfolioForm" enctype="multipart/form-data">
@@ -39,18 +40,22 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="PortfolioCategory" class="col-md-2 control-label"></label>
+            <label asp-for="PortfolioCategoryList" class="col-md-2 control-label"></label>
             <div class="col-md-3 col-sm-4 col-lg-3 col-xs-10">
 
-                <select asp-for="PortfolioCategory" class="form-control">
-                    <option value="">لطفا یک دسته بندی انتخاب کنید</option>
-                    <option value="ASP.NETMVC">ASP.NET MVC</option>
+                <select asp-for="PortfolioCategoryList" class="selectpicker show-menu-arrow" multiple>
+                    <option value="ASP-NET-MVC">ASP.NET MVC</option>
+                    <option value="Bootstrap">Bootstrap</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="UnderscoreJs">UnderscoreJs</option>
                     <option value="Angular">Angular</option>
-                    <option value="HTML&CSS">HTML&CSS</option>
+                    <option value="NodeJs">NodeJs</option>
+                    <option value="HTML">HTML</option>
+                    <option value="CSS">CSS</option>
                     <option value="WordPress">WordPress</option>
                 </select>
 
-                <span asp-validation-for="PortfolioCategory" class="text-danger" />
+                <span asp-validation-for="PortfolioCategoryList" class="text-danger" />
             </div>
         </div>
 
@@ -86,5 +91,6 @@
     <script src="~/lib/pickday/moment.min.js"></script>
     <script src="~/lib/pickday/pikaday.js"></script>
     <script src="~/lib/pickday/pikaday.jquery.js"></script>
+    <script src="~/lib/bootstrap-select/bootstrap-select.min.js"></script>
     <script src="~/js/webforscripts/admin.portfolio.create.js"></script>
 }

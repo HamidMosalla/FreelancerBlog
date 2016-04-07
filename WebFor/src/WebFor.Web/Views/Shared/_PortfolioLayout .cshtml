@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@section styles{
+    @RenderSection("PortfolioStyles", required: false)
+}
+
+<section id="title" class="emerald">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>نمونه کارها</h1>
+                <p>آخرین نمونه کارها با جزئیات در مورد تکنولوژی های استفاده شده</p>
+            </div>
+            <div class="col-sm-6">
+                <ul class="breadcrumb pull-right">
+                    <li><a href="/Home/Index">خانه</a></li>
+                    <li class="active"><a href="/Portfolio/Index">پورتفولیو</a></li>
+                    <li class="active"><a href="/Portfolio/Detail/@ViewData["PortfolioId"]">@ViewData["PortfolioTitle"]</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="blog" class="container">
+    <div class="row">
+        <aside class="col-sm-4 col-sm-pull-1">
+            <div class="widget search">
+                <form role="form">
+                    <div class="input-group">
+                        <input type="text" class="form-control" autocomplete="off" placeholder="جستجو">
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" type="button"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+            </div><!--/.search-->
+
+            <div class="widget ads">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a href="#"><img class="img-responsive img-rounded" src="/images/ads/ad1.png" alt=""></a>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <a href="#"><img class="img-responsive img-rounded" src="/images/ads/ad2.png" alt=""></a>
+                    </div>
+                </div>
+                <p> </p>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <a href="#"><img class="img-responsive img-rounded" src="/images/ads/ad3.png" alt=""></a>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <a href="#"><img class="img-responsive img-rounded" src="/images/ads/ad4.png" alt=""></a>
+                    </div>
+                </div>
+            </div>
+
+        </aside>
+
+        <div class="col-sm-8 col-sm-pull-1">
+            @RenderBody()
+        </div>
+
+
+    </div>
+</section>
+
+
+@section scripts{
+    @RenderSection("PortfolioScripts", required: false)
+}

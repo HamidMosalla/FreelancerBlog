@@ -21,7 +21,6 @@ namespace WebFor.Web.Services
         Task<ArticleViewModel> ArticleToArticleViewModelWithTagsAsync(Article article);
         Article ArticleViewModelToArticle(ArticleViewModel articleViewModel);
         List<ArticleViewModel> ArticleCollectionToArticleViewModelCollection(List<Article> articles);
-        List<PortfolioViewModel> PortfolioCollectionToPortfolioCollectionViewModel(List<Portfolio> portfolios);
         List<SlideShowViewModel> SlideShowCollectionToSlideShowCollectionViewModel(List<SlideShow> slideShows);
         ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel);
         List<ArticleCommentViewModel> ArticleCommentCollectionToArticleCommentViewModelCollection(List<ArticleComment> comments);
@@ -32,6 +31,7 @@ namespace WebFor.Web.Services
         List<PortfolioViewModel> PortfolioCollectionToPortfolioViewModelCollection(List<Portfolio> portfolios);
         SlideShowViewModelEdit SlideShowToSlideShowViewModelEdit(SlideShow model);
         Portfolio PortfolioViewModelToPorfolio(PortfolioViewModel viewModel, string thumbFileName);
+        PortfolioViewModel PortfolioToPorfolioViewModel(Portfolio model);
         SlideShow SlideShowViewModelEditToSlideShow(SlideShowViewModelEdit viewModel);
         PortfolioViewModelEdit PortfolioToPortfolioViewModelEdit(Portfolio model);
         Portfolio PortfolioViewModelEditToPortfolio(PortfolioViewModelEdit viewModel);
@@ -97,11 +97,6 @@ namespace WebFor.Web.Services
             return Mapper.Map<List<Article>, List<ArticleViewModel>>(articles);
         }
 
-        public List<PortfolioViewModel> PortfolioCollectionToPortfolioCollectionViewModel(List<Portfolio> portfolios)
-        {
-            return Mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios);
-        }
-
         public List<SlideShowViewModel> SlideShowCollectionToSlideShowCollectionViewModel(List<SlideShow> slideShows)
         {
             return Mapper.Map<List<SlideShow>, List<SlideShowViewModel>>(slideShows);
@@ -138,7 +133,21 @@ namespace WebFor.Web.Services
 
         public List<PortfolioViewModel> PortfolioCollectionToPortfolioViewModelCollection(List<Portfolio> portfolios)
         {
-            return Mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios);
+            var viewModels =  Mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios);
+
+            var viewModelWithCategory = viewModels.Select(
+                v =>
+                {
+                    v.PortfolioCategoryList =
+                        portfolios.Single(p => p.PortfolioId.Equals(v.PortfolioId))
+                            .PortfolioCategory.Split(',')
+                            .ToList();
+
+                    return v;
+                }
+                ).ToList();
+
+            return viewModelWithCategory;
         }
 
         public SlideShowViewModelEdit SlideShowToSlideShowViewModelEdit(SlideShow model)
@@ -151,8 +160,14 @@ namespace WebFor.Web.Services
             var portfolio =  Mapper.Map<PortfolioViewModel, Portfolio>(viewModel);
 
             portfolio.PortfolioThumbnail = thumbFileName;
+            portfolio.PortfolioCategory = string.Join(",", viewModel.PortfolioCategoryList);
 
             return portfolio;
+        }
+
+        public PortfolioViewModel PortfolioToPorfolioViewModel(Portfolio model)
+        {
+            return Mapper.Map<Portfolio, PortfolioViewModel>(model);
         }
 
         public SlideShow SlideShowViewModelEditToSlideShow(SlideShowViewModelEdit viewModel)
@@ -165,13 +180,18 @@ namespace WebFor.Web.Services
             var portfolioViewModelEdit =  Mapper.Map<Portfolio, PortfolioViewModelEdit>(model);
 
             portfolioViewModelEdit.CurrentThumbnail = model.PortfolioThumbnail;
+            portfolioViewModelEdit.PortfolioCategoryList = model.PortfolioCategory.Split(',').ToList();
 
             return portfolioViewModelEdit;
         }
 
         public Portfolio PortfolioViewModelEditToPortfolio(PortfolioViewModelEdit viewModel)
         {
-            return Mapper.Map<PortfolioViewModelEdit, Portfolio>(viewModel);
+            var portfolio =  Mapper.Map<PortfolioViewModelEdit, Portfolio>(viewModel);
+
+            portfolio.PortfolioCategory = string.Join(",", viewModel.PortfolioCategoryList);
+
+            return portfolio;
         }
 
         public ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel)
