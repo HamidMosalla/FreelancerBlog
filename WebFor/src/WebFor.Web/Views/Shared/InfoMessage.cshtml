@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "اطلاع رسانی";
+}
+
+<section id="title" class="emerald">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>اطلاع رسانی</h1>
+                <p>جهت اظلاع</p>
+            </div>
+            <div class="col-sm-6">
+                <ul class="breadcrumb pull-right">
+                    <li><a href="/Home/Index">خانه</a></li>
+                    <li class="active">اطلاع رسانی</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (ViewBag.InfoMessage == "RegistrationConfirmEmail")
+{
+    <div class="row" style="padding: 20px;">
+        <div class="col-md-4 col-sm-4 col-xs-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-4">
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h2 class="text-info text-center">نام کاربری شما در سیستم ثبت شد، ولی تا زمان تایید آن از طریق ایمیل اجازه ورود ندارید. ما یک ایمیل حاوی لینک فعال سازی برای شما ارسال کردیم، لطفا ایمیل خود را چک کنید، اگر ایمیل در اینباکس شما موجود نبود، هرزنامه های خود را چک کنید.</h2>
+                <a class="btn btn-success" href="/Home/Index">بازگشت به خانه</a>
+            </div>
+        </div>
+    </div>
+}

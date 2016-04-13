@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -15,12 +16,15 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using cloudscribe.Web.Pagination;
+using Microsoft.AspNet.Authentication.OAuth;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Routing;
 using WebFor.DependencyInjection.Modules;
 using WebFor.DependencyInjection.Modules.Article;
 using WebFor.Web.Services;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.WebEncoders;
+using WebFor.Infrastructure.Services.Shared;
 
 namespace WebFor.Web
 {
@@ -54,9 +58,15 @@ namespace WebFor.Web
                 .AddDbContext<WebForDbContext>(options =>
                     options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<WebForDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>(o =>
+            {
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireNonLetterOrDigit = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequiredLength= 6;
+            }).AddEntityFrameworkStores<WebForDbContext>()
+              .AddDefaultTokenProviders();
 
             services.AddMvc();
 
@@ -65,6 +75,8 @@ namespace WebFor.Web
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.CookieName = ".WebFor";
             });
+
+            services.Configure<AuthMessageSenderSecrets>(Configuration.GetSection("AuthMessageSenderSecrets"));
 
             services.AddTransient<IUrlHelper, UrlHelper>();
             services.TryAddTransient<IBuildPaginationLinks, PaginationLinkBuilder>();
@@ -125,8 +137,45 @@ namespace WebFor.Web
 
             app.UseIdentity();
 
-            // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
-            
+            app.UseGoogleAuthentication(options =>
+            {
+                options.ClientId = Configuration["OAuth:Google:ClientId"];
+                options.ClientSecret = Configuration["OAuth:Google:ClientSecret"];
+                options.Events = new OAuthEvents()
+                {
+                    OnRemoteError = ctx =>
+
+                    {
+                        ctx.Response.Redirect("/error?ErrorMessage=" + UrlEncoder.Default.UrlEncode(ctx.Error.Message));
+                        ctx.HandleResponse();
+                        return Task.FromResult(0);
+                    }
+                };
+            });
+
+            app.UseFacebookAuthentication(options =>
+            {
+                options.AppId = Configuration["OAuth:Facebook:AppId"];
+                options.AppSecret = Configuration["OAuth:Facebook:AppSecret"];
+                options.Scope.Add("email");
+                options.BackchannelHttpHandler = new FacebookBackChannelHandler();
+                options.UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,name,email,first_name,last_name,location";
+            });
+
+            app.UseTwitterAuthentication(options =>
+            {
+                options.ConsumerKey = Configuration["OAuth:Twitter:ConsumerKey"];
+                options.ConsumerSecret = Configuration["OAuth:Twitter:ConsumerSecret"];
+                options.DisplayName = "WebFor Twitter Auth";
+            });
+
+            app.UseMicrosoftAccountAuthentication(options =>
+            {
+                options.ClientId = Configuration["OAuth:Microsoft:ClientId"];
+                options.ClientSecret = Configuration["OAuth:Microsoft:ClientSecret"];
+                options.Scope.Add("wl.emails, wl.basic");
+                options.DisplayName = "WebFor Microsoft OAuth";
+            });
 
             app.UseSession();
 

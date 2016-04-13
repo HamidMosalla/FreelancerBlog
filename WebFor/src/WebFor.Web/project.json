@@ -33,7 +33,11 @@
     "WebFor.DependencyInjection": "1.0.0-*",
     "AutoMapper": "4.2.0",
     "cloudscribe.Web.Pagination": "1.0.1-beta1",
-    "Microsoft.AspNet.Identity": "3.0.0-rc1-final"
+    "Microsoft.AspNet.Identity": "3.0.0-rc1-final",
+    "Microsoft.AspNet.Authentication.Google": "1.0.0-rc1-final",
+    "Microsoft.AspNet.Authentication.Facebook": "1.0.0-rc1-final",
+    "Microsoft.AspNet.Authentication.Twitter": "1.0.0-rc1-final",
+    "Microsoft.AspNet.Authentication.MicrosoftAccount": "1.0.0-rc1-final"
   },
 
   "commands": {
@@ -42,8 +46,7 @@
   },
 
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
+    "dnx451": { }
   },
 
   "exclude": [
