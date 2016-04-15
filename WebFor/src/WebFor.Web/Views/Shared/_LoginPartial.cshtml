@@ -4,12 +4,30 @@
 {
     <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-controller="Manage" asp-action="Index" title="Manage">سلام @User.GetUserName()!</a>
+
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="caret"></i> @User.GetUserName().Split('@').First() <i class="caret"></i> </a>
+                <ul class="dropdown-menu">
+                    
+                    <li><a href="/Home/Careers">تغییر پسورد</a></li>
+                    <li><a href="/User/Profile/EditProfile">ویرایش پروفایل</a></li>
+                    <li><a href="/Home/Pricing">مشاهده پروفایل</a></li>
+                    <li><a href="#">ورود با دیگر سرویس ها</a></li>
+
+                    <li class="divider" style="background-color: gray;"></li>
+
+                    <li><a href="#">ارسال مقاله</a></li>
+                    <li><a href="#">ویرایش مقاله</a></li>
+
+                    <li class="divider" style="background-color: gray;"></li>
+
+                    <button type="submit" class="btn btn-link navbar-btn navbar-link">خروج</button>
+
+                </ul>
             </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">خروج</button>
-            </li>
+
+
         </ul>
     </form>
 }

@@ -1,0 +1,58 @@
+google api keys:
+https://console.developers.google.com/apis/api?project=webfor-1279
+
+id:
+ 427151437895-j831t4lojeco2dtl3erk3sqcfv030r83.apps.googleusercontent.com 
+ key:
+  TaBRsMMIJVWd4Dn4rhdGX2Da 
+  
+  
+  
+  
+  
+facebook api keys:
+
+https://developers.facebook.com/apps/242042172812082/
+
+id:
+242042172812082
+key:
+58e3af5484a470f1048189384ad8b04a
+  
+  
+  
+  
+  
+twitter api keys:
+
+https://apps.twitter.com/app/12220452/permissions
+
+id:
+wDBVeIBavyeAwuyCiwVECHam1
+key:
+mf0bwAUc0Lgi1wTxpV2HXbSHLWTOXYX165ny4MKdrRm0qFOnQY
+  
+  
+  
+  
+  
+  
+microsoft api keys:
+
+https://account.live.com/developers/applications/summary/0000000048190258
+
+id:
+0000000048190258
+key:
+m0f3cJp-Pc7Pb9oWNO0fZOFHLkQrg8gw
+  
+  
+  
+  
+  
+  
+call back urls:
+twitter=> http://localhost:18224
+http://localhost:18224/signin-google
+http://localhost:18224/signin-facebook
+http://localhost:18224/signin-microsoft

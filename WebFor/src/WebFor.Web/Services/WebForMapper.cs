@@ -12,6 +12,7 @@ using WebFor.Web.ViewModels.Article;
 using WebFor.Web.ViewModels.Contact;
 using WebFor.Web.Areas.Admin.ViewModels.SlideShow;
 using WebFor.Web.Areas.Admin.ViewModels.Portfolio;
+using WebFor.Web.Areas.User.ViewModels.Profile;
 
 namespace WebFor.Web.Services
 {
@@ -24,6 +25,7 @@ namespace WebFor.Web.Services
         List<SlideShowViewModel> SlideShowCollectionToSlideShowCollectionViewModel(List<SlideShow> slideShows);
         ArticleComment ArticleCommentViewModelToArticleComment(ArticleCommentViewModel viewModel);
         List<ArticleCommentViewModel> ArticleCommentCollectionToArticleCommentViewModelCollection(List<ArticleComment> comments);
+        UserProfileViewModel UserToUserProfileViewModel(ApplicationUser user);
         List<ArticleTagViewModel> ArticleTagCollectionToArticleTagViewModelCollection(List<ArticleTag> tags);
         List<ContactViewModel> ContactCollectionToContactViewModelCollection(List<Contact> contacts);
         SlideShow SlideShowViewModelToSlideShow(SlideShowViewModel slideShowViewModel, string imagePath);
@@ -67,6 +69,9 @@ namespace WebFor.Web.Services
             cfg.CreateMap<PortfolioViewModel, Portfolio>();
             cfg.CreateMap<Portfolio, PortfolioViewModelEdit>();
             cfg.CreateMap<PortfolioViewModelEdit, Portfolio>();
+            cfg.CreateMap<ApplicationUser, UserProfileViewModel>();
+            cfg.CreateMap<UserProfileViewModel, ApplicationUser>();
+
         });
 
         public IMapper Mapper = _autoMapperConfig.CreateMapper();
@@ -105,6 +110,11 @@ namespace WebFor.Web.Services
         public List<ArticleCommentViewModel> ArticleCommentCollectionToArticleCommentViewModelCollection(List<ArticleComment> comments)
         {
             return Mapper.Map<List<ArticleComment>, List<ArticleCommentViewModel>>(comments);
+        }
+
+        public UserProfileViewModel UserToUserProfileViewModel(ApplicationUser user)
+        {
+            return Mapper.Map<ApplicationUser, UserProfileViewModel>(user);
         }
 
         public List<ArticleTagViewModel> ArticleTagCollectionToArticleTagViewModelCollection(List<ArticleTag> tags)

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Data.Entity;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
@@ -37,7 +39,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<ApplicationUser> FindByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            return _context.Users.SingleAsync(u => u.Id.Equals(id));
         }
 
         public IEnumerable<ApplicationUser> GetAll()

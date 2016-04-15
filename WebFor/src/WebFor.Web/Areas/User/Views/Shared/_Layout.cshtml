@@ -22,6 +22,7 @@
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link href="~/lib/bootstrap/dist/css/bootstrap-rtl.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         <link href="~/lib/animate.css/animate.min.css" rel="stylesheet" />
 
         <link href="~/css/main.css" rel="stylesheet" />
@@ -46,13 +47,14 @@
 
 
 
-    <link rel="shortcut icon" href="~/images/ico/favicon.png">
+    <link rel="shortcut icon" href="~/images/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="~/images/ico/apple-touch-icon-57-precomposed.png">
     @RenderSection("styles", required: false)
 </head>
+
 
 <body>
 
@@ -102,7 +104,11 @@
         </div>
     </header>
 
-        @RenderBody()
+    <section id="BodyContent">
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+    </section>
 
     <section id="bottom" class="wet-asphalt">
         <div class="container">
@@ -112,31 +118,40 @@
                     <p>وب برای ایران با هدف ارائه دادن بهترین کیفیت در زمینه طراحی و ساخت سیستم های مدیریت محتوا و صفحات دینامیک وب و همچنین بهینه سازی آنها برای موتورهای جستجو (سئو) در حال شکل گیری است.</p>
                     <p>خدماتی که این وب سایت ارائه خواهد کرد شامل ساخت و پشتیبانی سیستم های اتوماسیون تحت وب، ساخت وب سایت های دینامیک شخصی و اداری، مشاوره در زمینه انتخاب بهترین روش ها و تکنولوژی های ممکن برای حل مسائل تجاری متناسب با نیاز و بودجه می باشد.</p>
                 </div><!--/.col-md-3-->
-                <div class="col-md-3 col-sm-6">
+                <div class="col-md-2 col-sm-4">
                     <h4>کمپانی</h4>
                     <div>
                         <ul>
-                            <li class="fa fa-chevron-left"> <a href="#">درباره کمپانی</a></li>
+                            <li class="fa fa-chevron-left"></li>
+                            <a href="#">درباره کمپانی</a>
                             <br />
-                            <li class="fa fa-chevron-left"> <a href="#">ملاقات با تیم</a></li>
+                            <li class="fa fa-chevron-left"></li>
+                            <a href="#">ملاقات با تیم</a>
                             <br />
-                            <li class="fa fa-chevron-left"> <a href="#">شرکای تجاری</a></li>
+                            <li class="fa fa-chevron-left"></li>
+                            <a href="#">شرکای تجاری</a>
                             <br />
-                            <li class="fa fa-chevron-left"> <a href="#">سرویس های ما</a></li>
+                            <li class="fa fa-chevron-left"></li>
+                            <a href="#">سرویس های ما</a>
                             <br />
-                            <li class="fa fa-chevron-left"> <a href="#">سوالات متداول</a></li>
+                            <li class="fa fa-chevron-left"></li>
+                            <a href="#">سوالات متداول</a>
                             <br />
-                            <li class="fa fa-chevron-left"> <a href="#">تماس با ما</a></li>
+                            <li class="fa fa-chevron-left"></li>
+                            <a href="#">تماس با ما</a>
                             <br />
-                            <li class="fa fa-chevron-left"> <a href="#">حریم خصوصی</a></li>
+                            <li class="fa fa-chevron-left"></li>
+                            <a href="#">حریم خصوصی</a>
                             <br />
-                            <li class="fa fa-chevron-left"> <a href="#">شرایط استفاده</a></li>
+                            <li class="fa fa-chevron-left"></li>
+                            <a href="#">شرایط استفاده</a>
                             <br />
-                            <li class="fa fa-chevron-left"> <a href="#">کپی رایت</a></li>
+                            <li class="fa fa-chevron-left"></li>
+                            <a href="#">کپی رایت</a>
                         </ul>
                     </div>
                 </div><!--/.col-md-3-->
-                <div class="col-md-3 col-sm-6">
+                <div class="col-md-4 col-sm-8">
                     <h4>آخرین مطالب بلاگ</h4>
                     <div>
                         <div class="media">
@@ -185,11 +200,10 @@
                             </span>
                         </div>
                     </form>
-                </div>
+                </div> <!--/.col-md-3-->
             </div>
         </div>
-    </section>
-
+    </section><!--/#bottom-->
     <footer id="footer" class="midnight-blue">
         <div class="container">
             <div class="row">
@@ -210,13 +224,13 @@
 
             </div>
         </div>
-    </footer>
+    </footer><!--/#footer-->
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/lib/isotope/dist/isotope.pkgd.js"></script>
         <script src="~/js/main.js"></script>
+        <script src="~/lib/isotope/dist/isotope.pkgd.js"></script>
     </environment>
 
     <environment names="Staging,Production">
@@ -239,6 +253,5 @@
     </environment>
 
     @RenderSection("scripts", required: false)
-
 </body>
 </html>

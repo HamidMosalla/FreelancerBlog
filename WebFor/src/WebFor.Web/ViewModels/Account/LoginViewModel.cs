@@ -4,15 +4,15 @@ namespace WebFor.Web.ViewModels.Account
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "پر کردن فیلد ایمیل اجباری میباشد.")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "پر کردن فیلد پسورد اجباری میباشد.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "به خاطر داشتن؟")]
         public bool RememberMe { get; set; }
     }
 }

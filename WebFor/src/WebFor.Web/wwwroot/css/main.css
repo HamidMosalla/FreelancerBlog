@@ -786,53 +786,7 @@ ul.tag-cloud {
         margin: 0 0 2px 0;
     }
 
-.btn-social {
-    border: 0;
-    color: #fff;
-    border-radius: 100%;
-    display: inline-block;
-    width: 36px;
-    height: 36px;
-    line-height: 36px;
-    text-align: center;
-    padding: 0;
-}
 
-    .btn-social.btn-facebook {
-        background: #4f7dd4;
-    }
-
-        .btn-social.btn-facebook:hover {
-            background: #789bde;
-        }
-
-    .btn-social.btn-twitter {
-        background: #5bceff;
-    }
-
-        .btn-social.btn-twitter:hover {
-            background: #8eddff;
-        }
-
-    .btn-social.btn-linkedin {
-        background: #21a6d8;
-    }
-
-        .btn-social.btn-linkedin:hover {
-            background: #49b9e3;
-        }
-
-    .btn-social.btn-google-plus {
-        background: #dc422b;
-    }
-
-        .btn-social.btn-google-plus:hover {
-            background: #e36957;
-        }
-
-    .btn-social:hover {
-        color: #fff;
-    }
 
 .navbar-inverse {
     border: none;
