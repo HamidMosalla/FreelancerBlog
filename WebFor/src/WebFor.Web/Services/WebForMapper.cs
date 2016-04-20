@@ -29,6 +29,7 @@ namespace WebFor.Web.Services
         List<ArticleTagViewModel> ArticleTagCollectionToArticleTagViewModelCollection(List<ArticleTag> tags);
         List<ContactViewModel> ContactCollectionToContactViewModelCollection(List<Contact> contacts);
         SlideShow SlideShowViewModelToSlideShow(SlideShowViewModel slideShowViewModel, string imagePath);
+        ApplicationUser UserProfileViewModelToUser(UserProfileViewModel viewModel);
         Contact ContactViewModelToContact(ContactViewModel contactViewModel);
         List<PortfolioViewModel> PortfolioCollectionToPortfolioViewModelCollection(List<Portfolio> portfolios);
         SlideShowViewModelEdit SlideShowToSlideShowViewModelEdit(SlideShow model);
@@ -134,6 +135,11 @@ namespace WebFor.Web.Services
             slideShow.SlideShowPictrure = imagePath;
 
             return slideShow;
+        }
+
+        public ApplicationUser UserProfileViewModelToUser(UserProfileViewModel viewModel)
+        {
+            return Mapper.Map<UserProfileViewModel, ApplicationUser>(viewModel);
         }
 
         public Contact ContactViewModelToContact(ContactViewModel contactViewModel)

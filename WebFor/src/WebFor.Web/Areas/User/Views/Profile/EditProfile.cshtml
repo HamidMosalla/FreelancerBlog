@@ -1,0 +1,178 @@
+﻿@model WebFor.Web.Areas.User.ViewModels.Profile.UserProfileViewModel
+
+@{
+    ViewData["Title"] = "ویرایش پروفایل";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+    <link href="~/lib/pickday/pikaday.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+}
+
+<form asp-action="EditProfile" asp-controller="Profile" id="EditProfileForm" enctype="multipart/form-data">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label asp-for="UserFullName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UserFullName" class="form-control" />
+                <span asp-validation-for="UserFullName" class="text-danger" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="UserOccupation" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UserOccupation" class="form-control" />
+                <span asp-validation-for="UserOccupation" class="text-danger" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="UserSpeciality" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UserSpeciality" class="form-control" />
+                <span asp-validation-for="UserSpeciality" class="text-danger" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="UserWebSite" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UserWebSite" class="form-control" />
+                <span asp-validation-for="UserWebSite" class="text-danger" />
+            </div>
+        </div>
+
+
+        <div class="form-group input-lg">
+            <label class="col-md-2 control-label"></label>
+            <div class="col-md-8 col-sm-8 col-xs-8">
+                <fieldset style="border: 1px solid #808080; padding-right: 15px;">
+                    <legend>جنیست</legend>
+                    <input asp-for="UserGender" value="Male" type="radio" />
+                    <label asp-for="UserGender">مرد</label>
+                    &nbsp;
+                    <input asp-for="UserGender" value="Female" type="radio" />
+                    <label asp-for="UserGender">زن</label>
+                </fieldset>
+                <span asp-validation-for="UserGender" class="text-danger"></span>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+
+        <div class="form-group">
+            <label asp-for="UserAddress" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <textarea asp-for="UserAddress" rows="5" class="form-control"></textarea>
+                <span asp-validation-for="UserAddress" class="text-danger" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="UserBio" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <textarea asp-for="UserBio" rows="10" class="form-control"></textarea>
+                <span asp-validation-for="UserBio" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UserFavourites" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UserFavourites" class="form-control" />
+                <span asp-validation-for="UserFavourites" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UserDateOfBirth" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UserDateOfBirth" class="form-control" />
+                <span asp-validation-for="UserDateOfBirth" class="text-danger" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="UserFacebookProfile" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UserFacebookProfile" class="form-control" />
+                <span asp-validation-for="UserFacebookProfile" class="text-danger" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="UserGoogleProfile" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UserGoogleProfile" class="form-control" />
+                <span asp-validation-for="UserGoogleProfile" class="text-danger" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="UserLinkedInProfile" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UserLinkedInProfile" class="form-control" />
+                <span asp-validation-for="UserLinkedInProfile" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UserTwitterProfile" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UserTwitterProfile" class="form-control" />
+                <span asp-validation-for="UserTwitterProfile" class="text-danger" />
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="UserAvatarFile" class="col-md-2 control-label"></label>
+            <div class="col-md-4">
+                <input asp-for="UserAvatarFile" type="file" accept=".jpg,.jpeg,.gif,.png" class="filestyle" data-buttonText="انتخاب تامبنیل" />
+                <span asp-validation-for="UserAvatarFile" class="text-danger" />
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">آواتار فعلی</div>
+                    <div class="panel-body">
+                        <img src="~/images/user-avatar/@(Model.UserAvatar ?? (Model.UserGender == "Male" ? "default-image-male.jpg" : "default-image-female"))" class="img-thumbnail" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ذخیره" class="btn btn-lg btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap-filestyle/src/bootstrap-filestyle.min.js"></script>
+    <script src="~/lib/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/lib/pickday/moment.min.js"></script>
+    <script src="~/lib/pickday/pikaday.js"></script>
+    <script src="~/lib/pickday/pikaday.jquery.js"></script>
+    <script src="~/js/webforscripts/user.editprofile.js"></script>
+}

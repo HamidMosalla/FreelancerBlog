@@ -29,7 +29,7 @@ namespace WebFor.Infrastructure.Services.Shared
 
                 var extension = Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
 
-                var fullFileName = fileName + "-" + DateTime.Now.ToString("yyyyMMdd-HHMMssff") + extension;
+                var fullFileName = fileName.Replace(" ", "-") + "-" + DateTime.Now.ToString("yyyyMMdd-HHMMssff") + extension;
 
                 path.Insert(0, Environment.WebRootPath);
 

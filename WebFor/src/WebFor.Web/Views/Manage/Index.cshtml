@@ -2,16 +2,49 @@
 @using WebFor.Web.ViewModels.Manage
 @model WebFor.Web.ViewModels.Manage.IndexViewModel
 @{
-    ViewData["Title"] = "Manage your account";
+    ViewData["Title"] = "تنظیمات کاربری";
 }
 
-<h2>@ViewData["Title"].</h2>
+<section id="title" class="emerald">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>تنظیمات کاربری</h1>
+                <p>در این بخش میتوانید جزئیات نام کاربری خود را تغییر دهید.</p>
+            </div>
+            <div class="col-sm-6">
+                <ul class="breadcrumb pull-right">
+                    <li><a href="/Home/Index">خانه</a></li>
+                    <li class="active"><a href="/Manage/Index">تنظیمات کاربری</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if (TempData["EditProfileMessage"] != null)
+{
+    if ((string)TempData["EditProfileMessage"] == "EditProfileSuccess")
+    {
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            پروفایل شما با موفقیت ویرایش شد.
+        </div>
+    }
+
+    if ((string)TempData["EditProfileMessage"] == "EditProfileFailed")
+    {
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            چیزی برای ذخیره وجود نداشت، یا مشکلی در ویرایش پروفایل شما پیش آمده.
+        </div>
+    }
+}
+
 <p class="text-success">@ViewData["StatusMessage"]</p>
 <div>
-    <h4>Change your account settings</h4>
-    <hr />
     <dl class="dl-horizontal">
-        <dt>Password:</dt>
+        <dt>پسورد</dt>
         <dd>
             [
             @if (Model.HasPassword)
@@ -24,20 +57,21 @@
             }
             ]
         </dd>
-        <dt>External Logins:</dt>
+        <dt>لاگین های خارجی</dt>
         <dd>
 
             @Model.Logins.Count [<a asp-controller="Manage" asp-action="ManageLogins">Manage</a>]
         </dd>
 
 
-        <dt>Phone Number:</dt>
+        @*<dt>شماره تلفن:</dt>
+
         <dd>
             <p>
                 Phone Numbers can used as a second factor of verification in two-factor authentication.
                 See <a href="http://go.microsoft.com/fwlink/?LinkID=532713">this article</a>
                 for details on setting up this ASP.NET application to support two-factor authentication using SMS.
-            </p>
+            </p>*@
             @*@(Model.PhoneNumber ?? "None") [
                 @if (Model.PhoneNumber != null)
                 {
@@ -50,14 +84,16 @@
                     <a asp-controller="Manage" asp-action="AddPhoneNumber">Add</a>
                 }
                 ]*@
-        </dd>
+        @*</dd>*@
 
-        <dt>Two-Factor Authentication:</dt>
+
+        @*<dt>ورود دو مرحله ای:</dt>
+
         <dd>
             <p>
                 There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkID=532713">this article</a>
                 for setting up this application to support two-factor authentication.
-            </p>
+            </p>*@
             @*@if (Model.TwoFactor)
                 {
                     <form asp-controller="Manage" asp-action="DisableTwoFactorAuthentication" method="post" class="form-horizontal" role="form">
@@ -76,6 +112,7 @@
                         </text>
                     </form>
                 }*@
-        </dd>
+        @*</dd>*@
+
     </dl>
 </div>

@@ -4,7 +4,7 @@
 @model WebFor.Web.Areas.Admin.ViewModels.Article.ArticleViewModel
 
 @{
-    ViewData["Title"] = "لیست مقالات";
+    ViewData["Title"] = Model.ArticleTitle;
     Layout = "~/views/shared/_bloglayout.cshtml";
 }
 
@@ -75,14 +75,58 @@
             <div class="author well" id="author-well">
                 <div class="media">
                     <div class="pull-left">
-                        <img alt="" src="~/images/blog/Avatar2016.jpg" class="avatar img-thumbnail">
+                        <img alt="" src="~/images/user-avatar/@Model.ApplicationUser.UserAvatar" style="max-width:150px; max-height:150px;" class="avatar img-thumbnail">
                     </div>
                     <div class="media-body">
                         <div class="media-heading">
-                            <strong>@Model.ApplicationUser.UserFullName</strong>
+                            <span class="fa fa-user"></span>  <strong>@Model.ApplicationUser.UserFullName</strong>
                         </div>
                         <p>@Model.ApplicationUser.UserBio</p>
                     </div>
+
+                    <div style="font-size: x-large;">
+
+                        @if (Model.ApplicationUser.UserWebSite != null)
+                        {
+                            <a class="social-webSite" target="_blank" href="@Model.ApplicationUser.UserWebSite" data-toggle="tooltip" title="وب سایت شخصی">
+                                <i class="fa fa-globe"></i>
+                            </a>
+                            @:&nbsp;
+                        }
+
+                        @if (Model.ApplicationUser.UserFacebookProfile != null)
+                        {
+                            <a class="social-facebook" target="_blank" href="@Model.ApplicationUser.UserFacebookProfile" data-toggle="tooltip" title="پروفایل فیس بوک">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                            @:&nbsp;
+                        }
+
+                        @if (Model.ApplicationUser.UserTwitterProfile != null)
+                        {
+                            <a class="social-twitter" target="_blank" href="@Model.ApplicationUser.UserTwitterProfile" data-toggle="tooltip" title="پروفایل تویتر">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                            @:&nbsp;
+                        }
+
+                        @if (Model.ApplicationUser.UserLinkedInProfile != null)
+                        {
+                            <a class="social-linkedin" target="_blank" href="@Model.ApplicationUser.UserLinkedInProfile" data-toggle="tooltip" title="پروفایل لینکدین">
+                                <i class="fa fa-linkedin"></i>
+                            </a>
+                            @:&nbsp;
+                        }
+
+                        @if (Model.ApplicationUser.UserGoogleProfile != null)
+                        {
+                            <a class="social-google" target="_blank" href="@Model.ApplicationUser.UserGoogleProfile" data-toggle="tooltip" title="پروفایل گوگل پلاس">
+                                <i class="fa fa-google-plus-square"></i>
+                            </a>
+                        }
+
+                    </div>
+
                 </div>
             </div>
 
