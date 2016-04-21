@@ -7,30 +7,7 @@
 }
 
 @section styles{
-    <style>
-        .colorgraph {
-            height: 5px;
-            border-top: 0;
-            background: #c4e17f;
-            border-radius: 5px;
-            background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-            background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-            background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-            background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
-        }
-
-        .checkbox label::before {
-            left: 102px !important;
-        }
-
-        .checkbox label::after {
-            left: 100px !important;
-        }
-
-        .row{margin:0;}
-
-    </style>
-
+    <link href="~/css/colorgraph.css" rel="stylesheet" />
     <link href="~/lib/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" />
     <link href="~/lib/bootstrap-social/bootstrap-social.css" rel="stylesheet" />
 }
@@ -64,6 +41,19 @@
                     <hr class="colorgraph">
 
                     <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+
+                    @if (TempData["LoginMessage"] != null)
+                    {
+                        if ((string)TempData["LoginMessage"] == "EmailIsNotConfirmed")
+                        {
+                            <div class="alert alert-warning alert-dismissable text-justify">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                اکانت شما هنوز تایید نشده، برای ورود لازم است اکانت خود را از طریق لینک فعال سازی که به ایمیل شما ارسال شده فعال کنید.
+                                اگر ایمیلی دریافت نکردید، پوشه هرزنامه های خود را چک کنید، اگر ایمیلی یافت نشد، برای ارسال دوباره لینک فعال سازی اقدام کنید.
+                            </div>
+                        }
+                    }
+
                 </div>
 
 
@@ -109,14 +99,14 @@
                         </p>
 
                         <p>
-                            <a asp-action="ResendConfirmationEmail">ارسال دوباره لینک فعال سازی؟</a>
+                            <a asp-action="ResendConfirmEmail">ارسال دوباره لینک فعال سازی؟</a>
                         </p>
 
                         <hr class="colorgraph">
                     </div>
                 </div>
 
-                
+
 
             </form>
         </section>

@@ -49,7 +49,7 @@
                         <i class="fa fa-tags fa-2x"></i> برچسب ها:
                         @foreach (var item in Model.ArticleTagsList)
                         {
-                            <a href="#" class="btn btn-xs btn-primary">@item.ArticleTagName</a>
+                            <a href="/Article/Tag/@item.ArticleTagId/@item.ArticleTagName.Replace(' ', '-')" class="btn btn-xs btn-primary">@item.ArticleTagName</a>
                         }
                     </div>
 

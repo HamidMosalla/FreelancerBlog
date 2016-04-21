@@ -53,6 +53,17 @@ namespace WebFor.Web.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if (user != null)
+                {
+                    if (!user.EmailConfirmed)
+                    {
+                        TempData["LoginMessage"] = "EmailIsNotConfirmed";
+                        return View(model);
+                    }
+                }
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
@@ -72,7 +83,7 @@ namespace WebFor.Web.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "نام کاربری یا کلمه عبور اشتباه است.");
                     return View(model);
                 }
             }
@@ -109,8 +120,11 @@ namespace WebFor.Web.Controllers
                 if (result.Succeeded)
                 {
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                    await _emailSender.SendEmailAsync(model.Email, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+
+                    await _emailSender.SendEmailAsync(model.Email, "فعال سازی اکانت", "برای فعال سازی اکانت خود بر روی لینک زیر کلیک کنید: <br /> <a href=\"" + callbackUrl + "\">link</a>");
+
                     _logger.LogInformation(3, "User created a new account with password.");
 
                     ViewBag.InfoMessage = "RegistrationConfirmEmail";
@@ -248,13 +262,56 @@ namespace WebFor.Web.Controllers
             {
                 return View("Error");
             }
+
             var user = await _userManager.FindByIdAsync(userId);
+
             if (user == null)
             {
                 return View("Error");
             }
+
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+
+            ViewBag.InfoMessage = "EmailConfirmed";
+
+            return View(result.Succeeded ? "InfoMessage" : "Error");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResendConfirmEmail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResendConfirmEmail(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                if (user == null || user.EmailConfirmed)
+                {
+                    ViewBag.InfoMessage = "ResendConfirmEmailSent";
+
+                    // Don't reveal that the user does not exist or is not confirmed
+                    return View("InfoMessage");
+                }
+
+                string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+
+                await _emailSender.SendEmailAsync(model.Email, "فعال سازی اکانت", "برای فعال سازی اکانت خود بر روی لینک زیر کلیک کنید: <br /> <a href=\"" + callbackUrl + "\">link</a>");
+
+                ViewBag.InfoMessage = "ResendConfirmEmailSent";
+
+                return View("InfoMessage");
+            }
+
+            return View(model);
         }
 
         [HttpGet]
@@ -275,27 +332,21 @@ namespace WebFor.Web.Controllers
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    ViewBag.InfoMessage = "ForgotPasswordEmailSent";
+                    return View("InfoMessage");
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                 // Send an email with this link
-                //var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                //var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                //   "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
-                //return View("ForgotPasswordConfirmation");
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                await _emailSender.SendEmailAsync(model.Email, "وب فور - بازنشانی پسورد", "لطفا برای بازنشانی پسورد خود بر روی لینک زیر کلیک کنید: <br /> <a href=\"" + callbackUrl + "\">لینک</a>");
+                ViewBag.InfoMessage = "ForgotPasswordEmailSent";
+                return View("InfoMessage");
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult ForgotPasswordConfirmation()
-        {
-            return View();
         }
 
         [HttpGet]
@@ -314,25 +365,27 @@ namespace WebFor.Web.Controllers
             {
                 return View(model);
             }
+
             var user = await _userManager.FindByNameAsync(model.Email);
+
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
+                ViewBag.InfoMessage = "ResetPasswordConfirmation";
+                return View("InfoMessage");
             }
+
             var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+
             if (result.Succeeded)
             {
-                return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
+                //return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
+                ViewBag.InfoMessage = "ResetPasswordConfirmation";
+                return View("InfoMessage");
             }
-            AddErrors(result);
-            return View();
-        }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult ResetPasswordConfirmation()
-        {
+            AddErrors(result);
+
             return View();
         }
 

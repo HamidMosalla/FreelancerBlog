@@ -2,7 +2,7 @@
 @using WebFor.Web.ViewModels.Account
 @model WebFor.Web.ViewModels.Account.ForgotPasswordViewModel
 @{
-    ViewData["Title"] = "پسورد خود را فراموش کرده اید؟";
+    ViewData["Title"] = "ارسال دوباره لینک فعال سازی";
 }
 
 @section styles{
@@ -39,13 +39,13 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <h1>فراموشی پسورد</h1>
-                <p>اگر پسورد خود را فراموش کرده اید، ایمیل خود را وارد کنید.</p>
+                <h1>ارسال دوباره لینک فعال سازی</h1>
+                <p>اگر لینک فعال سازی برای شما ارسال نشده، لینک فعال سازی جدید درخواست کنید.</p>
             </div>
             <div class="col-sm-6">
                 <ul class="breadcrumb pull-right">
                     <li><a href="/Home/Index">خانه</a></li>
-                    <li class="active"><a href="/Account/ForgotPassword">فراموشی پسورد</a></li>
+                    <li class="active"><a href="/Account/ResendConfirmEmail">ارسال دوباره لینک فعال سازی</a></li>
                 </ul>
             </div>
         </div>
@@ -55,12 +55,12 @@
 
 <div class="row">
     <div class="col-md-4 col-sm-4 col-xs-4 col-md-offset-3">
-        <form asp-controller="Account" asp-action="ForgotPassword" method="post" class="form-horizontal" role="form">
+        <form asp-controller="Account" asp-action="ResendConfirmEmail" method="post" class="form-horizontal" role="form">
 
 
             <div class="col-md-10">
                 <h2>
-                    فراموشی پسورد <br /><small>با وارد کردن ایمیل خود یک ایمیل حاوی مراحل لازم برای بازیابی پسورد دریافت خواهید کرد.</small>
+                    ارسال دوباره لینک فعال سازی <br /><small>اگر لینک فعال سازی برای شما ارسال نشده، لینک فعال سازی جدید درخواست کنید.</small>
                 </h2>
                 <hr class="colorgraph">
                 <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
@@ -78,7 +78,7 @@
 
             <div class="form-group">
                 <div class="col-md-10">
-                    <button type="submit" class="btn btn-lg btn-success" style="width: 100%;">ارسال</button>
+                    <button type="submit" class="btn btn-lg btn-success" style="width: 100%;">درخواست لینک فعال سازی</button>
 
                     <hr class="colorgraph">
 

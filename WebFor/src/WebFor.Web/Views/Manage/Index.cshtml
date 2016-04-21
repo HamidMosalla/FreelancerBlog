@@ -41,7 +41,19 @@
     }
 }
 
-<p class="text-success">@ViewData["StatusMessage"]</p>
+@if ((string)ViewData["StatusMessage"] != string.Empty)
+{
+    <div class="alert alert-warning alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        @ViewData["StatusMessage"]
+    </div>
+}
+
+<br/>
+<br/>
+<br/>
+<br />
+
 <div>
     <dl class="dl-horizontal">
         <dt>پسورد</dt>
@@ -116,3 +128,10 @@
 
     </dl>
 </div>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br />

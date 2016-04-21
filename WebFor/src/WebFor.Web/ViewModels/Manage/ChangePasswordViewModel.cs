@@ -4,20 +4,20 @@ namespace WebFor.Web.ViewModels.Manage
 {
     public class ChangePasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage ="پر کردن فیلد پسورد فعلی اجباری است.")]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "پسورد فعلی")]
         public string OldPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "پر کردن فیلد پسورد جدید اجباری است.")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "پسورد جدید")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "تایید پسورد جدید")]
+        [Compare("NewPassword", ErrorMessage = "پسورد جدید و تایید پسورد جدید با هم همخوانی ندارند.")]
         public string ConfirmPassword { get; set; }
     }
 }
