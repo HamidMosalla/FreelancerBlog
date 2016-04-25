@@ -33,10 +33,7 @@ namespace WebFor.Web.Areas.User.Controllers
         [Authorize]
         public async Task<IActionResult> EditProfile()
         {
-
             var user = await _uw.UserRepository.FindByIdAsync(User.GetUserId());
-
-            _uw.UserRepository.Detach(user);
 
             var userProfileViewModel = _webForMapper.UserToUserProfileViewModel(user);
 
@@ -89,6 +86,27 @@ namespace WebFor.Web.Areas.User.Controllers
 
             TempData["EditProfileMessage"] = "EditProfileFailed";
             return RedirectToAction("Index", "Manage");
+        }
+
+        [HttpGet("/User/Profile/ProfileDetail/{username?}")]
+        [Authorize]
+        public async Task<IActionResult> ProfileDetail(string userName)
+        {
+            if (userName == null)
+            {
+                return HttpBadRequest();
+            }
+
+            var user = await _uw.UserRepository.FindByUserNameAsync(userName);
+
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            var userProfileViewModel = _webForMapper.UserToUserProfileViewModel(user);
+
+            return View(userProfileViewModel);
         }
 
     }

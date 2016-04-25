@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Http;
+using WebFor.Core.Domain;
 
 namespace WebFor.Web.Areas.User.ViewModels.Profile
 {
@@ -84,5 +85,20 @@ namespace WebFor.Web.Areas.User.ViewModels.Profile
 
         [Display(Name = "تاریخ تولد")]
         public DateTime? UserDateOfBirth { get; set; }
+
+        [Display(Name = "شماره تلفن")]
+        [Range(10000000, 100000000000, ErrorMessage = "لطفا یک شماره تلفن معتبر وارد کنید.")]
+        [MaxLength(12, ErrorMessage = "مقدار فیلد نمی تواند از 12 کراکتر بیشتر باشد.")]
+        public string UserPhoneNumber { get; set; }
+
+        [Display(Name = "ایمیل")]
+        [EmailAddress(ErrorMessage = "لطفا یک ایمیل معتبر وارد کنید.")]
+        [MaxLength(100, ErrorMessage = "مقدار فیلد نمی تواند از 100 کراکتر بیشتر باشد.")]
+        public string UserProfileEmail { get; set; }
+
+
+
+        public virtual ICollection<Article> Articles { get; set; }
+        public virtual ICollection<ArticleComment> ArticleComments { get; set; }
     }
 }

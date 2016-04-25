@@ -7,5 +7,6 @@ namespace WebFor.Core.Repository
     {
         Task<int> UpdateUserProfileAsync(ApplicationUser user);
         void Detach(ApplicationUser model);
+        Task<ApplicationUser> FindByUserNameAsync(string userName);
     }
 }

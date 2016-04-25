@@ -81,6 +81,21 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label asp-for="UserPhoneNumber" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UserPhoneNumber" class="form-control" />
+                <span asp-validation-for="UserPhoneNumber" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="UserProfileEmail" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="UserProfileEmail" class="form-control" />
+                <span asp-validation-for="UserProfileEmail" class="text-danger" />
+            </div>
+        </div>
+
 
         <div class="form-group">
             <label asp-for="UserBio" class="col-md-2 control-label"></label>
@@ -151,7 +166,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">آواتار فعلی</div>
                     <div class="panel-body">
-                        <img src="~/images/user-avatar/@(Model.UserAvatar ?? (Model.UserGender == "Male" ? "default-image-male.jpg" : "default-image-female"))" class="img-thumbnail" />
+                        <img src="~/images/user-avatar/@(Model.UserAvatar ?? (Model.UserGender == "Male" ? "default-image-male.jpg" : "default-image-female.jpg"))" class="img-thumbnail" />
                     </div>
                 </div>
 

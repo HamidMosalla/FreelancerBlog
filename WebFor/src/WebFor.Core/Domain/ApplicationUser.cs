@@ -9,6 +9,8 @@ namespace WebFor.Core.Domain
     {
         public string UserFullName { get; set; }
         public string UserAddress { get; set; }
+        public string UserPhoneNumber { get; set; }
+        public string UserProfileEmail { get; set; }
         public string UserAvatar { get; set; }
         public string UserBio { get; set; }
         public string UserGender { get; set; }

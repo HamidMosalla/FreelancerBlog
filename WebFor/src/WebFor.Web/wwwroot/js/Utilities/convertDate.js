@@ -2,6 +2,9 @@
     $(function () {
         "use strict";
 
+        //convert .net date to persian date
+        $(".persianDate").each(function (index, element) { $(element).text(new Date($(element).text()).toLocaleDateString("fa-IR").replace(' ه‍.ش.', '')) });
+
         var $articleDateSpans = $(".ArticleDateCreated");
 
         $($articleDateSpans).each(function (index, element) {

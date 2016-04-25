@@ -83,6 +83,8 @@ namespace WebFor.Infrastructure.Repository
             var model = await _context.Users.SingleAsync(u => u.Id.Equals(user.Id));
 
             model.UserAddress = user.UserAddress;
+            model.UserProfileEmail = user.UserProfileEmail;
+            model.UserPhoneNumber = user.UserPhoneNumber;
             model.UserAvatar = user.UserAvatar ?? model.UserAvatar;
             model.UserBio = user.UserBio;
             model.UserDateOfBirth = user.UserDateOfBirth;
@@ -105,6 +107,11 @@ namespace WebFor.Infrastructure.Repository
         public void Detach(ApplicationUser model)
         {
             _context.Entry(model).State = EntityState.Detached;
+        }
+
+        public Task<ApplicationUser> FindByUserNameAsync(string userName)
+        {
+            return _context.Users.Include(u => u.Articles).ThenInclude(u => u.ArticleRatings).Include(u => u.ArticleComments).SingleOrDefaultAsync(u => u.Email.Equals(userName));
         }
     }
 }
