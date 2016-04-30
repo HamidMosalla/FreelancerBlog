@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace WebFor.Core.Domain
+namespace WebFor.Web.ViewModels.SiteOrder
 {
-    public class SiteOrder
+    public class SiteOrderViewModel
     {
-
         public int SiteOrderId { get; set; }
         public string SiteOrderFullName { get; set; }
         public string SiteOrderEmail { get; set; }
@@ -16,7 +18,7 @@ namespace WebFor.Core.Domain
 
 
 
-        
+
         public string SiteOrderWebSiteType { get; set; }
         public int? SiteOrderNumberOfMockUp { get; set; }
         public string SiteOrderDevelopmentComplexity { get; set; }
@@ -37,7 +39,7 @@ namespace WebFor.Core.Domain
 
 
         public bool? SiteOrderDoesHaveImageGallery { get; set; }
-        
+
         public bool? SiteOrderDoesContentOnUs { get; set; }
 
 
@@ -85,7 +87,7 @@ namespace WebFor.Core.Domain
 
         public bool? SiteOrderIsSinglePage { get; set; }
         public bool? SiteOrderDoesHaveSlideShow { get; set; }
-        
+
         public bool? SiteOrderDoesSupportTagging { get; set; }
         public bool? SiteOrderDoesSupportCategory { get; set; }
 
@@ -105,7 +107,7 @@ namespace WebFor.Core.Domain
         public bool? SiteOrderDoesIncludeAdvancedReport { get; set; }
 
 
-        
+
         public bool? SiteOrderDoesHaveShoppingCart { get; set; }
         public bool? SiteOrderDoesHaveShoppingCartWithoutRegister { get; set; }
 
@@ -121,7 +123,7 @@ namespace WebFor.Core.Domain
         public bool? SiteOrderDoesHaveDocumentation { get; set; }
         public bool? SiteOrderDoesHaveComplexFooter { get; set; }
 
-        
+
 
 
 

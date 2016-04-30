@@ -1,0 +1,771 @@
+﻿@model WebFor.Web.ViewModels.SiteOrder.SiteOrderViewModel
+
+@{
+    ViewData["Title"] = "سفارش وبسایت";
+}
+
+@section styles{
+    <link href="~/lib/pnotify/dist/pnotify.custom.min.css" rel="stylesheet" />
+
+    <style>
+        .btn-info {
+            background-color: #7492c8;
+            border-color: #8798b7;
+            color: #fff;
+        }
+
+        .btn-success {
+            background-color: #ffd02b;
+            border-color: #eacc63;
+            color: #292929;
+        }
+
+        .btn-info:hover {
+            background-color: #a4b8db;
+            border-color: #c0cee6;
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            background-color: #ffe690;
+            border-color: #ffe99e;
+            color: #292929;
+        }
+
+        .row {
+            margin: 0;
+        }
+
+
+
+        .yellow-stripes-section-wrapper {
+            background: rgba(0, 0, 0, 0) url("/images/site-order/yellow-strip-bg.jpg") repeat scroll 0 0;
+        }
+
+        article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {
+            display: block;
+        }
+
+        *::-moz-selection {
+            background: #334f81 none repeat scroll 0 0;
+            color: #fff;
+            text-shadow: none;
+        }
+
+
+        .website-cost-download-cta p.big {
+            line-height: 1.4em;
+            margin: 0;
+        }
+
+
+
+
+
+
+
+
+        .main, .white-section-wrapper, .bg--white, .bg--light-gray {
+            color: #666;
+        }
+
+        .small-pricing-table:nth-child(2n+1) ul {
+            background-color: #ddd;
+        }
+
+        ul.small-pricing-table-info {
+            margin: 0;
+            padding-bottom: 35px;
+            padding-top: 30px;
+        }
+
+        .content-section ul, .content-section--full ul {
+            line-height: 1.7em;
+            margin: 0 0 20px;
+            padding: 0;
+        }
+
+        ul, ol {
+            margin: 1em 0;
+            padding: 0 0 0 40px;
+        }
+
+        *::-moz-selection; {
+            background: #334f81 none repeat scroll 0 0;
+            color: #fff;
+            text-shadow: none;
+        }
+
+
+        .small-pricing-table-heading h4 {
+            color: #fff !important;
+            display: table-cell;
+            font-size: 16px;
+            height: 100%;
+            margin: 0;
+            padding: 0 15px;
+            vertical-align: middle;
+        }
+
+
+        .main h1, .main h2, .main h3, .main h4, .main h5, .main h6, .main dt, .pattern-background-section-wrapper h1, .pattern-background-section-wrapper h2, .pattern-background-section-wrapper h3, .pattern-background-section-wrapper h4, .pattern-background-section-wrapper h5, .pattern-background-section-wrapper h6, .white-section-wrapper h1, .white-section-wrapper h2, .white-section-wrapper h3, .white-section-wrapper h4, .white-section-wrapper h5, .white-section-wrapper h6, .bg--white h1, .bg--white h2, .bg--white h3, .bg--white h4, .bg--white h5, .bg--white h6, .bg--light-gray h1, .bg--light-gray h2, .bg--light-gray h3, .bg--light-gray h4, .bg--light-gray h5, .bg--light-gray h6 {
+            color: #122239;
+        }
+
+        h4 {
+            font-size: 16px;
+            line-height: 1.5em;
+            margin: 45px 0 10px;
+            text-transform: uppercase;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #fff;
+            font-weight: normal;
+        }
+
+        .small-pricing-table {
+            width: 25%;
+            float: left;
+            position: relative;
+        }
+
+        .small-pricing-table-heading {
+            color: #fff;
+            height: 75px;
+            width: 100%;
+            display: table;
+            position: relative;
+        }
+
+            .small-pricing-table-heading h4 {
+                color: #fff !important;
+                height: 100%;
+                margin: 0;
+                font-size: 16px;
+                display: table-cell;
+                vertical-align: middle;
+                padding: 0 15px;
+            }
+
+        .small-pricing-table:nth-of-type(1) .small-pricing-table-heading {
+            background-color: #7791CA;
+        }
+
+        .small-pricing-table:nth-of-type(2) .small-pricing-table-heading {
+            background-color: #5D73A2;
+        }
+
+        .small-pricing-table:nth-of-type(3) .small-pricing-table-heading {
+            background-color: #495F90;
+        }
+
+        .small-pricing-table:nth-of-type(4) .small-pricing-table-heading {
+            background-color: #324877;
+        }
+
+        .small-pricing-table:nth-of-type(1) .small-pricing-table-heading:after {
+            border-color: #7791CA transparent transparent;
+        }
+
+        .small-pricing-table:nth-of-type(2) .small-pricing-table-heading:after {
+            border-color: #5D73A2 transparent transparent;
+        }
+
+        .small-pricing-table:nth-of-type(3) .small-pricing-table-heading:after {
+            border-color: #495F90 transparent transparent;
+        }
+
+        .small-pricing-table:nth-of-type(4) .small-pricing-table-heading:after {
+            border-color: #324877 transparent transparent;
+        }
+
+        .small-pricing-table-heading:after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 12px 25px;
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            margin-left: -25px;
+        }
+
+        ul.small-pricing-table-info {
+            padding-top: 30px;
+            padding-bottom: 35px;
+            margin: 0;
+        }
+
+        .small-pricing-table ul.small-pricing-table-info li {
+            background: none;
+            font-size: 14px;
+            margin: 0;
+            padding: 5px 10px;
+        }
+
+        .small-pricing-table ul.small-pricing-table-info .cost {
+            margin-top: 15px;
+            font-size: 20px;
+            color: #32457F;
+            padding: 10px 0;
+            height: 45px;
+        }
+
+        .small-pricing-table:nth-child(odd) .cost {
+            background-color: #CCC;
+        }
+
+        .small-pricing-table:nth-child(even) .cost {
+            background-color: #C0C0C0;
+        }
+
+        .small-pricing-table:nth-child(odd) ul {
+            background-color: #ddd;
+        }
+
+        .small-pricing-table:nth-child(even) ul {
+            background-color: #d2d2d2;
+        }
+
+        .small-pricing-table .btn {
+            position: relative;
+            top: -20px;
+        }
+
+        .small-pricing-table .smaller-copy {
+            vertical-align: super;
+        }
+
+        .content-section:before, .content-section:after {
+    content: " ";
+    display: table;
+}
+.clearfix:after,
+.container:after,
+.container-fluid:after,
+.row:after,
+.cf:after,
+.content-section:after  { clear: both; }
+
+    .content-section p,
+.content-section--full p {
+	line-height:1.7em;
+	margin:0 0 20px 0;
+}
+
+	.content-section p small,
+    .content-section--full p small {
+		font-size:12px;
+		margin: 0 0 20px 0;
+		color:#777;
+	}
+
+.content-section cite,
+.content-section--full cite {
+	font-size:12px;
+	line-height:1.6em;
+	margin:0 0 20px 0;
+	display:block;
+	color:#777;
+	font-style: normal;
+}
+
+.content-section dl,
+.content-section--full dl {
+	font-size:14px;
+	margin: 0 0 15px 0;
+}
+
+	.white-section-wrapper .content-section dl {
+		color:#333;
+	}
+
+	.content-section li dl,
+    .content-section--full li dl {
+		font-size:14px;
+	}
+
+.content-section dd,
+.content-section--full dd {margin:0 0 0 20px;}
+
+
+    /*====== Website Cost Page ======*/
+.masthead--website-cost .masthead__content-wrapper{max-width:800px;}
+.masthead--website-cost-calculator .masthead__content-wrapper{max-width:1000px;width:1000px;}
+.ribbon-title{position:relative;text-align: left;font-size: 24px;font-family: 'roboto_thregular';padding: 0 5%;height:64px;line-height:64px;margin: 50px 0 25px;color: #fff;text-transform: uppercase;width: 385px;}
+.ribbon-title.blue{background-color: #7492C8;}
+.ribbon-title:after{border: solid transparent;content: " ";height: 0;width: 0;position: absolute;pointer-events: none;border-color: rgba(116,146,200,0);border-left-color: #7492C8;border-width: 32px 10px;left: 100%;top: 0;}
+
+.website-cost-calculator-header{text-align:center;background-color:#324877;font-family:'roboto_thregular';padding:25px 0;color:#fff;font-size:24px;margin:0;position: relative;z-index: 1;}
+.website-cost-calculator-header:after{padding-top: 50px;content: "\e724";font-family:'icomoonfont';color: #fff;background: #324877;-moz-border-radius: 50px;-webkit-border-radius: 50px;border-radius: 50px;width: 75px;height: auto;position: absolute;left: 50%;margin-left: -37px;z-index: -1;}
+.website-cost-breakdown-section{margin:45px 0;}
+.website-cost-breakdown-heading{height:70px;}
+.website-cost-breakdown-heading h4{float:left;margin:0;line-height:70px;font-size:20px;padding-left:20px;color:#fff;}
+.website-cost-breakdown-dollar{float:left;padding:15px;}
+.website-cost-breakdown-circle{line-height:40px;border-radius:25px;width:40px;height:40px;font-size:24px;font-family:'robotobold';background-color:#fff;text-align:center;margin:0 auto;}
+.website-cost-breakdown-cost{font-family:'robotobold';font-size:20px;}
+.website-cost-breakdown-info{padding:45px 45px 25px 45px;background-color:#fff;}
+
+.website-cost-breakdown-color--teal .website-cost-breakdown-heading{background-color:#4CCCBF;}
+.website-cost-breakdown-color--teal .website-cost-breakdown-dollar{background-color:#27A494;}
+.website-cost-breakdown-color--teal .website-cost-breakdown-circle,
+.website-cost-breakdown-color--teal .website-cost-breakdown-cost{color:#27A494;}
+.website-cost-breakdown-color--green .website-cost-breakdown-heading{background-color:#9BCC59;}
+.website-cost-breakdown-color--green .website-cost-breakdown-dollar{background-color:#8CB650;}
+.website-cost-breakdown-color--green .website-cost-breakdown-circle,
+.website-cost-breakdown-color--green .website-cost-breakdown-cost{color:#8CB650;}
+.website-cost-breakdown-color--orange .website-cost-breakdown-heading{background-color:#DD9701;}
+.website-cost-breakdown-color--orange .website-cost-breakdown-dollar{background-color:#CC8801;}
+.website-cost-breakdown-color--orange .website-cost-breakdown-circle,
+.website-cost-breakdown-color--orange .website-cost-breakdown-cost{color:#CC8801;}
+.website-cost-breakdown-color--red .website-cost-breakdown-heading{background-color:#F9494C;}
+.website-cost-breakdown-color--red .website-cost-breakdown-dollar{background-color:#D63D3F;}
+.website-cost-breakdown-color--red .website-cost-breakdown-circle,
+.website-cost-breakdown-color--red .website-cost-breakdown-cost{color:#D63D3F;}
+.website-cost-breakdown-select{border:1px solid #ccc; padding: 8px;border-radius: 5px;-webkit-border-radius: 5px;-moz-border-radius: 5px;font-family: robotobold;text-transform: uppercase;}
+
+.content-page .price-calculator{padding:10%;}
+.content-page .price-calculator .slider{width:18%;}
+.price-calculator {background:#EAEAEA; padding:50px 150px; margin:30px 0; overflow: auto; width:auto;}
+.price-calculator .row {border-bottom: 1px solid #D8D7D7; float: left; width:100%;}
+.price-calculator h2, .price-calculator p, .price-calculator label {color:#333 !important;}
+.price-calculator .row input.submit {border:none;}
+.price-calculator .row label {float:left; font-size:.75em; width: 200px; padding: 10px 0;}
+.price-calculator .row input[type="text"] {float:right; font-size:.75em; background: #D8D7D7; border: 0; box-shadow: none; padding: 10px; border-radius:0; min-height: 40px;}
+.price-calculator .slider-left,
+.price-calculator .slider-right {float:left; -webkit-border-radius: 10px; border-radius: 10px; width: 20px; padding: 0; margin:10px 0; height: 20px; cursor:pointer; position: relative; line-height: 1.4em;
+font-size: 16px;}
+.price-calculator .slider-left .pictogram,
+.price-calculator .slider-right .pictogram {padding: 0; position: absolute; top: 2px; left: 6px;}
+.price-calculator .slider {float:left; height: 20px; width: 240px; position:relative; background:url(../img/repeat-slider-bg.gif) repeat-x; -webkit-border-radius: 10px; border-radius: 10px; margin:10px; }
+.price-calculator .slider .ui-slider-handle {background-color: #eee; display: block; height: 20px; position: absolute; width:20px; top:0; -webkit-border-radius: 10px; border-radius: 10px; outline:none;-webkit-box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, .3);
+box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, .3); margin-left:-10px; }
+.price-calculator .button-row {margin-top:20px;}
+.price-calculator table {color: #333; border-top: #d8d7d7 solid 1px; border-left: #d8d7d7 solid 1px; width: 100%; margin-bottom: 30px;}
+.price-calculator td, .price-calculator th {border-right: #d8d7d7 solid 1px; border-bottom: #d8d7d7 solid 1px; padding:8px; font-weight:normal;}
+.price-calculator td {font-size:.813em;}
+.price-calculator th.service {text-align:left;}
+.price-calculator .total,
+.price-calculator tr.total .low,
+.price-calculator tr.total .high {background:#99CC62;}
+.price-calculator .low {background:#d8d7d7; text-align:right;}
+.price-calculator .high {background:#ccc; text-align:right;}
+.price-calculator .top th {font-size:.813em; text-transform:uppercase;}
+.price-calculator.main-form input[type="text"],
+.price-calculator.main-form textarea {border:1px solid #999; -webkit-box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, .4); box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, .4);}
+.price-calculator .quote-details .arrow {font-size:200px; display:block; text-align:center; line-height: 80px; color: #CCC;}
+
+.website-cost-download-cta{padding:20px 0;}
+.website-cost-download-cta img{float:left;margin-right:45px;}
+.website-cost-download-cta p { color: #333; }
+.website-cost-download-cta p.big{margin:0; line-height: 1.4em;}
+.website-cost-download-cta .dark-blue{background: #333;}
+
+
+@@media screen and (max-width:1024px) {
+
+    .masthead--website-cost-calculator .masthead__content-wrapper{width:auto;}
+    
+    .price-calculator{padding:50px;}
+    
+}
+
+@@media screen and (max-width:767px) {
+
+   	.price-calculator .row label{width:100%;}
+   	.price-calculator td, 
+    .price-calculator th {font-size:12px;}
+   	.content-page .price-calculator .slider{max-width:50%;width:100%;}
+
+}
+
+@@media screen and (max-width:600px) {
+
+   	.masthead--website-cost-calculator .masthead__content-wrapper{padding:50px 0;}
+   	.price-calculator{padding:15px;}
+   	.price-calculator .row{margin-bottom:25px;padding-bottom:15px;}
+   	.price-calculator .row label{width:60%;background-color:#ddd;height:45px;padding-left:15px;}
+   	.price-calculator .row input[type="text"]{width:40%;float:left;height:45px;}
+   	.price-calculator .slider{margin:10px 20px;width:100%; max-width:77%;}
+   	.price-calculator .row{border:none;}
+   	.content-page .price-calculator .slider{max-width:67%;width:100%;}
+   	.website-cost-breakdown-select{width:100%;}
+   	.website-cost-breakdown-info{padding:20px;}
+   	.website-cost-breakdown-heading{height:100%;}
+   	.website-cost-breakdown-heading h4{font-size:16px;line-height: inherit;width:80%;padding-top:12px;}
+   	.website-cost-breakdown-dollar{width:20%;padding:15px 0;}
+   	.website-cost-breakdown-cost{font-size:16px;}
+    
+    .site-footer.home .footer-blog-feed,
+	.top-logos-wrapper,
+	.footer-ctas,
+	.footer-logos,
+	.btn-free-quote {
+		display:none;
+	}
+    
+}
+
+@@media screen and (max-width: 400px) {
+    
+    .content-page .price-calculator .slider{max-width:55%;width:100%;}
+	.price-calculator .slider{max-width:70%;}
+	.price-calculator td, .price-calculator th{font-size:10px;}
+    
+}
+    
+    </style>
+}
+
+@if (TempData["CreateContactMessage"] != null)
+{
+    <p>
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>@TempData["CreateContactMessage"]</h4>
+        </div>
+    </p>
+}
+
+<section id="title" class="emerald" style="background-image: url(/images/site-order/bg-masthead-website-cost.jpg); height: 424px;">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-4">
+                <ul class="breadcrumb pull-right">
+                    <li><a href="/Home/Index">خانه</a></li>
+                    <li class="active">سفارش وبسایت</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12  text-center">
+                <h1>ساخت یک وب سایت این روزها چقدر خرج دارد؟</h1>
+
+                <br />
+                <br />
+
+
+                <p>در این قسمت می توانید وب سایت مورد نیاز خود را سفارش دهید و از قیمت تخمینی آن با خبر شوید.</p>
+                <p>در این قسمت می توانید وب سایت مورد نیاز خود را سفارش دهید و از قیمت تخمینی آن با خبر شوید.</p>
+                <p>در این قسمت می توانید وب سایت مورد نیاز خود را سفارش دهید و از قیمت تخمینی آن با خبر شوید.</p>
+
+                <br />
+                <br />
+
+                <a href="#" class="btn btn-lg btn-info">خواندن ادامه متن <span class="fa fa-angle-down"></span></a>
+                <a href="#" class="btn btn-lg btn-success">استفاده از محاسبه گر قیمت ما</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="row">
+    <div class="col-sm-offset-3 col-sm-6">
+        <p>But why not? Questions about website design cost are common online, but very few people are prepared to answer, even when it comes to professional web design prices.</p>
+        <p>
+            For this article, the WebpageFX team of professional web designers, developers, and <a href="http://www.webpagefx.com/search-engine-optimization.htm">SEO specialists</a> have worked together to examine some of the most important factors that go into a web design quote. These include historical website development costs, as well as <a href="websitedesign.htm">web design costs for different components</a>. The data also includes current website features and design costs.
+        </p>
+        <p>It can still be a challenge to nail down a specific professional website cost. That's why we made a website quote calculator that you can use to ballpark prices for websites you want to create.</p>
+        <p>Our website cost calculator can help you determine how much you should expect to pay for a site with the functions and features you want. Use the sliders to select the features you prefer, then click "get your quote now" and the cost estimator will generate a quote instantly!</p>
+    </div>
+</section>
+
+
+<section class="yellow-stripes-section-wrapper">
+    <section class="content-section no-padding-top no-padding-bottom">
+        <div class="text-center">
+            <img alt="Download the cheat sheet now!" src="~/images/site-order/website-cost-cta-image.png">
+            <br />
+            <p style="font-size: larger;">
+                <span style="font-size: xx-large;">لیست قیمت ها</span> را از اینجا دریافت کنید.
+            </p>
+            <p style="font-size: large;">این لیست حاوی جزئیات سرویس و قیمت نهایی برای پیاده سازی آن است.</p>
+            <div class="website-cost-download-cta-btn">
+                <a class="btn btn-lg btn-default" style="width: 200px;" href="#"><span class="fa fa-download"></span> &nbsp;دانلود!</a>
+            </div>
+        </div>
+    </section>
+</section>
+
+
+<article class="main">
+    <section class="content-section">
+
+        <div class="small-pricing-tables col-sm-8 col-sm-offset-2 text-center">
+            <h2>Does the Cost of a Website Vary by Its Type?</h2>
+            <p>To completely answer the question "how much should a web site cost," it's also useful to review specific website types. The cost of a new site absolutely varies by its type! Generally, the more involved your website has to be, the bigger impact you'll see on your website pricing. For example, you should expect to pay more for a site with ecommerce functionality than a site without it. This is because more time and effort will need to be spent populating product pages, adding images, testing the shopping cart, and so on.</p>
+            <p>Here are some estimates for specific kinds of websites and how much you should expect to pay for them.</p>
+        </div>
+
+        <div class="small-pricing-tables col-sm-8 col-sm-offset-2">
+
+
+            <div class="small-pricing-table center">
+                <div class="small-pricing-table-heading"><h4>Informational or Small Business Website</h4>
+                </div>
+                <ul class="small-pricing-table-info  list-unstyled">
+                    <li>8 - 16 web pages</li>
+                    <li>Custom graphics</li>
+                    <li>Stock photos</li>
+                    <li>Little or no Flash design</li>
+                    <li>Web forms sending to email accounts</li>
+                    <li>Project duration: 30 to 75 days </li>
+                    <li>Project duration: 30 to 75 days </li>
+                    <li class="cost sans-serif--bold"><span class="smaller-copy">$</span>2,000 - <span class="smaller-copy">$</span>6,000</li>
+                </ul>
+                <a class="btn btn-bg btn-success" href="/Free-Quote.php">Get a Quote <span class="icon-arrow-down5"></span></a>
+            </div>
+
+
+
+            <div class="small-pricing-table center">
+                <div class="small-pricing-table-heading">
+                    <h4>Informational or Small Business Website</h4>
+                </div>
+                <ul class="small-pricing-table-info  list-unstyled">
+                    <li>8 - 16 web pages</li>
+                    <li>Custom graphics</li>
+                    <li>Stock photos</li>
+                    <li>Little or no Flash design</li>
+                    <li>Web forms sending to email accounts</li>
+                    <li>Project duration: 30 to 75 days </li>
+                    <li>Project duration: 30 to 75 days </li>
+                    <li class="cost sans-serif--bold"><span class="smaller-copy">$</span>2,000 - <span class="smaller-copy">$</span>6,000</li>
+                </ul>
+                <a class="btn btn-bg btn-success" href="/Free-Quote.php">Get a Quote <span class="icon-arrow-down5"></span></a>
+            </div>
+
+
+
+            <div class="small-pricing-table center">
+                <div class="small-pricing-table-heading">
+                    <h4>Informational or Small Business Website</h4>
+                </div>
+                <ul class="small-pricing-table-info  list-unstyled">
+                    <li>8 - 16 web pages</li>
+                    <li>Custom graphics</li>
+                    <li>Stock photos</li>
+                    <li>Little or no Flash design</li>
+                    <li>Web forms sending to email accounts</li>
+                    <li>Project duration: 30 to 75 days </li>
+                    <li>Project duration: 30 to 75 days </li>
+                    <li class="cost sans-serif--bold"><span class="smaller-copy">$</span>2,000 - <span class="smaller-copy">$</span>6,000</li>
+                </ul>
+                <a class="btn btn-bg btn-success" href="/Free-Quote.php">Get a Quote <span class="icon-arrow-down5"></span></a>
+            </div>
+
+
+
+            <div class="small-pricing-table center">
+                <div class="small-pricing-table-heading">
+                    <h4>Informational or Small Business Website</h4>
+                </div>
+                <ul class="small-pricing-table-info  list-unstyled">
+                    <li>8 - 16 web pages</li>
+                    <li>Custom graphics</li>
+                    <li>Stock photos</li>
+                    <li>Little or no Flash design</li>
+                    <li>Web forms sending to email accounts</li>
+                    <li>Project duration: 30 to 75 days </li>
+                    <li>Project duration: 30 to 75 days </li>
+                    <li class="cost sans-serif--bold"><span class="smaller-copy">$</span>2,000 - <span class="smaller-copy">$</span>6,000</li>
+                </ul>
+                <a class="btn btn-bg btn-success" href="/Free-Quote.php">Get a Quote <span class="icon-arrow-down5"></span></a>
+            </div>
+
+
+
+        </div>
+
+    </section>
+</article>
+
+
+<section id="recent-works" style="background-color:#FCCE00;">
+    @await Component.InvokeAsync("HomePortfolioSlider")
+</section>
+
+
+<section class="white-section-wrapper">
+    <section class="content-section" id="cost-breakdowns">
+
+        <div class="col-sm-6 col-sm-offset-3">
+            <h2>Breakdown of Some Common Website Components and Their Costs</h2>
+            <p>The cost of a website can vary dramatically based on the specific components included. As you can probably guess, a website with basic functionality is going to cost much less, both initially and over time, than a site that acts as an online store or integrates with a company database or piece of software.</p>
+            <p>This section will break down some common website components and how much you should expect to pay for them. Some of the components in this website cost breakdown have initial investments, while others are ongoing. We frequently update this page to ensure that the amounts listed below are current and fit into the average cost of website design for 2016.</p>
+        </div>
+
+        <div id="filterContainer" class="col-sm-6 col-sm-offset-3">
+
+            <div class="website-cost-breakdown-section border-shadow website-cost-breakdown-color--teal all domain-name">
+                <div class="website-cost-breakdown-heading clearfix">
+                    <div class="website-cost-breakdown-dollar">
+                        <div class="website-cost-breakdown-circle">$</div>
+                    </div>
+                    <h4>Domain Name</h4>
+                </div>
+                <div class="website-cost-breakdown-info">
+                    <p>Your website’s domain name is the unique name that appears in the URL for your website. It’s kind of like your online fingerprint &mdash; it is specific to you. Although other websites may have domain names similar to it, your domain name is yours alone. However, to get the rights to your domain name, you have to register it annually, which factors into the cost of website maintenance.</p>
+                    <p>Your domain name is important because it creates an online identity for your website. Having a domain name establishes credibility with site visitors and potential customers while helping you further grow your brand. It is also important because if you ever change your hosting, your domain name will go with you. Lastly, your domain name is important because it expands your opportunities for online advertising, which has become necessary for attracting traffic to today’s websites. </p>
+                    <p class="website-cost-breakdown-cost">Cost: $5 to $15 per year</p>
+                </div>
+            </div>
+
+
+            <div class="website-cost-breakdown-section border-shadow website-cost-breakdown-color--green all website-hosting">
+                <div class="website-cost-breakdown-heading clearfix">
+                    <div class="website-cost-breakdown-dollar">
+                        <div class="website-cost-breakdown-circle">$</div>
+                    </div>
+                    <h4>Website Hosting</h4>
+                </div>
+                <div class="website-cost-breakdown-info">
+                    <p>Hosting is simply the service that allows your website to be accessed by other Internet users. A web host will provide space on its server for your website, allowing people around the world to view it. Website hosting is also a factor in your website costs.</p>
+                    <p>Hosting is important because the quality of your host can affect page loading time, the tech support you receive if your site crashes, and the ability of your website to expand in the future. To put it simply, your hosting provider has a huge impact on how your website functions. Although free hosting services exist, their tech support (if they supply any at all) will not be as good as paid hosting services. </p>
+                    <p class="website-cost-breakdown-cost">Cost: $75 to $200 a year <span class="small-copy">(depending on traffic and hosting features)</span></p>
+                </div>
+            </div>
+
+            <div class="website-cost-breakdown-section border-shadow website-cost-breakdown-color--orange all cms">
+                <div class="website-cost-breakdown-heading clearfix">
+                    <div class="website-cost-breakdown-dollar">
+                        <div class="website-cost-breakdown-circle">$</div>
+                    </div>
+                    <h4>Content Management System <span class="small-copy">(CMS)</span></h4>
+                </div>
+                <div class="website-cost-breakdown-info">
+                    <p>A CMS will allow you or your employees to edit information on your website without having to edit any of the code or mess with any of the files you already have in place. A CMS makes it extremely easy for you to adjust the little things here and there just in case you need to add something later or if you want full control of what is shown on your website.</p>
+                    <p>A CMS like Magento may be free, while others may have monthly or yearly licensing fees or usage charges associated with them. What you choose depends on what specific functionality you need your website to have. Choosing a free option may limit you, but it'll also help save on web page prices.</p>
+                    <p class="website-cost-breakdown-cost">Cost: $0 to $15,000+ per year <span class="small-copy">(depending on the platform chosen)</span></p>
+                </div>
+            </div>
+
+
+            <div class="website-cost-breakdown-section border-shadow website-cost-breakdown-color--red all ecommerce">
+                <div class="website-cost-breakdown-heading clearfix">
+                    <div class="website-cost-breakdown-dollar">
+                        <div class="website-cost-breakdown-circle">$</div>
+                    </div>
+                    <h4>Ecommerce Functionality</h4>
+                </div>
+                <div class="website-cost-breakdown-info">
+                    <p>Ecommerce is another moving part for websites that might require a major effort in overall design and development to make it functional. The addition of ecommerce functionality requires extensive testing of shopping carts, payment options, and shipping systems, as well as the time spent setting up products and ensuring their individual pages display correctly to shoppers.</p>
+                    <p>Typically, there is no extra cost to add ecommerce functionality. The expense comes from the amount of time it takes to ensure every component is working, the acquisition of a payment gateway, and any additional effort you may require to integrate your store with shipping or tracking systems hosted elsewhere. While it may only require a single payment on your part, ecommerce inclusion can have a big effect on the cost of a web site.</p>
+                    <p class="website-cost-breakdown-cost">Cost: $500 to $5,000 <span class="small-copy">(initial investment)</span></p>
+                </div>
+            </div>
+
+
+            <div class="website-cost-breakdown-section border-shadow website-cost-breakdown-color--teal all design-theme">
+                <div class="website-cost-breakdown-heading clearfix">
+                    <div class="website-cost-breakdown-dollar">
+                        <div class="website-cost-breakdown-circle">$</div>
+                    </div>
+                    <h4>Website Design or Theme Creation</h4>
+                </div>
+                <div class="website-cost-breakdown-info">
+                    <p>Design can go from a zero budget all the way to world class quality, meaning the fees for website design can heavily impact web page price. Obviously, a zero budget style of design will not look as good, and a world class design will certainly be eye catching and perhaps even award winning. It all depends what you would like your website to look like and the desires of your target audience.</p>
+                    <p>For some CMS, like Wordpress, creating a website design is as simple as creating a theme or "skin" to apply to your site. This may cost far less than a created-from-scratch design for another CMS, but it may also look less unique and lack some functionality. Website designing costs will be higher for the unique, from-scratch sites, but they'll also distinctly reflect you and your business.</p>
+                    <p class="website-cost-breakdown-cost">Cost: $250 to $20,000+ <span class="small-copy">(initial investment)</span></p>
+                </div>
+            </div>
+
+
+            <div class="website-cost-breakdown-section border-shadow website-cost-breakdown-color--green all copywriting">
+                <div class="website-cost-breakdown-heading clearfix">
+                    <div class="website-cost-breakdown-dollar">
+                        <div class="website-cost-breakdown-circle">$</div>
+                    </div>
+                    <h4>Copywriting</h4>
+                </div>
+                <div class="website-cost-breakdown-info">
+                    <p>Copywriting goes back to the number of pages your website has. The more pages it will have, the more copywriting it will need, making copywriting an unexpected factor to website creation cost for many first-time webmasters.</p>
+                    <p>Copywriting ties into search engine optimization (SEO): The content on your website needs to contain the keywords relevant to your products or services, because if it doesn't, your site won't be found in search for those terms. It takes a trained writer with knowledge of SEO to create copy that contains the right keywords and compels your visitors to take action. Some of the bigger content pieces may add more to your website creation costs than you'd like, but content is king &mdash; and it pays dividends.</p>
+                    <p class="website-cost-breakdown-cost">Cost: $50 to $500 per page or article</p>
+                </div>
+            </div>
+
+
+            <div class="website-cost-breakdown-section border-shadow website-cost-breakdown-color--orange all seo">
+                <div class="website-cost-breakdown-heading clearfix">
+                    <div class="website-cost-breakdown-dollar">
+                        <div class="website-cost-breakdown-circle">$</div>
+                    </div>
+                    <h4>SEO</h4>
+                </div>
+                <div class="website-cost-breakdown-info">
+                    <p>To attract the most visitors as possible, you must fully optimize your website for search engines. SEO services can range from very inexpensive to thousands of dollars per month, depending on how much work you want your agency to put into the ranking and visibility of your new site. After it's designed and developed, make sure you include SEO in your costs of a website to make sure your estimate is as accurate as possible.</p>
+                    <p>SEO services typically include multiple ongoing methods and tactics. For example, <a href="http://www.webpagefx.com/SEO-Pricing.html">WebpageFX's SEO packages</a> include optimization of website copy, keyword research, targeted outreach, link building, content creation, and more. The money you invested in your professional web design cost won't mean much if visitors can't find your site, and SEO is critical to making your site visible.
+                    </p>
+                    <p class="website-cost-breakdown-cost">Cost: $300 to $1,500 per month</p>
+                </div>
+            </div>
+
+
+            <div class="website-cost-breakdown-section border-shadow website-cost-breakdown-color--red all flash">
+                <div class="website-cost-breakdown-heading clearfix">
+                    <div class="website-cost-breakdown-dollar">
+                        <div class="website-cost-breakdown-circle">$</div>
+                    </div>
+                    <h4>Flash or Multimedia Design</h4>
+                </div>
+                <div class="website-cost-breakdown-info">
+                    <p>Whether you desire to have an interactive and eye-catching demo for your website or you just want an interesting header, multimedia design is what you need. Flash website design pricing varies from firm to firm, but the investment can give your website an invaluable element that engages visitors.</p>
+                    <p>Interactive website design can be very inexpensive, or it can be extremely costly, depending on the functionality of what is being developed. For example, a simple Flash animation may only cost a few hundred dollars, if that, while the creation of an interactive on-site application or tool to visualize colors, patterns, clothing, etc. could cost tens of thousands of dollars to create from scratch. If you want to make a powerful impression on your visitors using Flash, it can become a huge part of the cost of website design and development.</p>
+                    <p class="website-cost-breakdown-cost">Cost: $250 to $10,000+ <span class="small-copy">(depending on level of interactivity required)</span></p>
+                </div>
+            </div>
+
+
+            <div class="website-cost-breakdown-section border-shadow website-cost-breakdown-color--teal all database">
+                <div class="website-cost-breakdown-heading clearfix">
+                    <div class="website-cost-breakdown-dollar">
+                        <div class="website-cost-breakdown-circle">$</div>
+                    </div>
+                    <h4>Database Integration</h4>
+                </div>
+                <div class="website-cost-breakdown-info">
+                    <p>Database integration can lead to some really cool additions to your website, but a portion of your cost depends on how much development is necessary and how much time it will take to fully implement and test the integration. Integration can be a valuable addition to any online presence, which also makes it an essential consideration in the cost of a new website. Websites that have database integration tend to have a lot more things that can go wrong.</p>
+                    <p class="website-cost-breakdown-cost">Cost: $5,000 to $25,000 per integration</p>
+                </div>
+            </div>
+
+
+            <div class="website-cost-breakdown-section border-shadow website-cost-breakdown-color--green all maint">
+                <div class="website-cost-breakdown-heading clearfix">
+                    <div class="website-cost-breakdown-dollar">
+                        <div class="website-cost-breakdown-circle">$</div>
+                    </div>
+                    <h4>Ongoing Website Maintenance</h4>
+                </div>
+                <div class="website-cost-breakdown-info">
+                    <p>Website maintenance is the entire process involved in updating and managing a website once it is online. This includes ensuring that your website’s hardware and software are working well and that your site is up to date with the latest products and features. In general, there are a lot of different elements that can impact how much website maintenance costs.</p>
+                    <p>Site maintenance is important because it affects how interested your visitors are in your site, it allows you to maintain your search engine rankings, and it essentially keeps your website functioning. You need to be willing to spend the money to maintain your website after it launches, or else your site will likely fall into disarray and lose any chance of ranking on search engine results pages.</p>
+                    <p class="website-cost-breakdown-cost">Cost: $500 to $1250 a year <span class="small-copy">(depending on number of updates required)</span></p>
+                </div>
+            </div>
+
+
+        </div>
+
+    </section>
+</section>
+
+
+
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
+    <script src="~/lib/jquery.blockui/jquery.blockui.js"></script>
+    <script src="~/lib/spin.js/spin.min.js"></script>
+    <script src="~/js/utilities/spin.partofpage.js"></script>
+    <script src="~/js/webforscripts/contact.create.js"></script>
+}
