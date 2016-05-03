@@ -6,417 +6,9 @@
 
 @section styles{
     <link href="~/lib/pnotify/dist/pnotify.custom.min.css" rel="stylesheet" />
-
-    <style>
-        .btn-info {
-            background-color: #7492c8;
-            border-color: #8798b7;
-            color: #fff;
-        }
-
-        .btn-success {
-            background-color: #ffd02b;
-            border-color: #eacc63;
-            color: #292929;
-        }
-
-        .btn-info:hover {
-            background-color: #a4b8db;
-            border-color: #c0cee6;
-            color: #fff;
-        }
-
-        .btn-success:hover {
-            background-color: #ffe690;
-            border-color: #ffe99e;
-            color: #292929;
-        }
-
-        .row {
-            margin: 0;
-        }
-
-
-
-        .yellow-stripes-section-wrapper {
-            background: rgba(0, 0, 0, 0) url("/images/site-order/yellow-strip-bg.jpg") repeat scroll 0 0;
-        }
-
-        article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {
-            display: block;
-        }
-
-        *::-moz-selection {
-            background: #334f81 none repeat scroll 0 0;
-            color: #fff;
-            text-shadow: none;
-        }
-
-
-        .website-cost-download-cta p.big {
-            line-height: 1.4em;
-            margin: 0;
-        }
-
-
-
-
-
-
-
-
-        .main, .white-section-wrapper, .bg--white, .bg--light-gray {
-            color: #666;
-        }
-
-        .small-pricing-table:nth-child(2n+1) ul {
-            background-color: #ddd;
-        }
-
-        ul.small-pricing-table-info {
-            margin: 0;
-            padding-bottom: 35px;
-            padding-top: 30px;
-        }
-
-        .content-section ul, .content-section--full ul {
-            line-height: 1.7em;
-            margin: 0 0 20px;
-            padding: 0;
-        }
-
-        ul, ol {
-            margin: 1em 0;
-            padding: 0 0 0 40px;
-        }
-
-        *::-moz-selection; {
-            background: #334f81 none repeat scroll 0 0;
-            color: #fff;
-            text-shadow: none;
-        }
-
-
-        .small-pricing-table-heading h4 {
-            color: #fff !important;
-            display: table-cell;
-            font-size: 16px;
-            height: 100%;
-            margin: 0;
-            padding: 0 15px;
-            vertical-align: middle;
-        }
-
-
-        .main h1, .main h2, .main h3, .main h4, .main h5, .main h6, .main dt, .pattern-background-section-wrapper h1, .pattern-background-section-wrapper h2, .pattern-background-section-wrapper h3, .pattern-background-section-wrapper h4, .pattern-background-section-wrapper h5, .pattern-background-section-wrapper h6, .white-section-wrapper h1, .white-section-wrapper h2, .white-section-wrapper h3, .white-section-wrapper h4, .white-section-wrapper h5, .white-section-wrapper h6, .bg--white h1, .bg--white h2, .bg--white h3, .bg--white h4, .bg--white h5, .bg--white h6, .bg--light-gray h1, .bg--light-gray h2, .bg--light-gray h3, .bg--light-gray h4, .bg--light-gray h5, .bg--light-gray h6 {
-            color: #122239;
-        }
-
-        h4 {
-            font-size: 16px;
-            line-height: 1.5em;
-            margin: 45px 0 10px;
-            text-transform: uppercase;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            color: #fff;
-            font-weight: normal;
-        }
-
-        .small-pricing-table {
-            width: 25%;
-            float: left;
-            position: relative;
-        }
-
-        .small-pricing-table-heading {
-            color: #fff;
-            height: 75px;
-            width: 100%;
-            display: table;
-            position: relative;
-        }
-
-            .small-pricing-table-heading h4 {
-                color: #fff !important;
-                height: 100%;
-                margin: 0;
-                font-size: 16px;
-                display: table-cell;
-                vertical-align: middle;
-                padding: 0 15px;
-            }
-
-        .small-pricing-table:nth-of-type(1) .small-pricing-table-heading {
-            background-color: #7791CA;
-        }
-
-        .small-pricing-table:nth-of-type(2) .small-pricing-table-heading {
-            background-color: #5D73A2;
-        }
-
-        .small-pricing-table:nth-of-type(3) .small-pricing-table-heading {
-            background-color: #495F90;
-        }
-
-        .small-pricing-table:nth-of-type(4) .small-pricing-table-heading {
-            background-color: #324877;
-        }
-
-        .small-pricing-table:nth-of-type(1) .small-pricing-table-heading:after {
-            border-color: #7791CA transparent transparent;
-        }
-
-        .small-pricing-table:nth-of-type(2) .small-pricing-table-heading:after {
-            border-color: #5D73A2 transparent transparent;
-        }
-
-        .small-pricing-table:nth-of-type(3) .small-pricing-table-heading:after {
-            border-color: #495F90 transparent transparent;
-        }
-
-        .small-pricing-table:nth-of-type(4) .small-pricing-table-heading:after {
-            border-color: #324877 transparent transparent;
-        }
-
-        .small-pricing-table-heading:after {
-            content: '';
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 12px 25px;
-            position: absolute;
-            bottom: -24px;
-            left: 50%;
-            margin-left: -25px;
-        }
-
-        ul.small-pricing-table-info {
-            padding-top: 30px;
-            padding-bottom: 35px;
-            margin: 0;
-        }
-
-        .small-pricing-table ul.small-pricing-table-info li {
-            background: none;
-            font-size: 14px;
-            margin: 0;
-            padding: 5px 10px;
-        }
-
-        .small-pricing-table ul.small-pricing-table-info .cost {
-            margin-top: 15px;
-            font-size: 20px;
-            color: #32457F;
-            padding: 10px 0;
-            height: 45px;
-        }
-
-        .small-pricing-table:nth-child(odd) .cost {
-            background-color: #CCC;
-        }
-
-        .small-pricing-table:nth-child(even) .cost {
-            background-color: #C0C0C0;
-        }
-
-        .small-pricing-table:nth-child(odd) ul {
-            background-color: #ddd;
-        }
-
-        .small-pricing-table:nth-child(even) ul {
-            background-color: #d2d2d2;
-        }
-
-        .small-pricing-table .btn {
-            position: relative;
-            top: -20px;
-        }
-
-        .small-pricing-table .smaller-copy {
-            vertical-align: super;
-        }
-
-        .content-section:before, .content-section:after {
-    content: " ";
-    display: table;
-}
-.clearfix:after,
-.container:after,
-.container-fluid:after,
-.row:after,
-.cf:after,
-.content-section:after  { clear: both; }
-
-    .content-section p,
-.content-section--full p {
-	line-height:1.7em;
-	margin:0 0 20px 0;
-}
-
-	.content-section p small,
-    .content-section--full p small {
-		font-size:12px;
-		margin: 0 0 20px 0;
-		color:#777;
-	}
-
-.content-section cite,
-.content-section--full cite {
-	font-size:12px;
-	line-height:1.6em;
-	margin:0 0 20px 0;
-	display:block;
-	color:#777;
-	font-style: normal;
-}
-
-.content-section dl,
-.content-section--full dl {
-	font-size:14px;
-	margin: 0 0 15px 0;
-}
-
-	.white-section-wrapper .content-section dl {
-		color:#333;
-	}
-
-	.content-section li dl,
-    .content-section--full li dl {
-		font-size:14px;
-	}
-
-.content-section dd,
-.content-section--full dd {margin:0 0 0 20px;}
-
-
-    /*====== Website Cost Page ======*/
-.masthead--website-cost .masthead__content-wrapper{max-width:800px;}
-.masthead--website-cost-calculator .masthead__content-wrapper{max-width:1000px;width:1000px;}
-.ribbon-title{position:relative;text-align: left;font-size: 24px;font-family: 'roboto_thregular';padding: 0 5%;height:64px;line-height:64px;margin: 50px 0 25px;color: #fff;text-transform: uppercase;width: 385px;}
-.ribbon-title.blue{background-color: #7492C8;}
-.ribbon-title:after{border: solid transparent;content: " ";height: 0;width: 0;position: absolute;pointer-events: none;border-color: rgba(116,146,200,0);border-left-color: #7492C8;border-width: 32px 10px;left: 100%;top: 0;}
-
-.website-cost-calculator-header{text-align:center;background-color:#324877;font-family:'roboto_thregular';padding:25px 0;color:#fff;font-size:24px;margin:0;position: relative;z-index: 1;}
-.website-cost-calculator-header:after{padding-top: 50px;content: "\e724";font-family:'icomoonfont';color: #fff;background: #324877;-moz-border-radius: 50px;-webkit-border-radius: 50px;border-radius: 50px;width: 75px;height: auto;position: absolute;left: 50%;margin-left: -37px;z-index: -1;}
-.website-cost-breakdown-section{margin:45px 0;}
-.website-cost-breakdown-heading{height:70px;}
-.website-cost-breakdown-heading h4{float:left;margin:0;line-height:70px;font-size:20px;padding-left:20px;color:#fff;}
-.website-cost-breakdown-dollar{float:left;padding:15px;}
-.website-cost-breakdown-circle{line-height:40px;border-radius:25px;width:40px;height:40px;font-size:24px;font-family:'robotobold';background-color:#fff;text-align:center;margin:0 auto;}
-.website-cost-breakdown-cost{font-family:'robotobold';font-size:20px;}
-.website-cost-breakdown-info{padding:45px 45px 25px 45px;background-color:#fff;}
-
-.website-cost-breakdown-color--teal .website-cost-breakdown-heading{background-color:#4CCCBF;}
-.website-cost-breakdown-color--teal .website-cost-breakdown-dollar{background-color:#27A494;}
-.website-cost-breakdown-color--teal .website-cost-breakdown-circle,
-.website-cost-breakdown-color--teal .website-cost-breakdown-cost{color:#27A494;}
-.website-cost-breakdown-color--green .website-cost-breakdown-heading{background-color:#9BCC59;}
-.website-cost-breakdown-color--green .website-cost-breakdown-dollar{background-color:#8CB650;}
-.website-cost-breakdown-color--green .website-cost-breakdown-circle,
-.website-cost-breakdown-color--green .website-cost-breakdown-cost{color:#8CB650;}
-.website-cost-breakdown-color--orange .website-cost-breakdown-heading{background-color:#DD9701;}
-.website-cost-breakdown-color--orange .website-cost-breakdown-dollar{background-color:#CC8801;}
-.website-cost-breakdown-color--orange .website-cost-breakdown-circle,
-.website-cost-breakdown-color--orange .website-cost-breakdown-cost{color:#CC8801;}
-.website-cost-breakdown-color--red .website-cost-breakdown-heading{background-color:#F9494C;}
-.website-cost-breakdown-color--red .website-cost-breakdown-dollar{background-color:#D63D3F;}
-.website-cost-breakdown-color--red .website-cost-breakdown-circle,
-.website-cost-breakdown-color--red .website-cost-breakdown-cost{color:#D63D3F;}
-.website-cost-breakdown-select{border:1px solid #ccc; padding: 8px;border-radius: 5px;-webkit-border-radius: 5px;-moz-border-radius: 5px;font-family: robotobold;text-transform: uppercase;}
-
-.content-page .price-calculator{padding:10%;}
-.content-page .price-calculator .slider{width:18%;}
-.price-calculator {background:#EAEAEA; padding:50px 150px; margin:30px 0; overflow: auto; width:auto;}
-.price-calculator .row {border-bottom: 1px solid #D8D7D7; float: left; width:100%;}
-.price-calculator h2, .price-calculator p, .price-calculator label {color:#333 !important;}
-.price-calculator .row input.submit {border:none;}
-.price-calculator .row label {float:left; font-size:.75em; width: 200px; padding: 10px 0;}
-.price-calculator .row input[type="text"] {float:right; font-size:.75em; background: #D8D7D7; border: 0; box-shadow: none; padding: 10px; border-radius:0; min-height: 40px;}
-.price-calculator .slider-left,
-.price-calculator .slider-right {float:left; -webkit-border-radius: 10px; border-radius: 10px; width: 20px; padding: 0; margin:10px 0; height: 20px; cursor:pointer; position: relative; line-height: 1.4em;
-font-size: 16px;}
-.price-calculator .slider-left .pictogram,
-.price-calculator .slider-right .pictogram {padding: 0; position: absolute; top: 2px; left: 6px;}
-.price-calculator .slider {float:left; height: 20px; width: 240px; position:relative; background:url(../img/repeat-slider-bg.gif) repeat-x; -webkit-border-radius: 10px; border-radius: 10px; margin:10px; }
-.price-calculator .slider .ui-slider-handle {background-color: #eee; display: block; height: 20px; position: absolute; width:20px; top:0; -webkit-border-radius: 10px; border-radius: 10px; outline:none;-webkit-box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, .3);
-box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, .3); margin-left:-10px; }
-.price-calculator .button-row {margin-top:20px;}
-.price-calculator table {color: #333; border-top: #d8d7d7 solid 1px; border-left: #d8d7d7 solid 1px; width: 100%; margin-bottom: 30px;}
-.price-calculator td, .price-calculator th {border-right: #d8d7d7 solid 1px; border-bottom: #d8d7d7 solid 1px; padding:8px; font-weight:normal;}
-.price-calculator td {font-size:.813em;}
-.price-calculator th.service {text-align:left;}
-.price-calculator .total,
-.price-calculator tr.total .low,
-.price-calculator tr.total .high {background:#99CC62;}
-.price-calculator .low {background:#d8d7d7; text-align:right;}
-.price-calculator .high {background:#ccc; text-align:right;}
-.price-calculator .top th {font-size:.813em; text-transform:uppercase;}
-.price-calculator.main-form input[type="text"],
-.price-calculator.main-form textarea {border:1px solid #999; -webkit-box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, .4); box-shadow: inset 0px 0px 6px 0px rgba(0, 0, 0, .4);}
-.price-calculator .quote-details .arrow {font-size:200px; display:block; text-align:center; line-height: 80px; color: #CCC;}
-
-.website-cost-download-cta{padding:20px 0;}
-.website-cost-download-cta img{float:left;margin-right:45px;}
-.website-cost-download-cta p { color: #333; }
-.website-cost-download-cta p.big{margin:0; line-height: 1.4em;}
-.website-cost-download-cta .dark-blue{background: #333;}
-
-
-@@media screen and (max-width:1024px) {
-
-    .masthead--website-cost-calculator .masthead__content-wrapper{width:auto;}
-    
-    .price-calculator{padding:50px;}
-    
-}
-
-@@media screen and (max-width:767px) {
-
-   	.price-calculator .row label{width:100%;}
-   	.price-calculator td, 
-    .price-calculator th {font-size:12px;}
-   	.content-page .price-calculator .slider{max-width:50%;width:100%;}
-
-}
-
-@@media screen and (max-width:600px) {
-
-   	.masthead--website-cost-calculator .masthead__content-wrapper{padding:50px 0;}
-   	.price-calculator{padding:15px;}
-   	.price-calculator .row{margin-bottom:25px;padding-bottom:15px;}
-   	.price-calculator .row label{width:60%;background-color:#ddd;height:45px;padding-left:15px;}
-   	.price-calculator .row input[type="text"]{width:40%;float:left;height:45px;}
-   	.price-calculator .slider{margin:10px 20px;width:100%; max-width:77%;}
-   	.price-calculator .row{border:none;}
-   	.content-page .price-calculator .slider{max-width:67%;width:100%;}
-   	.website-cost-breakdown-select{width:100%;}
-   	.website-cost-breakdown-info{padding:20px;}
-   	.website-cost-breakdown-heading{height:100%;}
-   	.website-cost-breakdown-heading h4{font-size:16px;line-height: inherit;width:80%;padding-top:12px;}
-   	.website-cost-breakdown-dollar{width:20%;padding:15px 0;}
-   	.website-cost-breakdown-cost{font-size:16px;}
-    
-    .site-footer.home .footer-blog-feed,
-	.top-logos-wrapper,
-	.footer-ctas,
-	.footer-logos,
-	.btn-free-quote {
-		display:none;
-	}
-    
-}
-
-@@media screen and (max-width: 400px) {
-    
-    .content-page .price-calculator .slider{max-width:55%;width:100%;}
-	.price-calculator .slider{max-width:70%;}
-	.price-calculator td, .price-calculator th{font-size:10px;}
-    
-}
-    
-    </style>
+    <link href="~/lib/jquery-smart-wizard/smart_wizard.css" rel="stylesheet" />
+    <link href="~/css/site-order.css" rel="stylesheet" />
+    <link href="~/css/site-order-wizard.css" rel="stylesheet" />
 }
 
 @if (TempData["CreateContactMessage"] != null)
@@ -475,6 +67,174 @@ box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, .3); margin-left:-10px; }
     </div>
 </section>
 
+<section class="website-cost-calculator" id="calculator" style="padding-bottom:0;">
+    <h2 class="website-cost-calculator-header">Get an Instant Website Quote with Our Web Design Calculator</h2>
+    <section class="masthead masthead--website-cost-calculator">
+        <section class="masthead__content-wrapper content-section">
+
+            <div id="show_form" class="row">
+
+                <ul class="payment-wizard list-unstyled">
+
+
+                    <li class="active">
+                        <div class="wizard-heading">
+                            1. اطلاعات پایه
+                            <span class="fa fa-user"></span>
+                        </div>
+                        <div class="wizard-content">
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <button class="btn-green done">ادامه</button>
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <div class="wizard-heading">
+                            2. اطلاعات سرور
+                            <span class="fa fa-server"></span>
+                        </div>
+                        <div class="wizard-content">
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <button class="btn-green done">ادامه</button>
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <div class="wizard-heading">
+                            3. اطلاعات تخصصی
+                            <span class="fa fa-lightbulb-o"></span>
+                        </div>
+                        <div class="wizard-content">
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <button class="btn-green done">ادامه</button>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="wizard-heading">
+                            4. اطلاعات آماری
+                            <span class="fa fa-line-chart"></span>
+                        </div>
+                        <div class="wizard-content">
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <button class="btn-green done">ادامه</button>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="wizard-heading">
+                            5. اطیاعات ساختاری
+                            <span class="fa fa-institution"></span>
+                        </div>
+                        <div class="wizard-content">
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <button class="btn-green done">ادامه</button>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="wizard-heading">
+                            6. اطلاعات سازمانی
+                            <span class="fa fa-clock-o"></span>
+                        </div>
+                        <div class="wizard-content">
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <button class="btn-green done">ادامه</button>
+                        </div>
+                    </li>
+
+
+                    <li>
+                        <div class="wizard-heading">
+                            7. قیمت نهایی
+                            <span class="fa fa-money"></span>
+                        </div>
+                        <div class="wizard-content">
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <button class="btn-green" type="submit">ثبت</button>
+                        </div>
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+        </section>
+    </section>
+</section>
 
 <section class="yellow-stripes-section-wrapper">
     <section class="content-section no-padding-top no-padding-bottom">
@@ -492,7 +252,6 @@ box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, .3); margin-left:-10px; }
     </section>
 </section>
 
-
 <article class="main">
     <section class="content-section">
 
@@ -506,7 +265,8 @@ box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, .3); margin-left:-10px; }
 
 
             <div class="small-pricing-table center">
-                <div class="small-pricing-table-heading"><h4>Informational or Small Business Website</h4>
+                <div class="small-pricing-table-heading">
+                    <h4>Informational or Small Business Website</h4>
                 </div>
                 <ul class="small-pricing-table-info  list-unstyled">
                     <li>8 - 16 web pages</li>
@@ -585,11 +345,9 @@ box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, .3); margin-left:-10px; }
     </section>
 </article>
 
-
 <section id="recent-works" style="background-color:#FCCE00;">
     @await Component.InvokeAsync("HomePortfolioSlider")
 </section>
-
 
 <section class="white-section-wrapper">
     <section class="content-section" id="cost-breakdowns">
@@ -700,7 +458,8 @@ box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, .3); margin-left:-10px; }
                 </div>
                 <div class="website-cost-breakdown-info">
                     <p>To attract the most visitors as possible, you must fully optimize your website for search engines. SEO services can range from very inexpensive to thousands of dollars per month, depending on how much work you want your agency to put into the ranking and visibility of your new site. After it's designed and developed, make sure you include SEO in your costs of a website to make sure your estimate is as accurate as possible.</p>
-                    <p>SEO services typically include multiple ongoing methods and tactics. For example, <a href="http://www.webpagefx.com/SEO-Pricing.html">WebpageFX's SEO packages</a> include optimization of website copy, keyword research, targeted outreach, link building, content creation, and more. The money you invested in your professional web design cost won't mean much if visitors can't find your site, and SEO is critical to making your site visible.
+                    <p>
+                        SEO services typically include multiple ongoing methods and tactics. For example, <a href="http://www.webpagefx.com/SEO-Pricing.html">WebpageFX's SEO packages</a> include optimization of website copy, keyword research, targeted outreach, link building, content creation, and more. The money you invested in your professional web design cost won't mean much if visitors can't find your site, and SEO is critical to making your site visible.
                     </p>
                     <p class="website-cost-breakdown-cost">Cost: $300 to $1,500 per month</p>
                 </div>
@@ -756,9 +515,6 @@ box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, .3); margin-left:-10px; }
     </section>
 </section>
 
-
-
-
 @section Scripts {
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
@@ -767,5 +523,5 @@ box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, .3); margin-left:-10px; }
     <script src="~/lib/jquery.blockui/jquery.blockui.js"></script>
     <script src="~/lib/spin.js/spin.min.js"></script>
     <script src="~/js/utilities/spin.partofpage.js"></script>
-    <script src="~/js/webforscripts/contact.create.js"></script>
+    <script src="~/js/webforscripts/siteorder.index.js"></script>
 }

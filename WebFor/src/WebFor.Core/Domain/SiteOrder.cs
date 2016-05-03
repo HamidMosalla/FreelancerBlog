@@ -34,6 +34,7 @@ namespace WebFor.Core.Domain
         public bool? SiteOrderIsCrossPlatform { get; set; }
         public bool? SiteOrderDoesIncludeUnitTest { get; set; }
         public bool? SiteOrderIsAsync { get; set; }
+        public bool? SiteOrderDoesConformToSolidDesign { get; set; }
 
 
         public bool? SiteOrderDoesHaveImageGallery { get; set; }
