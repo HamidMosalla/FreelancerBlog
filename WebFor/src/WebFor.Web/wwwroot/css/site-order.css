@@ -1244,7 +1244,7 @@ ul.small-pricing-table-info {
     .masthead__content-wrapper h4,
     .masthead__content-wrapper p,
     .masthead__content-wrapper li {
-        color: #fff !important;
+        color: #333 !important;
     }
 
     .masthead__content-wrapper h1,
