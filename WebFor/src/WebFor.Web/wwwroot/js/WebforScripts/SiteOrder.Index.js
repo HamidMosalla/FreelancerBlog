@@ -50,7 +50,7 @@
 
 
 	    $(".done").click(function () {
-	        var this_li_ind = $(this).parent().parent("li").index();
+	        var thisLiInd = $(this).parent().parent("li").index();
 	        if ($('.payment-wizard li').hasClass("jump-here")) {
 	            $(this).parent().parent("li").removeClass("active").addClass("completed");
 	            $(this).parent(".wizard-content").slideUp();
@@ -64,9 +64,9 @@
 
 	    $('.payment-wizard li .wizard-heading').click(function () {
 	        if ($(this).parent().hasClass('completed')) {
-	            var this_li_ind = $(this).parent("li").index();
+	            var thisLiInd = $(this).parent("li").index();
 	            var li_ind = $('.payment-wizard li.active').index();
-	            if (this_li_ind < li_ind) {
+	            if (thisLiInd < li_ind) {
 	                $('.payment-wizard li.active').addClass("jump-here");
 	            }
 	            $(this).parent().addClass('active').removeClass('completed');
