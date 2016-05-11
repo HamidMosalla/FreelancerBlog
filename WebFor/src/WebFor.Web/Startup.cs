@@ -24,6 +24,7 @@ using WebFor.DependencyInjection.Modules.Article;
 using WebFor.Web.Services;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.WebEncoders;
+using WebFor.DependencyInjection.Modules.SiteOrder;
 using WebFor.Infrastructure.Services.Shared;
 
 namespace WebFor.Web
@@ -93,6 +94,8 @@ namespace WebFor.Web
             containerBuilder.RegisterModule<FileUploadValidatorModule>();
             containerBuilder.RegisterModule<ArticleCreatorModule>();
             containerBuilder.RegisterModule<ArticleEditorModule>();
+            containerBuilder.RegisterModule<PriceSpecCollectionFactoryModule>();
+            containerBuilder.RegisterModule<FinalPriceCalculatorModule>();
             containerBuilder.RegisterType<WebForMapper>().As<IWebForMapper>();
 
             containerBuilder.Populate(services);

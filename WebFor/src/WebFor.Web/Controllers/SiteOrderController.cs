@@ -3,6 +3,8 @@ using WebFor.Core;
 using WebFor.Core.Services;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
+using WebFor.Core.Services.SiteOrderServices;
+using WebFor.Infrastructure.Services.SiteOrderServices;
 using WebFor.Web.Services;
 using WebFor.Web.ViewModels.SiteOrder;
 
@@ -16,6 +18,16 @@ namespace WebFor.Web.Controllers
         [FromServices]
         public IWebForMapper WebForMapper { get; set; }
 
+        private IPriceSpecCollectionFactory<PriceSpec, object> _priceSpecCollectionFactory;
+        private IFinalPriceCalculator<PriceSpec> _finalPriceCalculator;
+
+        public SiteOrderController(IPriceSpecCollectionFactory<PriceSpec, object> priceSpecCollectionFactory, IFinalPriceCalculator<PriceSpec> finalPriceCalculator)
+        {
+            _priceSpecCollectionFactory = priceSpecCollectionFactory;
+            _finalPriceCalculator = finalPriceCalculator;
+        }
+
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -24,9 +36,18 @@ namespace WebFor.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(SiteOrderViewModel viewModel)
+        public JsonResult Index(SiteOrderViewModel viewModel)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return Json(new {Status = "FormWasNotValid"});
+            }
+
+            var priceSpecCollection = _priceSpecCollectionFactory.BuildPriceSpecCollection(viewModel);
+
+            var finalPrice = _finalPriceCalculator.CalculateFinalPrice(priceSpecCollection);
+
+            return Json(new {Price = finalPrice, PriceSheet = priceSpecCollection, Status = "Success"});
         }
     }
 }

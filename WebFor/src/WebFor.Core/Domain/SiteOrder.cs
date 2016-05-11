@@ -91,7 +91,7 @@ namespace WebFor.Core.Domain
         public string SiteOrderEmail { get; set; }
         public string SiteOrderPhone { get; set; }
         public string SiteOrderDesc { get; set; }
-        public double SiteOrderTimeToDeliverMonth { get; set; }
+        public string SiteOrderTimeToDeliverMonth { get; set; }
         public string SiteOrderExample { get; set; }
         public string SiteOrderHowFindUs { get; set; }
 

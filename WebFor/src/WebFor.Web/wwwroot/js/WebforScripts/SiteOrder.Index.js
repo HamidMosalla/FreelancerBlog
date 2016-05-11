@@ -1,79 +1,105 @@
 ﻿(function () {
-	$(function () {
-	    "use strict";
+    $(function () {
+        "use strict";
 
-	    //ajaxSpinnerForPartOfPage("#contact-page");
+        ajaxSpinnerForPartOfPage("#show_form");
 
+        // go to the next step
+        $(".done").click(function (e) {
 
-	    var successfulCreateNotice = function () {
-	        new PNotify({
-	            title: 'ثبت موفق',
-	            text: 'پیغام شما با موفقیت ثبت شد، هم اکنون به صفحه اصلی هدایت میشوید.',
-	            type: 'success',
-	            icon: 'glyphicon glyphicon-ok',
-	            delay: 1000
-	        });
-	    }
+            var thisLiInd = $(this).parent().parent("li").index();
 
-	    var ProblematicCreateNotice = function () {
-	        new PNotify({
-	            title: 'ثبت ناموفق',
-	            text: 'مشکلی در ثبت پیغام شما پیش آمده، لطفا دوباره تلاش کنید، اگر موفق به ثبت نشدید، با مدیریت سایت تماس بگیرید.',
-	            type: 'warning',
-	            icon: 'glyphicon glyphicon-warning-sign',
-	            delay: 1000
-	        });
-	    }
+            if ($('.payment-wizard li').hasClass("jump-here")) {
+                $(this).parent().parent("li").removeClass("active").addClass("completed");
+                $(this).parent(".wizard-content").slideUp();
+                $('.payment-wizard li.jump-here').removeClass("jump-here");
+            }
+            else {
+                $(this).parent().parent("li").removeClass("active").addClass("completed");
+                $(this).parent(".wizard-content").slideUp();
+                $(this).parent().parent("li").next("li:not('.completed')").addClass('active').children('.wizard-content').slideDown();
+            }
 
-	    var GeneralSuccessNotice = function () {
-	        new PNotify({
-	            title: 'عملیات موفق',
-	            text: 'عملیات مورد نظر موفقیت آمیز بود.',
-	            type: 'success',
-	            icon: 'glyphicon glyphicon-ok',
-	            delay: 1000
-	        });
-	    }
+        });
 
-	    var GeneralFailureNotice = function () {
-	        new PNotify({
-	            title: 'عملیات ناموفق',
-	            text: 'مشکلی در انجام عملیات مورد نظر پیش آمده.',
-	            type: 'success',
-	            icon: 'glyphicon glyphicon-ok',
-	            delay: 1000
-	        });
-	    }
+        //expand and collapse the heading
+        $('.payment-wizard li .wizard-heading').click(function () {
+
+            if ($(this).parent().hasClass('completed')) {
+
+                var thisLiInd = $(this).parent("li").index();
+
+                var liInd = $('.payment-wizard li.active').index();
+
+                if (thisLiInd < liInd) {
+                    $('.payment-wizard li.active').addClass("jump-here");
+                }
+                $(this).parent().addClass('active').removeClass('completed');
+
+                $(this).siblings('.wizard-content').slideDown();
+
+            }
+
+        });
 
 
-	    //$('#wizard').smartWizard();
+        $("#calculateFinalPriceForm").on("submit", function (e) {
+            e.preventDefault();
+
+            //var antiForgeryToken = $("input[name='__RequestVerificationToken']").val();
+
+            var trueCheckBoxes = $(".slideThree input[type='checkbox']:checked");
+
+            //console.log(trueCheckBoxes.length);
+
+            $.each(trueCheckBoxes, function (index, value) {
+                //console.log(value); 
+                $(value).val(true);
+
+            });
+
+            var $form = $(this);
+
+            var formParametersArray = $form.serializeArray();
+
+            if ($form.valid()) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/SiteOrder/Index",
+                    data: formParametersArray,//$form.serialize()
+                    dataType: "json",
+                    success: function (response) {
+
+                        //console.log(response.Price);
+                        //console.log(response.PriceSheet);
+                        //console.log(response.Status);
+
+                        $("#PriceSheetTable").empty();
+
+                        var tableBodyString;
+
+                        $.each(response.PriceSheet, function(index, value) {
+                            tableBodyString += '<tr><td>' + value.FaName + '</td><td>' + (value.Value === true ? "بلی" : value.Value) + '</td><td>' + Number(value.Price).toLocaleString("en") + ' تومان</td></tr>';
+                        });
+
+                        $("#PriceSheetTable").append(tableBodyString);
+
+                        $("#FinalPriceModalSpan").text(Number(response.Price).toLocaleString("en") + " تومان");
+
+                        $("#FinalPriceModal").modal("show");
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                        alert("message : \n" + "An error occurred, for more info check the js console" + "\n status : \n" + status + " \n error : \n" + error);
+                    }
+                });
 
 
-	    $(".done").click(function () {
-	        var thisLiInd = $(this).parent().parent("li").index();
-	        if ($('.payment-wizard li').hasClass("jump-here")) {
-	            $(this).parent().parent("li").removeClass("active").addClass("completed");
-	            $(this).parent(".wizard-content").slideUp();
-	            $('.payment-wizard li.jump-here').removeClass("jump-here");
-	        } else {
-	            $(this).parent().parent("li").removeClass("active").addClass("completed");
-	            $(this).parent(".wizard-content").slideUp();
-	            $(this).parent().parent("li").next("li:not('.completed')").addClass('active').children('.wizard-content').slideDown();
-	        }
-	    });
+            }
 
-	    $('.payment-wizard li .wizard-heading').click(function () {
-	        if ($(this).parent().hasClass('completed')) {
-	            var thisLiInd = $(this).parent("li").index();
-	            var li_ind = $('.payment-wizard li.active').index();
-	            if (thisLiInd < li_ind) {
-	                $('.payment-wizard li.active').addClass("jump-here");
-	            }
-	            $(this).parent().addClass('active').removeClass('completed');
-	            $(this).siblings('.wizard-content').slideDown();
-	        }
-	    });
+        });
 
-
-	});
+    });
 })();

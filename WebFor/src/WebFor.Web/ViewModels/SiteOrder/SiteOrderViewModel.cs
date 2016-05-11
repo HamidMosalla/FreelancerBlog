@@ -8,16 +8,21 @@ namespace WebFor.Web.ViewModels.SiteOrder
 {
     public class SiteOrderViewModel
     {
+        public SiteOrderViewModel()
+        {
+            //this.SiteOrderDoesHaveShoppingCart = new SiteOrderViewModelDetail { EnName = "SiteOrderDoesHaveShoppingCart", FaName = "سامتن سامتن", Price = 100};
+        }
+
         public int SiteOrderId { get; set; }
 
 
         //preliminary info - step1
-        public string SiteOrderWebSiteType { get; set; }
+        public string SiteOrderWebSiteType { get; set; } 
         public string SiteOrderNumberOfMockUp { get; set; }
         public string SiteOrderDevelopmentComplexity { get; set; }
         public int? SiteOrderStaticPageNumber { get; set; }
         public bool SiteOrderDoesHaveDatabase { get; set; }
-        public bool SiteOrderDoesHaveShoppingCart { get; set; }
+        public bool SiteOrderDoesHaveShoppingCart { get; set; } //= new SiteOrderViewModelDetail { EnName = "SiteOrderDoesHaveShoppingCart", FaName = "سبد خرید", Price = 100 };
         public bool SiteOrderDoesHaveShoppingCartWithoutRegister { get; set; }
         public bool SiteOrderDoesHaveBlog { get; set; }
         public bool SiteOrderDoesContentOnUs { get; set; }
@@ -109,7 +114,8 @@ namespace WebFor.Web.ViewModels.SiteOrder
         public string SiteOrderDesc { get; set; }
 
         [MaxLength(15, ErrorMessage = "مقدار فیلد نمی تواند از 15 کراکتر بیشتر باشد.")]
-        public double SiteOrderTimeToDeliverMonth { get; set; }
+        [Required(ErrorMessage = "پر کردن فیلد فرجه زمانی اجباری می باشد.")]
+        public string SiteOrderTimeToDeliverMonth { get; set; }
 
         [MaxLength(400, ErrorMessage = "مقدار فیلد نمی تواند از 400 کراکتر بیشتر باشد.")]
         public string SiteOrderExample { get; set; }
