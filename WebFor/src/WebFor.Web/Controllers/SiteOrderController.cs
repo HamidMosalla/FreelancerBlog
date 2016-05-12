@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNet.Mvc;
 using WebFor.Core;
 using WebFor.Core.Services;
 using WebFor.Core.Domain;
@@ -36,7 +37,7 @@ namespace WebFor.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult Index(SiteOrderViewModel viewModel)
+        public async Task<JsonResult> Index(SiteOrderViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -47,7 +48,16 @@ namespace WebFor.Web.Controllers
 
             var finalPrice = _finalPriceCalculator.CalculateFinalPrice(priceSpecCollection);
 
-            return Json(new {Price = finalPrice, PriceSheet = priceSpecCollection, Status = "Success"});
+            var siteOrder = WebForMapper.SiteOrderViewModelToSiteOrder(viewModel);
+
+            int addSiteOrderAsyncResult = await _db.SiteOrderRepository.AddSiteOrderAsync(siteOrder);
+
+            if (addSiteOrderAsyncResult > 0)
+            {
+                return Json(new { Price = finalPrice, PriceSheet = priceSpecCollection, Status = "Success" });
+            }
+
+            return Json(new {Price = finalPrice, PriceSheet = priceSpecCollection, Status = "Failed"});
         }
     }
 }

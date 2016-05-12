@@ -4,6 +4,8 @@
 
         ajaxSpinnerForPartOfPage("#show_form");
 
+        $('a').click(function () { $('html, body').animate( { scrollTop: $($.attr(this, 'href')).offset().top }, 500); return false; });
+
         // go to the next step
         $(".done").click(function (e) {
 
@@ -79,13 +81,15 @@
 
                         var tableBodyString;
 
-                        $.each(response.PriceSheet, function(index, value) {
+                        $.each(response.PriceSheet, function (index, value) {
                             tableBodyString += '<tr><td>' + value.FaName + '</td><td>' + (value.Value === true ? "بلی" : value.Value) + '</td><td>' + Number(value.Price).toLocaleString("en") + ' تومان</td></tr>';
                         });
 
                         $("#PriceSheetTable").append(tableBodyString);
 
                         $("#FinalPriceModalSpan").text(Number(response.Price).toLocaleString("en") + " تومان");
+
+                        response.Status === "Success" ? $("#successAlert").show() : $("#faileAlert").show();
 
                         $("#FinalPriceModal").modal("show");
 

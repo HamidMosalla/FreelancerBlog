@@ -7,7 +7,7 @@ using WebFor.Infrastructure.EntityFramework;
 
 namespace WebFor.Infrastructure.Repository
 {
-    public class SiteOrderRepository:ISiteOrderRepository
+    public class SiteOrderRepository : ISiteOrderRepository
     {
         private WebForDbContext _context;
 
@@ -48,6 +48,12 @@ namespace WebFor.Infrastructure.Repository
         public Task<List<SiteOrder>> GetAllAsync()
         {
             throw new NotImplementedException();
+        }
+
+        public Task<int> AddSiteOrderAsync(SiteOrder siteOrder)
+        {
+            _context.SiteOrders.Add(siteOrder);
+            return _context.SaveChangesAsync();
         }
     }
 }
