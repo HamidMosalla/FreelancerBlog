@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
 
 namespace WebFor.Web.Areas.Admin.ViewModels.Portfolio
 {

@@ -20,7 +20,7 @@
                         <div class="media-heading">
 
                             <strong>@node.ArticleCommentName</strong>&nbsp; @(node.ArticleCommentParentId != null ? " - در پاسخ به " + node.ArticleCommentParent.ArticleCommentName : "")
-                            <small style="padding-right: 10px;"><i class="fa fa-calendar"></i>&nbsp; <span class="ArticleDateCreated"> @node.ArticleCommentDateCreated.ToShortDateString()</span></small>
+                            <small style="padding-right: 10px;"><i class="fa fa-calendar"></i>&nbsp; <span class="ArticleDateCreated"> @node.ArticleCommentDateCreated.ToString("MM/dd/yyyy")</span></small>
                             <a href="#" class="pull-left replyButton" data-parent-id="@node.ArticleCommentId" data-commentor-name="@node.ArticleCommentName"><i class="fa fa-repeat"></i> پاسخ</a>
 
                         </div>

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using cloudscribe.Web.Pagination;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.ArticleServices;
 using WebFor.Web.Services;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using WebFor.Web.ViewModels.Article;
+using WebFor.Core.Domain;
 
 namespace WebFor.Web.Controllers
 {
@@ -16,11 +18,13 @@ namespace WebFor.Web.Controllers
     {
         private IUnitOfWork _uw;
         private IWebForMapper _webForMapper;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ArticleController(IUnitOfWork uw, IWebForMapper webForMapper)
+        public ArticleController(IUnitOfWork uw, IWebForMapper webForMapper, UserManager<ApplicationUser> userManager)
         {
             _uw = uw;
             _webForMapper = webForMapper;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -42,7 +46,7 @@ namespace WebFor.Web.Controllers
         {
             if (id == 0)
             {
-                return HttpBadRequest();
+                return BadRequest();
             }
 
             var articles = await _uw.ArticleRepository.GetArticlesByTag(id);
@@ -61,14 +65,14 @@ namespace WebFor.Web.Controllers
         {
             if (id == 0)
             {
-                return HttpBadRequest();
+                return BadRequest();
             }
 
             var article = await _uw.ArticleRepository.FindByIdAsync(id);
 
             if (article == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
 
             await _uw.ArticleRepository.IncreaseArticleViewCount(id);
@@ -80,7 +84,7 @@ namespace WebFor.Web.Controllers
 
         public async Task<JsonResult> RateArticle(int id, double rating)
         {
-            var userId = User.GetUserId();
+            var userId = _userManager.GetUserId(User);
 
             if (!User.Identity.IsAuthenticated)
             {

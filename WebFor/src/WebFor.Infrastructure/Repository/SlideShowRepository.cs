@@ -1,8 +1,8 @@
-﻿using Microsoft.Data.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
 using WebFor.Infrastructure.EntityFramework;
@@ -72,7 +72,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<int> UpdateSlideShowAsync(SlideShow slideshow)
         {
-            _context.SlideShows.Attach(slideshow, GraphBehavior.SingleObject);
+            _context.SlideShows.Attach(slideshow);
 
             var entity = _context.Entry(slideshow);
             entity.State = EntityState.Modified;

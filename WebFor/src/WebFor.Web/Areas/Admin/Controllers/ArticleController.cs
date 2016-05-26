@@ -2,19 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Mvc;
-using Microsoft.Net.Http.Headers;
-using WebFor.Web.Areas.Admin.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 using WebFor.Web.Areas.Admin.ViewModels.Article;
 using WebFor.Web.Services;
 using System.Linq;
-using WebFor.Core.Domain;
-using WebFor.Core.Repository;
-using WebFor.Core.Services.ArticleServices;
-using WebFor.Core.Services.Shared;
 using cloudscribe.Web.Pagination;
+using Microsoft.AspNetCore.Http;
+using WebFor.Core.Repository;
+using WebFor.Core.Services.Shared;
+using WebFor.Core.Services.ArticleServices;
 using WebFor.Core.Enums;
 
 namespace WebFor.Web.Areas.Admin.Controllers
@@ -232,7 +228,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
             if (id == 0)
             {
                 //return new HttpStatusCodeResult(StatusCodes.Status400BadRequest);
-                return HttpBadRequest();
+                return BadRequest();
             }
 
             var article = await _uw.ArticleRepository.FindByIdAsync(id);
@@ -240,7 +236,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
             if (article == null)
             {
                 //return new HttpStatusCodeResult(StatusCodes.Status404NotFound);
-                return HttpNotFound();
+                return NotFound();
             }
 
             var articleViewModel = await _webForMapper.ArticleToArticleViewModelWithTagsAsync(article);

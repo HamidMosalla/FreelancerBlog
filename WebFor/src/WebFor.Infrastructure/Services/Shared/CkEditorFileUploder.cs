@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Mvc;
 using Microsoft.Net.Http.Headers;
 using WebFor.Core.Services.Shared;
-using Microsoft.AspNet.Hosting;
 using System.IO;
-using Microsoft.AspNet.Mvc.Routing;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebFor.Infrastructure.Services.Shared
 {

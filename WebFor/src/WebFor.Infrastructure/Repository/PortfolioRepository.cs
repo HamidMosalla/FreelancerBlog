@@ -1,8 +1,8 @@
-﻿using Microsoft.Data.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
 using WebFor.Infrastructure.EntityFramework;
@@ -71,7 +71,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<int> UpdatePortfolioAsync(Portfolio portfolio)
         {
-            _context.Portfolios.Attach(portfolio, GraphBehavior.SingleObject);
+            _context.Portfolios.Attach(portfolio);
 
             var entity = _context.Entry(portfolio);
             entity.State = EntityState.Modified;

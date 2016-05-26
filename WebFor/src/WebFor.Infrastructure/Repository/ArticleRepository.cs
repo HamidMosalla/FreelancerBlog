@@ -1,8 +1,8 @@
-﻿using Microsoft.Data.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
 using WebFor.Infrastructure.EntityFramework;
@@ -41,7 +41,7 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<int> UpdateArticleAsync(Article article)
         {
-            _context.Articles.Attach(article, GraphBehavior.SingleObject);
+            _context.Articles.Attach(article);
 
             var entity = _context.Entry(article);
             entity.State = EntityState.Modified;

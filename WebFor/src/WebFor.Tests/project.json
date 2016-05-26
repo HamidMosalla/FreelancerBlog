@@ -2,18 +2,15 @@
   "version": "1.0.0-*",
   "description": "WebFor.Tests Class Library",
   "authors": [ "User" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
+
   "frameworks": {
-    "dnx451": { }
+    "netstandard1.5": {
+      "imports": [ "dnxcore50", "portable-net452+win81" ]
+    }
   },
   "dependencies": {
+    "NETStandard.Library": "1.5.0-rc2-24027",
     "xunit": "2.1.0",
     "xunit.runner.dnx": "2.1.0-rc1-build204"
-  },
-
-  "commands": {
-    "test": "xunit.runner.dnx"
   }
 }

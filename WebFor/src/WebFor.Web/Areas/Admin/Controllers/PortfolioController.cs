@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.Data.Entity;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
 using WebFor.Infrastructure.EntityFramework;
 using WebFor.Web.Services;
 using WebFor.Web.ViewModels.Contact;
 using cloudscribe.Web.Pagination;
-using Microsoft.AspNet.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using WebFor.Core.Services.Shared;
 using WebFor.Web.Areas.Admin.ViewModels.Portfolio;
 
@@ -90,14 +88,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
         {
             if (id.Equals(default(int)))
             {
-                return HttpBadRequest();
+                return BadRequest();
             }
 
             var model = await _uw.PortfolioRepository.FindByIdAsync(id);
 
             if (model == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
 
             var viewModel = _webForMapper.PortfolioToPortfolioViewModelEdit(model);

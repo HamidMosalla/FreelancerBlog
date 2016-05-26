@@ -3,10 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Data.Entity;
-using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Metadata;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace WebFor.Infrastructure.EntityFramework
 {
@@ -21,6 +20,11 @@ namespace WebFor.Infrastructure.EntityFramework
         public DbSet<Portfolio> Portfolios { get; set; }
         public DbSet<SiteOrder> SiteOrders { get; set; }
         public DbSet<SlideShow> SlideShows { get; set; }
+
+        public WebForDbContext(DbContextOptions<WebForDbContext> options) : base(options)
+        {
+            
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

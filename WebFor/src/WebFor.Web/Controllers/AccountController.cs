@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Authorization;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebFor.Core;
 using WebFor.Core.Services;
@@ -194,8 +194,8 @@ namespace WebFor.Web.Controllers
                 // If the user does not have an account, then ask the user to create an account.
                 ViewData["ReturnUrl"] = returnUrl;
                 ViewData["LoginProvider"] = info.LoginProvider;
-                var email = info.ExternalPrincipal.FindFirstValue(ClaimTypes.Email);
-                var fullName = info.ExternalPrincipal.FindFirstValue(ClaimTypes.Name);
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+                var fullName = info.Principal.FindFirstValue(ClaimTypes.Name);
                 return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email, UserFullName = fullName });
             }
         }
@@ -205,7 +205,7 @@ namespace WebFor.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl = null)
         {
-            if (User.IsSignedIn())
+            if (_signInManager.IsSignedIn(User))
             {
                 return RedirectToAction(nameof(ManageController.Index), "Manage");
             }
@@ -494,7 +494,7 @@ namespace WebFor.Web.Controllers
 
         private async Task<ApplicationUser> GetCurrentUserAsync()
         {
-            return await _userManager.FindByIdAsync(HttpContext.User.GetUserId());
+            return await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User));
         }
 
         private IActionResult RedirectToLocal(string returnUrl)

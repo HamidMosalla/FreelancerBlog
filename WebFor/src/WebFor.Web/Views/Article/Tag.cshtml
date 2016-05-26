@@ -30,7 +30,7 @@
                         <span><i class="fa fa-star"></i> &nbsp; @(item.ArticleRatings.Sum(a => a.ArticleRatingScore) / item.ArticleRatings.Count)/10</span>
                     }
 
-                    <span><i class="fa fa-calendar"></i>&nbsp;<span class="ArticleDateCreated">@item.ArticleDateCreated.ToShortDateString()</span></span>
+                    <span><i class="fa fa-calendar"></i>&nbsp;<span class="ArticleDateCreated">@item.ArticleDateCreated.ToString("MM/dd/yyyy")</span></span>
                     <span><i class="fa fa-comment"></i> <a href="javascript: void(0);">&nbsp; نظرات @item.ArticleComments.Count</a></span>
                 </div>
                 <p>@item.ArticleSummary</p>

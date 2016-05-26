@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNet.Http;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.Shared;
 using WebFor.Web.Areas.Admin.ViewModels.Article;
 using System.Security.Claims;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using WebFor.Web.ViewModels.Article;
 using WebFor.Web.ViewModels.Contact;
 using WebFor.Web.Areas.Admin.ViewModels.SlideShow;
@@ -47,11 +48,13 @@ namespace WebFor.Web.Services
 
         private IUnitOfWork _uw;
         private readonly IHttpContextAccessor contextAccessor;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public WebForMapper(IUnitOfWork uw, IHttpContextAccessor contextAccessor)
+        public WebForMapper(IUnitOfWork uw, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager)
         {
             _uw = uw;
             this.contextAccessor = contextAccessor;
+            _userManager = userManager;
         }
 
         static readonly MapperConfiguration _autoMapperConfig = new MapperConfiguration(cfg =>
@@ -97,7 +100,8 @@ namespace WebFor.Web.Services
 
 
             articleViewModel.SumOfRating = articleViewModel.ArticleRatings.Sum(a => a.ArticleRatingScore) / articleViewModel.ArticleRatings.Count;
-            articleViewModel.CurrentUserRating = articleViewModel.ArticleRatings.SingleOrDefault(a => a.UserIDfk == contextAccessor.HttpContext.User.GetUserId());
+            //UserManager<ApplicationUser>.GetUserAsync(contextAccessor.HttpContext.User)
+            articleViewModel.CurrentUserRating = articleViewModel.ArticleRatings.SingleOrDefault(a => a.UserIDfk == _userManager.GetUserId(contextAccessor.HttpContext.User));
 
             return articleViewModel;
         }

@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using Microsoft.AspNet.Identity;
+﻿using System;
 using WebFor.Core.Domain;
 using System.Linq;
+using Microsoft.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace WebFor.Infrastructure.EntityFramework
 {

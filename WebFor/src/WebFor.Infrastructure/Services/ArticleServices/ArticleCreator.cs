@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNet.Http;
-using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using WebFor.Core.Domain;
 using WebFor.Core.Enums;
 using WebFor.Core.Repository;
@@ -16,11 +16,13 @@ namespace WebFor.Infrastructure.Services.ArticleServices
     {
         private IUnitOfWork _uw;
         private readonly IHttpContextAccessor contextAccessor;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ArticleCreator(IUnitOfWork uw, IHttpContextAccessor contextAccessor)
+        public ArticleCreator(IUnitOfWork uw, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager)
         {
             _uw = uw;
             this.contextAccessor = contextAccessor;
+            _userManager = userManager;
         }
 
         public async Task<List<ArticleStatus>> CreateNewArticleAsync(Article article, string articleTags)
@@ -32,7 +34,7 @@ namespace WebFor.Infrastructure.Services.ArticleServices
             article.ArticleDateCreated = DateTime.Now;
             article.ArticleViewCount = 1;
 
-            article.UserIDfk = contextAccessor.HttpContext.User.GetUserId();
+            article.UserIDfk = _userManager.GetUserId(contextAccessor.HttpContext.User);
 
             _uw.ArticleRepository.Add(article);
 

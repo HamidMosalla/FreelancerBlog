@@ -53,6 +53,6 @@ m0f3cJp-Pc7Pb9oWNO0fZOFHLkQrg8gw
   
 call back urls:
 twitter=> http://localhost:18224
-http://localhost:18224/signin-google
-http://localhost:18224/signin-facebook
-http://localhost:18224/signin-microsoft
+google=> http://localhost:18224/signin-google
+facebook=> http://localhost:18224/signin-facebook
+microsoft=> http://localhost:18224/signin-microsoft

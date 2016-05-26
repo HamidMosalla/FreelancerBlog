@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using WebFor.Core;
 using WebFor.Core.Services;
 using WebFor.Core.Domain;
@@ -13,19 +13,17 @@ namespace WebFor.Web.Controllers
 {
     public class SiteOrderController : Controller
     {
-        [FromServices]
-        public IUnitOfWork  _db { get; set; }
-
-        [FromServices]
-        public IWebForMapper WebForMapper { get; set; }
-
+        private IUnitOfWork _db;
+        private IWebForMapper _webForMapper;
         private IPriceSpecCollectionFactory<PriceSpec, object> _priceSpecCollectionFactory;
         private IFinalPriceCalculator<PriceSpec> _finalPriceCalculator;
 
-        public SiteOrderController(IPriceSpecCollectionFactory<PriceSpec, object> priceSpecCollectionFactory, IFinalPriceCalculator<PriceSpec> finalPriceCalculator)
+        public SiteOrderController(IPriceSpecCollectionFactory<PriceSpec, object> priceSpecCollectionFactory, IFinalPriceCalculator<PriceSpec> finalPriceCalculator, IUnitOfWork uw, IWebForMapper webForMapper)
         {
             _priceSpecCollectionFactory = priceSpecCollectionFactory;
             _finalPriceCalculator = finalPriceCalculator;
+            _db = uw;
+            _webForMapper = webForMapper;
         }
 
 
@@ -48,7 +46,7 @@ namespace WebFor.Web.Controllers
 
             var finalPrice = _finalPriceCalculator.CalculateFinalPrice(priceSpecCollection);
 
-            var siteOrder = WebForMapper.SiteOrderViewModelToSiteOrder(viewModel);
+            var siteOrder = _webForMapper.SiteOrderViewModelToSiteOrder(viewModel);
 
             int addSiteOrderAsyncResult = await _db.SiteOrderRepository.AddSiteOrderAsync(siteOrder);
 

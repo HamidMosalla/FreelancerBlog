@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Rendering;
-using Microsoft.Data.Entity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
 using WebFor.Infrastructure.EntityFramework;
@@ -28,14 +27,14 @@ namespace WebFor.Web.Controllers
         {
             if (id.Equals(default(int)))
             {
-                return HttpBadRequest();
+                return BadRequest();
             }
 
             var model = await _uw.PortfolioRepository.FindByIdAsync(id);
 
             if (model == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
 
             var viewModel = _webForMapper.PortfolioToPorfolioViewModel(model);

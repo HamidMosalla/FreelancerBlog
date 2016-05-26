@@ -12,7 +12,7 @@
 <form asp-action="Edit" asp-controller="SlideShow" id="SlideShowForm" enctype="multipart/form-data">
     <div class="form-horizontal">
         <hr />
-        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         @Html.HiddenFor(model=>model.SlideShowId)
 

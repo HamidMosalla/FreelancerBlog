@@ -1,7 +1,7 @@
-﻿using System.Net;
-using System.Net.Mail;
+﻿using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
-using Microsoft.Extensions.OptionsModel;
+using MailKit.Net.Smtp;
+using MimeKit;
 using WebFor.Core.Services.Shared;
 
 namespace WebFor.Infrastructure.Services.Shared
@@ -20,26 +20,52 @@ namespace WebFor.Infrastructure.Services.Shared
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            var mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress(_authMessageSenderSecrets.Email);
-            mailMessage.To.Add(new MailAddress(email));
+            //var mailMessage = new MailMessage();
+            //mailMessage.From = new MailAddress(_authMessageSenderSecrets.Email);
+            //mailMessage.To.Add(new MailAddress(email));
+            //mailMessage.Subject = subject;
+            //mailMessage.Body = message;
+            //mailMessage.IsBodyHtml = true;
+
+            //var smtp = new SmtpClient();
+
+            //var credential = new NetworkCredential
+            //{
+            //    UserName = _authMessageSenderSecrets.Email,
+            //    Password = _authMessageSenderSecrets.Password
+            //};
+
+            //smtp.Credentials = credential;
+            //smtp.Host = "mail.webfor.ir";
+            //smtp.Port = 25;
+            //return smtp.SendMailAsync(mailMessage);
+
+            var mailMessage = new MimeMessage();
+            mailMessage.From.Add(new MailboxAddress("WebFor", _authMessageSenderSecrets.Email));
+            mailMessage.To.Add(new MailboxAddress("Client", email));
             mailMessage.Subject = subject;
-            mailMessage.Body = message;
-            mailMessage.IsBodyHtml = true;
 
-            var smtp = new SmtpClient();
-           
 
-            var credential = new NetworkCredential
-            {
-                UserName = _authMessageSenderSecrets.Email,
-                Password = _authMessageSenderSecrets.Password
-            };
+            var bodyBuilder = new BodyBuilder { HtmlBody = message };
+            mailMessage.Body = bodyBuilder.ToMessageBody();
 
-            smtp.Credentials = credential;
-            smtp.Host = "mail.webfor.ir";
-            smtp.Port = 25;
-            return smtp.SendMailAsync(mailMessage);
+            var client = new SmtpClient();
+            client.Connect("mail.webfor.ir", 25, false);
+
+            // Note: since we don't have an OAuth2 token, disable
+            // the XOAUTH2 authentication mechanism.
+            //remove all of it except "LOGIN" because server doesn't support falling back to other method if one fail
+            client.AuthenticationMechanisms.Remove("XOAUTH2");
+            client.AuthenticationMechanisms.Remove("CRAM-MD5");
+            client.AuthenticationMechanisms.Remove("NTLM");
+            //var supportedMechanisms = client.AuthenticationMechanisms;
+
+            // Note: only needed if the SMTP server requires authentication
+            client.Authenticate(_authMessageSenderSecrets.Email, _authMessageSenderSecrets.Password);
+
+            return client.SendAsync(mailMessage);
+            //client.Disconnect(true);
+
         }
 
         public Task SendSmsAsync(string number, string message)
