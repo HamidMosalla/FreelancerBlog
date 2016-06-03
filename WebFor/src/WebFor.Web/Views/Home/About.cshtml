@@ -1,7 +1,144 @@
 ﻿@{
-    ViewData["Title"] = "About";
+    ViewData["Title"] = "درباره";
 }
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+@section styles{
+    <link href="~/lib/bootstrap-social/bootstrap-social.css" rel="stylesheet" />
+
+    <style>
+        .progress-bar {
+            line-height: 30px;
+        }
+    </style>
+
+}
+
+<section id="title" class="emerald">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <h1>درباره</h1>
+                <p>در این بخش شما با من و اهداف سایت آشنا خواهید شد.</p>
+            </div>
+            <div class="col-sm-4">
+                <ul class="breadcrumb pull-right">
+                    <li><a href="/Home/Index">خانه</a></li>
+                    <li class="active">درباره ما</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about-us" class="container">
+    <div class="row">
+
+
+        <div class="col-sm-6">
+            <h2>درباره من</h2>
+
+            <p>
+                من حمید مصلی نژاد هستم و این سایت را با هدف به اشتراک گذاشتن اطلاعات در زمینه برنامه نویسی و تکنولوژی، کمک
+                از طریق ارائه راه حل های تحت وب به افرادی که نیاز به ساخت نرم افزارهای تحت وب دارند، و همچنین محلی برای نمایش آخرین
+                برنامه هایی که نوشتم و کارهایی که انجام دادم، به عبارت دیگر نمایش رزومه کاری خودم راه اندازی کردم. تخصص اصلی من برنامه نویسی زیر ساختار
+                یا بک اند نرم افزار است، من برای انجام کارهام بیشتر از تکنولوژی های ماکروسافت استفاده میکنم، ولی در زمان نیاز خودم را محدود به یک تکنولوژی
+                خاص نمیدانم و تعصبی در این زمینه ندارم، و اعتقاد دارم تکنولوژی یک ابزار است، و از هر ابزاری که مناسبترین برای انجام کار است باید استفاده شود.
+                من علاقه ی فوق العاده زیادی به یادگیری و آزمایش کردن تکنولوژی های جدید دارم و از تغییرات مداوم در دنیای تکنولوژی با آغوش باز استقبال میکنم، از اینرو
+                اعتقاد دارم همین تغییرات هستند که این کار را به کاری جذاب تبدیل کرده اند.
+            </p>
+
+            <p>
+                مطالبی که در این سایت می نویسم فقط برای بازدید کنندگان برنامه نویس نیست، بلکه مطالبی هم خواهم داشت تا افراد غیر برنامه نویس هم بتوانند
+                در مورد انتخاب تکنولوژی های مورد نظرشان بهترین تصمیم را داشته باشند، این امر را می توانید در بخش سفارش سایت مشاهده کنید، در این بخش
+                سعی شده تا جای ممکن جزئیاتی که در کیفیت ساخت سایت تاثیر می گذارند به مخاطب انتقال داده شود، و مشتری بداند انتخاب هر تکنولوژی چه تاثیری
+                میتواند در روند کاری او داشته باشد. فعالیت های من در عرصه وب تنها به این سایت و زبان فارسی خلاصه نمی شود بلکه در این زمینه به زبان انگلیسی نیز
+                مقالاتی نوشته ام، که آن را میتوانید در <a href="http://www.hamidmosalla.com/" style="text-decoration: underline;">این آدرس</a> مشاهده کنید و
+                همچنین در سایت <a href="http://www.codeproject.com/script/Articles/MemberArticles.aspx?amid=8013865" style="text-decoration: underline;">کد پروژه</a>
+                نیز فعال هستم و در آنجا نیز مقالاتی ارسال کرده ام.
+
+            </p>
+
+        </div>
+
+
+        <div class="col-sm-6">
+            <h2>تخصص های من</h2>
+            <div>
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
+                        <span style="font-size: medium;">#C</span>
+                    </div>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+                        <span style="font-size: medium;">Asp.Net</span>
+                    </div>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;">
+                        <span style="font-size: medium;">JavaScript/jQuery</span>
+                    </div>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+                        <span style="font-size: medium;">Html/CSS/Bootstrap</span>
+                    </div>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;">
+                        <span style="font-size: medium;">OOP/SOLID Design/Architecture</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="gap"></div>
+
+
+    <div id="meet-the-team" class="row">
+
+        <div class="col-md-offset-4 col-md-3 col-xs-6">
+
+            <h1 class="center">تماس با من</h1>
+            <p class="lead center">برای تماس با من می توانید از یکی از روش های زیر استفاده کنید.</p>
+            <div class="gap"></div>
+
+            <div class="center">
+                <p>
+                    <img class="img-responsive img-thumbnail img-circle" src="~/images/team-member/hamid-mosalla.jpg" alt="">
+                </p>
+                <h5>حمید مصلی نژاد<small class="designation muted">مدیر سایت</small></h5>
+                <p>تخصص ها: توسعه وب با تکنولوژی های دات نت</p>
+
+                <a href="mailto:Xellarix@gmail.com" class="btn btn-social-icon btn-reddit">
+                    <span class="fa fa-envelope"></span>
+                </a>
+
+                <a href="https://twitter.com/xellarix" class="btn btn-social-icon btn-twitter">
+                    <span class="fa fa-twitter"></span>
+                </a>
+
+                <a href="https://www.linkedin.com/in/hamid-mosalla-a10a2ab2" class="btn btn-social-icon btn-linkedin">
+                    <span class="fa fa-linkedin"></span>
+                </a>
+
+                <a href="https://plus.google.com/u/0/114825960141862334677" class="btn btn-social-icon btn-google">
+                    <span class="fa fa-google-plus"></span>
+                </a>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+</section>
