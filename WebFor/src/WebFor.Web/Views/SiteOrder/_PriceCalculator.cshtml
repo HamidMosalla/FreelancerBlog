@@ -1,0 +1,1060 @@
+﻿@model WebFor.Web.ViewModels.SiteOrder.SiteOrderViewModel
+
+<h2 class="website-cost-calculator-header">با استفاده از محاسبه گر قیمت ما میتوانید در سریع ترین زمان ممکن از هزینه پروژه خود آگاه شوید</h2>
+<section class="masthead masthead--website-cost-calculator">
+<section class="masthead__content-wrapper content-section">
+
+
+<div id="show_form" class="row">
+
+<form asp-controller="SiteOrder" asp-action="Index" id="calculateFinalPriceForm" method="post" role="form">
+
+<ul class="payment-wizard list-unstyled">
+
+<li class="active">
+
+    <div class="wizard-heading">
+        1. امکانات پایه
+        <span class="fa fa-bank"></span>
+    </div>
+
+    <div class="wizard-content">
+        <div class="row wizard-inner-content">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>نوع وب سایت</label> - <a href="#">(وب سایت های انترنتی چه انواع مختفی میتوانند داشته باشند؟)</a>
+                </div>
+
+                <div class="col-md-6">
+
+                    <select class="selectpicker" asp-for="SiteOrderWebSiteType">
+                        <option value="">لطفا نوع وب سایت را مشخص کنید</option>
+                        <option value="Personal">شخصی</option>
+                        <option value="Blog">بلاگ</option>
+                        <option value="Shop">فروشگاه</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>تعداد طرح های پیش ساخت</label> - <a href="#">(نمونه طرح پیش ساخت چیست و چه استفاده ای دارد؟)</a>
+                </div>
+
+                <div class="col-md-6">
+
+                    <select class="selectpicker" asp-for="SiteOrderNumberOfMockUp">
+                        <option value="">لطفا تعداد نمونه طرح های پیش ساخت را مشخص کنید</option>
+                        <option value="0">نمونه لازم نیست، تمام ایده ها از خودم است</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="5">5</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>پیچیدگی ساخت</label> - <a href="#">(وب سایت های انترنتی تا چه حد میتوانند پیجیده باشند؟)</a>
+                </div>
+
+                <div class="col-md-6">
+
+                    <select class="selectpicker" asp-for="SiteOrderDevelopmentComplexity">
+                        <option value="">لطفا پیچیدگی سایت را مشخص کنید</option>
+                        <option value="Standard">استاندارد</option>
+                        <option value="Advanced">پیشرفته</option>
+                        <option value="Enterprise">تجاری</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>تعداد صفحات استاتیک</label> - <a href="#">(منظور از استاتیک چیست و چه فرقی با دینامیک دارد؟)</a>
+                </div>
+
+                <div class="col-md-3">
+                    <input asp-for="SiteOrderStaticPageNumber" class="form-control" autocomplete="off"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>داشتن بانک اطلاعاتی؟</label> - <a href="#">(بانک اطلاعاتی چیست و چه تاثیری روی وب سایت میگذارد؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveDatabase" name="SiteOrderDoesHaveDatabase"/>
+                        <label for="SiteOrderDoesHaveDatabase"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>داشتن سبد خرید</label> - <a href="#">(سبد خرید چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveShoppingCart" name="SiteOrderDoesHaveShoppingCart"/>
+                        <label for="SiteOrderDoesHaveShoppingCart"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label> سبد خرید بدون ثبت نام</label> - <a href="#">(سبد خرید بدون نیاز به ثبت نام کاربر چه امکاناتی دارد؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveShoppingCartWithoutRegister" name="SiteOrderDoesHaveShoppingCartWithoutRegister"/>
+                        <label for="SiteOrderDoesHaveShoppingCartWithoutRegister"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>داشتن بلاگ</label> - <a href="#">(منظور از بلاگ چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveBlog" name="SiteOrderDoesHaveBlog"/>
+                        <label for="SiteOrderDoesHaveBlog"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>تولید محتوا</label> - <a href="#">(منظور از محتوا چیست و تولید آن بر عهده کیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesContentOnUs" name="SiteOrderDoesContentOnUs"/>
+                        <label for="SiteOrderDoesContentOnUs"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>نوع پشتیبانی</label> - <a href="#">(منظور از پشتیبانی چیست و چرا به آن احتیاج دارید؟)</a>
+                </div>
+
+                <div class="col-md-6">
+
+                    <select class="selectpicker" asp-for="SiteOrderSupportType">
+                        <option value="">لطفا نوع پشتیبانی را انتخاب کنید</option>
+                        <option value="NoSupport">پشتیبانی لازم نیست</option>
+                        <option value="OneYear">یک ساله</option>
+                        <option value="TwoYear">دوساله</option>
+                        <option value="FiveYear">پنج ساله</option>
+                        <option value="IndefiniteSupport">مادام العمر</option>
+                    </select>
+
+                </div>
+            </div>
+
+
+        </div>
+        <button class="btn-green done" type="button">ادامه</button>
+    </div>
+
+</li>
+
+<li>
+
+    <div class="wizard-heading">
+        2. امکانات طراحی و ظاهر
+        <span class="fa fa-paint-brush"></span>
+    </div>
+
+
+    <div class="wizard-content">
+        <div class="row wizard-inner-content" style="height: 560px;">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>استفاده از قالب آماده</label> - <a href="#">(قالب آماده چیست و چه تفاوتی به قالب دست ساز دارد؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesUseTemplates" name="SiteOrderDoesUseTemplates"/>
+                        <label for="SiteOrderDoesUseTemplates"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>استفاده از قالب دست ساز</label> - <a href="#">(قالب دست ساز چیز و مزیت آن نسبت به قالب آماده چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesUseCustomDesign" name="SiteOrderDoesUseCustomDesign"/>
+                        <label for="SiteOrderDoesUseCustomDesign"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>دیزاین واکنش گرا</label> - <a href="#">(واکنش گرایی در دیزاین چیست و مزیت های آن چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderIsResponsive" name="SiteOrderIsResponsive"/>
+                        <label for="SiteOrderIsResponsive"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>بهینه سازی برای موبایل</label> - <a href="#">(بهینه سازی برای موبایل چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderIsOptimizedForMobile" name="SiteOrderIsOptimizedForMobile"/>
+                        <label for="SiteOrderIsOptimizedForMobile"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>بهینه سازی دسترسی</label> - <a href="#">(بهینه سازی دسترسی چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderIsOptimizedForAccessibility" name="SiteOrderIsOptimizedForAccessibility"/>
+                        <label for="SiteOrderIsOptimizedForAccessibility"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>بهینه سازی برای سبکی</label> - <a href="#">(بهینه سازی برای سبکی چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderIsOptimizedForLightness" name="SiteOrderIsOptimizedForLightness"/>
+                        <label for="SiteOrderIsOptimizedForLightness"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>کار کردن بدون جاوا اسکریپت</label> - <a href="#">(کار کردن بدون جاوا اسکریپت یا گریسفول دگردیشن چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesWithOkWithJavascriptDisabled" name="SiteOrderDoesWithOkWithJavascriptDisabled"/>
+                        <label for="SiteOrderDoesWithOkWithJavascriptDisabled"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>بهینه سازی برای موتورهای جستجو</label> - <a href="#">(بهینه سازی برای موتورهای جستجو چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveSeo" name="SiteOrderDoesHaveSeo"/>
+                        <label for="SiteOrderDoesHaveSeo"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>نوع بهینه سازی</label> - <a href="#">(بهینه سازی برای متوهای جستجو چه انواعی دارد؟)</a>
+                </div>
+
+                <div class="col-md-6">
+
+                    <select class="selectpicker" asp-for="SiteOrderSeoType">
+                        <option value="">لطفا نوع بهینه سازی برای متوهای جستجو را مشخص کنید</option>
+                        <option value="Standard">استاندارد</option>
+                        <option value="Advanced">پیشرفته</option>
+                        <option value="Enterprise">تجاری</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>نقشه سایت</label> - <a href="#">(نقشه سایت چیست و چه تاثیری بر سایت میگذارد؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveSiteMap" name="SiteOrderDoesHaveSiteMap"/>
+                        <label for="SiteOrderDoesHaveSiteMap"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <button class="btn-green done" type="button">ادامه</button>
+    </div>
+
+</li>
+
+<li>
+
+    <div class="wizard-heading">
+        3. امکانات فنی و ساختاری
+        <span class="fa fa-code"></span>
+    </div>
+
+
+    <div class="wizard-content">
+        <div class="row wizard-inner-content" style="height: 507px;">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>کراسپلتفرم</label> - <a href="#">(منظورت از کراسپلتفرم چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderIsCrossPlatform" name="SiteOrderIsCrossPlatform"/>
+                        <label for="SiteOrderIsCrossPlatform"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>یونیت تست</label> - <a href="#">(یونیت تست چیست و چه تاثیری رو کیفیت نرم فزار میگذارد؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesIncludeUnitTest" name="SiteOrderDoesIncludeUnitTest"/>
+                        <label for="SiteOrderDoesIncludeUnitTest"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>غیر همزمان بودن توابع</label> - <a href="#">(منظور از غیر همزمان بودن توابع چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderIsAsync" name="SiteOrderIsAsync"/>
+                        <label for="SiteOrderIsAsync"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>پرنسیب سالید دیزان</label> - <a href="#">(پرنسیب سالید دیزان چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesConformToSolidDesign" name="SiteOrderDoesConformToSolidDesign"/>
+                        <label for="SiteOrderDoesConformToSolidDesign"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>وب سایت تک صفحه ای</label> - <a href="#">(وب سایت تک صفحه ای چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderIsSinglePage" name="SiteOrderIsSinglePage"/>
+                        <label for="SiteOrderIsSinglePage"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>اسفاده از آژاکس</label> - <a href="#">(آژاکس چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesUseAjax" name="SiteOrderDoesUseAjax"/>
+                        <label for="SiteOrderDoesUseAjax"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>شدت استفاده از آژاکس</label> - <a href="#">(شدت استفاده از آژاکس چه تاثیری بر سایت میگذارد؟)</a>
+                </div>
+
+                <div class="col-md-6">
+
+                    <select class="selectpicker" asp-for="SiteOrderDoesUseAjaxType">
+                        <option value="">لطفا شدت استفاده از آژاکس را مشخص کنید</option>
+                        <option value="Standard">استاندارد</option>
+                        <option value="Advanced">پیشرفته</option>
+                        <option value="Enterprise">تجاری</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>استفاده از اس اس ال</label> - <a href="#">(اس اس ال چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveSsl" name="SiteOrderDoesHaveSsl"/>
+                        <label for="SiteOrderDoesHaveSsl"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>تحویل با سورس کد</label> - <a href="#">(چرا تحویل تحویل با سورس کد مهم است؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesSourceCodeIncluded" name="SiteOrderDoesSourceCodeIncluded"/>
+                        <label for="SiteOrderDoesSourceCodeIncluded"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>مستند سازی</label> - <a href="#">(مستند سازی چیست و چه اهمیتی دارد؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveDocumentation" name="SiteOrderDoesHaveDocumentation"/>
+                        <label for="SiteOrderDoesHaveDocumentation"></label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <button class="btn-green done" type="button">ادامه</button>
+    </div>
+
+</li>
+
+<li>
+
+    <div class="wizard-heading">
+        4. بخش های تشکیل دهنده
+        <span class="fa fa-building"></span>
+    </div>
+
+    <div class="wizard-content">
+        <div class="row wizard-inner-content" style="height: 534px;">
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>قابلیت ثبت نام</label> - <a href="#">(قابلیت ثبت نام شامل چه امکاناتی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveRegistration" name="SiteOrderDoesHaveRegistration"/>
+                        <label for="SiteOrderDoesHaveRegistration"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>ورود بدون ثبت نام با اوآث</label> - <a href="#">(ورود به سایت با اوآث چیست و چه مزیت هایی دارد؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveExternalAuth" name="SiteOrderDoesHaveExternalAuth"/>
+                        <label for="SiteOrderDoesHaveExternalAuth"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>بخش کاربری</label> - <a href="#">(داشتن بخش کاربری شامل چه امکاناتی میشود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesIncludeUserArea" name="SiteOrderDoesIncludeUserArea"/>
+                        <label for="SiteOrderDoesIncludeUserArea"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>بخش پروفایل کاربری</label> - <a href="#">(پروفایل کاربری شامل چه امکاناتی میشود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveUserProfile" name="SiteOrderDoesHaveUserProfile"/>
+                        <label for="SiteOrderDoesHaveUserProfile"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>داشتن بخش مدیریت</label> - <a href="#">(بخش مدیریت شامل چه امکاناتی است؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveAdminSection" name="SiteOrderDoesHaveAdminSection"/>
+                        <label for="SiteOrderDoesHaveAdminSection"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>بخش مدیریت کاربران</label> - <a href="#">(بخش مدیریت کاربران شامل چه امکاناتی است؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesAdminManageUsers" name="SiteOrderDoesAdminManageUsers"/>
+                        <label for="SiteOrderDoesAdminManageUsers"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>مدیریت فایل</label> - <a href="#">(بخش مدیریت فایل چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveFileManager" name="SiteOrderDoesHaveFileManager"/>
+                        <label for="SiteOrderDoesHaveFileManager"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>گالری عکس</label> - <a href="#">(بخش گالری عکس شامل چه امکاناتی است؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveImageGallery" name="SiteOrderDoesHaveImageGallery"/>
+                        <label for="SiteOrderDoesHaveImageGallery"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>ادیتور اچ تی ام ال پیشرفته</label> - <a href="#">(ادیتور اچ تی ام ال پیشرفته شامل جه امکاناتی است؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveAdvancedHtmlEditor" name="SiteOrderDoesHaveAdvancedHtmlEditor"/>
+                        <label for="SiteOrderDoesHaveAdvancedHtmlEditor"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>سلاید شو</label> - <a href="#">(سلاید شو چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveSlideShow" name="SiteOrderDoesHaveSlideShow"/>
+                        <label for="SiteOrderDoesHaveSlideShow"></label>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <button class="btn-green done" type="button">ادامه</button>
+    </div>
+
+</li>
+
+<li>
+
+    <div class="wizard-heading">
+        5. امکانات بخش های تشکیل دهنده
+        <span class="fa fa-gears"></span>
+    </div>
+
+    <div class="wizard-content">
+        <div class="row wizard-inner-content">
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>قابلیت تگ گذاری</label> - <a href="#">(قابلیت قابلیت تگ گذاری شامل چه امکاناتی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesSupportTagging" name="SiteOrderDoesSupportTagging"/>
+                        <label for="SiteOrderDoesSupportTagging"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>قابلیت دسته بندی</label> - <a href="#">(قابلیت دسته بندی شامل چه امکاناتی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesSupportCategory" name="SiteOrderDoesSupportCategory"/>
+                        <label for="SiteOrderDoesSupportCategory"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>قابلیت کامنت گذاری</label> - <a href="#">(قابلیت کامنت گذاری شامل چه امکاناتی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveCommenting" name="SiteOrderDoesHaveCommenting"/>
+                        <label for="SiteOrderDoesHaveCommenting"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>قابلیت امتیاز دهی</label> - <a href="#">(قابلیت امتیاز دهی شامل چه امکاناتی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveRatinging" name="SiteOrderDoesHaveRatinging"/>
+                        <label for="SiteOrderDoesHaveRatinging"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>قابلیت خبرنامه</label> - <a href="#">(قابلیت خبرنامه شامل چه امکاناتی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveNewsLetter" name="SiteOrderDoesHaveNewsLetter"/>
+                        <label for="SiteOrderDoesHaveNewsLetter"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>قابلیت فید خوان</label> - <a href="#">(قابلیت فید خوان شامل چه امکاناتی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveFeed" name="SiteOrderDoesHaveFeed"/>
+                        <label for="SiteOrderDoesHaveFeed"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>قابلیت پخش ویدئو</label> - <a href="#">(قابلیت پخش ویدئو شامل چه امکاناتی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesVideoPlaying" name="SiteOrderDoesVideoPlaying"/>
+                        <label for="SiteOrderDoesVideoPlaying"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>قابلیت فوروم</label> - <a href="#">(قابلیت فوروم شامل چه امکاناتی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveForum" name="SiteOrderDoesHaveForum"/>
+                        <label for="SiteOrderDoesHaveForum"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>قابلیت جستجو</label> - <a href="#">(قابلیت جستجو شامل چه امکاناتی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveSearch" name="SiteOrderDoesHaveSearch"/>
+                        <label for="SiteOrderDoesHaveSearch"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>نوع جستجو</label> - <a href="#">(امکان جستجو چه انواعی دارید و چه تاثیری رو سایت میگذارد؟)</a>
+                </div>
+
+                <div class="col-md-6">
+
+                    <select class="selectpicker" asp-for="SiteOrderSearchType">
+                        <option value="">لطفا نوع جستجو را انتخاب کنید</option>
+                        <option value="Standard">استاندارد</option>
+                        <option value="Advanced">پیشرفته</option>
+                        <option value="Enterprise">تجاری</option>
+                    </select>
+
+                </div>
+            </div>
+
+
+        </div>
+        <button class="btn-green done" type="button">ادامه</button>
+    </div>
+
+</li>
+
+<li>
+
+    <div class="wizard-heading">
+        6. امکانات اضافه
+        <span class="fa fa-plus-square"></span>
+    </div>
+
+
+    <div class="wizard-content">
+        <div class="row wizard-inner-content" style="height: 554px;">
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>استفاده از گوگل مپ</label> - <a href="#">(گوگل مپ چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesUseGoogleMap" name="SiteOrderDoesUseGoogleMap"/>
+                        <label for="SiteOrderDoesUseGoogleMap"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>استفاده از گوگل آنالیتیک</label> - <a href="#">(گوگل آنالیتیک چیست و چه امکانی به شما میدهد؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesUseGoogleAnalytics" name="SiteOrderDoesUseGoogleAnalytics"/>
+                        <label for="SiteOrderDoesUseGoogleAnalytics"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>راه اندازی سوشال مدیا</label> - <a href="#">(راه اندازی سوشال مدیا شامل چه امکاناتی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesUseSocialMedia" name="SiteOrderDoesUseSocialMedia"/>
+                        <label for="SiteOrderDoesUseSocialMedia"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>استفاده از چارت</label> - <a href="#">(استفاده از چارت چطور باعث مشاهده بهتر اطلاعات آماری می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesIncludeChart" name="SiteOrderDoesIncludeChart"/>
+                        <label for="SiteOrderDoesIncludeChart"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>استفاده از چارت دینامیک</label> - <a href="#">(تفاوت چارت دینامیک با چارت معمولی چیست؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesIncludeDynamicChart" name="SiteOrderDoesIncludeDynamicChart"/>
+                        <label for="SiteOrderDoesIncludeDynamicChart"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>قابلیت گزارش گیری پیشرفته</label> - <a href="#">(قابلیت گزارش گیری پیشرفته شامل چه امکاناتی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesIncludeAdvancedReport" name="SiteOrderDoesIncludeAdvancedReport"/>
+                        <label for="SiteOrderDoesIncludeAdvancedReport"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>اضافه کردن هزینه هاست و دامین</label> - <a href="#">(هاست و دامین چیست و هزینه آنها حدودا چقدر است؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesIncludeDomainAndHosting" name="SiteOrderDoesIncludeDomainAndHosting"/>
+                        <label for="SiteOrderDoesIncludeDomainAndHosting"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>ساپورت بعد از تحویل</label> - <a href="#">(ساپورت بعد از تحویل شامل جه مواردی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesSupportIncluded" name="SiteOrderDoesSupportIncluded"/>
+                        <label for="SiteOrderDoesSupportIncluded"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>بخش سوالات تکراری</label> - <a href="#">(بخش سوالات تکراری چه سودی دارد؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveFaq" name="SiteOrderDoesHaveFaq"/>
+                        <label for="SiteOrderDoesHaveFaq"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>فوتر پیشرفته</label> - <a href="#">(فوتر پیشرفته چیست و شامل چه امکاناتی می شود؟)</a>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="slideThree">
+                        <input type="checkbox" value="None" id="SiteOrderDoesHaveComplexFooter" name="SiteOrderDoesHaveComplexFooter"/>
+                        <label for="SiteOrderDoesHaveComplexFooter"></label>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <button class="btn-green done" type="button">ادامه</button>
+    </div>
+
+
+</li>
+
+<li>
+
+    <div class="wizard-heading">
+        7. محاسبه قیمت و ثبت
+        <span class="fa fa-money"></span>
+    </div>
+
+    <div class="wizard-content">
+
+        <div class="row wizard-inner-content" style="height: 762px;">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <input asp-for="SiteOrderFullName" placeholder="نام و نام خانوادگی" class="form-control input-lg"/>
+                    <span asp-validation-for="SiteOrderFullName" class="text-danger"></span>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <input asp-for="SiteOrderEmail" placeholder="ایمیل" class="form-control input-lg"/>
+                    <span asp-validation-for="SiteOrderEmail" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <input asp-for="SiteOrderPhone" placeholder="شماره تماس" class="form-control input-lg"/>
+                    <span asp-validation-for="SiteOrderPhone" class="text-danger"></span>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <input asp-for="SiteOrderTimeToDeliverMonth" placeholder="فرجه زمانی به ماه" class="form-control input-lg"/>
+                    <span asp-validation-for="SiteOrderTimeToDeliverMonth" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                    <select asp-for="SiteOrderHowFindUs" class="form-control input-lg" placeholder="طریقه اشنایی با ما">
+                        <option value="">لطفا طریقه آشنایی را انتخاب کنید</option>
+                        <option value="موتورهای جستجو">موتورهای جستجو</option>
+                        <option value="دوستان و آشنایان">دوستان و آشنایان</option>
+                        <option value="مشتریان قبلی ما">مشتریان قبلی ما</option>
+                        <option value="شبکه های اجتماعی">شبکه های اجتماعی</option>
+                        <option value="ایمیل های تبلیغاتی">ایمیل های تبلیغاتی</option>
+                    </select>
+                    <span asp-validation-for="SiteOrderHowFindUs" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea asp-for="SiteOrderExample" rows="5" placeholder="نمونه کارهای مشابه" class="form-control input-lg"></textarea>
+                        <span asp-validation-for="SiteOrderExample" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea asp-for="SiteOrderDesc" rows="10" placeholder="توضیحات" class="form-control input-lg"></textarea>
+                        <span asp-validation-for="SiteOrderDesc" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <button class="btn-green" style="width: 100%;" id="calculateFinalPriceAndSubmit">ثبت و محاسبه</button>
+
+    </div>
+
+</li>
+
+</ul>
+
+</form>
+
+</div>
+
+<div class="modal fade" id="FinalPriceModal" tabindex="-1" role="dialog" aria-labelledby="FinalPriceModal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="FinalPriceModal-label">هزینه نهایی <span id="FinalPriceModalSpan"></span></h4>
+            </div>
+
+            <div class="alert alert-success alert-dismissable" id="successAlert" style="display: none;">
+                سفارش شما با موفقیت ثبت شد، جزئیات سفارش خود را میتوانید در قالب یک فایل اکسل دریافت کنید.
+            </div>
+
+            <div class="alert alert-warning alert-dismissable" id="faileAlert" style="display: none;">
+                مشکلی در ثبت سفارش پیش آمده، سفارش شما با موفقیت ثبت نشد، لطفا دوباره تلاش کنید.
+            </div>
+
+            <div class="modal-body" style="height: 600px; overflow-y: scroll;">
+                <table class="table table-responsive table-striped table-hover" id="siteOrderTable">
+
+                    <thead>
+                    <tr>
+                        <td>
+                            امکانات
+                        </td>
+                        <td>
+                            مقدار انتخابی
+                        </td>
+                        <td>
+                            قیمت
+                        </td>
+                    </tr>
+                    </thead>
+
+                    <tbody id="PriceSheetTable"></tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">بستن</button>
+                <button type="button" onclick="$('#siteOrderTable').tableExport({ type: 'excel', escape: 'false' });" class="btn btn-success">استخراج در قالب اکسل</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</section>
+</section>
