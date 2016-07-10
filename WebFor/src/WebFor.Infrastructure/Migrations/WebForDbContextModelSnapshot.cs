@@ -5,17 +5,16 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using WebFor.Infrastructure.EntityFramework;
 
-namespace WebFor.Web.Migrations
+namespace WebFor.Infrastructure.Migrations
 {
     [DbContext(typeof(WebForDbContext))]
-    [Migration("20160525142809_Init")]
-    partial class Init
+    partial class WebForDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasDefaultSchema("MainDb")
-                .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
@@ -210,6 +209,7 @@ namespace WebFor.Web.Migrations
                         .HasName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
+                        .IsUnique()
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
@@ -566,7 +566,7 @@ namespace WebFor.Web.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
-                        .WithMany()
+                        .WithMany("Claims")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -574,7 +574,7 @@ namespace WebFor.Web.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
                     b.HasOne("WebFor.Core.Domain.ApplicationUser")
-                        .WithMany()
+                        .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -582,7 +582,7 @@ namespace WebFor.Web.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
                     b.HasOne("WebFor.Core.Domain.ApplicationUser")
-                        .WithMany()
+                        .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -590,61 +590,61 @@ namespace WebFor.Web.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserRole<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebFor.Core.Domain.ApplicationUser")
-                        .WithMany()
+                        .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebFor.Core.Domain.Article", b =>
                 {
-                    b.HasOne("WebFor.Core.Domain.ApplicationUser")
-                        .WithMany()
+                    b.HasOne("WebFor.Core.Domain.ApplicationUser", "ApplicationUser")
+                        .WithMany("Articles")
                         .HasForeignKey("UserIDfk");
                 });
 
             modelBuilder.Entity("WebFor.Core.Domain.ArticleArticleTag", b =>
                 {
-                    b.HasOne("WebFor.Core.Domain.Article")
-                        .WithMany()
+                    b.HasOne("WebFor.Core.Domain.Article", "Article")
+                        .WithMany("ArticleArticleTags")
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WebFor.Core.Domain.ArticleTag")
-                        .WithMany()
+                    b.HasOne("WebFor.Core.Domain.ArticleTag", "ArticleTag")
+                        .WithMany("ArticleArticleTags")
                         .HasForeignKey("ArticleTagId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("WebFor.Core.Domain.ArticleComment", b =>
                 {
-                    b.HasOne("WebFor.Core.Domain.ArticleComment")
-                        .WithMany()
+                    b.HasOne("WebFor.Core.Domain.ArticleComment", "ArticleCommentParent")
+                        .WithMany("ArticleCommentChilds")
                         .HasForeignKey("ArticleCommentParentId");
 
-                    b.HasOne("WebFor.Core.Domain.Article")
-                        .WithMany()
+                    b.HasOne("WebFor.Core.Domain.Article", "Article")
+                        .WithMany("ArticleComments")
                         .HasForeignKey("ArticleIDfk")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WebFor.Core.Domain.ApplicationUser")
-                        .WithMany()
+                    b.HasOne("WebFor.Core.Domain.ApplicationUser", "ApplicationUser")
+                        .WithMany("ArticleComments")
                         .HasForeignKey("UserIDfk");
                 });
 
             modelBuilder.Entity("WebFor.Core.Domain.ArticleRating", b =>
                 {
-                    b.HasOne("WebFor.Core.Domain.Article")
-                        .WithMany()
+                    b.HasOne("WebFor.Core.Domain.Article", "Article")
+                        .WithMany("ArticleRatings")
                         .HasForeignKey("ArticleIDfk")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("WebFor.Core.Domain.ApplicationUser")
-                        .WithMany()
+                    b.HasOne("WebFor.Core.Domain.ApplicationUser", "ApplicationUser")
+                        .WithMany("ArticleRatings")
                         .HasForeignKey("UserIDfk");
                 });
         }

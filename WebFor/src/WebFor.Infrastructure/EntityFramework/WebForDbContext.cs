@@ -33,9 +33,15 @@ namespace WebFor.Infrastructure.EntityFramework
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //dnvm upgrade -r coreclr
-            //dnx ef migrations add Initial
-            //dnx ef database update
+            /*
+             because tooling preview doesn't allow ef migrations in class libraries, we temporarily use this approach =>
+                 adding migrations: dotnet ef --startup-project ../WebFor.Web/ migrations add InitDb
+                 running the migrations: dotnet ef --startup-project ../WebFor.Web/ database update
+
+             for normal circumstances =>
+                 adding migrations: dotnet ef migrations add Initial
+                 running the migrations: dotnet ef database update
+             */
 
             base.OnModelCreating(builder);
 

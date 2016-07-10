@@ -4,14 +4,14 @@
   "authors": [ "User" ],
 
   "frameworks": {
-    "netstandard1.5": {
-      "imports": [ "dnxcore50", "portable-net452+win81" ]
+    "netstandard1.6": {
+      "imports": [ "dnxcore50"]
     }
   },
   "dependencies": {
-    "NETStandard.Library": "1.5.0-rc2-24027",
-    "Autofac": "4.0.0-rc1-177",
-    "Autofac.Extensions.DependencyInjection": "4.0.0-rc1-177",
+    "NETStandard.Library": "1.6.0",
+    "Autofac": "4.0.0-rc3-293",
+    "Autofac.Extensions.DependencyInjection": "4.0.0-rc3-280",
     "WebFor.Core": "1.0.0-*",
     "WebFor.Infrastructure": "1.0.0-*"
   }
