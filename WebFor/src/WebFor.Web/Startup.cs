@@ -15,6 +15,8 @@ using cloudscribe.Web.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using WebFor.DependencyInjection.Modules;
 using WebFor.DependencyInjection.Modules.Article;
@@ -75,7 +77,10 @@ namespace WebFor.Web
 
             services.Configure<AuthMessageSenderSecrets>(Configuration.GetSection("AuthMessageSenderSecrets"));
 
-            services.AddTransient<IUrlHelper, UrlHelper>();
+            services.AddTransient<IUrlHelperFactory, UrlHelperFactory>();
+            
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<IBuildPaginationLinks, PaginationLinkBuilder>();
 
             // Autofac container configuration and modules

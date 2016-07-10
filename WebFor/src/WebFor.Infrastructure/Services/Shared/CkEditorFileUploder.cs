@@ -8,6 +8,8 @@ using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace WebFor.Infrastructure.Services.Shared
 {
@@ -16,10 +18,10 @@ namespace WebFor.Infrastructure.Services.Shared
         private IHostingEnvironment _environment;
         private IUrlHelper _urlHelper;
 
-        public CkEditorFileUploder(IHostingEnvironment environment, IUrlHelper urlHelper)
+        public CkEditorFileUploder(IHostingEnvironment environment, IUrlHelperFactory urlHelperFactory, IActionContextAccessor actionContextAccessor)
         {
-            _urlHelper = urlHelper;
             _environment = environment;
+            _urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
         }
 
         public async Task<string> UploadAsync(IFormFile upload, List<string> webRootPath, string relativePath, string CKEditorFuncNum, string CKEditor, string langCode)
