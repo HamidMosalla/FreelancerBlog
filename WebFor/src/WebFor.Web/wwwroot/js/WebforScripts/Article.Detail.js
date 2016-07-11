@@ -66,7 +66,7 @@
                 dataType: "json",
                 success: function (response) {
 
-                    if (response.Status === "YouMustLogin") {
+                    if (response.status === "YouMustLogin") {
 
                         $this.rating('rate', 0);
 
@@ -80,7 +80,7 @@
 
                     }
 
-                    if (response.Status === "Success") {
+                    if (response.status === "Success") {
 
                         new PNotify({
                             title: 'عملیات موفق',
@@ -92,7 +92,7 @@
 
                     }
 
-                    if (response.Status === "SomeProblemWithSubmit") {
+                    if (response.status === "SomeProblemWithSubmit") {
 
                         new PNotify({
                             title: 'ثبت ناموفق',
@@ -104,7 +104,7 @@
 
                     }
 
-                    if (response.Status === "UpdatedSuccessfully") {
+                    if (response.status === "UpdatedSuccessfully") {
 
                         new PNotify({
                             title: 'عملیات موفق',
@@ -144,8 +144,8 @@
                 data: formData,
                 dataType: "json",
                 success: function (response) {
-
-                    if (response.Status === "CannotHaveEmptyArgument") {
+                    console.log(response);
+                    if (response.status === "CannotHaveEmptyArgument") {
 
                         new PNotify({
                             title: 'ثبت ناموفق',
@@ -157,7 +157,7 @@
 
                     }
 
-                    if (response.Status === "Success") {
+                    if (response.status === "Success") {
 
                         new PNotify({
                             title: 'عملیات موفق',
@@ -171,7 +171,7 @@
 
                     }
 
-                    if (response.Status === "ProblematicSubmit") {
+                    if (response.status === "ProblematicSubmit") {
 
                         new PNotify({
                             title: 'ثبت ناموفق',

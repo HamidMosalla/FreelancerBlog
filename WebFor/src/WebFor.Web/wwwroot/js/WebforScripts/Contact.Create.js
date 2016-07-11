@@ -67,12 +67,12 @@
 					dataType: "json",
 					success: function (response) {
 
-					    if (response.Status === "Success") {
+					    if (response.status === "Success") {
 					        successfulCreateNotice();
 					        setTimeout(function () { window.location.replace("/Home/Index"); }, 3000);
 					    }
 
-					    if (response.Status === "ProblematicSubmit") {
+					    if (response.status === "ProblematicSubmit") {
 					        ProblematicCreateNotice();
 					    }
 

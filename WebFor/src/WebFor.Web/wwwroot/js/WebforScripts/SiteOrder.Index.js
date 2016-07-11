@@ -75,7 +75,7 @@
 
                         //console.log(response.Price);
                         //console.log(response.PriceSheet);
-                        //console.log(response.Status);
+                        //console.log(response.status);
 
                         $("#PriceSheetTable").empty();
 
@@ -89,7 +89,7 @@
 
                         $("#FinalPriceModalSpan").text(Number(response.Price).toLocaleString("en") + " تومان");
 
-                        response.Status === "Success" ? $("#successAlert").show() : $("#faileAlert").show();
+                        response.status === "Success" ? $("#successAlert").show() : $("#faileAlert").show();
 
                         $("#FinalPriceModal").modal("show");
 

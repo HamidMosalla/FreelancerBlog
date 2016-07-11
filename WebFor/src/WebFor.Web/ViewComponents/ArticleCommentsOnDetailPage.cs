@@ -24,7 +24,7 @@ namespace WebFor.Web.ViewComponents
 
         public async Task<IViewComponentResult> InvokeAsync(ArticleCommentTreeViewModel commentTree)
         {
-            var articleCommentTree = new ArticleCommentTreeViewModel() { CommentSeed = commentTree.CommentSeed, Comments = commentTree.Comments };
+            var articleCommentTree = new ArticleCommentTreeViewModel { CommentSeed = commentTree.CommentSeed, Comments = commentTree.Comments };
 
             return View(articleCommentTree);
         }

@@ -92,12 +92,12 @@
                     dataType: "json",
                     success: function (response) {
 
-                        if (response.Status === "Deleted") {
+                        if (response.status === "Deleted") {
                             successfulDeleteNotice();
                             $this.closest("tr").fadeOut(2000);
                         }
 
-                        if (response.Status === "NotDeletedSomeProblem") {
+                        if (response.status === "NotDeletedSomeProblem") {
                             ProblematicDeleteNotice();
                         }
 
@@ -128,11 +128,11 @@
                 dataType: "json",
                 success: function (response) {
 
-                    if (response.Status === "Success") {
+                    if (response.status === "Success") {
                         GeneralSuccessNotice();
                     }
 
-                    if (response.Status === "NotDeletedSomeProblem") {
+                    if (response.status === "NotDeletedSomeProblem") {
                         GeneralFailureNotice();
                     }
 
@@ -200,12 +200,12 @@
                 dataType: "json",
                 success: function (response) {
 
-                    if (response.Status === "Success") {
+                    if (response.status === "Success") {
                         GeneralSuccessNotice();
                         $("#ArticleCommentEditModal").modal("hide");
                     }
 
-                    if (response.Status === "NotDeletedSomeProblem") {
+                    if (response.status === "NotDeletedSomeProblem") {
                         GeneralFailureNotice();
                     }
 

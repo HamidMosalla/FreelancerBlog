@@ -90,12 +90,12 @@
                     dataType: "json",
                     success: function (response) {
 
-                        if (response.Status === "Deleted") {
+                        if (response.status === "Deleted") {
                             successfulDeleteNotice();
                             $this.closest("tr").fadeOut(2000);
                         }
 
-                        if (response.Status === "NotDeletedSomeProblem") {
+                        if (response.status === "NotDeletedSomeProblem") {
                             ProblematicDeleteNotice();
                         }
 

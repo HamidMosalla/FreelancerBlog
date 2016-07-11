@@ -32,7 +32,7 @@
 
                     </div>
 
-                    @await Component.InvokeAsync("ArticleCommentsOnDetailPage", inner)
+                    @await Component.InvokeAsync("ArticleCommentsOnDetailPage", new { commentTree = inner })
 
                 </div>
             </div>
