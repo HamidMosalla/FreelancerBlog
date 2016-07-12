@@ -73,21 +73,21 @@
                     dataType: "json",
                     success: function (response) {
 
-                        //console.log(response.Price);
-                        //console.log(response.PriceSheet);
+                        //console.log(response.price);
+                        console.log(response.priceSheet);
                         //console.log(response.status);
 
                         $("#PriceSheetTable").empty();
 
                         var tableBodyString;
 
-                        $.each(response.PriceSheet, function (index, value) {
-                            tableBodyString += '<tr><td>' + value.FaName + '</td><td>' + (value.Value === true ? "بلی" : value.Value) + '</td><td>' + Number(value.Price).toLocaleString("en") + ' تومان</td></tr>';
+                        $.each(response.priceSheet, function (index, value) {
+                            tableBodyString += '<tr><td>' + value.faName + '</td><td>' + (value.value === true ? "بلی" : value.value) + '</td><td>' + Number(value.price).toLocaleString("en") + ' تومان</td></tr>';
                         });
 
                         $("#PriceSheetTable").append(tableBodyString);
 
-                        $("#FinalPriceModalSpan").text(Number(response.Price).toLocaleString("en") + " تومان");
+                        $("#FinalPriceModalSpan").text(Number(response.price).toLocaleString("en") + " تومان");
 
                         response.status === "Success" ? $("#successAlert").show() : $("#faileAlert").show();
 
