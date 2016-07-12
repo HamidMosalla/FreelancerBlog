@@ -38,6 +38,7 @@ namespace WebFor.Web.Controllers
         [Route("/Error/Status/{statusCode?}")]
         public IActionResult Error(int statusCode)
         {
+            //It gave 404 because of missing css and js map file and missing stylesheet
             ViewBag.StatusCode = statusCode;
 
             return View();

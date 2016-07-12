@@ -74,7 +74,7 @@
                     success: function (response) {
 
                         //console.log(response.price);
-                        console.log(response.priceSheet);
+                        //console.log(response.priceSheet);
                         //console.log(response.status);
 
                         $("#PriceSheetTable").empty();
