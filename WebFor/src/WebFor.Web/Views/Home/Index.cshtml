@@ -3,86 +3,155 @@
     Layout = "~/views/shared/_layout.cshtml";
 }
 
+@section styles{
+    <style>
+        .bg-3 {
+            background: url('/images/index/index-parallax.jpg') no-repeat bottom center fixed;
+            color: #fff;
+            background-size: cover;
+        }
+
+        .visit-more {
+            background: rgba(0, 0, 0, 0) linear-gradient(to bottom, #e04c13 0px, #e04c13 100%) repeat scroll 0 0;
+            border-bottom: 1px solid #e13008;
+            border-top: 1px solid #e8842f;
+            box-shadow: 0 1px #f74a11 inset, 0 1px #4ebee3;
+            color: #fff;
+            padding: 62px 0 58px;
+            text-align: center;
+        }
+
+        .nm-link {
+            color: #fff;
+            display: inline-block;
+            font: italic 32px/1.1 roboto-light-webfont,sans-serif;
+            transition: color 0.4s ease 0s;
+        }
+
+            .nm-link:hover {
+                color: #00b2fa;
+            }
+
+            .nm-link span {
+                font-family: roboto-bold-webfont,sans-serif;
+                font-style: normal;
+                margin-left: 7px;
+            }
+
+                .nm-link span::after {
+                    background: rgba(0, 0, 0, 0) url("../images/sprite.png") no-repeat scroll -612px -280px;
+                    content: "";
+                    display: inline-block;
+                    height: 29px;
+                    margin: 6px 0 0 24px;
+                    vertical-align: top;
+                    width: 19px;
+                }
+
+        .row {
+            margin-right: 0;
+            margin-left: 0;
+        }
+    </style>
+
+}
+
 <section id="main-slider" class="no-margin">
     @await Component.InvokeAsync("HomeSlider")
 </section>
 
-<section id="services" class="emerald">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-sm-6">
-                <div class="media">
-                    <div class="pull-left">
-                        <i class="fa fa-twitter-square fa-4x"></i>
-                    </div>
-                    <div class="media-body">
-                        <h3 class="media-heading">Twitter Marketing</h3>
-                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
-                    </div>
-                </div>
-            </div><!--/.col-md-4-->
-            <div class="col-md-4 col-sm-6">
-                <div class="media">
-                    <div class="pull-left">
-                        <i class="fa fa-facebook-official fa-4x"></i>
-                    </div>
-                    <div class="media-body">
-                        <h3 class="media-heading">Facebook Marketing</h3>
-                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
-                    </div>
-                </div>
-            </div><!--/.col-md-4-->
-            <div class="col-md-4 col-sm-6">
-                <div class="media">
-                    <div class="pull-left">
-                        <i class="fa fa-google-plus-square fa-4x"></i>
-                    </div>
-                    <div class="media-body">
-                        <h3 class="media-heading">Google Plus Marketing</h3>
-                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae.</p>
-                    </div>
-                </div>
-            </div><!--/.col-md-4-->
-        </div>
+<section class="row" style="display: block; text-align: center;">
+
+    <div class="col-lg-3 specialty">
+        <img alt="RESEARCH &amp; DISCOVERY" src="~/images/index/5411d3383cb97584393720.png">
+        <h3 style="height: 30px;">جستجو و تحلیل</h3>
+        <p style="height: 129px;">بدون تعریف مسئله، پیدا کردن راه حل ممکن نیست، یا اگر راه حلی باشد راه حل واقعی نیست، جستجو و تحلیل نیاز مشتری یکی از مهمترین مراحلی است که برای رسیدن به موفقیت لازم است، از اینرو ما این مرحله را بسار جدی میگیریم.</p>
     </div>
+    </div>
+
+    <div class="col-lg-3 specialty">
+        <img alt="UX STRATEGY &amp; DESIGN" src="~/images/index/5411d346048d9848730509.png">
+        <h3 style="height: 30px;">طراحی و دیزاین</h3>
+        <p style="height: 129px;">ما برای انجام پروژه های شما از به روزترین استاندارد های روز و متخصص این امر بهره خواهیم برد، ما به کاری که انجام می دهیم علاقه مندیم و به آن افتخار می کنیم، و در تمام مراحل انجام پروژه جویای افکار و نظرات مشتریان هستیم تا راه حل ساخته شده با خواسته مشتری مطابقت داشته باشد.</p>
+
+    </div>
+    </div>
+
+    <div class="col-lg-3 specialty">
+        <img alt="ENGINEERING" src="~/images/index/5411d350c0fe9095486801.png">
+        <h3 style="height: 30px;">مهندسی</h3>
+        <p style="height: 129px;">ما از هر نوع راه حلی که بتواند مسئله مورد نظر را به بهترین وجه ممکن حل کند استفاده خواهیم کرد، و خود را محدود به یک پلتفرم خاص نمی دانیم. ما تنها به دلیل اینکه به یک تکنولوژی خاص تسلط داریم از آن استفاده نمیکنیم، بلکه در فاز تحقیق مناسبترین تکنولوژی برای حل مسئله تجاری که مشتری ارائه داده انتخاب می کنیم.</p>
+
+    </div>
+    </div>
+
+    <div class="col-lg-3 specialty">
+        <img alt="QA &amp; DEPLOYMENT" src="~/images/index/5411d35a68552974185863.png">
+        <h3 style="height: 30px;">آموزش و نصب</h3>
+        <p style="height: 129px;">مرحله پایانی که تحویل پروژه به مشتری می باشد یکی از مهمترین مراحل کار ما است، زیرا در این مرحله باید آموزش لازم به مشتری برای استفاده از راه حل ساخته شده داده شود، و بعد از در نظر گرفتن و تست نهایی پروژه، پروژه برای مشتری راه اندازی خواهد شد.</p>
+
+    </div>
+    </div>
+
+</section>
+
+<section class="bg-3 text-center">
+    <h1>خود را به مشتری های بالقوه خود بشناسانید!</h1>
+    <h2>فروشنده هستید؟ آیا میدانستید با راه اندازی وبسایت می تواند فروش خود را چند برابر کنید و خود را به مشتریان بالقوه خود بشناسانید؟</h2>
+    <h2>هم اکنون وبسایت و امکانات مورد نظر انلاین خود را از طریق محاسبه گر قیمت سایت انتخاب نمایید.</h2>
+    <br />
+    <br />
+    <a href="/SiteOrder/Index#calculator" class="btn btn-default btn-lg">محاسبه گر قیمت</a>
+    <p class="lead"></p>
 </section>
 
 <section id="recent-works">
     @await Component.InvokeAsync("HomePortfolioSlider")
 </section>
 
-<section id="testimonial" class="alizarin">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="center">
-                    <h2>What our clients say</h2>
-                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-                </div>
-                <div class="gap"></div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <blockquote>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                            <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-                        </blockquote>
-                        <blockquote>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                            <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-                        </blockquote>
+
+<section class="visit-more">
+    <a href="/Article/Index" class="nm-link">می خواهید بیشتر بدانید؟<span>از وبلاگ ما بازدید کنید</span></a>
+</section>
+
+
+@*<section id="testimonial" class="alizarin">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="center">
+                        <h2>What our clients say</h2>
+                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
                     </div>
-                    <div class="col-md-6">
-                        <blockquote>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                            <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-                        </blockquote>
-                        <blockquote>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                            <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-                        </blockquote>
+                    <div class="gap"></div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <blockquote>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+                            </blockquote>
+                            <blockquote>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+                            </blockquote>
+                        </div>
+                        <div class="col-md-6">
+                            <blockquote>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+                            </blockquote>
+                            <blockquote>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                                <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+                            </blockquote>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>*@
+
+@section scripts{
+    <script src="~/lib/parallax/parallax.js"></script>
+    <script src="~/js/WebforScripts/Index.js"></script>
+}
