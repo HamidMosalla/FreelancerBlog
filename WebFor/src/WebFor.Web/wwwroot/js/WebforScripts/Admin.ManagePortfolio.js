@@ -2,9 +2,6 @@
     $(function () {
         "use strict";
 
-        // #region code resposible for persian date
-        $(".persianDate").each(function (index, element) { $(element).text(new Date($(element).text()).toLocaleDateString("fa-IR").replace(' ه‍.ش.', '')) });
-
         var successfulDeleteNotice = function () {
             new PNotify({
                 title: 'حذف موفق',
