@@ -12,7 +12,7 @@
 	            text: 'پیغام شما با موفقیت ثبت شد، هم اکنون به صفحه اصلی هدایت میشوید.',
 	            type: 'success',
 	            icon: 'glyphicon glyphicon-ok',
-	            delay: 1000
+	            delay: 3000
 	        });
 	    }
 
@@ -66,6 +66,8 @@
 					data: formParametersArray,//$form.serialize().concat("&isJavascriptEnabled=true"),
 					dataType: "json",
 					success: function (response) {
+
+					    //console.log(response);
 
 					    if (response.status === "Success") {
 					        successfulCreateNotice();
