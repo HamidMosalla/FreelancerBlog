@@ -6,7 +6,7 @@
     ViewData["Title"] = "مدیریت اسلاید شو";
 }
 
-<h2>مدیریت مقاله</h2>
+<h2>مدیریت اسلاید شو</h2>
 
 @section styles{
     <link href="~/lib/pnotify/dist/pnotify.custom.min.css" rel="stylesheet" />
@@ -51,7 +51,7 @@
             </td>
 
             <td>
-                <span class="ArticleDateCreated">@item.SlideShowDateCreated.ToString("MM/dd/yyyy")</span>
+                <span class="persianDate">@item.SlideShowDateCreated.ToString("MM/dd/yyyy")</span>
             </td>
 
             <td>
@@ -101,6 +101,5 @@
 
 @section scripts{
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
-    <script src="~/lib/pesian-datetime/jalali.js"></script>
     <script src="~/js/webforscripts/admin.manageslideshow.js"></script>
 }

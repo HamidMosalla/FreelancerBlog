@@ -4,7 +4,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebFor.Web.Areas.Admin.ViewModels.Article;
-using WebFor.Web.Services;
 using System.Linq;
 using cloudscribe.Web.Pagination;
 using Microsoft.AspNetCore.Http;
@@ -12,6 +11,7 @@ using WebFor.Core.Repository;
 using WebFor.Core.Services.Shared;
 using WebFor.Core.Services.ArticleServices;
 using WebFor.Core.Enums;
+using WebFor.Web.Mapper;
 
 namespace WebFor.Web.Areas.Admin.Controllers
 {

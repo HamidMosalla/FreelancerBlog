@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
-using WebFor.Web.Services;
+using WebFor.Web.Mapper;
 using WebFor.Web.ViewModels.Article;
 
 namespace WebFor.Web.ViewComponents

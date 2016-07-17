@@ -128,72 +128,48 @@
                         <ul>
                             <li class="fa fa-chevron-left"></li>
                             <a href="#">درباره کمپانی</a>
-                            <br />
+                            <br/>
                             <li class="fa fa-chevron-left"></li>
                             <a href="#">ملاقات با تیم</a>
-                            <br />
+                            <br/>
                             <li class="fa fa-chevron-left"></li>
                             <a href="#">شرکای تجاری</a>
-                            <br />
+                            <br/>
                             <li class="fa fa-chevron-left"></li>
                             <a href="#">سرویس های ما</a>
-                            <br />
+                            <br/>
                             <li class="fa fa-chevron-left"></li>
                             <a href="#">سوالات متداول</a>
-                            <br />
+                            <br/>
                             <li class="fa fa-chevron-left"></li>
                             <a href="#">تماس با ما</a>
-                            <br />
+                            <br/>
                             <li class="fa fa-chevron-left"></li>
                             <a href="#">حریم خصوصی</a>
-                            <br />
+                            <br/>
                             <li class="fa fa-chevron-left"></li>
                             <a href="#">شرایط استفاده</a>
-                            <br />
+                            <br/>
                             <li class="fa fa-chevron-left"></li>
                             <a href="#">کپی رایت</a>
                         </ul>
                     </div>
-                </div><!--/.col-md-3-->
-                <div class="col-md-4 col-sm-8">
-                    <h4>آخرین مطالب بلاگ</h4>
-                    <div>
-                        <div class="media">
-                            <div class="pull-left">
-                                <img src="~/images/blog/thumb1.jpg" alt="">
-                            </div>
-                            <div class="media-body">
-                                <span class="media-heading"><a href="#">آخرین تغییرات در فریم ورک جدید مایکروسافت</a></span>
-                                <small class="muted">ارسال شده در هفدهم مهر ماه 94</small>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="pull-left">
-                                <img src="~/images/blog/thumb2.jpg" alt="">
-                            </div>
-                            <div class="media-body">
-                                <span class="media-heading"><a href="#">تگ هلپر سلام، اچ تی ام ال هلپر خداخافظ</a></span>
-                                <small class="muted">ارسال شده در دهم مهر ماه 94</small>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="pull-left">
-                                <img src="~/images/blog/thumb3.jpg" alt="">
-                            </div>
-                            <div class="media-body">
-                                <span class="media-heading"><a href="#">جدیدترین ویژگی ها سی شارپ شش</a></span>
-                                <small class="muted">ارسال شده در دوم مهر ماه 94</small>
-                            </div>
-                        </div>
-                    </div>
-                </div><!--/.col-md-3-->
+                </div>
+
+
+                 <div class="col-md-3 col-sm-6">
+                    @await Component.InvokeAsync("HomeFooterBlog")
+                </div>
+
+
+
                 <div class="col-md-3 col-sm-6">
                     <h4>آدرس</h4>
                     <address>
                         <strong>شرکت وب برای ایران</strong><br>
                         استان فارس - جهرم<br>
                         بلوار مصطفی خمینی<br>
-                        <abbr title="Phone">تلفن:</abbr> 54447493 (071)
+                        <abbr title="Phone">تلفن:</abbr> 09103773310
                     </address>
                     <h4>خبرنامه</h4>
                     <form role="form">
@@ -233,6 +209,7 @@
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/Utilities/convertDate.js"></script>
         <script src="~/js/main.js"></script>
         <script src="~/lib/isotope/dist/isotope.pkgd.js"></script>
     </environment>
@@ -253,6 +230,7 @@
 
         </script>
         <script src="~/lib/isotope/dist/isotope.pkgd.min.js"></script>
+        <script src="~/js/Utilities/convertDate.js"></script>
         <script src="~/js/main.js"></script>
     </environment>
 

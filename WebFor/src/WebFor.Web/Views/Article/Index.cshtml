@@ -30,7 +30,7 @@
                         <span><i class="fa fa-star"></i> &nbsp; @(item.ArticleRatings.Sum(a => a.ArticleRatingScore) / item.ArticleRatings.Count)/10</span>
                     }
 
-                    <span><i class="fa fa-calendar"></i>&nbsp;<span class="ArticleDateCreated">@item.ArticleDateCreated.ToString("MM/dd/yyyy")</span></span>
+                    <span><i class="fa fa-calendar"></i>&nbsp;<span class="persianDate">@item.ArticleDateCreated.ToString("MM/dd/yyyy")</span></span>
                     <span><i class="fa fa-comment"></i> <a href="javascript: void(0);">&nbsp; نظرات @item.ArticleComments.Count</a></span>
                 </div>
                 <p>@item.ArticleSummary</p>
@@ -55,6 +55,5 @@
 
 
 @section BlogScripts{
-    <script src="~/lib/pesian-datetime/jalali.js"></script>
     <script src="~/js/webforscripts/article.index.js"></script>
 }

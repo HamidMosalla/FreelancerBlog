@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebFor.Core.Domain;
+using WebFor.Infrastructure;
 using WebFor.Infrastructure.EntityFramework;
+using WebFor.Infrastructure.Services.Shared;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using cloudscribe.Web.Pagination;
@@ -20,9 +22,10 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using WebFor.DependencyInjection.Modules;
 using WebFor.DependencyInjection.Modules.Article;
-using WebFor.Web.Services;
 using WebFor.DependencyInjection.Modules.SiteOrder;
 using WebFor.Infrastructure.Services.Shared;
+using WebFor.Web.Mapper;
+using WebFor.Web.Services;
 
 namespace WebFor.Web
 {

@@ -1,22 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using WebFor.Core.Domain;
-using WebFor.Core.Repository;
-using WebFor.Core.Services.Shared;
-using WebFor.Web.Areas.Admin.ViewModels.Article;
-using System.Security.Claims;
-using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using WebFor.Web.Areas.Admin.ViewModels.Article;
+using WebFor.Web.Areas.Admin.ViewModels.Portfolio;
+using WebFor.Web.Areas.Admin.ViewModels.SlideShow;
+using WebFor.Web.Areas.User.ViewModels.Profile;
 using WebFor.Web.ViewModels.Article;
 using WebFor.Web.ViewModels.Contact;
-using WebFor.Web.Areas.Admin.ViewModels.SlideShow;
-using WebFor.Web.Areas.Admin.ViewModels.Portfolio;
-using WebFor.Web.Areas.User.ViewModels.Profile;
 using WebFor.Web.ViewModels.SiteOrder;
+using WebFor.Core.Domain;
+using WebFor.Core.Repository;
 
-namespace WebFor.Web.Services
+namespace WebFor.Web.Mapper
 {
     public interface IWebForMapper
     {

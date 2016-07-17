@@ -34,7 +34,7 @@
                     <span><i class="fa fa-star"></i> &nbsp; @Model.SumOfRating/10</span>
                 }
 
-                <span><i class="fa fa-calendar"></i>&nbsp;<span class="ArticleDateCreated">@Model.ArticleDateCreated.ToString("MM/dd/yyyy")</span></span>
+                <span><i class="fa fa-calendar"></i>&nbsp;<span class="persianDate">@Model.ArticleDateCreated.ToString("MM/dd/yyyy")</span></span>
                 <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">&nbsp; نظرات @Model.ArticleComments.Count</a></span>
             </div>
 
@@ -215,7 +215,6 @@
 
 
 @section BlogScripts{
-    <script src="~/lib/pesian-datetime/jalali.js"></script>
     <script src="~/lib/bootstrap-rating/bootstrap-rating.min.js"></script>
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
     <script src="~/lib/spin.js/spin.min.js"></script>

@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.Shared;
-using WebFor.Web.Services;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebFor.Web.Areas.User.ViewModels.Profile;
 using WebFor.Core.Domain;
+using WebFor.Web.Mapper;
 
 namespace WebFor.Web.Areas.User.Controllers
 {

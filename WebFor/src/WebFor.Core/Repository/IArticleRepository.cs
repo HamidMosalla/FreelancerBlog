@@ -14,5 +14,6 @@ namespace WebFor.Core.Repository
         Task<int> IncreaseArticleViewCount(int articleId);
 
         Task<List<Article>> GetArticlesByTag(int tagId);
+        Task<List<Article>> GetLatestArticles(int numberOfArticles);
     }
 }

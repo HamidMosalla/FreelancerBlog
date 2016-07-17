@@ -10,25 +10,25 @@ using WebFor.Web.ViewModels.Article;
 
 namespace WebFor.Web.ViewComponents
 {
-    public class ArticleTagBox : ViewComponent
+    public class HomeFooterBlog : ViewComponent
     {
 
         private IUnitOfWork _uw;
         private IWebForMapper _webForMapper;
 
-        public ArticleTagBox(IUnitOfWork uw, IWebForMapper webForMapper)
+        public HomeFooterBlog(IUnitOfWork uw, IWebForMapper webForMapper)
         {
             _uw = uw;
             _webForMapper = webForMapper;
         }
 
-        public  async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            var articleTags = await _uw.ArticleTagRepository.GetAllAsync();
+            var articles = await _uw.ArticleRepository.GetLatestArticles(3);
 
-            var articleTagViewModel = _webForMapper.ArticleTagCollectionToArticleTagViewModelCollection(articleTags);
+            var articlesViewModel = _webForMapper.ArticleCollectionToArticleViewModelCollection(articles);
 
-            return View(articleTagViewModel);
+            return View(articlesViewModel);
         }
 
     }

@@ -6,11 +6,11 @@ using cloudscribe.Web.Pagination;
 using Microsoft.AspNetCore.Mvc;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.ArticleServices;
-using WebFor.Web.Services;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using WebFor.Web.ViewModels.Article;
 using WebFor.Core.Domain;
+using WebFor.Web.Mapper;
 
 namespace WebFor.Web.Controllers
 {

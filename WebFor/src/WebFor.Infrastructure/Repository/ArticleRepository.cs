@@ -73,6 +73,11 @@ namespace WebFor.Infrastructure.Repository
             return _context.ArticleArticleTags.Where(a => a.ArticleTagId.Equals(tagId)).Join(_context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleComments).Include(a => a.ArticleRatings), left => left.ArticleId, right => right.ArticleId, (aat, a) => a).ToListAsync();
         }
 
+        public Task<List<Article>> GetLatestArticles(int numberOfArticles)
+        {
+            return _context.Articles.OrderByDescending(a => a.ArticleDateCreated).Take(numberOfArticles).ToListAsync();
+        }
+
         public Article FindById(int id)
         {
             return _context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleRatings).Include(a => a.ArticleComments).Single(a => a.ArticleId == id);
