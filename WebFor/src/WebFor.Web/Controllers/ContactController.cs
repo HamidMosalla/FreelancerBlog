@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,7 +10,10 @@ using WebFor.Core.Repository;
 using WebFor.Infrastructure.EntityFramework;
 using WebFor.Web.ViewModels.Contact;
 using cloudscribe.Web.Pagination;
+using Microsoft.AspNetCore.Http;
 using WebFor.Web.Mapper;
+using WebFor.Core.Services.Shared;
+using WebFor.Core.Types;
 
 namespace WebFor.Web.Controllers
 {
@@ -15,11 +21,13 @@ namespace WebFor.Web.Controllers
     {
         private IUnitOfWork _uw;
         private IWebForMapper _webForMapper;
+        private ICaptchaValidator _captchaValidator;
 
-        public ContactController(IUnitOfWork uw, IWebForMapper webForMapper)
+        public ContactController(IUnitOfWork uw, IWebForMapper webForMapper, ICaptchaValidator captchaValidator)
         {
             _uw = uw;
             _webForMapper = webForMapper;
+            _captchaValidator = captchaValidator;
         }
 
         [HttpGet]
@@ -32,6 +40,12 @@ namespace WebFor.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ContactViewModel contactViewModel, bool isJavascriptEnabled)
         {
+            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync("6LfFXAgTAAAAANE4nygpgcm-MRkL94svNg_udtUj");
+
+            if (captchaResult.Success != "true")
+            {
+                return Json(new { status = "Sorry, we don't take kindly to robots around here!!!!" });
+            }
 
             if (ModelState.IsValid)
             {
@@ -44,10 +58,10 @@ namespace WebFor.Web.Controllers
 
                     if (addContactResult > 0)
                     {
-                        return Json(new {Status = "Success"});
+                        return Json(new { Status = "Success" });
                     }
 
-                    return Json(new {Staus = "ProblematicSubmit"});
+                    return Json(new { Staus = "ProblematicSubmit" });
                 }
 
                 var contactWioutJavascript = _webForMapper.ContactViewModelToContact(contactViewModel);

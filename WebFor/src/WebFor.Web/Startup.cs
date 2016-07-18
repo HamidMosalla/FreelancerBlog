@@ -100,6 +100,7 @@ namespace WebFor.Web
             containerBuilder.RegisterModule<ArticleEditorModule>();
             containerBuilder.RegisterModule<PriceSpecCollectionFactoryModule>();
             containerBuilder.RegisterModule<FinalPriceCalculatorModule>();
+            containerBuilder.RegisterModule<CaptchaValidatorModule>();
             containerBuilder.RegisterType<WebForMapper>().As<IWebForMapper>();
 
             containerBuilder.Populate(services);
