@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using WebFor.Core;
 using WebFor.Core.Services;
 using WebFor.Core.Domain;
@@ -8,6 +9,8 @@ using WebFor.Core.Services.SiteOrderServices;
 using WebFor.Infrastructure.Services.SiteOrderServices;
 using WebFor.Web.Mapper;
 using WebFor.Web.ViewModels.SiteOrder;
+using WebFor.Core.Services.Shared;
+using WebFor.Core.Types;
 
 namespace WebFor.Web.Controllers
 {
@@ -17,13 +20,17 @@ namespace WebFor.Web.Controllers
         private IWebForMapper _webForMapper;
         private IPriceSpecCollectionFactory<PriceSpec, object> _priceSpecCollectionFactory;
         private IFinalPriceCalculator<PriceSpec> _finalPriceCalculator;
+        private ICaptchaValidator _captchaValidator;
+        private IConfiguration _configuration;
 
-        public SiteOrderController(IPriceSpecCollectionFactory<PriceSpec, object> priceSpecCollectionFactory, IFinalPriceCalculator<PriceSpec> finalPriceCalculator, IUnitOfWork uw, IWebForMapper webForMapper)
+        public SiteOrderController(IPriceSpecCollectionFactory<PriceSpec, object> priceSpecCollectionFactory, IFinalPriceCalculator<PriceSpec> finalPriceCalculator, IUnitOfWork uw, IWebForMapper webForMapper, ICaptchaValidator captchaValidator, IConfiguration configuration)
         {
             _priceSpecCollectionFactory = priceSpecCollectionFactory;
             _finalPriceCalculator = finalPriceCalculator;
             _db = uw;
             _webForMapper = webForMapper;
+            _captchaValidator = captchaValidator;
+            _configuration = configuration;
         }
 
 
@@ -37,6 +44,13 @@ namespace WebFor.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> Index(SiteOrderViewModel viewModel)
         {
+            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configuration.GetValue<string>("reChaptchaSecret:server-secret"));
+
+            if (captchaResult.Success != "true")
+            {
+                return Json(new { status = "FailedTheCaptchaValidation" });
+            }
+
             if (!ModelState.IsValid)
             {
                 return Json(new {Status = "FormWasNotValid"});

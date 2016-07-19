@@ -2,6 +2,8 @@
 @using System.Threading.Tasks
 @using WebFor.Web.ViewModels.Article
 @using WebFor.Core.Domain
+@using Microsoft.Extensions.Configuration;
+
 @model WebFor.Web.Areas.Admin.ViewModels.Article.ArticleViewModel
 
 @{
@@ -10,6 +12,7 @@
 }
 
 @inject UserManager<ApplicationUser> UserManager
+@inject IConfiguration _configuration
 
 @section BlogStyles{
     <link href="~/lib/bootstrap-rating/bootstrap-rating.css" rel="stylesheet" />
@@ -186,6 +189,8 @@
                             </div>
 
                             <div id="commentFormButtonsContainer" style="display: inline;">
+                                <div class="g-recaptcha" data-sitekey="@(_configuration.GetValue<string>("reChaptchaSecret:client-data-sitekey"))"></div>
+                                <br />
                                 <button id="submitComment" class="btn btn-danger btn-lg" type="submit">ثبت نظر</button>
                             </div>
 
@@ -222,5 +227,6 @@
     <script src="~/lib/gravatar/gravatar.js"></script>
     <script src="~/js/utilities/spin.partofpage.js"></script>
     <script src="~/js/webforscripts/article.detail.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js?hl=fa'></script>
 
 }

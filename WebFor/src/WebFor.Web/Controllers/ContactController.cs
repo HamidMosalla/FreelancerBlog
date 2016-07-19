@@ -11,6 +11,7 @@ using WebFor.Infrastructure.EntityFramework;
 using WebFor.Web.ViewModels.Contact;
 using cloudscribe.Web.Pagination;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using WebFor.Web.Mapper;
 using WebFor.Core.Services.Shared;
 using WebFor.Core.Types;
@@ -22,12 +23,14 @@ namespace WebFor.Web.Controllers
         private IUnitOfWork _uw;
         private IWebForMapper _webForMapper;
         private ICaptchaValidator _captchaValidator;
+        private IConfiguration _configuration;
 
-        public ContactController(IUnitOfWork uw, IWebForMapper webForMapper, ICaptchaValidator captchaValidator)
+        public ContactController(IUnitOfWork uw, IWebForMapper webForMapper, ICaptchaValidator captchaValidator, IConfiguration configuration)
         {
             _uw = uw;
             _webForMapper = webForMapper;
             _captchaValidator = captchaValidator;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -40,11 +43,11 @@ namespace WebFor.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ContactViewModel contactViewModel, bool isJavascriptEnabled)
         {
-            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync("6LfFXAgTAAAAANE4nygpgcm-MRkL94svNg_udtUj");
+            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configuration.GetValue<string>("reChaptchaSecret:server-secret"));
 
             if (captchaResult.Success != "true")
             {
-                return Json(new { status = "Sorry, we don't take kindly to robots around here!!!!" });
+                return Json(new { status = "FailedTheCaptchaValidation" });
             }
 
             if (ModelState.IsValid)

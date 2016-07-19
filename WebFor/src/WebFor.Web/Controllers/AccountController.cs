@@ -5,12 +5,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using WebFor.Core;
 using WebFor.Core.Services;
 using WebFor.Core.Domain;
 using WebFor.Core.Services.Shared;
 using WebFor.Web.ViewModels.Account;
+using WebFor.Core.Types;
 
 namespace WebFor.Web.Controllers
 {
@@ -22,18 +24,22 @@ namespace WebFor.Web.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private ICaptchaValidator _captchaValidator;
+        private IConfiguration _configuration;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory, ICaptchaValidator captchaValidator, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
+            _captchaValidator = captchaValidator;
+            _configuration = configuration;
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
@@ -104,6 +110,15 @@ namespace WebFor.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+
+            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configuration.GetValue<string>("reChaptchaSecret:server-secret"));
+
+            if (captchaResult.Success != "true")
+            {
+                TempData["FailedTheCaptchaValidation"] = "true";
+                return View(model);
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser

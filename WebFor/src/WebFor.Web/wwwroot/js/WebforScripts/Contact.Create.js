@@ -1,95 +1,85 @@
 ﻿(function () {
-	$(function () {
-	    "use strict";
+    $(function () {
+        "use strict";
 
-	    ajaxSpinnerForPartOfPage("#contact-page");
+        ajaxSpinnerForPartOfPage("#contact-page");
 
-	    $("#YesScript").show();
+        $("#YesScript").show();
 
-	    var successfulCreateNotice = function () {
-	        new PNotify({
-	            title: 'ثبت موفق',
-	            text: 'پیغام شما با موفقیت ثبت شد، هم اکنون به صفحه اصلی هدایت میشوید.',
-	            type: 'success',
-	            icon: 'glyphicon glyphicon-ok',
-	            delay: 3000
-	        });
-	    }
+        var successfulCreateNotice = function () {
+            new PNotify({
+                title: 'ثبت موفق',
+                text: 'پیغام شما با موفقیت ثبت شد، هم اکنون به صفحه اصلی هدایت میشوید.',
+                type: 'success',
+                icon: 'glyphicon glyphicon-ok',
+                delay: 3000
+            });
+        }
 
-	    var ProblematicCreateNotice = function () {
-	        new PNotify({
-	            title: 'ثبت ناموفق',
-	            text: 'مشکلی در ثبت پیغام شما پیش آمده، لطفا دوباره تلاش کنید، اگر موفق به ثبت نشدید، با مدیریت سایت تماس بگیرید.',
-	            type: 'warning',
-	            icon: 'glyphicon glyphicon-warning-sign',
-	            delay: 1000
-	        });
-	    }
-
-	    var GeneralSuccessNotice = function () {
-	        new PNotify({
-	            title: 'عملیات موفق',
-	            text: 'عملیات مورد نظر موفقیت آمیز بود.',
-	            type: 'success',
-	            icon: 'glyphicon glyphicon-ok',
-	            delay: 1000
-	        });
-	    }
-
-	    var GeneralFailureNotice = function () {
-	        new PNotify({
-	            title: 'عملیات ناموفق',
-	            text: 'مشکلی در انجام عملیات مورد نظر پیش آمده.',
-	            type: 'success',
-	            icon: 'glyphicon glyphicon-ok',
-	            delay: 1000
-	        });
-	    }
+        var ProblematicCreateNotice = function () {
+            new PNotify({
+                title: 'ثبت ناموفق',
+                text: 'مشکلی در ثبت پیغام شما پیش آمده، لطفا دوباره تلاش کنید، اگر موفق به ثبت نشدید، با مدیریت سایت تماس بگیرید.',
+                type: 'warning',
+                icon: 'glyphicon glyphicon-warning-sign',
+                delay: 1000
+            });
+        }
 
 
-		$("#ContactForm").on("submit", function (e) {
-			e.preventDefault();
+        $("#ContactForm").on("submit", function (e) {
+            e.preventDefault();
 
-			//var antiForgeryToken = $("input[name='__RequestVerificationToken']").val();
+            //var antiForgeryToken = $("input[name='__RequestVerificationToken']").val();
 
-			var $form = $(this);
+            var $form = $(this);
 
-			var formParametersArray = $form.serializeArray();
+            var formParametersArray = $form.serializeArray();
 
-			formParametersArray.push({ name: 'isJavascriptEnabled', value: true });
+            formParametersArray.push({ name: 'isJavascriptEnabled', value: true });
 
-			if ($form.valid()) {
+            if ($form.valid()) {
 
-				$.ajax({
-					type: "POST",
-					url: "/Contact/Create",
-					data: formParametersArray,//$form.serialize().concat("&isJavascriptEnabled=true"),
-					dataType: "json",
-					success: function (response) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Contact/Create",
+                    data: formParametersArray,//$form.serialize().concat("&isJavascriptEnabled=true"),
+                    dataType: "json",
+                    success: function (response) {
 
-					    //console.log(response);
+                        //console.log(response);
 
-					    if (response.status === "Success") {
-					        successfulCreateNotice();
-					        setTimeout(function () { window.location.replace("/Home/Index"); }, 3000);
-					    }
+                        if (response.status === "Success") {
+                            successfulCreateNotice();
+                            setTimeout(function () { window.location.replace("/Home/Index"); }, 3000);
+                        }
 
-					    if (response.status === "ProblematicSubmit") {
-					        ProblematicCreateNotice();
-					    }
+                        if (response.status === "FailedTheCaptchaValidation") {
+                            new PNotify({
+                                title: 'عملیات ناموفق',
+                                text: 'لطفا قسمت کپچا را تکمیل نمایید.',
+                                type: 'danger',
+                                icon: 'glyphicon glyphicon-warning-sign',
+                                delay: 3000
+                            });
+                        }
 
-					},
-					error: function (xhr, status, error) {
-						console.log(xhr.responseText);
-						alert("message : \n" + "An error occurred, for more info check the js console" + "\n status : \n" + status + " \n error : \n" + error);
-					}
-				});
+                        if (response.status === "ProblematicSubmit") {
+                            ProblematicCreateNotice();
+                        }
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                        alert("message : \n" + "An error occurred, for more info check the js console" + "\n status : \n" + status + " \n error : \n" + error);
+                    }
+                });
 
 
-			}
+            }
 
-		});
+        });
 
 
-	});
+    });
 })();

@@ -8,9 +8,12 @@ using WebFor.Core.Repository;
 using WebFor.Core.Services.ArticleServices;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using WebFor.Web.ViewModels.Article;
 using WebFor.Core.Domain;
 using WebFor.Web.Mapper;
+using WebFor.Core.Services.Shared;
+using WebFor.Core.Types;
 
 namespace WebFor.Web.Controllers
 {
@@ -19,12 +22,16 @@ namespace WebFor.Web.Controllers
         private IUnitOfWork _uw;
         private IWebForMapper _webForMapper;
         private readonly UserManager<ApplicationUser> _userManager;
+        private ICaptchaValidator _captchaValidator;
+        private IConfiguration _configuration;
 
-        public ArticleController(IUnitOfWork uw, IWebForMapper webForMapper, UserManager<ApplicationUser> userManager)
+        public ArticleController(IUnitOfWork uw, IWebForMapper webForMapper, UserManager<ApplicationUser> userManager, ICaptchaValidator captchaValidator, IConfiguration configuration)
         {
             _uw = uw;
             _webForMapper = webForMapper;
             _userManager = userManager;
+            _captchaValidator = captchaValidator;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -118,6 +125,13 @@ namespace WebFor.Web.Controllers
         [HttpPost]
         public async Task<JsonResult> SubmitComment(ArticleCommentViewModel viewModel)
         {
+
+            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configuration.GetValue<string>("reChaptchaSecret:server-secret"));
+
+            if (captchaResult.Success != "true")
+            {
+                return Json(new { status = "FailedTheCaptchaValidation" });
+            }
 
             if (viewModel.ArticleCommentName == null || viewModel.ArticleCommentEmail == null ||
                 viewModel.ArticleCommentBody == null)

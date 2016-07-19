@@ -1,8 +1,11 @@
-﻿@model WebFor.Web.ViewModels.Contact.ContactViewModel
+﻿@using Microsoft.Extensions.Configuration;
+@model WebFor.Web.ViewModels.Contact.ContactViewModel
 
 @{
     ViewData["Title"] = "تماس با ما";
 }
+
+@inject IConfiguration _configuration
 
 @section styles{
     <link href="~/lib/pnotify/dist/pnotify.custom.min.css" rel="stylesheet" />
@@ -69,9 +72,10 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="g-recaptcha" data-sitekey="6LfFXAgTAAAAAHv2Z6PAS63arl1wyH1QGB7qZrAQ"></div>
+                                <div class="g-recaptcha" data-sitekey="@(_configuration.GetValue<string>("reChaptchaSecret:client-data-sitekey"))"></div>
+
                                 <br />
-                                <input type="submit" value="ارسال" style="width: 100%;" class="btn btn-primary btn-lg"/>
+                                <input type="submit" value="ارسال" style="width: 100%;" class="btn btn-primary btn-lg" />
                             </div>
 
                         </div>

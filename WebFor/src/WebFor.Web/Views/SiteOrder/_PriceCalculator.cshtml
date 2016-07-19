@@ -1,5 +1,8 @@
 ﻿@model WebFor.Web.ViewModels.SiteOrder.SiteOrderViewModel
 
+@using Microsoft.Extensions.Configuration;
+@inject IConfiguration _configuration
+
 <h2 class="website-cost-calculator-header">با استفاده از محاسبه گر قیمت ما میتوانید در سریع ترین زمان ممکن از هزینه پروژه خود آگاه شوید</h2>
 <section class="masthead masthead--website-cost-calculator">
 <section class="masthead__content-wrapper content-section">
@@ -997,6 +1000,10 @@
 
 
         </div>
+
+        <div class="g-recaptcha" data-sitekey="@(_configuration.GetValue<string>("reChaptchaSecret:client-data-sitekey"))"></div>
+
+        <br />
 
         <button class="btn-green" style="width: 100%;" id="calculateFinalPriceAndSubmit">ثبت و محاسبه</button>
 

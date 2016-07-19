@@ -1,9 +1,12 @@
 ﻿@using System.Threading.Tasks
 @using WebFor.Web.ViewModels.Account
+@using Microsoft.Extensions.Configuration;
 @model WebFor.Web.ViewModels.Account.RegisterViewModel
 @{
     ViewData["Title"] = "ثبت نام";
 }
+
+@inject IConfiguration _configuration
 
 @section styles{
     <style>
@@ -32,8 +35,9 @@
             left: 104px !important;
         }
 
-        .row{margin:0;}
-
+        .row {
+            margin: 0;
+        }
     </style>
 
     <link href="~/lib/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" />
@@ -69,6 +73,12 @@
                 </h2>
                 <hr class="colorgraph">
 
+                @if ((string)TempData["FailedTheCaptchaValidation"] == "true")
+                {
+                    <div class="alert alert-warning">
+                        برای تکمیل ثبت نام لطفا قسمت کپچا را تکمیل نمایید.
+                    </div>
+                }
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             </div>
@@ -142,6 +152,8 @@
                         <input type="checkbox" asp-for="TermsAndConditions">
                         <label asp-for="TermsAndConditions">موافقت با قوانین</label> - <a href="#">لطفا قوانین سایت را با دقت مطالعه فرمایید.</a>
                     </div>
+                    <br />
+                    <div class="g-recaptcha" data-sitekey="@(_configuration.GetValue<string>("reChaptchaSecret:client-data-sitekey"))"></div>
                     <span asp-validation-for="TermsAndConditions" class="text-danger"></span>
                 </div>
             </div>
@@ -170,4 +182,5 @@
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
     <script src="~/js/webforscripts/account.register.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js?hl=fa'></script>
 }

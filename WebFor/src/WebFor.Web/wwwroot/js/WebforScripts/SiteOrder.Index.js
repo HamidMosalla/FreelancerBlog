@@ -4,7 +4,7 @@
 
         ajaxSpinnerForPartOfPage("#show_form");
 
-        $('a').click(function () { $('html, body').animate( { scrollTop: $($.attr(this, 'href')).offset().top }, 500); return false; });
+        $('a').click(function () { $('html, body').animate({ scrollTop: $($.attr(this, 'href')).offset().top }, 500); return false; });
 
         // go to the next step
         $(".done").click(function (e) {
@@ -44,7 +44,7 @@
 
         });
 
-
+        //submitting the final form
         $("#calculateFinalPriceForm").on("submit", function (e) {
             e.preventDefault();
 
@@ -76,6 +76,17 @@
                         //console.log(response.price);
                         //console.log(response.priceSheet);
                         //console.log(response.status);
+
+                        if (response.status === "FailedTheCaptchaValidation") {
+                            new PNotify({
+                                title: 'عملیات ناموفق',
+                                text: 'لطفا قسمت کپچا را تکمیل نمایید.',
+                                type: 'danger',
+                                icon: 'glyphicon glyphicon-warning-sign',
+                                delay: 3000
+                            });
+                            return;
+                        }
 
                         $("#PriceSheetTable").empty();
 

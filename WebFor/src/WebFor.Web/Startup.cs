@@ -85,6 +85,7 @@ namespace WebFor.Web
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<IBuildPaginationLinks, PaginationLinkBuilder>();
+            services.AddSingleton<IConfiguration>(Configuration);
 
             // Autofac container configuration and modules
             var containerBuilder = new ContainerBuilder();

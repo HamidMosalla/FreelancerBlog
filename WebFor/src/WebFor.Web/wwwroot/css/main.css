@@ -1249,5 +1249,6 @@ ul.faq {
     text-align: center;
     font-size: 1.5em;
     color: white;
+    margin-top: 20px;
     background-color: firebrick;
 }

@@ -9,6 +9,7 @@
     <link href="~/css/site-order.css" rel="stylesheet" />
     <link href="~/css/site-order-wizard.css" rel="stylesheet" />
     <link href="~/lib/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/lib/pnotify/dist/pnotify.custom.min.css" rel="stylesheet" />
     <link href="~/css/checkbox-slider.css" rel="stylesheet" />
 
 }
@@ -43,7 +44,7 @@
 
 <section class="yellow-stripes-section-wrapper">
 
-     @{ Html.RenderPartial("_PristList"); }
+    @{ Html.RenderPartial("_PristList"); }
 
 </section>
 
@@ -54,7 +55,7 @@
 </article>
 
 <section id="recent-works" style="background-color: #FCCE00;">
-    
+
     @await Component.InvokeAsync("HomePortfolioSlider")
 
 </section>
@@ -74,5 +75,7 @@
     <script src="~/lib/bootstrap-select/bootstrap-select.min.js"></script>
     <script src="~/lib/tableexport/jquery.base64.utf8.js"></script>
     <script src="~/lib/tableexport/tableexport.js"></script>
+    <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
     <script src="~/js/webforscripts/siteorder.index.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js?hl=fa'></script>
 }

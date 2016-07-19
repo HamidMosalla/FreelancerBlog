@@ -131,7 +131,9 @@
                 data: formData,
                 dataType: "json",
                 success: function (response) {
-                    console.log(response);
+
+                    //console.log(response);
+
                     if (response.status === "CannotHaveEmptyArgument") {
 
                         new PNotify({
@@ -163,6 +165,18 @@
                         new PNotify({
                             title: 'ثبت ناموفق',
                             text: 'مشکلی در ثبت نظر شما پیش آمده، لطفا دوباره تلاش کنید.',
+                            type: 'danger',
+                            icon: 'glyphicon glyphicon-warning-sign',
+                            delay: 5000
+                        });
+
+                    }
+
+                    if (response.status === "FailedTheCaptchaValidation") {
+
+                        new PNotify({
+                            title: 'ثبت ناموفق',
+                            text: 'قبل از ثبت نظر لطفا ابتدا قسمت کپچا را تکمیل نمایید.',
                             type: 'danger',
                             icon: 'glyphicon glyphicon-warning-sign',
                             delay: 5000
