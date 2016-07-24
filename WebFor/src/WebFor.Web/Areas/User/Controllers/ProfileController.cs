@@ -13,6 +13,7 @@ using WebFor.Web.Mapper;
 namespace WebFor.Web.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize]
     public class ProfileController : Controller
     {
         private IUnitOfWork _uw;
@@ -34,7 +35,6 @@ namespace WebFor.Web.Areas.User.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> EditProfile()
         {
             var user = await _uw.UserRepository.FindByIdAsync(_userManager.GetUserId(User));
@@ -45,7 +45,7 @@ namespace WebFor.Web.Areas.User.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfile(UserProfileViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -89,11 +89,11 @@ namespace WebFor.Web.Areas.User.Controllers
             }
 
             TempData["EditProfileMessage"] = "EditProfileFailed";
-            return RedirectToAction("Index", "Manage", new {Area = ""});
+            return RedirectToAction("Index", "Manage", new { Area = "" });
         }
 
         [HttpGet("/User/Profile/ProfileDetail/{username?}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> ProfileDetail(string userName)
         {
             if (userName == null)

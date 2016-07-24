@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebFor.Web.Areas.Admin.ViewModels.Article;
 using System.Linq;
 using cloudscribe.Web.Pagination;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.Shared;
@@ -16,6 +17,7 @@ using WebFor.Web.Mapper;
 namespace WebFor.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles ="admin")]
     public class ArticleController : Controller
     {
         private IUnitOfWork _uw;

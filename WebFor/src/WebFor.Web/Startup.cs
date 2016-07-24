@@ -81,7 +81,7 @@ namespace WebFor.Web
             services.Configure<AuthMessageSenderSecrets>(Configuration.GetSection("AuthMessageSenderSecrets"));
 
             services.AddTransient<IUrlHelperFactory, UrlHelperFactory>();
-            
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<IBuildPaginationLinks, PaginationLinkBuilder>();
@@ -127,11 +127,20 @@ namespace WebFor.Web
                 app.UseExceptionHandler("/Error/Status/{0}");
             }
 
-            app.UseStatusCodePagesWithRedirects("/Error/Status/{0}");
+            //app.UseStatusCodePagesWithRedirects("/Error/Status/{0}");
 
             app.UseStaticFiles();
 
             app.UseIdentity();
+
+            app.UseCookieAuthentication(new CookieAuthenticationOptions()
+            {
+                AuthenticationScheme = "WebForCookieMiddlewareInstance",
+                LoginPath = new PathString("/Account/Login/"),
+                AccessDeniedPath = new PathString("/Account/Forbidden/"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
 
             #region External Logins Setup
 

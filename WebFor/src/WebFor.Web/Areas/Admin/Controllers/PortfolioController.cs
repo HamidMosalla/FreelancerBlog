@@ -7,6 +7,7 @@ using WebFor.Core.Repository;
 using WebFor.Infrastructure.EntityFramework;
 using WebFor.Web.ViewModels.Contact;
 using cloudscribe.Web.Pagination;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebFor.Core.Services.Shared;
@@ -16,6 +17,7 @@ using WebFor.Web.Mapper;
 namespace WebFor.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "admin")]
     public class PortfolioController : Controller
     {
         private IUnitOfWork _uw;

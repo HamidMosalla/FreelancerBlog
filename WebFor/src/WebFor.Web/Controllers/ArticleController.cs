@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.ArticleServices;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using WebFor.Web.ViewModels.Article;
@@ -91,12 +92,12 @@ namespace WebFor.Web.Controllers
 
         public async Task<JsonResult> RateArticle(int id, double rating)
         {
-            var userId = _userManager.GetUserId(User);
-
             if (!User.Identity.IsAuthenticated)
             {
                 return Json(new { Status = "YouMustLogin" });
             }
+
+            var userId = _userManager.GetUserId(User);
 
             if (_uw.ArticleRatingRepository.IsRatedBefore(id, userId))
             {
@@ -136,7 +137,7 @@ namespace WebFor.Web.Controllers
             if (viewModel.ArticleCommentName == null || viewModel.ArticleCommentEmail == null ||
                 viewModel.ArticleCommentBody == null)
             {
-                return Json(new {Status = "CannotHaveEmptyArgument"});
+                return Json(new { Status = "CannotHaveEmptyArgument" });
             }
 
             var articleComment = _webForMapper.ArticleCommentViewModelToArticleComment(viewModel);
@@ -145,7 +146,7 @@ namespace WebFor.Web.Controllers
 
             if (addArticleCommentResult > 0)
             {
-                return Json(new {Status = "Success"});
+                return Json(new { Status = "Success" });
             }
 
             return Json(new { Status = "ProblematicSubmit" });

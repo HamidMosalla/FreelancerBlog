@@ -9,12 +9,14 @@ using WebFor.Infrastructure.EntityFramework;
 using WebFor.Web.Areas.Admin.ViewModels.SlideShow;
 using WebFor.Core.Services.Shared;
 using cloudscribe.Web.Pagination;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebFor.Web.Mapper;
 
 namespace WebFor.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "admin")]
     public class SlideShowController : Controller
     {
         private IUnitOfWork _uw;
