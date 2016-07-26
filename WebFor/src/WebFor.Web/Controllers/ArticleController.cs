@@ -151,5 +151,11 @@ namespace WebFor.Web.Controllers
 
             return Json(new { Status = "ProblematicSubmit" });
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            _uw.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

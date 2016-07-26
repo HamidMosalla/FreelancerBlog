@@ -113,5 +113,10 @@ namespace WebFor.Web.Areas.User.Controllers
             return View(userProfileViewModel);
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            _uw.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

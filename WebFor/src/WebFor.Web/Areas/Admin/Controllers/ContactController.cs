@@ -73,5 +73,11 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "Error", eXMessage = eX.Message });
             }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            _uw.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

@@ -410,5 +410,12 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
             return Content(vOutput, "text/html");
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            _uw.Dispose();
+            base.Dispose(disposing);
+        }
+
     }
 }

@@ -3,16 +3,19 @@ using WebFor.Core;
 using WebFor.Core.Services;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
+using WebFor.Infrastructure.Services.Shared;
+using WebFor.Core.Services.Shared;
+using WebFor.Web.ViewModels.Email;
 
 namespace WebFor.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private IUnitOfWork _db;
+        private IUnitOfWork _uw;
 
         public HomeController(IUnitOfWork uw)
         {
-            _db = uw;
+            _uw = uw;
         }
 
         public IActionResult Index()
@@ -43,5 +46,12 @@ namespace WebFor.Web.Controllers
 
             return View();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            _uw.Dispose();
+            base.Dispose(disposing);
+        }
+
     }
 }

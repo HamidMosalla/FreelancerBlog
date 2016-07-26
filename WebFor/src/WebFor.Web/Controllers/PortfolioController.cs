@@ -51,5 +51,12 @@ namespace WebFor.Web.Controllers
 
             return View(viewModel);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            _uw.Dispose();
+            base.Dispose(disposing);
+        }
+
     }
 }

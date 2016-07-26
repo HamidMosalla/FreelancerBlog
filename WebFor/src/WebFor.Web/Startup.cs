@@ -26,6 +26,7 @@ using WebFor.DependencyInjection.Modules.SiteOrder;
 using WebFor.Infrastructure.Services.Shared;
 using WebFor.Web.Mapper;
 using WebFor.Web.Services;
+using WebFor.Core.Services.Shared;
 
 namespace WebFor.Web
 {
@@ -86,6 +87,7 @@ namespace WebFor.Web
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<IBuildPaginationLinks, PaginationLinkBuilder>();
             services.AddSingleton<IConfiguration>(Configuration);
+            services.AddScoped<IRazorViewToString, RazorViewToString>();
 
             // Autofac container configuration and modules
             var containerBuilder = new ContainerBuilder();

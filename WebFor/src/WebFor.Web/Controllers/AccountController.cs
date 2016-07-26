@@ -13,6 +13,7 @@ using WebFor.Core.Domain;
 using WebFor.Core.Services.Shared;
 using WebFor.Web.ViewModels.Account;
 using WebFor.Core.Types;
+using WebFor.Web.ViewModels.Email;
 
 namespace WebFor.Web.Controllers
 {
@@ -26,13 +27,14 @@ namespace WebFor.Web.Controllers
         private readonly ILogger _logger;
         private ICaptchaValidator _captchaValidator;
         private IConfiguration _configuration;
+        private IRazorViewToString _razorViewToString;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory, ICaptchaValidator captchaValidator, IConfiguration configuration)
+            ILoggerFactory loggerFactory, ICaptchaValidator captchaValidator, IConfiguration configuration, IRazorViewToString render)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -41,6 +43,7 @@ namespace WebFor.Web.Controllers
             _captchaValidator = captchaValidator;
             _configuration = configuration;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _razorViewToString = render;
         }
 
         [HttpGet]
@@ -138,7 +141,17 @@ namespace WebFor.Web.Controllers
 
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(model.Email, "فعال سازی اکانت", "برای فعال سازی اکانت خود بر روی لینک زیر کلیک کنید: <br /> <a href=\"" + callbackUrl + "\">link</a>");
+                    var htmlString = _razorViewToString.Render("EmailTemplates/IdentityTemplate",
+                        new IdentityTemplateViewModel
+                        {
+                            CallBackLink = callbackUrl,
+                            CallBackLinkText = "فعال سازی",
+                            EmailMessageHeader = "فعال سازی اکانت",
+                            EmailPreviewMessage = "",
+                             EmailMessageBody = "پیوستن شما به جمع کاربران وب برای ایران را تبریک میگوییم، برای فعال سازی نام کاربری خود فقط کافیست بر روی دکمه زیر کلیک کنید."
+                        });
+
+                    await _emailSender.SendEmailAsync(model.Email, "فعال سازی نام کاربری - وب برای ایران", htmlString);
 
                     _logger.LogInformation(3, "User created a new account with password.");
 

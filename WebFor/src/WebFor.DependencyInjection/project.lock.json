@@ -3292,6 +3292,7 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
           "Microsoft.AspNetCore.Mvc.Abstractions": "1.0.0",
           "Microsoft.AspNetCore.Mvc.Core": "1.0.0",
+          "Microsoft.AspNetCore.Mvc.Razor": "1.0.0",
           "NETStandard.Library": "1.6.0"
         },
         "compile": {

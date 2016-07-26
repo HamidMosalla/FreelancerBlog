@@ -16,7 +16,7 @@ namespace WebFor.Web.Controllers
 {
     public class SiteOrderController : Controller
     {
-        private IUnitOfWork _db;
+        private IUnitOfWork _uw;
         private IWebForMapper _webForMapper;
         private IPriceSpecCollectionFactory<PriceSpec, object> _priceSpecCollectionFactory;
         private IFinalPriceCalculator<PriceSpec> _finalPriceCalculator;
@@ -27,7 +27,7 @@ namespace WebFor.Web.Controllers
         {
             _priceSpecCollectionFactory = priceSpecCollectionFactory;
             _finalPriceCalculator = finalPriceCalculator;
-            _db = uw;
+            _uw = uw;
             _webForMapper = webForMapper;
             _captchaValidator = captchaValidator;
             _configuration = configuration;
@@ -62,7 +62,7 @@ namespace WebFor.Web.Controllers
 
             var siteOrder = _webForMapper.SiteOrderViewModelToSiteOrder(viewModel);
 
-            int addSiteOrderAsyncResult = await _db.SiteOrderRepository.AddSiteOrderAsync(siteOrder);
+            int addSiteOrderAsyncResult = await _uw.SiteOrderRepository.AddSiteOrderAsync(siteOrder);
 
             if (addSiteOrderAsyncResult > 0)
             {
@@ -71,5 +71,12 @@ namespace WebFor.Web.Controllers
 
             return Json(new {Price = finalPrice, PriceSheet = priceSpecCollection, Status = "Failed"});
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            _uw.Dispose();
+            base.Dispose(disposing);
+        }
+
     }
 }

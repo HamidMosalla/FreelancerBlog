@@ -83,5 +83,11 @@ namespace WebFor.Web.Controllers
 
             return View(contactViewModel);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            _uw.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }
