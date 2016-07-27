@@ -175,6 +175,11 @@ namespace WebFor.Infrastructure.Services.SiteOrderServices
             }
             #endregion
 
+            if (boolTypes.SingleOrDefault(b => b.EnName == "SiteOrderDoesSourceCodeIncluded") != null)
+            {
+                TotalPrice = TotalPrice * 6;
+            }
+
             return TotalPrice;
         }
     }
