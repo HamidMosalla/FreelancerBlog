@@ -1,0 +1,92 @@
+﻿<div class="container">
+    <div class="row">
+
+
+        <div class="col-md-3 col-sm-6">
+            <h4>درباره ما</h4>
+            <p>وب برای ایران با هدف ارائه دادن سرویس ها و راه حل های تحت وب و همچنین اطلاع رسانی در زمینه تکنولوژی تحت وب راه اندازی شده است لیست خدمات را می تواند در قسمت سرویس های ما مشاهده کنید.</p>
+        </div>
+
+
+        <div class="col-md-3 col-sm-6">
+            <h4>وب برای ایران</h4>
+            <div>
+                <ul>
+                    <li class="fa fa-chevron-left"> <a href="/Home/About">درباره ما</a></li>
+                    <br/>
+                    @*<li class="fa fa-chevron-left"> <a href="#">ملاقات با تیم</a></li>
+                        <br />*@
+                    @*<li class="fa fa-chevron-left"> <a href="#">شرکای تجاری</a></li>
+                        <br />*@
+                    <li class="fa fa-chevron-left"> <a href="/Home/Services">سرویس های ما</a></li>
+                    <br/>
+                    <li class="fa fa-chevron-left"> <a href="/Home/Faq">سوالات متداول</a></li>
+                    <br/>
+                    <li class="fa fa-chevron-left"> <a href="/Contact/Create">تماس با ما</a></li>
+                    <br/>
+                    <li class="fa fa-chevron-left"> <a href="/Home/PrivacyPolicy">حریم خصوصی</a></li>
+                    <br/>
+                    <li class="fa fa-chevron-left"> <a href="/Home/TermsAndConditions">شرایط و ضوابط</a></li>
+                    <br/>
+                    <li class="fa fa-chevron-left"> <a href="#" id="copyright-anchor">کپی رایت</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+
+        <div class="col-md-3 col-sm-6">
+            @await Component.InvokeAsync("HomeFooterBlog")
+        </div>
+
+
+        <div class="col-md-3 col-sm-6">
+            <h4>آدرس</h4>
+
+            <address>
+                <strong>دفتر وب برای ایران</strong><br>
+                استان فارس - جهرم<br>
+                بلوار مصطفی خمینی<br>
+                <abbr title="Phone">تلفن: </abbr> 3310-377-0910
+            </address>
+
+            <h4>خبرنامه</h4>
+            <form id="news-letter-form" role="form">
+                <div class="input-group">
+                    <input type="text" class="form-control" autocomplete="off" placeholder="ایمیل خود را وارد کنید" required />
+                    <span class="input-group-btn">
+                        <button class="btn btn-danger" type="submit">ثبت!</button>
+                    </span>
+                </div>
+            </form>
+
+        </div>
+
+
+    </div>
+</div>
+
+<div class="modal fade" id="notification-modal" tabindex="-1" role="dialog" aria-labelledby="notification-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="notification-modal-label">اطلاع</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="alert alert-success" id="news-letter-alert" style="display: none;">
+                    ایمیل شما با موفقیت در لیست خبر نامه ثبت شد.
+                </div>
+
+                <div class="alert alert-success" id="copyright-alert" style="display: none;">
+                    کپی برداری از مطالب این سایت با ذکر منبع مجاز می باشد.
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+            </div>
+        </div>
+    </div>
+</div>

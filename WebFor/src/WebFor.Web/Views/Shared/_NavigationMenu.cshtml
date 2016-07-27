@@ -1,0 +1,39 @@
+﻿<div class="container">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/Home/Index"><img src="~/images/logo.png" alt="logo"></a>
+    </div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="/Home/Index">خانه</a></li>
+            @if (User.IsInRole("admin"))
+            {
+                <li><a href="/Admin/ControlPanel/Index">مدیریت</a></li>
+            }
+            <li><a href="/SiteOrder/Index">سفارشات</a></li>
+            <li><a href="/Portfolio/Index">سوابق کاری</a></li>
+            <li><a href="/Home/Services">سرویس های ما</a></li>
+            <li><a href="/Home/Faq">سوالات تکراری</a></li>
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">دیگر صفحات <i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu">
+                    @*<li><a href="/Home/Careers">مشاغل</a></li>
+                    <li class="divider"></li>*@
+                    <li><a href="/Home/PrivacyPolicy">حریم خصوصی</a></li>
+                    <li><a href="/Home/TermsAndConditions">شرایط و ضوابط</a></li>
+                </ul>
+            </li>
+
+            <li><a href="/Article/Index">وبلاگ</a></li>
+            <li><a href="/Home/About">درباره ما</a></li>
+            <li><a href="/Contact/Create">تماس با ما</a></li>
+        </ul>
+        @await Html.PartialAsync("_LoginPartial")
+    </div>
+</div>
