@@ -44,7 +44,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
             var pageNumber = page ?? 1;
 
-            var pagedSlideShow = slideShowsViewModel.ToPagedList(pageNumber - 1, 2);
+            var pagedSlideShow = slideShowsViewModel.ToPagedList(pageNumber - 1, 20);
 
             return View(pagedSlideShow);
         }

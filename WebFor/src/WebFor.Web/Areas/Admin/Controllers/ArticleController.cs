@@ -46,7 +46,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
             var pageNumber = page ?? 1;
 
-            var pagedArticle = articlesViewModel.ToPagedList(pageNumber - 1, 2);
+            var pagedArticle = articlesViewModel.ToPagedList(pageNumber - 1, 20);
 
             return View(pagedArticle);
         }
@@ -60,7 +60,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
             var pageNumber = page ?? 1;
 
-            var pagedArticleComment = commentsViewModel.ToPagedList(pageNumber - 1, 200);
+            var pagedArticleComment = commentsViewModel.ToPagedList(pageNumber - 1, 20);
 
             return View(pagedArticleComment);
         }

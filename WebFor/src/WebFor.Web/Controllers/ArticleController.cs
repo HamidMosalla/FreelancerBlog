@@ -44,7 +44,7 @@ namespace WebFor.Web.Controllers
 
             var pageNumber = page ?? 1;
 
-            var pagedArticle = articlesViewModel.ToPagedList(pageNumber - 1, 2);
+            var pagedArticle = articlesViewModel.ToPagedList(pageNumber - 1, 20);
 
             return View(pagedArticle);
         }
@@ -63,7 +63,7 @@ namespace WebFor.Web.Controllers
 
             var pageNumber = page ?? 1;
 
-            var pagedArticle = articlesViewModel.ToPagedList(pageNumber - 1, 2);
+            var pagedArticle = articlesViewModel.ToPagedList(pageNumber - 1, 20);
 
             return View(pagedArticle);
         }

@@ -46,7 +46,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
             var pageNumber = page ?? 1;
 
-            var pagedPortfolios = portfoliosViewModel.ToPagedList(pageNumber - 1, 2);
+            var pagedPortfolios = portfoliosViewModel.ToPagedList(pageNumber - 1, 20);
 
             return View(pagedPortfolios);
         }

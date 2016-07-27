@@ -35,7 +35,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
             var pageNumber = page ?? 1;
 
-            var pagedContact = contactsViewModel.ToPagedList(pageNumber - 1, 2);
+            var pagedContact = contactsViewModel.ToPagedList(pageNumber - 1, 20);
 
             return View(pagedContact);
         }
