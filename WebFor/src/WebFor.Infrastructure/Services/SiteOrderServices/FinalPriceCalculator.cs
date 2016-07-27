@@ -66,10 +66,10 @@ namespace WebFor.Infrastructure.Services.SiteOrderServices
 
                 var siteOrderWebSiteTypePrice =
                     (string)siteOrderWebSiteType.Value == "Personal"
-                        ? 20000
+                        ? 1500000
                         : (string)siteOrderWebSiteType.Value == "Blog"
-                            ? 40000
-                            : (string)siteOrderWebSiteType.Value == "Shop" ? 70000 : 0;
+                            ? 1500000
+                            : (string)siteOrderWebSiteType.Value == "Shop" ? 2500000 : 0;
 
                 TotalPrice += siteOrderWebSiteTypePrice;
             }
@@ -85,10 +85,10 @@ namespace WebFor.Infrastructure.Services.SiteOrderServices
 
                 var siteOrderDevelopmentComplexityPrice =
                     (string)siteOrderDevelopmentComplexity.Value == "Standard"
-                        ? 20000
+                        ? 0
                         : (string)siteOrderDevelopmentComplexity.Value == "Advanced"
-                            ? 40000
-                            : (string)siteOrderDevelopmentComplexity.Value == "Enterprise" ? 70000 : 0;
+                            ? 1000000
+                            : (string)siteOrderDevelopmentComplexity.Value == "Enterprise" ? 2000000 : 0;
 
                 TotalPrice += siteOrderDevelopmentComplexityPrice;
             }
@@ -106,14 +106,13 @@ namespace WebFor.Infrastructure.Services.SiteOrderServices
 
                 var siteOrderSupportTypePrice =
                     (string)siteOrderSupportType.Value == "NoSupport"
-                        ? 20000
+                        ? 400000
                         : (string)siteOrderSupportType.Value == "OneYear"
-                            ? 40000
+                            ? 600000
                             : (string)siteOrderSupportType.Value == "TwoYear"
                                 ? 80000
                                 : (string)siteOrderSupportType.Value == "FiveYear"
-                                    ? 160000
-                                    : (string)siteOrderSupportType.Value == "IndefiniteSupport" ? 320000 : 0;
+                                    ? 1200000 : 0;
 
                 TotalPrice += siteOrderSupportTypePrice;
             }
@@ -129,10 +128,10 @@ namespace WebFor.Infrastructure.Services.SiteOrderServices
 
                 var siteOrderSeoTypePrice =
                     (string)siteOrderSeoType.Value == "Standard"
-                        ? 20000
+                        ? 300000
                         : (string)siteOrderSeoType.Value == "Advanced"
-                            ? 40000
-                            : (string)siteOrderSeoType.Value == "Enterprise" ? 70000 : 0;
+                            ? 800000
+                            : (string)siteOrderSeoType.Value == "Enterprise" ? 1500000 : 0;
 
                 TotalPrice += siteOrderSeoTypePrice;
             }
@@ -148,10 +147,10 @@ namespace WebFor.Infrastructure.Services.SiteOrderServices
 
                 var siteOrderDoesUseAjaxTypePrice =
                     (string)siteOrderDoesUseAjaxType.Value == "Standard"
-                        ? 20000
+                        ? 300000
                         : (string)siteOrderDoesUseAjaxType.Value == "Advanced"
-                            ? 40000
-                            : (string)siteOrderDoesUseAjaxType.Value == "Enterprise" ? 70000 : 0;
+                            ? 500000
+                            : (string)siteOrderDoesUseAjaxType.Value == "Enterprise" ? 800000 : 0;
 
                 TotalPrice += siteOrderDoesUseAjaxTypePrice;
             }
@@ -167,10 +166,10 @@ namespace WebFor.Infrastructure.Services.SiteOrderServices
 
                 var siteOrderSearchTypePrice =
                     (string)siteOrderSearchType.Value == "Standard"
-                        ? 20000
+                        ? 0
                         : (string)siteOrderSearchType.Value == "Advanced"
-                            ? 40000
-                            : (string)siteOrderSearchType.Value == "Enterprise" ? 70000 : 0;
+                            ? 160000
+                            : (string)siteOrderSearchType.Value == "Enterprise" ? 370000 : 0;
 
                 TotalPrice += siteOrderSearchTypePrice;
             }
