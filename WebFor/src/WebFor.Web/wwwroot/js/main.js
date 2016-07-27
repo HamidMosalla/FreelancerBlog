@@ -47,8 +47,18 @@ jQuery(function ($) {
     $("#news-letter-form").on("submit", function (e) {
         e.preventDefault();
 
-        $("#newsletter-confirmation").modal("show");
+        $("#news-letter-alert").slideDown();
+        $("#notification-modal").modal("show");
         this.reset();
+
+    });
+
+    $("#copyright-anchor").on("click", function(e) {
+        e.preventDefault();
+
+        $("#news-letter-alert").slideUp();
+        $("#copyright-alert").slideDown();
+        $("#notification-modal").modal("show");
 
     });
 

@@ -33,6 +33,16 @@ namespace WebFor.Web.Controllers
             return View();
         }
 
+        public IActionResult PrivacyPolicy()
+        {
+            return View();
+        }
+
+        public IActionResult TermsAndConditions()
+        {
+            return View();
+        }
+
         public IActionResult Services()
         {
             return View();
