@@ -65,47 +65,7 @@
     </noscript>
 
     <header class="navbar navbar-inverse navbar-fixed-top wet-asphalt" role="banner">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/Home/Index"><img src="~/images/logo.png" alt="logo"></a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="/Home/Index">خانه</a></li>
-
-                    @if (User.IsInRole("admin"))
-                    {
-                        <li><a href="/Admin/ControlPanel/Index">مدیریت</a></li>
-                    }
-
-                    <li><a href="/SiteOrder/Index">سفارشات</a></li>
-                    <li><a href="/Portfolio/Index">سوابق کاری</a></li>
-                    <li><a href="/Home/Services">سرویس های ما</a></li>
-                    <li><a href="/Home/Faq">سوالات تکراری</a></li>
-
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">دیگر صفحات <i class="fa fa-angle-down"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/Home/Careers">مشاغل</a></li>
-                            <li class="divider"></li>
-                            <li><a href="privacy.html">حریم خصوصی</a></li>
-                            <li><a href="terms.html">ترم اوف یوز</a></li>
-                        </ul>
-                    </li>
-
-                    <li><a href="/Article/Index">وبلاگ</a></li>
-                    <li><a href="/Home/About">درباره ما</a></li>
-                    <li><a href="/Contact/Create">تماس با ما</a></li>
-                </ul>
-                @await Html.PartialAsync("_LoginPartial")
-            </div>
-        </div>
+        @await Html.PartialAsync("_NavigationMenu")
     </header>
 
     <section id="BodyContent">
@@ -115,120 +75,12 @@
     </section>
 
     <section id="bottom" class="wet-asphalt">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 col-sm-6">
-                    <h4>درباره ما</h4>
-                    <p>وب برای ایران با هدف ارائه دادن بهترین کیفیت در زمینه طراحی و ساخت سیستم های مدیریت محتوا و صفحات دینامیک وب و همچنین بهینه سازی آنها برای موتورهای جستجو (سئو) در حال شکل گیری است.</p>
-                    <p>خدماتی که این وب سایت ارائه خواهد کرد شامل ساخت و پشتیبانی سیستم های اتوماسیون تحت وب، ساخت وب سایت های دینامیک شخصی و اداری، مشاوره در زمینه انتخاب بهترین روش ها و تکنولوژی های ممکن برای حل مسائل تجاری متناسب با نیاز و بودجه می باشد.</p>
-                </div><!--/.col-md-3-->
-                <div class="col-md-2 col-sm-4">
-                    <h4>کمپانی</h4>
-                    <div>
-                        <ul>
-                            <li class="fa fa-chevron-left"></li>
-                            <a href="#">درباره کمپانی</a>
-                            <br />
-                            <li class="fa fa-chevron-left"></li>
-                            <a href="#">ملاقات با تیم</a>
-                            <br />
-                            <li class="fa fa-chevron-left"></li>
-                            <a href="#">شرکای تجاری</a>
-                            <br />
-                            <li class="fa fa-chevron-left"></li>
-                            <a href="#">سرویس های ما</a>
-                            <br />
-                            <li class="fa fa-chevron-left"></li>
-                            <a href="#">سوالات متداول</a>
-                            <br />
-                            <li class="fa fa-chevron-left"></li>
-                            <a href="#">تماس با ما</a>
-                            <br />
-                            <li class="fa fa-chevron-left"></li>
-                            <a href="#">حریم خصوصی</a>
-                            <br />
-                            <li class="fa fa-chevron-left"></li>
-                            <a href="#">شرایط استفاده</a>
-                            <br />
-                            <li class="fa fa-chevron-left"></li>
-                            <a href="#">کپی رایت</a>
-                        </ul>
-                    </div>
-                </div><!--/.col-md-3-->
-                <div class="col-md-4 col-sm-8">
-                    <h4>آخرین مطالب بلاگ</h4>
-                    <div>
-                        <div class="media">
-                            <div class="pull-left">
-                                <img src="~/images/blog/thumb1.jpg" alt="">
-                            </div>
-                            <div class="media-body">
-                                <span class="media-heading"><a href="#">آخرین تغییرات در فریم ورک جدید مایکروسافت</a></span>
-                                <small class="muted">ارسال شده در هفدهم مهر ماه 94</small>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="pull-left">
-                                <img src="~/images/blog/thumb2.jpg" alt="">
-                            </div>
-                            <div class="media-body">
-                                <span class="media-heading"><a href="#">تگ هلپر سلام، اچ تی ام ال هلپر خداخافظ</a></span>
-                                <small class="muted">ارسال شده در دهم مهر ماه 94</small>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <div class="pull-left">
-                                <img src="~/images/blog/thumb3.jpg" alt="">
-                            </div>
-                            <div class="media-body">
-                                <span class="media-heading"><a href="#">جدیدترین ویژگی ها سی شارپ شش</a></span>
-                                <small class="muted">ارسال شده در دوم مهر ماه 94</small>
-                            </div>
-                        </div>
-                    </div>
-                </div><!--/.col-md-3-->
-                <div class="col-md-3 col-sm-6">
-                    <h4>آدرس</h4>
-                    <address>
-                        <strong>شرکت وب برای ایران</strong><br>
-                        استان فارس - جهرم<br>
-                        بلوار مصطفی خمینی<br>
-                        <abbr title="Phone">تلفن: </abbr> 3310-377-0910
-                    </address>
-                    <h4>خبرنامه</h4>
-                    <form role="form">
-                        <div class="input-group">
-                            <input type="text" class="form-control" autocomplete="off" placeholder="ایمیل خود را وارد کنید">
-                            <span class="input-group-btn">
-                                <button class="btn btn-danger" type="button">ثبت!</button>
-                            </span>
-                        </div>
-                    </form>
-                </div> <!--/.col-md-3-->
-            </div>
-        </div>
-    </section><!--/#bottom-->
+        @await Html.PartialAsync("_ExtendedFooter")
+    </section>
+
     <footer id="footer" class="midnight-blue">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-sm-6">
-                    <ul class="pull-right">
-                        <li><a id="gototop" class="gototop" href="#"><i class="fa fa-chevron-up"></i></a></li><!--#gototop-->
-                        <li><a href="/">خانه</a></li>
-                        <li><a href="/Home/About">درباره ما</a></li>
-                        <li><a href="/Home/Faq">سوالات متداول</a></li>
-                        <li><a href="/Contact/Create">تماس با ما</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-sm-6">
-                    &copy; @DateTime.Now.Year <a target="_blank" href="http://webfor.ir/" title="وب برای ایران طراحی وب سایت های سفارشی، مقالات روز تکنولوژی، مشاوره تخصصی">وب برای ایران</a>. تمام حقوق محفوظ است.
-                </div>
-
-            </div>
-        </div>
-    </footer><!--/#footer-->
+        @await Html.PartialAsync("_Footer")
+    </footer>
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

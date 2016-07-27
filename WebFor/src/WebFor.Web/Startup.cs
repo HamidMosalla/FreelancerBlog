@@ -23,7 +23,6 @@ using Microsoft.Extensions.DependencyInjection;
 using WebFor.DependencyInjection.Modules;
 using WebFor.DependencyInjection.Modules.Article;
 using WebFor.DependencyInjection.Modules.SiteOrder;
-using WebFor.Infrastructure.Services.Shared;
 using WebFor.Web.Mapper;
 using WebFor.Web.Services;
 using WebFor.Core.Services.Shared;
