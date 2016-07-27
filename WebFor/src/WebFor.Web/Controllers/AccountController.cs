@@ -332,7 +332,17 @@ namespace WebFor.Web.Controllers
 
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
 
-                await _emailSender.SendEmailAsync(model.Email, "فعال سازی اکانت", "برای فعال سازی اکانت خود بر روی لینک زیر کلیک کنید: <br /> <a href=\"" + callbackUrl + "\">link</a>");
+                var htmlString = _razorViewToString.Render("EmailTemplates/IdentityTemplate",
+                         new IdentityTemplateViewModel
+                         {
+                             CallBackLink = callbackUrl,
+                             CallBackLinkText = "فعال سازی",
+                             EmailMessageHeader = "فعال سازی اکانت",
+                             EmailPreviewMessage = "",
+                             EmailMessageBody = "پیوستن شما به جمع کاربران وب برای ایران را تبریک میگوییم، برای فعال سازی نام کاربری خود فقط کافیست بر روی دکمه زیر کلیک کنید."
+                         });
+
+                await _emailSender.SendEmailAsync(model.Email, "فعال سازی نام کاربری - وب برای ایران", htmlString);
 
                 ViewBag.InfoMessage = "ResendConfirmEmailSent";
 
@@ -367,9 +377,25 @@ namespace WebFor.Web.Controllers
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                 // Send an email with this link
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
-                await _emailSender.SendEmailAsync(model.Email, "وب فور - بازنشانی پسورد", "لطفا برای بازنشانی پسورد خود بر روی لینک زیر کلیک کنید: <br /> <a href=\"" + callbackUrl + "\">لینک</a>");
+
+                var htmlString = _razorViewToString.Render("EmailTemplates/IdentityTemplate",
+                         new IdentityTemplateViewModel
+                         {
+                             CallBackLink = callbackUrl,
+                             CallBackLinkText = "بازنشانی پسورد",
+                             EmailMessageHeader = "بازنشانی کلمه عبور",
+                             EmailPreviewMessage = "",
+                             EmailMessageBody = "در صورتی که کلمه عبور خود را فراموش کرده اید برای بازنشانی کلمه عبور خود کافیست بر روی دکمه زیر کلیک کنید، و یک کلمه عبور جدید برای خود انتخاب کنید."
+                         });
+
+                await _emailSender.SendEmailAsync(model.Email, "بازنشانی پسورد - وب برای ایران", htmlString);
+
                 ViewBag.InfoMessage = "ForgotPasswordEmailSent";
+
+
                 return View("InfoMessage");
             }
 
