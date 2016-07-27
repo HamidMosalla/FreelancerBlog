@@ -4,7 +4,7 @@
 
         ajaxSpinnerForPartOfPage("#show_form");
 
-        $('a').click(function () { $('html, body').animate({ scrollTop: $($.attr(this, 'href')).offset().top }, 500); return false; });
+        $('.smooth-scroll').click(function () { $('html, body').animate({ scrollTop: $($.attr(this, 'href')).offset().top }, 500); return false; });
 
         // go to the next step
         $(".done").click(function (e) {
