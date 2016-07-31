@@ -31,7 +31,7 @@ namespace WebFor.Web.Areas.User.ViewModels.Profile
 
         [Display(Name = "درباره")]
         [DataType(DataType.MultilineText)]
-        [MaxLength(500, ErrorMessage = "مقدار فیلد نمی تواند از 500 کراکتر بیشتر باشد.")]
+        [MaxLength(1000, ErrorMessage = "مقدار فیلد نمی تواند از 500 کراکتر بیشتر باشد.")]
         public string UserBio { get; set; }
 
 
@@ -68,7 +68,6 @@ namespace WebFor.Web.Areas.User.ViewModels.Profile
         public string UserTwitterProfile { get; set; }
 
 
-        [DataType(DataType.Url)]
         [Display(Name = "پروفایل لینکدین")]
         [MaxLength(400, ErrorMessage = "مقدار فیلد نمی تواند از 400 کراکتر بیشتر باشد.")]
         public string UserLinkedInProfile { get; set; }

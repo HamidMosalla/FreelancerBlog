@@ -128,7 +128,7 @@ namespace WebFor.Web
                 app.UseExceptionHandler("/Error/Status/{0}");
             }
 
-            //app.UseStatusCodePagesWithRedirects("/Error/Status/{0}");
+            app.UseStatusCodePagesWithRedirects("/Error/Status/{0}");
 
             app.UseStaticFiles();
 

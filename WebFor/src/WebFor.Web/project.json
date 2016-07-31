@@ -98,13 +98,8 @@
   },
 
   "publishOptions": {
-    "include": [
-      "wwwroot",
-      "Views",
-      "Areas/**/Views",
-      "appsettings.json",
-      "web.config"
-    ]
+    "include": [ "wwwroot", "Views", "appsettings.json", "web.config", "Areas" ],
+    "exclude": [ "**.user", "**.vspscc", "**.cs", "bin" ]
   },
 
   "scripts": {
