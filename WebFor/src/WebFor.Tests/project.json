@@ -9,12 +9,12 @@
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "System.Diagnostics.TraceSource": "4.0.0",
     "Moq": "4.6.25-alpha",
-    "FluentAssertions": "4.12.0",
+    "GenFu": "1.1.1",
+    "FluentAssertions": "4.13.0",
     "WebFor.Web": "1.0.0-*",
     "WebFor.Core": "1.0.0-*",
     "WebFor.Infrastructure": "1.0.0-*",
-    "WebFor.DependencyInjection": "1.0.0-*",
-    "GenFu": "1.1.1"
+    "WebFor.DependencyInjection": "1.0.0-*"
   },
 
 

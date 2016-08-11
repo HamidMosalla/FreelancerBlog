@@ -100,7 +100,7 @@
           "lib/netcoreapp1.0/dotnet-test-xunit.dll": {}
         }
       },
-      "FluentAssertions/4.12.0": {
+      "FluentAssertions/4.13.0": {
         "type": "package",
         "dependencies": {
           "NETStandard.Library": "1.6.0",
@@ -4656,12 +4656,12 @@
         "runtimes/win7-x86/lib/net451/dotnet-test-xunit.exe"
       ]
     },
-    "FluentAssertions/4.12.0": {
-      "sha512": "zDyZsVfWS1noMPLxHJGNhvPuJwxUIdO9wDGHbHY4C4TpTnAnL+wKdtWnZCn2Ajgmwq1fl+fEZMecTGz3ZYbYmw==",
+    "FluentAssertions/4.13.0": {
+      "sha512": "pwUxkKNClLDtcseAhXcsJ1zTn6f8lqSP4oxw1Fzspofp+7do2bL9XtXKkuHEoyAdiMh8qVnJEKpNHWxinwuyvw==",
       "type": "package",
-      "path": "FluentAssertions/4.12.0",
+      "path": "FluentAssertions/4.13.0",
       "files": [
-        "FluentAssertions.4.12.0.nupkg.sha512",
+        "FluentAssertions.4.13.0.nupkg.sha512",
         "FluentAssertions.nuspec",
         "lib/net40/FluentAssertions.Core.dll",
         "lib/net40/FluentAssertions.Core.pdb",
@@ -11473,7 +11473,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "FluentAssertions >= 4.12.0",
+      "FluentAssertions >= 4.13.0",
       "GenFu >= 1.1.1",
       "Moq >= 4.6.25-alpha",
       "System.Diagnostics.TraceSource >= 4.0.0",

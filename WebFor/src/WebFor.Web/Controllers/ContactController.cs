@@ -76,9 +76,9 @@ namespace WebFor.Web.Controllers
                 return View("Success");
             }
 
-            TempData["CreateContactMessage"] = "مشکلی در ثبت پیغام شما پیش آمده، لطفا دوباره تلاش کنید، اگر مشکل حل نشد، با مدیر سایت تماس بگیرید.";
+            TempData["CreateContactMessage"] = "مشکلی در ثبت پیش آمده یا چیزی برای ثبت کردن وجود نداشت.";
 
-            return View(contactViewModel);
+            return View("Create", contactViewModel);
         }
 
         protected override void Dispose(bool disposing)

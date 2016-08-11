@@ -9,39 +9,39 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using WebFor.Web.Mapper;
-using WebFor.Core.Repository;
-using WebFor.Core.Services.Shared;
 using WebFor.Web.Controllers;
 using WebFor.Web.ViewModels.Contact;
 using Xunit;
-using WebFor.Core.Types;
-using WebFor.Infrastructure.Services.Shared;
 using System.Reflection;
 using FluentAssertions;
 using GenFu;
+using WebFor.Core.Repository;
+using WebFor.Core.Services.Shared;
+using WebFor.Core.Types;
+using WebFor.Core.Domain;
 
 namespace WebFor.Tests.WebFor.Web.Tests
 {
     public class ContactControllerTests
     {
         private Mock<IUnitOfWork> _uw;
+        private Mock<IContactRepository> _contactRepository;
         private Mock<IWebForMapper> _webForMapper;
         private Mock<ICaptchaValidator> _captchaValidator;
         private Mock<IConfigurationBinderWrapper> _configurationWrapper;
-        private Mock<HttpContext> _httpContext;
-        private Mock<ITempDataProvider> _tempDataProvider;
         private Mock<TempDataDictionary> _tempData;
 
 
         public ContactControllerTests()
         {
             _uw = new Mock<IUnitOfWork>();
+            _contactRepository = new Mock<IContactRepository>();
             _webForMapper = new Mock<IWebForMapper>();
             _captchaValidator = new Mock<ICaptchaValidator>();
             _configurationWrapper = new Mock<IConfigurationBinderWrapper>();
-            _httpContext = new Mock<HttpContext>();
-            _tempDataProvider = new Mock<ITempDataProvider>();
-            _tempData = new Mock<TempDataDictionary>(_httpContext.Object, _tempDataProvider.Object);
+            var httpContext = new Mock<HttpContext>();
+            var tempDataProvider = new Mock<ITempDataProvider>();
+            _tempData = new Mock<TempDataDictionary>(httpContext.Object, tempDataProvider.Object);
 
         }
 
@@ -79,7 +79,7 @@ namespace WebFor.Tests.WebFor.Web.Tests
         }
 
         [Fact]
-        public async Task Create_SouldReturn_ContactViewModel()
+        public async Task Create_SouldReturnContactViewModel_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
         {
             _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
                 .ReturnsAsync(new CaptchaResponse
@@ -98,8 +98,10 @@ namespace WebFor.Tests.WebFor.Web.Tests
 
             var result = (ViewResult)await sut.Create(new ContactViewModel(), false);
 
-            Assert.IsType<ContactViewModel>(result.Model);
-            Assert.NotNull(result);
+            result.TempData.Should().NotBeNull();
+            result.ViewName.Should().Be("Create");
+            result.ViewData.Model.Should().BeOfType<ContactViewModel>();
+            result.ViewData.Model.Should().NotBeNull();
         }
 
         [Fact]
@@ -133,7 +135,7 @@ namespace WebFor.Tests.WebFor.Web.Tests
                 .ReturnsAsync(new CaptchaResponse
                 {
                     ChallengeTimeStamp = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
-                    ErrorCodes = new List<string> {},
+                    ErrorCodes = new List<string> { },
                     HostName = "localhost",
                     Success = "true"
                 });
@@ -149,12 +151,41 @@ namespace WebFor.Tests.WebFor.Web.Tests
 
             //Act
             var result = (ViewResult)await sut.Create(contactViewModel, false);
-            
+
 
             //Assert
             result.ViewData.Model.Should().BeOfType<ContactViewModel>();
             result.ViewData.Model.Should().NotBeNull();
 
+        }
+
+        [Fact]
+        public async Task Create_SouldReturnSuccessView_IfNewContactAdded()
+        {
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
+                .ReturnsAsync(new CaptchaResponse
+                {
+                    ChallengeTimeStamp = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+                    ErrorCodes = new List<string> { },
+                    HostName = "localhost",
+                    Success = "true"
+                });
+
+            var contactViewModel = A.New<ContactViewModel>();
+
+            _webForMapper.Setup(s => s.ContactViewModelToContact(It.IsAny<ContactViewModel>())).Returns(A.New<Contact>());
+
+            //It.IsAny<Contact>() means what ever passed in
+
+            _contactRepository.Setup(c => c.AddNewContactAsync(It.IsAny<Contact>())).ReturnsAsync(10);
+
+            _uw.SetupGet<IContactRepository>(u => u.ContactRepository).Returns(_contactRepository.Object);
+
+            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+
+            var result = (ViewResult)await sut.Create(contactViewModel, false);
+
+            result.ViewName.Should().Be("Success");
         }
 
     }
