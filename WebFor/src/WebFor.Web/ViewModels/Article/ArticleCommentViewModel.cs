@@ -22,9 +22,11 @@ namespace WebFor.Web.ViewModels.Article
         public DateTime ArticleCommentDateCreated { get; set; }
 
         [Display(Name = "نام")]
+        [Required(ErrorMessage ="پر کردن نام اجباری میباشد.")]
         public string ArticleCommentName { get; set; }
 
         [Display(Name = "ایمیل")]
+        [Required(ErrorMessage ="وارد کردن اجباری می باشد")]
         public string ArticleCommentEmail { get; set; }
 
         [Display(Name = "وب سایت")]
@@ -33,6 +35,7 @@ namespace WebFor.Web.ViewModels.Article
         public string ArticleCommentGravatar { get; set; }
 
         [Display(Name = "متن نظر")]
+        [Required(ErrorMessage ="پر کردن بدنه نظر اجباری می باشد")]
         public string ArticleCommentBody { get; set; }
 
         [Display(Name = "تایید شدن نظر")]

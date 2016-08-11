@@ -116,17 +116,14 @@ namespace WebFor.Web.Controllers
             if (addRatingResult > 0)
             {
                 return Json(new { Status = "Success" });
-
             }
 
             return Json(new { Status = "SomeProblemWithSubmit" });
-
         }
 
         [HttpPost]
         public async Task<JsonResult> SubmitComment(ArticleCommentViewModel viewModel)
         {
-
             CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configuration.GetValue<string>("reChaptchaSecret:server-secret"));
 
             if (captchaResult.Success != "true")
@@ -134,8 +131,7 @@ namespace WebFor.Web.Controllers
                 return Json(new { status = "FailedTheCaptchaValidation" });
             }
 
-            if (viewModel.ArticleCommentName == null || viewModel.ArticleCommentEmail == null ||
-                viewModel.ArticleCommentBody == null)
+            if (!ModelState.IsValid)
             {
                 return Json(new { Status = "CannotHaveEmptyArgument" });
             }

@@ -4,7 +4,7 @@
 
         ajaxSpinnerForPartOfPage("#ArticleCommentEditModalContainer");
 
-        var successfulDeleteNotice = function () {
+        var successfulDeleteNotice = function() {
             new PNotify({
                 title: 'حذف موفق',
                 text: 'آیتم مورد نظر با موفقیت حذف شد.',
@@ -12,9 +12,9 @@
                 icon: 'glyphicon glyphicon-ok',
                 delay: 1000
             });
-        }
+        };
 
-        var ProblematicDeleteNotice = function () {
+        var problematicDeleteNotice = function() {
             new PNotify({
                 title: 'حذف ناموفق',
                 text: 'مشکلی در حذف کامنت مورد نظر پیش آمده، لطفا دوباره تلاش کنید.',
@@ -22,9 +22,9 @@
                 icon: 'glyphicon glyphicon-warning-sign',
                 delay: 1000
             });
-        }
+        };
 
-        var GeneralSuccessNotice = function () {
+        var generalSuccessNotice = function() {
             new PNotify({
                 title: 'عملیات موفق',
                 text: 'عملیات مورد نظر موفقیت آمیز بود.',
@@ -32,9 +32,9 @@
                 icon: 'glyphicon glyphicon-ok',
                 delay: 1000
             });
-        }
+        };
 
-        var GeneralFailureNotice = function () {
+        var generalFailureNotice = function() {
             new PNotify({
                 title: 'عملیات ناموفق',
                 text: 'مشکلی در انجام عملیات مورد نظر پیش آمده.',
@@ -42,7 +42,7 @@
                 icon: 'glyphicon glyphicon-ok',
                 delay: 1000
             });
-        }
+        };
 
         //code responsible for deleting comments
         $(".DeleteArticleCommentButton").on("click", function (e) {
@@ -83,7 +83,7 @@
                         }
 
                         if (response.status === "NotDeletedSomeProblem") {
-                            ProblematicDeleteNotice();
+                            problematicDeleteNotice();
                         }
 
                     },
@@ -114,11 +114,11 @@
                 success: function (response) {
 
                     if (response.status === "Success") {
-                        GeneralSuccessNotice();
+                        generalSuccessNotice();
                     }
 
                     if (response.status === "NotDeletedSomeProblem") {
-                        GeneralFailureNotice();
+                        generalFailureNotice();
                     }
 
                 },
@@ -186,12 +186,12 @@
                 success: function (response) {
 
                     if (response.status === "Success") {
-                        GeneralSuccessNotice();
+                        generalSuccessNotice();
                         $("#ArticleCommentEditModal").modal("hide");
                     }
 
                     if (response.status === "NotDeletedSomeProblem") {
-                        GeneralFailureNotice();
+                        generalFailureNotice();
                     }
 
                 },

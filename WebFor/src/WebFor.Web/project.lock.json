@@ -4694,6 +4694,7 @@
           "Microsoft.AspNetCore.Mvc": "1.0.0",
           "Microsoft.EntityFrameworkCore": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "1.0.0",
           "NETStandard.Library": "1.6.0",
           "WebFor.Core": "1.0.0"
         },

@@ -17,7 +17,7 @@ using WebFor.Web.Mapper;
 namespace WebFor.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles ="admin")]
+    [Authorize(Roles = "admin")]
     public class ArticleController : Controller
     {
         private IUnitOfWork _uw;
@@ -193,35 +193,32 @@ namespace WebFor.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ArticleViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(viewModel);
+
+            var model = _webForMapper.ArticleViewModelToArticle(viewModel);
+
+            List<ArticleStatus> result = await _articleCreator.CreateNewArticleAsync(model, viewModel.ArticleTags);
+
+            if (!result.Any(r => r == ArticleStatus.ArticleCreateSucess))
             {
-                var model = _webForMapper.ArticleViewModelToArticle(viewModel);
-
-                List<ArticleStatus> result = await _articleCreator.CreateNewArticleAsync(model, viewModel.ArticleTags);
-
-                if (result.Any(r => r == ArticleStatus.ArticleCreateSucess))
-                {
-                    TempData["ViewMessage"] = "مقاله با موفقیت ثبت شد.";
-
-                    if (result.Any(r => r == ArticleStatus.ArticleTagCreateSucess))
-                    {
-                        TempData["ArticleTagCreateMessage"] = "تگ های جدید با موفقیت ثبت شدند.";
-                    }
-
-                    if (result.Any(r => r == ArticleStatus.ArticleArticleTagsCreateSucess))
-                    {
-                        TempData["ArticleArticleTagCreateMessage"] = "تگ ها با موفقیت به این مقاله اضافه شدند.";
-                    }
-
-                    return RedirectToAction("ManageArticle", "Article");
-                }
-
                 TempData["ViewMessage"] = "مشکلی در ثبت مقاله پیش آمده، مقاله با موفقیت ثبت نشد.";
 
                 return RedirectToAction("ManageArticle", "Article");
             }
 
-            return View(viewModel);
+            TempData["ViewMessage"] = "مقاله با موفقیت ثبت شد.";
+
+            if (result.Any(r => r == ArticleStatus.ArticleTagCreateSucess))
+            {
+                TempData["ArticleTagCreateMessage"] = "تگ های جدید با موفقیت ثبت شدند.";
+            }
+
+            if (result.Any(r => r == ArticleStatus.ArticleArticleTagsCreateSucess))
+            {
+                TempData["ArticleArticleTagCreateMessage"] = "تگ ها با موفقیت به این مقاله اضافه شدند.";
+            }
+
+            return RedirectToAction("ManageArticle", "Article");
         }
 
         [HttpGet]
@@ -229,7 +226,6 @@ namespace WebFor.Web.Areas.Admin.Controllers
         {
             if (id == 0)
             {
-                //return new HttpStatusCodeResult(StatusCodes.Status400BadRequest);
                 return BadRequest();
             }
 
@@ -237,7 +233,6 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
             if (article == null)
             {
-                //return new HttpStatusCodeResult(StatusCodes.Status404NotFound);
                 return NotFound();
             }
 
@@ -250,40 +245,37 @@ namespace WebFor.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(ArticleViewModel viewModel)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(viewModel);
+
+            var article = _webForMapper.ArticleViewModelToArticle(viewModel);
+
+            List<ArticleStatus> result = await _articleEditor.EditArticleAsync(article, viewModel.ArticleTags);
+
+            if (!result.Any(r => r == ArticleStatus.ArticleEditSucess))
             {
-                var article = _webForMapper.ArticleViewModelToArticle(viewModel);
-
-                List<ArticleStatus> result = await _articleEditor.EditArticleAsync(article, viewModel.ArticleTags);
-
-                if (result.Any(r => r == ArticleStatus.ArticleEditSucess))
-                {
-                    TempData["ViewMessage"] = "مقاله با موفقیت ویرایش شد.";
-
-                    if (result.Any(r => r == ArticleStatus.ArticleTagCreateSucess))
-                    {
-                        TempData["ArticleTagCreateMessage"] = "تگ های جدید با موفقیت ثبت شدند.";
-                    }
-
-                    if (result.Any(r => r == ArticleStatus.ArticleArticleTagsCreateSucess))
-                    {
-                        TempData["ArticleArticleTagCreateMessage"] = "تگ ها با موفقیت به این مقاله اضافه شدند.";
-                    }
-
-                    if (result.Any(r => r == ArticleStatus.ArticleRemoveTagsFromArticleSucess))
-                    {
-                        TempData["ArticleArticleTagRemoveFromArticle"] = "تگ ها با موفقیت از این مقاله حذف شدند.";
-                    }
-
-                    return RedirectToAction("ManageArticle", "Article");
-                }
-
                 TempData["ViewMessage"] = "مشکلی در ویرایش مقاله پیش آمده، مقاله با موفقیت ثبت نشد.";
 
                 return RedirectToAction("ManageArticle", "Article");
             }
 
-            return View(viewModel);
+            TempData["ViewMessage"] = "مقاله با موفقیت ویرایش شد.";
+
+            if (result.Any(r => r == ArticleStatus.ArticleTagCreateSucess))
+            {
+                TempData["ArticleTagCreateMessage"] = "تگ های جدید با موفقیت ثبت شدند.";
+            }
+
+            if (result.Any(r => r == ArticleStatus.ArticleArticleTagsCreateSucess))
+            {
+                TempData["ArticleArticleTagCreateMessage"] = "تگ ها با موفقیت به این مقاله اضافه شدند.";
+            }
+
+            if (result.Any(r => r == ArticleStatus.ArticleRemoveTagsFromArticleSucess))
+            {
+                TempData["ArticleArticleTagRemoveFromArticle"] = "تگ ها با موفقیت از این مقاله حذف شدند.";
+            }
+
+            return RedirectToAction("ManageArticle", "Article");
         }
 
         [HttpPost]
@@ -302,22 +294,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "ArticleCommentNotFound" });
             }
 
-            try
+            int editCommentResult = await _uw.ArticleCommentRepository.EditArticleCommentAsync(model, newCommentBody);
+
+            if (editCommentResult > 0)
             {
-                int editCommentResult = await _uw.ArticleCommentRepository.EditArticleCommentAsync(model, newCommentBody);
-
-                if (editCommentResult > 0)
-                {
-                    return Json(new { Status = "Success" });
-                }
-
-                return Json(new { Status = "NotDeletedSomeProblem" });
+                return Json(new { Status = "Success" });
             }
 
-            catch (Exception eX)
-            {
-                return Json(new { Status = "Error", eXMessage = eX.Message });
-            }
+            return Json(new { Status = "NotDeletedSomeProblem" });
         }
 
         [HttpPost]
@@ -336,22 +320,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "ArticleTagNotFound" });
             }
 
-            try
+            int editArticleTagResult = await _uw.ArticleTagRepository.EditArticleTagAsync(model, newTagName);
+
+            if (editArticleTagResult > 0)
             {
-                int editArticleTagResult = await _uw.ArticleTagRepository.EditArticleTagAsync(model, newTagName);
-
-                if (editArticleTagResult > 0)
-                {
-                    return Json(new { Status = "Success" });
-                }
-
-                return Json(new { Status = "NotDeletedSomeProblem" });
+                return Json(new { Status = "Success" });
             }
 
-            catch (Exception eX)
-            {
-                return Json(new { Status = "Error", eXMessage = eX.Message });
-            }
+            return Json(new { Status = "NotDeletedSomeProblem" });
         }
 
         [HttpPost]
@@ -369,24 +345,16 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "ArticleNotFound" });
             }
 
-            try
+            _fileDeleter.DeleteEditorImages(model.ArticleBody, new List<string> { "Files", "ArticleUploads" });
+
+            int deleteArticleResult = await _uw.ArticleRepository.DeleteArticleAsync(model);
+
+            if (deleteArticleResult > 0)
             {
-                _fileDeleter.DeleteEditorImages(model.ArticleBody, new List<string> { "Files", "ArticleUploads" });
-
-                int deleteArticleResult = await _uw.ArticleRepository.DeleteArticleAsync(model);
-
-                if (deleteArticleResult > 0)
-                {
-                    return Json(new { Status = "Deleted" });
-                }
-
-                return Json(new { Status = "NotDeletedSomeProblem" });
+                return Json(new { Status = "Deleted" });
             }
 
-            catch (Exception eX)
-            {
-                return Json(new { Status = "Error", eXMessage = eX.Message });
-            }
+            return Json(new { Status = "NotDeletedSomeProblem" });
         }
 
         public async Task<IActionResult> TagLookup()

@@ -165,24 +165,16 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "SlideShowNotFound" });
             }
 
-            try
+            _fileDeleter.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
+
+            int deleteSlideShowResult = await _uw.SlideShowRepository.DeleteSlideShowAsync(model);
+
+            if (deleteSlideShowResult > 0)
             {
-                _fileDeleter.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
-
-                int deleteSlideShowResult = await _uw.SlideShowRepository.DeleteSlideShowAsync(model);
-
-                if (deleteSlideShowResult > 0)
-                {
-                    return Json(new { Status = "Deleted" });
-                }
-
-                return Json(new { Status = "NotDeletedSomeProblem" });
+                return Json(new { Status = "Deleted" });
             }
 
-            catch (Exception eX)
-            {
-                return Json(new { Status = "Error", eXMessage = eX.Message });
-            }
+            return Json(new { Status = "NotDeletedSomeProblem" });
         }
 
         protected override void Dispose(bool disposing)

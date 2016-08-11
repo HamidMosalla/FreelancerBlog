@@ -23,63 +23,60 @@ namespace WebFor.Web.Controllers
         private IUnitOfWork _uw;
         private IWebForMapper _webForMapper;
         private ICaptchaValidator _captchaValidator;
-        private IConfiguration _configuration;
+        private IConfigurationBinderWrapper _configurationWrapper;
 
-        public ContactController(IUnitOfWork uw, IWebForMapper webForMapper, ICaptchaValidator captchaValidator, IConfiguration configuration)
+        public ContactController(IUnitOfWork uw, IWebForMapper webForMapper, ICaptchaValidator captchaValidator, IConfigurationBinderWrapper configurationWrapper)
         {
             _uw = uw;
             _webForMapper = webForMapper;
             _captchaValidator = captchaValidator;
-            _configuration = configuration;
+            _configurationWrapper = configurationWrapper;
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View("Create");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ContactViewModel contactViewModel, bool isJavascriptEnabled)
         {
-            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configuration.GetValue<string>("reChaptchaSecret:server-secret"));
+            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configurationWrapper.GetValue<string>("reChaptchaSecret:server-secret"));
+
 
             if (captchaResult.Success != "true")
             {
                 return Json(new { status = "FailedTheCaptchaValidation" });
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(contactViewModel);
+
+            if (isJavascriptEnabled)
             {
+                var contact = _webForMapper.ContactViewModelToContact(contactViewModel);
 
-                if (isJavascriptEnabled)
+                int addContactResult = await _uw.ContactRepository.AddNewContactAsync(contact);
+
+                if (addContactResult > 0)
                 {
-                    var contact = _webForMapper.ContactViewModelToContact(contactViewModel);
-
-                    int addContactResult = await _uw.ContactRepository.AddNewContactAsync(contact);
-
-                    if (addContactResult > 0)
-                    {
-                        return Json(new { Status = "Success" });
-                    }
-
-                    return Json(new { Staus = "ProblematicSubmit" });
+                    return Json(new { Status = "Success" });
                 }
 
-                var contactWioutJavascript = _webForMapper.ContactViewModelToContact(contactViewModel);
-
-                int addContactResultWioutJavascript = await _uw.ContactRepository.AddNewContactAsync(contactWioutJavascript);
-
-                if (addContactResultWioutJavascript > 0)
-                {
-                    return View("Success");
-                }
-
-                TempData["CreateContactMessage"] = "مشکلی در ثبت پیغام شما پیش آمده، لطفا دوباره تلاش کنید، اگر مشکل حل نشد، با مدیر سایت تماس بگیرید.";
-
-                return View(contactViewModel);
+                return Json(new { Staus = "ProblematicSubmit" });
             }
+
+            var contactWioutJavascript = _webForMapper.ContactViewModelToContact(contactViewModel);
+
+            int addContactResultWioutJavascript = await _uw.ContactRepository.AddNewContactAsync(contactWioutJavascript);
+
+            if (addContactResultWioutJavascript > 0)
+            {
+                return View("Success");
+            }
+
+            TempData["CreateContactMessage"] = "مشکلی در ثبت پیغام شما پیش آمده، لطفا دوباره تلاش کنید، اگر مشکل حل نشد، با مدیر سایت تماس بگیرید.";
 
             return View(contactViewModel);
         }

@@ -56,22 +56,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "ContactNotFound" });
             }
 
-            try
+            int deleteContactResult = await _uw.ContactRepository.DeleteContactAsync(model);
+
+            if (deleteContactResult > 0)
             {
-                int deleteContactResult = await _uw.ContactRepository.DeleteContactAsync(model);
-
-                if (deleteContactResult > 0)
-                {
-                    return Json(new { Status = "Deleted" });
-                }
-
-                return Json(new { Status = "NotDeletedSomeProblem" });
+                return Json(new { Status = "Deleted" });
             }
 
-            catch (Exception eX)
-            {
-                return Json(new { Status = "Error", eXMessage = eX.Message });
-            }
+            return Json(new { Status = "NotDeletedSomeProblem" });
         }
 
         protected override void Dispose(bool disposing)
