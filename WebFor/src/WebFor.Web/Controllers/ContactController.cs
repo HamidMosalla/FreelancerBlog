@@ -64,7 +64,7 @@ namespace WebFor.Web.Controllers
                     return Json(new { Status = "Success" });
                 }
 
-                return Json(new { Staus = "ProblematicSubmit" });
+                return Json(new { Status = "ProblematicSubmit" });
             }
 
             var contactWioutJavascript = _webForMapper.ContactViewModelToContact(contactViewModel);

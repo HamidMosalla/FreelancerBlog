@@ -56,26 +56,8 @@ namespace WebFor.Tests.WebFor.Web.Tests
 
             //assert
             Assert.NotNull(result);
-        }
-
-        [Fact]
-        void Create_SouldReturn_IndexView()
-        {
-            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
-
-            var result = (ViewResult)sut.Create();
-
-            Assert.Equal("Create", result.ViewName);
-        }
-
-        [Fact]
-        void Create_SouldReturn_TheSameType()
-        {
-            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
-
-            var result = (ViewResult)sut.Create();
-
             Assert.IsType<ViewResult>(result);
+            Assert.Equal("Create", result.ViewName);
         }
 
         [Fact]
@@ -85,7 +67,32 @@ namespace WebFor.Tests.WebFor.Web.Tests
                 .ReturnsAsync(new CaptchaResponse
                 {
                     ChallengeTimeStamp = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
-                    ErrorCodes = new List<string> { "404" },
+                    ErrorCodes = new List<string> { },
+                    HostName = "localhost",
+                    Success = "true"
+                });
+
+            _uw.Setup(u => u.ContactRepository.AddNewContactAsync(new Core.Domain.Contact { })).ReturnsAsync(0);
+
+            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+
+            sut.TempData = _tempData.Object;
+
+            var result = (ViewResult)await sut.Create(new ContactViewModel(), false);
+            
+            result.ViewName.Should().Be("Create");
+            result.ViewData.Model.Should().BeOfType<ContactViewModel>();
+            result.ViewData.Model.Should().NotBeNull();
+        }
+
+        [Fact]
+        public async Task Create_SouldReturnFillTempData_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
+        {
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
+                .ReturnsAsync(new CaptchaResponse
+                {
+                    ChallengeTimeStamp = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+                    ErrorCodes = new List<string> { },
                     HostName = "localhost",
                     Success = "true"
                 });
@@ -99,9 +106,6 @@ namespace WebFor.Tests.WebFor.Web.Tests
             var result = (ViewResult)await sut.Create(new ContactViewModel(), false);
 
             result.TempData.Should().NotBeNull();
-            result.ViewName.Should().Be("Create");
-            result.ViewData.Model.Should().BeOfType<ContactViewModel>();
-            result.ViewData.Model.Should().NotBeNull();
         }
 
         [Fact]
@@ -111,7 +115,7 @@ namespace WebFor.Tests.WebFor.Web.Tests
                 .ReturnsAsync(new CaptchaResponse
                 {
                     ChallengeTimeStamp = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
-                    ErrorCodes = new List<string> { "404" },
+                    ErrorCodes = new List<string> { },
                     HostName = "localhost",
                     Success = "false"
                 });
@@ -185,8 +189,66 @@ namespace WebFor.Tests.WebFor.Web.Tests
 
             var result = (ViewResult)await sut.Create(contactViewModel, false);
 
+            result.Should().NotBeNull();
             result.ViewName.Should().Be("Success");
         }
 
+        [Fact]
+        public async Task Create_SouldReturnSuccessJsonStatus_IfNewContactAdded()
+        {
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
+                .ReturnsAsync(new CaptchaResponse
+                {
+                    ChallengeTimeStamp = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+                    ErrorCodes = new List<string> { },
+                    HostName = "localhost",
+                    Success = "true"
+                });
+
+            var contactViewModel = A.New<ContactViewModel>();
+
+            _webForMapper.Setup(s => s.ContactViewModelToContact(It.IsAny<ContactViewModel>())).Returns(A.New<Contact>());
+
+            _contactRepository.Setup(c => c.AddNewContactAsync(It.IsAny<Contact>())).ReturnsAsync(10);
+
+            _uw.SetupGet<IContactRepository>(u => u.ContactRepository).Returns(_contactRepository.Object);
+
+            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+
+            var result = (JsonResult)await sut.Create(contactViewModel, true);
+
+            _contactRepository.Verify(c => c.AddNewContactAsync(It.IsAny<Contact>()), Times.Once);
+            result.Value.Should().NotBeNull();
+            result.Value.GetType().GetProperty("Status").GetValue(result.Value).Should().Be("Success");
+        }
+
+        [Fact]
+        public async Task Create_SouldReturnProblematicSubmitJsonStatus_IfThereWasAProblem()
+        {
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
+                .ReturnsAsync(new CaptchaResponse
+                {
+                    ChallengeTimeStamp = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+                    ErrorCodes = new List<string> { },
+                    HostName = "localhost",
+                    Success = "true"
+                });
+
+            var contactViewModel = A.New<ContactViewModel>();
+
+            _webForMapper.Setup(s => s.ContactViewModelToContact(It.IsAny<ContactViewModel>())).Returns(A.New<Contact>());
+
+            _contactRepository.Setup(c => c.AddNewContactAsync(It.IsAny<Contact>())).ReturnsAsync(0);
+
+            _uw.SetupGet<IContactRepository>(u => u.ContactRepository).Returns(_contactRepository.Object);
+
+            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+
+            var result = (JsonResult)await sut.Create(contactViewModel, true);
+
+            _contactRepository.Verify(c => c.AddNewContactAsync(It.IsAny<Contact>()), Times.Once);
+            result.Value.Should().NotBeNull();
+            result.Value.GetType().GetProperty("Status").GetValue(result.Value).Should().Be("ProblematicSubmit");
+        }
     }
 }
