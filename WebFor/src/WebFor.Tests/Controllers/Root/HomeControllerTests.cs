@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
-using WebFor.Core.Domain;
 using WebFor.Core.Repository;
-using WebFor.Infrastructure.Repository;
 using WebFor.Web.Controllers;
 using Xunit;
 
-namespace WebFor.Tests.WebFor.Web.Tests
+namespace WebFor.Tests.Controllers.Root
 {
     public class HomeControllerTests
     {

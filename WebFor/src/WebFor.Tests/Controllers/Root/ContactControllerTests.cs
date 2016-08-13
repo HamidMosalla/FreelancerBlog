@@ -1,26 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using FluentAssertions;
+using GenFu;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.Extensions.Configuration;
 using Moq;
-using WebFor.Web.Mapper;
 using WebFor.Web.Controllers;
+using WebFor.Web.Mapper;
 using WebFor.Web.ViewModels.Contact;
 using Xunit;
-using System.Reflection;
-using FluentAssertions;
-using GenFu;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.Shared;
-using WebFor.Core.Types;
 using WebFor.Core.Domain;
+using WebFor.Core.Types;
 
-namespace WebFor.Tests.WebFor.Web.Tests
+namespace WebFor.Tests.Controllers.Root
 {
     public class ContactControllerTests
     {
