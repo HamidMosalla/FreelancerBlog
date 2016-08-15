@@ -44,7 +44,7 @@ namespace WebFor.Tests.Controllers.Root
         }
 
         [Fact]
-        void Create_SouldReturn_NotNull()
+        void Create_SouldReturn_CreateView()
         {
             //arrange
             var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
@@ -214,8 +214,7 @@ namespace WebFor.Tests.Controllers.Root
             var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
             var result = (JsonResult)await sut.Create(contactViewModel, true);
-
-            _contactRepository.Verify(c => c.AddNewContactAsync(It.IsAny<Contact>()), Times.Once);
+            
             result.Value.Should().NotBeNull();
             result.Value.GetType().GetProperty("Status").GetValue(result.Value).Should().Be("Success");
         }
@@ -243,10 +242,15 @@ namespace WebFor.Tests.Controllers.Root
             var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
             var result = (JsonResult)await sut.Create(contactViewModel, true);
-
-            _contactRepository.Verify(c => c.AddNewContactAsync(It.IsAny<Contact>()), Times.Once);
+            
             result.Value.Should().NotBeNull();
             result.Value.GetType().GetProperty("Status").GetValue(result.Value).Should().Be("ProblematicSubmit");
+
+            //pointless, here just for reference, use verify type of methods to test the operations
+            //with unobservable1 behavior, for more info visit: http://stackoverflow.com/a/29509950/1650277
+            //_contactRepository.VerifyAll();
+            //_contactRepository.Verify(c => c.AddNewContactAsync(It.IsAny<Contact>()), Times.Once);
+            //_webForMapper.Verify(w => w.ContactViewModelToContact(It.IsAny<ContactViewModel>()), Times.Once);
         }
     }
 }
