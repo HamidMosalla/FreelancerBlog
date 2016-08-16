@@ -59,6 +59,33 @@ namespace WebFor.Tests.Controllers.Root
         }
 
         [Fact]
+        public async Task Create_SouldReturnContactView_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
+        {
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
+                .ReturnsAsync(new CaptchaResponse
+                {
+                    ChallengeTimeStamp = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+                    ErrorCodes = new List<string> { },
+                    HostName = "localhost",
+                    Success = "true"
+                });
+
+            _uw.Setup(u => u.ContactRepository.AddNewContactAsync(new Core.Domain.Contact { })).ReturnsAsync(0);
+
+            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+
+            sut.TempData = _tempData.Object;
+
+            var result = (ViewResult)await sut.Create(new ContactViewModel(), false);
+
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewName.Should().Be("Create");
+        }
+
+
+        [Fact]
         public async Task Create_SouldReturnContactViewModel_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
         {
             _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
@@ -77,11 +104,13 @@ namespace WebFor.Tests.Controllers.Root
             sut.TempData = _tempData.Object;
 
             var result = (ViewResult)await sut.Create(new ContactViewModel(), false);
-            
-            result.ViewName.Should().Be("Create");
-            result.ViewData.Model.Should().BeOfType<ContactViewModel>();
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
             result.ViewData.Model.Should().NotBeNull();
+            result.ViewData.Model.Should().BeOfType<ContactViewModel>();
         }
+
 
         [Fact]
         public async Task Create_SouldReturnFillTempData_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
@@ -103,6 +132,8 @@ namespace WebFor.Tests.Controllers.Root
 
             var result = (ViewResult)await sut.Create(new ContactViewModel(), false);
 
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
             result.TempData.Should().NotBeNull();
         }
 
@@ -122,6 +153,8 @@ namespace WebFor.Tests.Controllers.Root
 
             var result = (JsonResult)await sut.Create(new ContactViewModel(), false);
 
+            result.Should().NotBeNull();
+            result.Should().BeOfType<JsonResult>();
             result.Value.GetType()
                 .GetProperty("status")
                 .GetValue(result.Value)
@@ -156,6 +189,9 @@ namespace WebFor.Tests.Controllers.Root
 
 
             //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewName.Should().BeNull();
             result.ViewData.Model.Should().BeOfType<ContactViewModel>();
             result.ViewData.Model.Should().NotBeNull();
 
@@ -188,6 +224,7 @@ namespace WebFor.Tests.Controllers.Root
             var result = (ViewResult)await sut.Create(contactViewModel, false);
 
             result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
             result.ViewName.Should().Be("Success");
         }
 
@@ -214,7 +251,9 @@ namespace WebFor.Tests.Controllers.Root
             var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
             var result = (JsonResult)await sut.Create(contactViewModel, true);
-            
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<JsonResult>();
             result.Value.Should().NotBeNull();
             result.Value.GetType().GetProperty("Status").GetValue(result.Value).Should().Be("Success");
         }
@@ -242,7 +281,9 @@ namespace WebFor.Tests.Controllers.Root
             var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
             var result = (JsonResult)await sut.Create(contactViewModel, true);
-            
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<JsonResult>();
             result.Value.Should().NotBeNull();
             result.Value.GetType().GetProperty("Status").GetValue(result.Value).Should().Be("ProblematicSubmit");
 

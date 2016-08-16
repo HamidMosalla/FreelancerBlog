@@ -28,6 +28,13 @@ namespace WebFor.Tests.Controllers.Root
             _uw = new Mock<IUnitOfWork>();
             _webForMapper = new Mock<IWebForMapper>();
             _portfolioRepository = new Mock<IPortfolioRepository>();
+
+            _uw.SetupGet<IPortfolioRepository>(u => u.PortfolioRepository).Returns(_portfolioRepository.Object);
+
+            _webForMapper.Setup(w => w.PortfolioToPorfolioViewModel(It.IsAny<Portfolio>())).Returns(A.New<PortfolioViewModel>());
+
+            _webForMapper.Setup(w => w.PortfolioCollectionToPortfolioViewModelCollection(It.IsAny<List<Portfolio>>()))
+                .Returns(A.ListOf<PortfolioViewModel>(10));
         }
 
         [Fact]
@@ -40,8 +47,8 @@ namespace WebFor.Tests.Controllers.Root
             var result = (BadRequestResult)await sut.Detail(default(int));
 
             //Assert
-            result.Should().BeOfType<BadRequestResult>();
             result.Should().NotBeNull();
+            result.Should().BeOfType<BadRequestResult>();
             result.StatusCode.Should().Be(400);
         }
 
@@ -51,45 +58,88 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new PortfolioController(_uw.Object, _webForMapper.Object);
 
-            _uw.SetupGet<IPortfolioRepository>(u => u.PortfolioRepository).Returns(_portfolioRepository.Object);
-
             _portfolioRepository.Setup(p => p.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(null);
 
             //Act
             var result = (NotFoundResult)await sut.Detail(1);
 
             //Assert
-            result.Should().BeOfType<NotFoundResult>();
             result.Should().NotBeNull();
+            result.Should().BeOfType<NotFoundResult>();
             result.StatusCode.Should().Be(404);
         }
 
         [Fact]
-        public async Task Detail_ShoudReturnRequestedDetailViewWithModel_IfPorfolioDetailExist()
+        public async Task Detail_ShoudReturnRequestedDetailView_IfPorfolioDetailExist()
         {
             //Arrange
             var sut = new PortfolioController(_uw.Object, _webForMapper.Object);
 
-            _uw.SetupGet<IPortfolioRepository>(u => u.PortfolioRepository).Returns(_portfolioRepository.Object);
-
             _portfolioRepository.Setup(p => p.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(A.New<Portfolio>());
-
-            _webForMapper.Setup(w => w.PortfolioToPorfolioViewModel(It.IsAny<Portfolio>()))
-                .Returns(A.New<PortfolioViewModel>());
-
-
 
             //Act
             var result = (ViewResult)await sut.Detail(1);
 
 
-            //is it ok to have all this here or separate tests?
             //Assert
-            result.Should().BeOfType<ViewResult>();
             result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
             result.ViewName.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task Detail_ShoudReturnPortfolioDetailViewModel_IfPorfolioDetailExist()
+        {
+            //Arrange
+            var sut = new PortfolioController(_uw.Object, _webForMapper.Object);
+
+            _portfolioRepository.Setup(p => p.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(A.New<Portfolio>());
+
+            //Act
+            var result = (ViewResult)await sut.Detail(1);
+
+
+            //Assert
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
             result.Model.Should().NotBeNull();
             result.Model.Should().BeOfType<PortfolioViewModel>();
+        }
+
+        [Fact]
+        public async Task Index_ShoudReturnIndexView_Always()
+        {
+            //Arrange
+            var sut = new PortfolioController(_uw.Object, _webForMapper.Object);
+
+            _portfolioRepository.Setup(p => p.GetAllAsync()).ReturnsAsync(A.ListOf<Portfolio>(10));
+
+            //Act
+            var result = (ViewResult)await sut.Index();
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewName.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task Index_ShoudReturnIndexWithPortfolioViewModel_Always()
+        {
+            //Arrange
+            var sut = new PortfolioController(_uw.Object, _webForMapper.Object);
+
+            _portfolioRepository.Setup(p => p.GetAllAsync()).ReturnsAsync(A.ListOf<Portfolio>(10));
+
+            //Act
+            var result = (ViewResult)await sut.Index();
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.Model.Should().NotBeNull();
+            result.Model.Should().BeOfType<List<PortfolioViewModel>>();
         }
     }
 }
