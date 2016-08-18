@@ -34,7 +34,10 @@ namespace WebFor.Web.Controllers
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory, ICaptchaValidator captchaValidator, IConfiguration configuration, IRazorViewToString render)
+            ILoggerFactory loggerFactory,
+            ICaptchaValidator captchaValidator,
+            IConfiguration configuration,
+            IRazorViewToString render)
         {
             _userManager = userManager;
             _signInManager = signInManager;

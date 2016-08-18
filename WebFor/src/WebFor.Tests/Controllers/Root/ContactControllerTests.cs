@@ -44,6 +44,7 @@ namespace WebFor.Tests.Controllers.Root
         }
 
         [Fact]
+        [Trait("Category", "DefaultView")]
         void Create_SouldReturn_CreateView()
         {
             //arrange
