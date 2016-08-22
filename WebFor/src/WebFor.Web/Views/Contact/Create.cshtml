@@ -11,14 +11,17 @@
     <link href="~/lib/pnotify/dist/pnotify.custom.min.css" rel="stylesheet" />
 }
 
-@if (TempData["CreateContactMessage"] != null)
+@if (ViewData["CreateContactMessage"] != null)
 {
-    <p>
-        <div class="alert alert-warning alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4>@TempData["CreateContactMessage"]</h4>
-        </div>
-    </p>
+    @if ((string)ViewData["CreateContactMessage"] == "NothingToSaveOrThereWasAProblem")
+    {
+        <p>
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4>مشکلی در ثبت پیش آمده یا چیزی برای ثبت کردن وجود نداشت.</h4>
+            </div>
+        </p>
+    }
 }
 
 <section id="title" class="emerald">

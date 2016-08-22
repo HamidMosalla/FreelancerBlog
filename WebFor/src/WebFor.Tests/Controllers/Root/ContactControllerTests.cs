@@ -75,8 +75,6 @@ namespace WebFor.Tests.Controllers.Root
 
             var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
-            sut.TempData = _tempData.Object;
-
             var result = (ViewResult)await sut.Create(new ContactViewModel(), false);
 
 
@@ -85,6 +83,30 @@ namespace WebFor.Tests.Controllers.Root
             result.ViewName.Should().Be("Create");
         }
 
+        [Fact]
+        public async Task Create_SouldReturnContactViewWithProperViewData_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
+        {
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
+                .ReturnsAsync(new CaptchaResponse
+                {
+                    ChallengeTimeStamp = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+                    ErrorCodes = new List<string> { },
+                    HostName = "localhost",
+                    Success = "true"
+                });
+
+            _uw.Setup(u => u.ContactRepository.AddNewContactAsync(new Core.Domain.Contact { })).ReturnsAsync(0);
+
+            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+
+            var result = (ViewResult)await sut.Create(new ContactViewModel(), false);
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewData.Should().NotBeEmpty();
+            result.ViewData.Should().ContainKey("CreateContactMessage");
+            result.ViewData["CreateContactMessage"].Should().Be("NothingToSaveOrThereWasAProblem");
+        }
 
         [Fact]
         public async Task Create_SouldReturnContactViewModel_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
@@ -102,40 +124,12 @@ namespace WebFor.Tests.Controllers.Root
 
             var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
-            sut.TempData = _tempData.Object;
-
             var result = (ViewResult)await sut.Create(new ContactViewModel(), false);
 
             result.Should().NotBeNull();
             result.Should().BeOfType<ViewResult>();
             result.ViewData.Model.Should().NotBeNull();
             result.ViewData.Model.Should().BeOfType<ContactViewModel>();
-        }
-
-
-        [Fact]
-        public async Task Create_SouldReturnFillTempData_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
-        {
-            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
-                .ReturnsAsync(new CaptchaResponse
-                {
-                    ChallengeTimeStamp = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
-                    ErrorCodes = new List<string> { },
-                    HostName = "localhost",
-                    Success = "true"
-                });
-
-            _uw.Setup(u => u.ContactRepository.AddNewContactAsync(new Core.Domain.Contact { })).ReturnsAsync(0);
-
-            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
-
-            sut.TempData = _tempData.Object;
-
-            var result = (ViewResult)await sut.Create(new ContactViewModel(), false);
-
-            result.Should().NotBeNull();
-            result.Should().BeOfType<ViewResult>();
-            result.TempData.Should().NotBeNull();
         }
 
         [Fact]

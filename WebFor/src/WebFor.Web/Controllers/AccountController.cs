@@ -64,49 +64,42 @@ namespace WebFor.Web.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(model);
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
+
+            if (user != null)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-
-                if (user != null)
+                if (!user.EmailConfirmed)
                 {
-                    if (!user.EmailConfirmed)
-                    {
-                        TempData["LoginMessage"] = "EmailIsNotConfirmed";
-                        return View(model);
-                    }
-                }
-
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation(1, "User logged in.");
-                    return RedirectToLocal(returnUrl);
-                }
-
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                }
-
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning(2, "User account locked out.");
-
-                    return View("Lockout");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "نام کاربری یا کلمه عبور اشتباه است.");
-
+                    ViewData["LoginMessage"] = "EmailIsNotConfirmed";
                     return View(model);
                 }
             }
 
-            // If we got this far, something failed, redisplay form
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+
+            if (result.Succeeded)
+            {
+                _logger.LogInformation(1, "User logged in.");
+                return RedirectToLocal(returnUrl);
+            }
+
+            if (result.RequiresTwoFactor)
+            {
+                return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+            }
+
+            if (result.IsLockedOut)
+            {
+                _logger.LogWarning(2, "User account locked out.");
+
+                return View("Lockout");
+            }
+
+            ModelState.AddModelError(string.Empty, "نام کاربری یا کلمه عبور اشتباه است.");
             return View(model);
         }
 
@@ -127,7 +120,7 @@ namespace WebFor.Web.Controllers
 
             if (captchaResult.Success != "true")
             {
-                TempData["FailedTheCaptchaValidation"] = "true";
+                ViewData["FailedTheCaptchaValidation"] = "true";
                 return View(model);
             }
 

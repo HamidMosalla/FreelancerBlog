@@ -19,10 +19,11 @@ using WebFor.Tests.Fixtures;
 using WebFor.Core.Services.Shared;
 using WebFor.Core.Repository;
 using WebFor.Tests.HandMadeFakes;
+using WebFor.Web.ViewModels.Account;
 
 namespace WebFor.Tests.Controllers.Root
 {
-    public class AccountControllerTests 
+    public class AccountControllerTests
     {
         private Mock<IUnitOfWork> _uw;
         private Mock<IContactRepository> _contactRepository;
@@ -64,7 +65,7 @@ namespace WebFor.Tests.Controllers.Root
 
 
         [Fact]
-        public void Login_ShouldReturn_DefaultView()
+        public void Login_ShouldReturnDefaultView_WhenNoParameterSupplied()
         {
 
             //Arrange
@@ -82,7 +83,7 @@ namespace WebFor.Tests.Controllers.Root
         }
 
         [Fact]
-        public void Login_ShouldReturn_FilledReturnUrlViewData()
+        public void Login_ShouldReturnFilledReturnUrlViewData_WhenNoParameterSupplied()
         {
 
             //Arrange
@@ -99,6 +100,110 @@ namespace WebFor.Tests.Controllers.Root
             result.ViewData.Should().NotBeNull();
         }
 
+        [Fact]
+        public async Task Login_ShouldReturnDefaultView_IfModelStateIsNotValid()
+        {
+
+            //Arrange
+            var sut = new AccountController(_userManager, _signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactory.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object);
+
+            sut.ViewData.ModelState.AddModelError("Key", "ErrorMessage");
+
+            //Act
+            var result = (ViewResult)await sut.Login(A.New<LoginViewModel>(), returnUrl: "/");
+
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewName.Should().BeNull();
+            result.ViewData.Should().NotBeNull();
+        }
+
+        [Fact]
+        public async Task Login_ShouldReturnDefaultViewWithModel_IfModelStateIsNotValid()
+        {
+
+            //Arrange
+            var sut = new AccountController(_userManager, _signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactory.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object);
+
+            sut.ViewData.ModelState.AddModelError("Key", "ErrorMessage");
+
+            //Act
+            var result = (ViewResult)await sut.Login(A.New<LoginViewModel>(), returnUrl: "/");
+
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.Model.Should().NotBeNull();
+            result.Model.Should().BeOfType<LoginViewModel>();
+        }
+
+        [Fact]
+        public async Task Login_ShouldReturnDefaultView_IfUserIsNotConfirmed()
+        {
+            //Arrange
+            var sut = new AccountController(_userManager, _signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactory.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object);
+
+            sut.TempData = _tempData.Object;
+
+            //Act
+            var result = (ViewResult)await sut.Login(A.New<LoginViewModel>(), returnUrl: "/");
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewName.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task Login_ShouldReturnDefaultViewWithModel_IfUserIsNotConfirmed()
+        {
+            //Arrange
+            var sut = new AccountController(_userManager, _signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactory.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object);
+
+            sut.TempData = _tempData.Object;
+
+            //Act
+            var result = (ViewResult)await sut.Login(A.New<LoginViewModel>(), returnUrl: "/");
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.Model.Should().NotBeNull();
+            result.Model.Should().BeOfType<LoginViewModel>();
+        }
+
+        [Fact]
+        public async Task Login_ShouldReturnDefaultViewWithFilledTempData_IfUserIsNotConfirmed()
+        {
+            //Arrange
+            var sut = new AccountController(_userManager, _signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactory.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object);
+
+            sut.TempData = _tempData.Object;
+
+            //Act
+            var result = (ViewResult)await sut.Login(A.New<LoginViewModel>(), returnUrl: "/");
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.TempData.Should().NotBeNull();
+            //result.TempData.Should().NotBeEmpty();
+            //result.TempData.ContainsKey("LoginMessage").Should().BeTrue();
+            //result.TempData["LoginMessage"].Should().Be("EmailIsNotConfirmed");
+        }
 
     }
 }

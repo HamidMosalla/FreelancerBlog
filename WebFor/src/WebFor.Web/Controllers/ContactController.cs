@@ -76,7 +76,7 @@ namespace WebFor.Web.Controllers
                 return View("Success");
             }
 
-            TempData["CreateContactMessage"] = "مشکلی در ثبت پیش آمده یا چیزی برای ثبت کردن وجود نداشت.";
+            ViewData["CreateContactMessage"] = "NothingToSaveOrThereWasAProblem";
 
             return View("Create", contactViewModel);
         }

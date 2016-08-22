@@ -95,22 +95,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "ArticleCommentNotFound" });
             }
 
-            try
+            int deleteArticleResult = await _uw.ArticleCommentRepository.DeleteArticleCommentAsync(model);
+
+            if (deleteArticleResult > 0)
             {
-                int deleteArticleResult = await _uw.ArticleCommentRepository.DeleteArticleCommentAsync(model);
-
-                if (deleteArticleResult > 0)
-                {
-                    return Json(new { Status = "Deleted" });
-                }
-
-                return Json(new { Status = "NotDeletedSomeProblem" });
+                return Json(new { Status = "Deleted" });
             }
 
-            catch (Exception eX)
-            {
-                return Json(new { Status = "Error", eXMessage = eX.Message });
-            }
+            return Json(new { Status = "NotDeletedSomeProblem" });
         }
 
 
@@ -130,22 +122,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "ArticleCommentNotFound" });
             }
 
-            try
+            int deleteArticleTagResult = await _uw.ArticleTagRepository.DeleteArticleTagAsync(model);
+
+            if (deleteArticleTagResult > 0)
             {
-                int deleteArticleTagResult = await _uw.ArticleTagRepository.DeleteArticleTagAsync(model);
-
-                if (deleteArticleTagResult > 0)
-                {
-                    return Json(new { Status = "Deleted" });
-                }
-
-                return Json(new { Status = "NotDeletedSomeProblem" });
+                return Json(new { Status = "Deleted" });
             }
 
-            catch (Exception eX)
-            {
-                return Json(new { Status = "Error", eXMessage = eX.Message });
-            }
+            return Json(new { Status = "NotDeletedSomeProblem" });
         }
 
 
@@ -165,22 +149,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "ArticleCommentNotFound" });
             }
 
-            try
+            int toggleArticleCommentApprovalResult = await _uw.ArticleCommentRepository.ToggleArticleCommentApproval(model);
+
+            if (toggleArticleCommentApprovalResult > 0)
             {
-                int toggleArticleCommentApprovalResult = await _uw.ArticleCommentRepository.ToggleArticleCommentApproval(model);
-
-                if (toggleArticleCommentApprovalResult > 0)
-                {
-                    return Json(new { Status = "Success" });
-                }
-
-                return Json(new { Status = "NotDeletedSomeProblem" });
+                return Json(new { Status = "Success" });
             }
 
-            catch (Exception eX)
-            {
-                return Json(new { Status = "Error", eXMessage = eX.Message });
-            }
+            return Json(new { Status = "NotDeletedSomeProblem" });
         }
 
         [HttpGet]
