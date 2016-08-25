@@ -60,7 +60,7 @@ namespace WebFor.Tests.Controllers.Root
         }
 
         [Fact]
-        public async Task Create_SouldReturnContactView_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
+        public async Task CreatePost_SouldReturnContactView_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
         {
             _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
                 .ReturnsAsync(new CaptchaResponse
@@ -84,7 +84,7 @@ namespace WebFor.Tests.Controllers.Root
         }
 
         [Fact]
-        public async Task Create_SouldReturnContactViewWithProperViewData_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
+        public async Task CreatePost_SouldReturnContactViewWithProperViewData_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
         {
             _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
                 .ReturnsAsync(new CaptchaResponse
@@ -109,7 +109,7 @@ namespace WebFor.Tests.Controllers.Root
         }
 
         [Fact]
-        public async Task Create_SouldReturnContactViewModel_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
+        public async Task CreatePost_SouldReturnContactViewModel_WhenJavaScriptIsDisabledAndThereIsNothingToSaveOrThereWasAProblem()
         {
             _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
                 .ReturnsAsync(new CaptchaResponse
@@ -133,7 +133,7 @@ namespace WebFor.Tests.Controllers.Root
         }
 
         [Fact]
-        public async Task Create_SouldReturnFailedTheCaptchaValidation_IfCaptchaIsInvalid()
+        public async Task CreatePost_SouldReturnFailedTheCaptchaValidation_IfCaptchaIsInvalid()
         {
             _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
                 .ReturnsAsync(new CaptchaResponse
@@ -158,7 +158,7 @@ namespace WebFor.Tests.Controllers.Root
         }
 
         [Fact]
-        public async Task Create_SouldReturnViewWithModel_IfModelStateIsNotValid()
+        public async Task CreatePost_SouldReturnViewWithModel_IfModelStateIsNotValid()
         {
             //Arrange
             _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
@@ -193,7 +193,7 @@ namespace WebFor.Tests.Controllers.Root
         }
 
         [Fact]
-        public async Task Create_SouldReturnSuccessView_IfNewContactAdded()
+        public async Task CreatePost_SouldReturnSuccessView_IfNewContactAdded()
         {
             _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
                 .ReturnsAsync(new CaptchaResponse
@@ -224,7 +224,7 @@ namespace WebFor.Tests.Controllers.Root
         }
 
         [Fact]
-        public async Task Create_SouldReturnSuccessJsonStatus_IfNewContactAdded()
+        public async Task CreatePost_SouldReturnSuccessJsonStatus_IfNewContactAdded()
         {
             _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
                 .ReturnsAsync(new CaptchaResponse
@@ -254,7 +254,7 @@ namespace WebFor.Tests.Controllers.Root
         }
 
         [Fact]
-        public async Task Create_SouldReturnProblematicSubmitJsonStatus_IfThereWasAProblem()
+        public async Task CreatePost_SouldReturnProblematicSubmitJsonStatus_IfThereWasAProblem()
         {
             _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
                 .ReturnsAsync(new CaptchaResponse

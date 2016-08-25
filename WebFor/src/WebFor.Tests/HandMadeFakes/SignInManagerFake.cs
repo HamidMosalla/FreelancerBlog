@@ -12,13 +12,16 @@ namespace WebFor.Tests.HandMadeFakes
 {
     public class SignInManagerFake : SignInManager<ApplicationUser>
     {
-        public SignInManagerFake(IHttpContextAccessor contextAccessor)
-        : base(new UserManagerFake(),
+        private SignInResult _signInResult;
+
+        public SignInManagerFake(IHttpContextAccessor contextAccessor, SignInResult signInResult)
+        : base(new UserManagerFake(isUserConfirmed:false),
               contextAccessor,
               new Mock<IUserClaimsPrincipalFactory<ApplicationUser>>().Object,
               new Mock<IOptions<IdentityOptions>>().Object,
               new Mock<ILogger<SignInManager<ApplicationUser>>>().Object)
-    {
+        {
+            _signInResult = signInResult;
         }
 
         public override Task SignInAsync(ApplicationUser user, bool isPersistent, string authenticationMethod = null)
@@ -28,7 +31,7 @@ namespace WebFor.Tests.HandMadeFakes
 
         public override Task<SignInResult> PasswordSignInAsync(string userName, string password, bool isPersistent, bool lockoutOnFailure)
         {
-            return Task.FromResult(SignInResult.Success);
+            return Task.FromResult(_signInResult);
         }
 
         public override Task SignOutAsync()

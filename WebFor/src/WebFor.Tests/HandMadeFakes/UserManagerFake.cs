@@ -11,21 +11,25 @@ namespace WebFor.Tests.HandMadeFakes
 {
     public class UserManagerFake : UserManager<ApplicationUser>
     {
-        public UserManagerFake() 
+        private readonly bool _isUserConfirmed;
+
+        public UserManagerFake(bool isUserConfirmed)
             : base(new Mock<IUserStore<ApplicationUser>>().Object,
-                  new Mock<IOptions<IdentityOptions>>().Object,
-                  new Mock<IPasswordHasher<ApplicationUser>>().Object,
-                  new IUserValidator<ApplicationUser>[0],
-                  new IPasswordValidator<ApplicationUser>[0],
-                  new Mock<ILookupNormalizer>().Object, 
-                  new Mock<IdentityErrorDescriber>().Object,
-                  new Mock<IServiceProvider>().Object,
-                  new Mock<ILogger<UserManager<ApplicationUser>>>().Object)
-        { }
+                new Mock<IOptions<IdentityOptions>>().Object,
+                new Mock<IPasswordHasher<ApplicationUser>>().Object,
+                new IUserValidator<ApplicationUser>[0],
+                new IPasswordValidator<ApplicationUser>[0],
+                new Mock<ILookupNormalizer>().Object,
+                new Mock<IdentityErrorDescriber>().Object,
+                new Mock<IServiceProvider>().Object,
+                new Mock<ILogger<UserManager<ApplicationUser>>>().Object)
+        {
+            this._isUserConfirmed = isUserConfirmed;
+        }
 
         public override Task<ApplicationUser> FindByEmailAsync(string email)
         {
-            return Task.FromResult(new ApplicationUser { Email = email });
+            return Task.FromResult(new ApplicationUser { Email = email, EmailConfirmed = _isUserConfirmed });
         }
 
         public override Task<bool> IsEmailConfirmedAsync(ApplicationUser user)

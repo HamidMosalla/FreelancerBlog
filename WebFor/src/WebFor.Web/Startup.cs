@@ -87,6 +87,7 @@ namespace WebFor.Web
             services.AddTransient<IBuildPaginationLinks, PaginationLinkBuilder>();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<IConfigurationBinderWrapper, ConfigurationBinderWrapper>();
+            services.AddSingleton<ILoggerFactoryWrapper, LoggerFactoryWrapper>();
             services.AddScoped<IRazorViewToString, RazorViewToString>();
 
             // Autofac container configuration and modules

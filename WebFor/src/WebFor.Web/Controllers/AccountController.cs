@@ -34,7 +34,7 @@ namespace WebFor.Web.Controllers
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory,
+            ILoggerFactoryWrapper loggerFactoryWrapper,
             ICaptchaValidator captchaValidator,
             IConfiguration configuration,
             IRazorViewToString render)
@@ -45,7 +45,7 @@ namespace WebFor.Web.Controllers
             _smsSender = smsSender;
             _captchaValidator = captchaValidator;
             _configuration = configuration;
-            _logger = loggerFactory.CreateLogger<AccountController>();
+            _logger = loggerFactoryWrapper.CreateLogger<AccountController>();
             _razorViewToString = render;
         }
 
@@ -150,7 +150,7 @@ namespace WebFor.Web.Controllers
                             CallBackLinkText = "فعال سازی",
                             EmailMessageHeader = "فعال سازی اکانت",
                             EmailPreviewMessage = "",
-                             EmailMessageBody = "پیوستن شما به جمع کاربران وب برای ایران را تبریک میگوییم، برای فعال سازی نام کاربری خود فقط کافیست بر روی دکمه زیر کلیک کنید."
+                            EmailMessageBody = "پیوستن شما به جمع کاربران وب برای ایران را تبریک میگوییم، برای فعال سازی نام کاربری خود فقط کافیست بر روی دکمه زیر کلیک کنید."
                         });
 
                     await _emailSender.SendEmailAsync(model.Email, "فعال سازی نام کاربری - وب برای ایران", htmlString);
@@ -548,21 +548,14 @@ namespace WebFor.Web.Controllers
             }
         }
 
-        private async Task<ApplicationUser> GetCurrentUserAsync()
-        {
-            return await _userManager.FindByIdAsync(_userManager.GetUserId(HttpContext.User));
-        }
-
         private IActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
             }
-            else
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
+
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         #endregion
