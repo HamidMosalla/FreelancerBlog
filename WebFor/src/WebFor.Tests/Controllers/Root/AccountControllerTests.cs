@@ -15,11 +15,14 @@ using Microsoft.Extensions.Logging;
 using FluentAssertions;
 using GenFu;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Routing;
 using WebFor.Tests.Fixtures;
 using WebFor.Tests.HandMadeFakes;
 using WebFor.Web.ViewModels.Account;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.Shared;
+using WebFor.Core.Types;
 
 namespace WebFor.Tests.Controllers.Root
 {
@@ -28,6 +31,7 @@ namespace WebFor.Tests.Controllers.Root
         private Mock<IUnitOfWork> _uw;
         private Mock<IContactRepository> _contactRepository;
         private Mock<IWebForMapper> _webForMapper;
+        private Mock<HttpContext> _httpContext;
         private Mock<ICaptchaValidator> _captchaValidator;
         private Mock<IConfigurationBinderWrapper> _configurationWrapper;
         private Mock<TempDataDictionary> _tempData;
@@ -42,7 +46,7 @@ namespace WebFor.Tests.Controllers.Root
 
         public AccountControllerTests()
         {
-             _httpContextAccessor = new Mock<IHttpContextAccessor>();
+            _httpContextAccessor = new Mock<IHttpContextAccessor>();
 
             _logger = new Mock<ILogger<AccountController>>();
             _loggerFactoryWrapper = new Mock<ILoggerFactoryWrapper>();
@@ -57,10 +61,10 @@ namespace WebFor.Tests.Controllers.Root
             _webForMapper = new Mock<IWebForMapper>();
             _captchaValidator = new Mock<ICaptchaValidator>();
             _configurationWrapper = new Mock<IConfigurationBinderWrapper>();
-            var httpContext = new Mock<HttpContext>();
+            _httpContext = new Mock<HttpContext>();
             _urlHelper = new Mock<IUrlHelper>();
             var tempDataProvider = new Mock<ITempDataProvider>();
-            _tempData = new Mock<TempDataDictionary>(httpContext.Object, tempDataProvider.Object);
+            _tempData = new Mock<TempDataDictionary>(_httpContext.Object, tempDataProvider.Object);
 
         }
 
@@ -74,7 +78,7 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object,
                 _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
-                _razorViewToString.Object);
+                _razorViewToString.Object, _configurationWrapper.Object);
 
             //Act
             var result = (ViewResult)sut.Login(returnUrl: null);
@@ -94,7 +98,7 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object,
                 _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
-                _razorViewToString.Object);
+                _razorViewToString.Object, _configurationWrapper.Object);
 
             //Act
             var result = (ViewResult)sut.Login(returnUrl: "/");
@@ -117,7 +121,7 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object,
                 _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
-                _razorViewToString.Object);
+                _razorViewToString.Object, _configurationWrapper.Object);
 
             sut.ViewData.ModelState.AddModelError("Key", "ErrorMessage");
 
@@ -141,7 +145,7 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object,
                 _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
-                _razorViewToString.Object);
+                _razorViewToString.Object, _configurationWrapper.Object);
 
             sut.ViewData.ModelState.AddModelError("Key", "ErrorMessage");
 
@@ -165,7 +169,7 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object,
                 _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
-                _razorViewToString.Object);
+                _razorViewToString.Object, _configurationWrapper.Object);
 
             //Act
             var result = (ViewResult)await sut.Login(A.New<LoginViewModel>(), returnUrl: "/");
@@ -185,7 +189,7 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object,
                 _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
-                _razorViewToString.Object);
+                _razorViewToString.Object, _configurationWrapper.Object);
 
             //Act
             var result = (ViewResult)await sut.Login(A.New<LoginViewModel>(), returnUrl: "/");
@@ -206,7 +210,7 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object,
                 _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
-                _razorViewToString.Object);
+                _razorViewToString.Object, _configurationWrapper.Object);
 
             //Act
             var result = (ViewResult)await sut.Login(A.New<LoginViewModel>(), returnUrl: "/");
@@ -229,7 +233,7 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object,
                 _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
-                _razorViewToString.Object);
+                _razorViewToString.Object, _configurationWrapper.Object);
 
             _urlHelper.Setup(u => u.IsLocalUrl(It.IsAny<string>())).Returns(true);
 
@@ -254,7 +258,7 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object,
                 _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
-                _razorViewToString.Object);
+                _razorViewToString.Object, _configurationWrapper.Object);
 
             _urlHelper.Setup(u => u.IsLocalUrl(It.IsAny<string>())).Returns(false);
 
@@ -282,7 +286,7 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object,
                 _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
-                _razorViewToString.Object);
+                _razorViewToString.Object, _configurationWrapper.Object);
 
             _urlHelper.Setup(u => u.IsLocalUrl(It.IsAny<string>())).Returns(false);
 
@@ -307,7 +311,7 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object,
                 _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
-                _razorViewToString.Object);
+                _razorViewToString.Object, _configurationWrapper.Object);
 
             _urlHelper.Setup(u => u.IsLocalUrl(It.IsAny<string>())).Returns(false);
 
@@ -331,7 +335,7 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object,
                 _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
-                _razorViewToString.Object);
+                _razorViewToString.Object, _configurationWrapper.Object);
 
             _urlHelper.Setup(u => u.IsLocalUrl(It.IsAny<string>())).Returns(false);
 
@@ -356,7 +360,7 @@ namespace WebFor.Tests.Controllers.Root
             //Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object,
                 _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
-                _razorViewToString.Object);
+                _razorViewToString.Object, _configurationWrapper.Object);
 
             _urlHelper.Setup(u => u.IsLocalUrl(It.IsAny<string>())).Returns(false);
 
@@ -370,6 +374,271 @@ namespace WebFor.Tests.Controllers.Root
             result.Should().BeOfType<ViewResult>();
             result.Model.Should().BeOfType<LoginViewModel>();
             result.Model.Should().NotBeNull();
+        }
+
+
+        [Fact]
+        void Register_ShouldReturnDefaultView_AllTheTime()
+        {
+            var userManager = new UserManagerFake(isUserConfirmed: true);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Success);
+
+            //Arrange
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            _urlHelper.Setup(u => u.IsLocalUrl(It.IsAny<string>())).Returns(false);
+
+            sut.Url = _urlHelper.Object;
+
+            //Act
+            var result = (ViewResult)sut.Register();
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewName.Should().BeNull();
+        }
+
+        [Fact]
+        public async Task Register_ShouldReturnRegisterView_IfCapthchaFailed()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
+
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
+                .ReturnsAsync(
+                    new CaptchaResponse
+                    {
+                        Success = "false"
+                    });
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            //Act
+            var result = (ViewResult)await sut.Register(A.New<RegisterViewModel>());
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewName.Should().BeNull();
+        }
+
+
+        [Fact]
+        public async Task Register_ShouldReturnRegisterViewWithModel_IfCapthchaFailed()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
+
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
+                .ReturnsAsync(
+                    new CaptchaResponse
+                    {
+                        Success = "false"
+                    });
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            //Act
+            var result = (ViewResult)await sut.Register(A.New<RegisterViewModel>());
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.Model.Should().NotBeNull();
+            result.Model.Should().BeOfType<RegisterViewModel>();
+        }
+
+
+        [Fact]
+        public async Task Register_ShouldReturnRegisterViewWithViewData_IfCapthchaFailed()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
+
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
+                .ReturnsAsync(
+                    new CaptchaResponse
+                    {
+                        Success = "false"
+                    });
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            //Act
+            var result = (ViewResult)await sut.Register(A.New<RegisterViewModel>());
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewData.Should().NotBeNull();
+            result.ViewData.ContainsKey("FailedTheCaptchaValidation").Should().BeTrue();
+            result.ViewData["FailedTheCaptchaValidation"].Should().Be("true");
+        }
+
+
+        [Fact]
+        public async Task Register_ShouldReturnRegisterView_IfModelValidationFailed()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
+
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
+                .ReturnsAsync(
+                    new CaptchaResponse
+                    {
+                        Success = "true"
+                    });
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            sut.ModelState.AddModelError(string.Empty, "Dummy Error");
+
+            //Act
+            var result = (ViewResult)await sut.Register(A.New<RegisterViewModel>());
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewName.Should().BeNull();
+        }
+
+
+
+        [Fact]
+        public async Task Register_ShouldReturnRegisterViewWithModel_IfModelValidationFailed()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
+
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
+                .ReturnsAsync(
+                    new CaptchaResponse
+                    {
+                        Success = "true"
+                    });
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            sut.ModelState.AddModelError(string.Empty, "Dummy Error");
+
+            //Act
+            var result = (ViewResult)await sut.Register(A.New<RegisterViewModel>());
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.Model.Should().NotBeNull();
+            result.Model.Should().BeOfType<RegisterViewModel>();
+        }
+
+
+
+        [Fact]
+        public async Task Register_ShouldReturnRegisterView_IfCreateAsyncIdentityResultReturnFailed()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Failed());
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
+
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
+                .ReturnsAsync(
+                    new CaptchaResponse
+                    {
+                        Success = "true"
+                    });
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            //Act
+            var result = (ViewResult)await sut.Register(A.New<RegisterViewModel>());
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewName.Should().BeNull();
+        }
+
+
+        [Fact]
+        public async Task Register_ShouldReturnRegisterViewWithModel_IfCreateAsyncIdentityResultReturnFailed()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Failed());
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
+
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
+                .ReturnsAsync(
+                    new CaptchaResponse
+                    {
+                        Success = "true"
+                    });
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            //Act
+            var result = (ViewResult)await sut.Register(A.New<RegisterViewModel>());
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.Model.Should().NotBeNull();
+            result.Model.Should().BeOfType<RegisterViewModel>();
+        }
+
+
+        [Fact]
+        public async Task Register_ShouldReturnInfoMessageView_IfCreateAsyncIdentityResultReturnSuccess()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
+
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
+                .ReturnsAsync(
+                    new CaptchaResponse
+                    {
+                        Success = "true"
+                    });
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+
+            sut.ControllerContext.HttpContext = new DefaultHttpContext();
+
+            sut.Url = _urlHelper.Object;
+
+            //Act
+            var result = (ViewResult)await sut.Register(A.New<RegisterViewModel>());
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewName.Should().Be("InfoMessage");
         }
 
     }

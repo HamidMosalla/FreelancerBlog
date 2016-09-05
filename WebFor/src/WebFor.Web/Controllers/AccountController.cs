@@ -26,6 +26,7 @@ namespace WebFor.Web.Controllers
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
         private ICaptchaValidator _captchaValidator;
+        private IConfigurationBinderWrapper _configurationWrapper;
         private IConfiguration _configuration;
         private IRazorViewToString _razorViewToString;
 
@@ -37,7 +38,8 @@ namespace WebFor.Web.Controllers
             ILoggerFactoryWrapper loggerFactoryWrapper,
             ICaptchaValidator captchaValidator,
             IConfiguration configuration,
-            IRazorViewToString render)
+            IRazorViewToString render,
+            IConfigurationBinderWrapper configurationWrapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -47,6 +49,7 @@ namespace WebFor.Web.Controllers
             _configuration = configuration;
             _logger = loggerFactoryWrapper.CreateLogger<AccountController>();
             _razorViewToString = render;
+            _configurationWrapper = configurationWrapper;
         }
 
         [HttpGet]
@@ -116,7 +119,7 @@ namespace WebFor.Web.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
 
-            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configuration.GetValue<string>("reChaptchaSecret:server-secret"));
+            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configurationWrapper.GetValue<string>("reChaptchaSecret:server-secret"));
 
             if (captchaResult.Success != "true")
             {
@@ -124,47 +127,45 @@ namespace WebFor.Web.Controllers
                 return View(model);
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(model);
+
+            var user = new ApplicationUser
             {
-                var user = new ApplicationUser
-                {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    UserFullName = model.UserFullName,
-                    UserGender = model.UserGender,
-                    UserHowFindUs = model.UserHowFindUs
-                };
+                UserName = model.Email,
+                Email = model.Email,
+                UserFullName = model.UserFullName,
+                UserGender = model.UserGender,
+                UserHowFindUs = model.UserHowFindUs
+            };
 
-                var result = await _userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
 
-                if (result.Succeeded)
-                {
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            if (result.Succeeded)
+            {
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
 
-                    var htmlString = _razorViewToString.Render("EmailTemplates/IdentityTemplate",
-                        new IdentityTemplateViewModel
-                        {
-                            CallBackLink = callbackUrl,
-                            CallBackLinkText = "فعال سازی",
-                            EmailMessageHeader = "فعال سازی اکانت",
-                            EmailPreviewMessage = "",
-                            EmailMessageBody = "پیوستن شما به جمع کاربران وب برای ایران را تبریک میگوییم، برای فعال سازی نام کاربری خود فقط کافیست بر روی دکمه زیر کلیک کنید."
-                        });
+                var htmlString = _razorViewToString.Render("EmailTemplates/IdentityTemplate",
+                    new IdentityTemplateViewModel
+                    {
+                        CallBackLink = callbackUrl,
+                        CallBackLinkText = "فعال سازی",
+                        EmailMessageHeader = "فعال سازی اکانت",
+                        EmailPreviewMessage = "",
+                        EmailMessageBody = "پیوستن شما به جمع کاربران وب برای ایران را تبریک میگوییم، برای فعال سازی نام کاربری خود فقط کافیست بر روی دکمه زیر کلیک کنید."
+                    });
 
-                    await _emailSender.SendEmailAsync(model.Email, "فعال سازی نام کاربری - وب برای ایران", htmlString);
+                await _emailSender.SendEmailAsync(model.Email, "فعال سازی نام کاربری - وب برای ایران", htmlString);
 
-                    _logger.LogInformation(3, "User created a new account with password.");
+                _logger.LogInformation(3, "User created a new account with password.");
 
-                    ViewBag.InfoMessage = "RegistrationConfirmEmail";
+                ViewBag.InfoMessage = "RegistrationConfirmEmail";
 
-                    return View("InfoMessage");
-                }
-
-                AddErrors(result);
-
+                return View("InfoMessage");
             }
+
+            AddErrors(result);
 
             return View(model);
         }
