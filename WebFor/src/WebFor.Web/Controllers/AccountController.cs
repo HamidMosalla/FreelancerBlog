@@ -220,15 +220,12 @@ namespace WebFor.Web.Controllers
                 return View("Lockout");
             }
 
-            else
-            {
-                // If the user does not have an account, then ask the user to create an account.
-                ViewData["ReturnUrl"] = returnUrl;
-                ViewData["LoginProvider"] = info.LoginProvider;
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                var fullName = info.Principal.FindFirstValue(ClaimTypes.Name);
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email, UserFullName = fullName });
-            }
+            // If the user does not have an account, then ask the user to create an account.
+            ViewData["ReturnUrl"] = returnUrl;
+            ViewData["LoginProvider"] = info.LoginProvider;
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            var fullName = info.Principal.FindFirstValue(ClaimTypes.Name);
+            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email, UserFullName = fullName });
         }
 
         [HttpPost]
@@ -446,6 +443,29 @@ namespace WebFor.Web.Controllers
             return View();
         }
 
+        #region Helpers
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+        }
+
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
+            return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        #endregion
+
+        #region Not Used
         [HttpGet]
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl = null, bool rememberMe = false)
@@ -538,27 +558,7 @@ namespace WebFor.Web.Controllers
                 return View(model);
             }
         }
-
-        #region Helpers
-
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
-        }
-
-        private IActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-
-            return RedirectToAction(nameof(HomeController.Index), "Home");
-        }
-
         #endregion
+
     }
 }

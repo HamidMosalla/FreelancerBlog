@@ -23,6 +23,7 @@ using WebFor.Web.ViewModels.Account;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.Shared;
 using WebFor.Core.Types;
+using WebFor.Web.ViewModels.Email;
 
 namespace WebFor.Tests.Controllers.Root
 {
@@ -639,6 +640,322 @@ namespace WebFor.Tests.Controllers.Root
             result.Should().NotBeNull();
             result.Should().BeOfType<ViewResult>();
             result.ViewName.Should().Be("InfoMessage");
+        }
+
+        [Fact]
+        public async Task Register_ShouldReturnInfoMessageViewWithFilledViewBag_IfCreateAsyncIdentityResultReturnSuccess()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
+
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
+                .ReturnsAsync(
+                    new CaptchaResponse
+                    {
+                        Success = "true"
+                    });
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+
+            sut.ControllerContext.HttpContext = new DefaultHttpContext();
+
+            sut.Url = _urlHelper.Object;
+
+            //Act
+            var result = (ViewResult)await sut.Register(A.New<RegisterViewModel>());
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.Should().NotBeNull();
+            result.ViewData.Should().NotBeEmpty();
+            result.ViewData.ContainsKey("InfoMessage").Should().BeTrue();
+            result.ViewData["InfoMessage"].Should().Be("RegistrationConfirmEmail");
+        }
+
+        [Fact]
+        public async Task Register_ShouldCallRazorViewToString_ExactlyOnce()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
+
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
+                .ReturnsAsync(
+                    new CaptchaResponse
+                    {
+                        Success = "true"
+                    });
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+
+            sut.ControllerContext.HttpContext = new DefaultHttpContext();
+
+            sut.Url = _urlHelper.Object;
+
+            //Act
+            var result = (ViewResult)await sut.Register(A.New<RegisterViewModel>());
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            _razorViewToString.Verify(r => r.Render(It.IsAny<string>(), It.IsAny<IdentityTemplateViewModel>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task Register_ShouldCallSendEmailAsync_ExactlyOnce()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
+
+            _captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
+                .ReturnsAsync(
+                    new CaptchaResponse
+                    {
+                        Success = "true"
+                    });
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+
+            sut.ControllerContext.HttpContext = new DefaultHttpContext();
+
+            sut.Url = _urlHelper.Object;
+
+            //Act
+            var result = (ViewResult)await sut.Register(A.New<RegisterViewModel>());
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            _emailSender.Verify(e => e.SendEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()),
+                Times.Once);
+        }
+
+        [Fact]
+        public async Task LogOff_ShouldRedirectTo_HomeIndex()
+        {
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            var result = (RedirectToActionResult)await sut.LogOff();
+
+            result.Should().NotBeNull();
+            result.Should().BeOfType<RedirectToActionResult>();
+            result.ControllerName.Should().Be("Home");
+            result.ActionName.Should().Be(nameof(HomeController.Index));
+        }
+
+        [Fact]
+        public void ExternalLogin_ShouldReturnANew_ChallengeResult()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            sut.Url = _urlHelper.Object;
+
+            //Act
+            var result = (ChallengeResult)sut.ExternalLogin("google");
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ChallengeResult>();
+            result.Properties.Should().NotBeNull();
+        }
+
+        [Fact]
+        public async Task ExternalLoginCallback_ShouldRedirectToLogin_IfExternalLoginInfoIsNull()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, Microsoft.AspNetCore.Identity.SignInResult.Failed, null);
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            sut.ControllerContext.HttpContext = new DefaultHttpContext();
+
+            //Act
+            var result = (RedirectToActionResult)await sut.ExternalLoginCallback();
+
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<RedirectToActionResult>();
+            result.ActionName.Should().Be(nameof(AccountController.Login));
+        }
+
+        [Fact]
+        public async Task ExternalLoginCallback_ShouldRedirectToReturnUrl_IfExternalLoginSignInAsyncResultIsSuccess()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, Microsoft.AspNetCore.Identity.SignInResult.Success, new ExternalLoginInfo(new System.Security.Claims.ClaimsPrincipal(), string.Empty, string.Empty, string.Empty));
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            sut.Url = _urlHelper.Object;
+
+            //Act
+            var result = (RedirectToActionResult)await sut.ExternalLoginCallback("/Home/Index");
+
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<RedirectToActionResult>();
+            result.ControllerName.Should().Be("Home");
+            result.ActionName.Should().Be(nameof(HomeController.Index));
+        }
+
+        [Fact]
+        public async Task ExternalLoginCallback_ShouldRedirectToSendCode_IfExternalLoginSignInAsyncResultIsTwoFactorRequired()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, Microsoft.AspNetCore.Identity.SignInResult.TwoFactorRequired, new ExternalLoginInfo(new System.Security.Claims.ClaimsPrincipal(), string.Empty, string.Empty, string.Empty));
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            sut.Url = _urlHelper.Object;
+
+            //Act
+            var result = (RedirectToActionResult)await sut.ExternalLoginCallback("/Home/Index");
+
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<RedirectToActionResult>();
+            result.ActionName.Should().Be(nameof(AccountController.SendCode));
+        }
+
+        [Fact]
+        public async Task ExternalLoginCallback_ShouldReturnLockoutView_IfExternalLoginSignInAsyncResultIsLockedOut()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, Microsoft.AspNetCore.Identity.SignInResult.LockedOut, new ExternalLoginInfo(new System.Security.Claims.ClaimsPrincipal(), string.Empty, string.Empty, string.Empty));
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            sut.Url = _urlHelper.Object;
+
+            //Act
+            var result = (ViewResult)await sut.ExternalLoginCallback("/Home/Index");
+
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewName.Should().Be("Lockout");
+        }
+
+        [Fact]
+        public async Task ExternalLoginCallback_ShouldReturnExternalLoginConfirmationView_IfUserDoesNotHaveAnAccount()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, Microsoft.AspNetCore.Identity.SignInResult.Failed, new ExternalLoginInfo(new System.Security.Claims.ClaimsPrincipal(), string.Empty, string.Empty, string.Empty));
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            sut.Url = _urlHelper.Object;
+
+            //Act
+            var result = (ViewResult)await sut.ExternalLoginCallback("/Home/Index");
+
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewName.Should().Be("ExternalLoginConfirmation");
+        }
+
+        [Fact]
+        public async Task ExternalLoginCallback_ShouldReturnExternalLoginConfirmationViewWithModel_IfUserDoesNotHaveAnAccount()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, Microsoft.AspNetCore.Identity.SignInResult.Failed, new ExternalLoginInfo(new System.Security.Claims.ClaimsPrincipal(), string.Empty, string.Empty, string.Empty));
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            sut.Url = _urlHelper.Object;
+
+            //Act
+            var result = (ViewResult)await sut.ExternalLoginCallback("/Home/Index");
+
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.Model.Should().NotBeNull();
+            result.Model.Should().BeOfType<ExternalLoginConfirmationViewModel>();
+        }
+
+        [Fact]
+        public async Task ExternalLoginCallback_ShouldReturnExternalLoginConfirmationViewWithFilledViewData_IfUserDoesNotHaveAnAccount()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, Microsoft.AspNetCore.Identity.SignInResult.Failed, new ExternalLoginInfo(new System.Security.Claims.ClaimsPrincipal(), string.Empty, string.Empty, string.Empty));
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            sut.Url = _urlHelper.Object;
+
+            //Act
+            var result = (ViewResult)await sut.ExternalLoginCallback("/Home/Index");
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<ViewResult>();
+            result.ViewData.ContainsKey("ReturnUrl").Should().BeTrue();
+            result.ViewData.ContainsKey("LoginProvider").Should().BeTrue();
+            result.ViewData["ReturnUrl"].Should().Be("/Home/Index");
+            result.ViewData["LoginProvider"].Should().Be(signInManager.GetExternalLoginInfoAsync().Result.LoginProvider);
         }
 
     }
