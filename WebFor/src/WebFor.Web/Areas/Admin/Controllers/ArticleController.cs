@@ -20,20 +20,18 @@ namespace WebFor.Web.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class ArticleController : Controller
     {
-        private IUnitOfWork _uw;
-        private ICkEditorFileUploder _ckEditorFileUploader;
-        private IWebForMapper _webForMapper;
-        private IArticleCreator _articleCreator;
-        private IArticleEditor _articleEditor;
-        private IFileDeleter _fileDeleter;
+        private readonly IUnitOfWork _uw;
+        private readonly ICkEditorFileUploder _ckEditorFileUploader;
+        private readonly IWebForMapper _webForMapper;
+        private IArticleServices _articleServices;
+        private readonly IFileDeleter _fileDeleter;
 
-        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IWebForMapper webForMapper, IArticleCreator articleCreator, IArticleEditor articleEditor, IFileDeleter fileDeleter)
+        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IWebForMapper webForMapper, IArticleServices articleServices, IFileDeleter fileDeleter)
         {
             _uw = uw;
             _ckEditorFileUploader = ckEditorFileUploader;
             _webForMapper = webForMapper;
-            _articleCreator = articleCreator;
-            _articleEditor = articleEditor;
+            _articleServices = articleServices;
             _fileDeleter = fileDeleter;
         }
 
@@ -173,7 +171,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
             var model = _webForMapper.ArticleViewModelToArticle(viewModel);
 
-            List<ArticleStatus> result = await _articleCreator.CreateNewArticleAsync(model, viewModel.ArticleTags);
+            List<ArticleStatus> result = await _articleServices.CreateNewArticleAsync(model, viewModel.ArticleTags);
 
             if (!result.Any(r => r == ArticleStatus.ArticleCreateSucess))
             {
@@ -225,7 +223,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
             var article = _webForMapper.ArticleViewModelToArticle(viewModel);
 
-            List<ArticleStatus> result = await _articleEditor.EditArticleAsync(article, viewModel.ArticleTags);
+            List<ArticleStatus> result = await _articleServices.EditArticleAsync(article, viewModel.ArticleTags);
 
             if (!result.Any(r => r == ArticleStatus.ArticleEditSucess))
             {

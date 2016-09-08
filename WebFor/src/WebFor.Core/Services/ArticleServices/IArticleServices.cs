@@ -7,8 +7,9 @@ using WebFor.Core.Enums;
 
 namespace WebFor.Core.Services.ArticleServices
 {
-    public interface IArticleEditor
+    public interface IArticleServices
     {
+        Task<List<ArticleStatus>> CreateNewArticleAsync(Article article, string articleTags);
         Task<List<ArticleStatus>> EditArticleAsync(Article article, string articleTags);
     }
 }

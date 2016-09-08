@@ -100,8 +100,7 @@ namespace WebFor.Web
             containerBuilder.RegisterModule<FileUploderModule>();
             containerBuilder.RegisterModule<FileDeleterModule>();
             containerBuilder.RegisterModule<FileUploadValidatorModule>();
-            containerBuilder.RegisterModule<ArticleCreatorModule>();
-            containerBuilder.RegisterModule<ArticleEditorModule>();
+            containerBuilder.RegisterModule<ArticleServicesModule>();
             containerBuilder.RegisterModule<PriceSpecCollectionFactoryModule>();
             containerBuilder.RegisterModule<FinalPriceCalculatorModule>();
             containerBuilder.RegisterModule<CaptchaValidatorModule>();

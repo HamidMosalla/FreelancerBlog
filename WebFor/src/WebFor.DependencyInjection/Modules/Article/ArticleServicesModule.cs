@@ -4,11 +4,11 @@ using WebFor.Infrastructure.Services.ArticleServices;
 
 namespace WebFor.DependencyInjection.Modules.Article
 {
-    public class ArticleCreatorModule : Module
+    public class ArticleServicesModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ArticleCreator>().As<IArticleCreator>();
+            builder.RegisterType<ArticleServices>().As<IArticleServices>();
         }
     }
 }
