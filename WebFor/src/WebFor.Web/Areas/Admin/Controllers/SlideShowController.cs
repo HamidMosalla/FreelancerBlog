@@ -21,18 +21,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
     {
         private IUnitOfWork _uw;
         private IWebForMapper _webForMapper;
-        private IFileUploader _fileUploader;
-        private IFileDeleter _fileDeleter;
-        private IFileUploadValidator _fileValidator;
+        private IFileManager _fileManager;
 
 
-        public SlideShowController(IUnitOfWork uw, IWebForMapper webForMapper, IFileUploader fileUploader, IFileDeleter fileDeleter, IFileUploadValidator fileValidator)
+        public SlideShowController(IUnitOfWork uw, IWebForMapper webForMapper, IFileManager fileManager)
         {
             _uw = uw;
             _webForMapper = webForMapper;
-            _fileUploader = fileUploader;
-            _fileDeleter = fileDeleter;
-            _fileValidator = fileValidator;
+            _fileManager = fileManager;
         }
 
         [HttpGet]
@@ -64,12 +60,12 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return View(slideShowViewModel);
             }
 
-            if (!_fileValidator.ValidateUploadedFile(slideShowViewModel.SlideShowPictrureFile, Core.Enums.UploadFileType.Image, 4, ModelState))
+            if (!_fileManager.ValidateUploadedFile(slideShowViewModel.SlideShowPictrureFile, Core.Enums.UploadFileType.Image, 4, ModelState))
             {
                 return View(slideShowViewModel);
             }
 
-            string fileName = await _fileUploader.UploadFile(slideShowViewModel.SlideShowPictrureFile, new List<string> { "images", "slider" });
+            string fileName = await _fileManager.UploadFile(slideShowViewModel.SlideShowPictrureFile, new List<string> { "images", "slider" });
 
             var slideShow = _webForMapper.SlideShowViewModelToSlideShow(slideShowViewModel, fileName);
 
@@ -119,7 +115,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
             if (viewModel.SlideShowPictrureFile != null)
             {
 
-                if (!_fileValidator.ValidateUploadedFile(viewModel.SlideShowPictrureFile, Core.Enums.UploadFileType.Image, 4, ModelState))
+                if (!_fileManager.ValidateUploadedFile(viewModel.SlideShowPictrureFile, Core.Enums.UploadFileType.Image, 4, ModelState))
                 {
                     return View(viewModel);
                 }
@@ -128,9 +124,9 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
                 _uw.SlideShowRepository.Detach(model);
 
-                _fileDeleter.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
+                _fileManager.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
 
-                string newPictureName = await _fileUploader.UploadFile(viewModel.SlideShowPictrureFile, new List<string> { "images", "slider" });
+                string newPictureName = await _fileManager.UploadFile(viewModel.SlideShowPictrureFile, new List<string> { "images", "slider" });
 
                 slideshow.SlideShowPictrure = newPictureName;
             }
@@ -165,7 +161,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "SlideShowNotFound" });
             }
 
-            _fileDeleter.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
+            _fileManager.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
 
             int deleteSlideShowResult = await _uw.SlideShowRepository.DeleteSlideShowAsync(model);
 

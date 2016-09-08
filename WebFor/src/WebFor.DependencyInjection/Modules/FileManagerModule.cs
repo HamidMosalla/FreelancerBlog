@@ -13,11 +13,11 @@ using WebFor.Infrastructure.Services.Shared;
 
 namespace WebFor.DependencyInjection.Modules
 {
-    public class FileUploderModule : Module
+    public class FileManagerModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<FileUploader>().As<IFileUploader>();
+            builder.RegisterType<FileManager>().As<IFileManager>();
         }
     }
 }

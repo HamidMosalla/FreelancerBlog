@@ -23,17 +23,13 @@ namespace WebFor.Web.Areas.Admin.Controllers
         private IUnitOfWork _uw;
         private IWebForMapper _webForMapper;
         private ICkEditorFileUploder _ckEditorFileUploader;
-        private IFileUploader _fileUploader;
-        private IFileDeleter _fileDeleter;
-        private IFileUploadValidator _fileValidator;
+        private IFileManager _fileManager;
 
-        public PortfolioController(IUnitOfWork uw, IWebForMapper webForMapper, IFileUploader fileUploader, IFileDeleter fileDeleter, IFileUploadValidator fileValidator, ICkEditorFileUploder ckEditorFileUploader)
+        public PortfolioController(IUnitOfWork uw, IWebForMapper webForMapper, IFileManager fileManager, ICkEditorFileUploder ckEditorFileUploader)
         {
             _uw = uw;
             _webForMapper = webForMapper;
-            _fileUploader = fileUploader;
-            _fileDeleter = fileDeleter;
-            _fileValidator = fileValidator;
+            _fileManager = fileManager;
             _ckEditorFileUploader = ckEditorFileUploader;
         }
 
@@ -64,12 +60,12 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return View(viewModel);
             }
 
-            if (!_fileValidator.ValidateUploadedFile(viewModel.PortfolioThumbnailFile, Core.Enums.UploadFileType.Image, 4, ModelState))
+            if (!_fileManager.ValidateUploadedFile(viewModel.PortfolioThumbnailFile, Core.Enums.UploadFileType.Image, 4, ModelState))
             {
                 return View(viewModel);
             }
 
-            string fileName = await _fileUploader.UploadFile(viewModel.PortfolioThumbnailFile, new List<string> { "images", "portfolio", "thumb" });
+            string fileName = await _fileManager.UploadFile(viewModel.PortfolioThumbnailFile, new List<string> { "images", "portfolio", "thumb" });
 
             var portfolio = _webForMapper.PortfolioViewModelToPorfolio(viewModel, fileName);
 
@@ -119,7 +115,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
             if (viewModel.PortfolioThumbnailFile != null)
             {
 
-                if (!_fileValidator.ValidateUploadedFile(viewModel.PortfolioThumbnailFile, Core.Enums.UploadFileType.Image, 4, ModelState))
+                if (!_fileManager.ValidateUploadedFile(viewModel.PortfolioThumbnailFile, Core.Enums.UploadFileType.Image, 4, ModelState))
                 {
                     return View(viewModel);
                 }
@@ -128,9 +124,9 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
                 _uw.PortfolioRepository.Detach(model);
 
-                _fileDeleter.DeleteFile(model.PortfolioThumbnail, new List<string> { "images", "portfolio", "thumb" });
+                _fileManager.DeleteFile(model.PortfolioThumbnail, new List<string> { "images", "portfolio", "thumb" });
 
-                string newThumbName = await _fileUploader.UploadFile(viewModel.PortfolioThumbnailFile, new List<string> { "images", "portfolio", "thumb" });
+                string newThumbName = await _fileManager.UploadFile(viewModel.PortfolioThumbnailFile, new List<string> { "images", "portfolio", "thumb" });
 
                 portfolio.PortfolioThumbnail = newThumbName;
             }
@@ -165,9 +161,9 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "PortfolioNotFound" });
             }
 
-            _fileDeleter.DeleteFile(model.PortfolioThumbnail, new List<string> { "images", "portfolio", "thumb" });
+            _fileManager.DeleteFile(model.PortfolioThumbnail, new List<string> { "images", "portfolio", "thumb" });
 
-            _fileDeleter.DeleteEditorImages(model.PortfolioBody, new List<string> { "images", "portfolio", "full" });
+            _fileManager.DeleteEditorImages(model.PortfolioBody, new List<string> { "images", "portfolio", "full" });
 
             int deletePortfolioResult = await _uw.PortfolioRepository.DeletePortfolioAsync(model);
 

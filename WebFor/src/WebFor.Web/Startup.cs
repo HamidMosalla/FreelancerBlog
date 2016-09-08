@@ -97,9 +97,7 @@ namespace WebFor.Web
             containerBuilder.RegisterModule<AuthMessageSenderModule>();
             containerBuilder.RegisterModule<WebForDbContextSeedDataModule>();
             containerBuilder.RegisterModule<CkEditorFileUploderModule>();
-            containerBuilder.RegisterModule<FileUploderModule>();
-            containerBuilder.RegisterModule<FileDeleterModule>();
-            containerBuilder.RegisterModule<FileUploadValidatorModule>();
+            containerBuilder.RegisterModule<FileManagerModule>();
             containerBuilder.RegisterModule<ArticleServicesModule>();
             containerBuilder.RegisterModule<PriceSpecCollectionFactoryModule>();
             containerBuilder.RegisterModule<FinalPriceCalculatorModule>();

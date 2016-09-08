@@ -18,19 +18,15 @@ namespace WebFor.Web.Areas.User.Controllers
     {
         private IUnitOfWork _uw;
         private IWebForMapper _webForMapper;
-        private IFileUploader _fileUploader;
-        private IFileDeleter _fileDeleter;
-        private IFileUploadValidator _fileValidator;
+        private IFileManager _fileManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
 
-        public ProfileController(IUnitOfWork uw, IWebForMapper webForMapper, IFileUploader fileUploader, IFileDeleter fileDeleter, IFileUploadValidator fileValidator, UserManager<ApplicationUser> userManager)
+        public ProfileController(IUnitOfWork uw, IWebForMapper webForMapper, IFileManager fileManager, UserManager<ApplicationUser> userManager)
         {
             _uw = uw;
             _webForMapper = webForMapper;
-            _fileUploader = fileUploader;
-            _fileDeleter = fileDeleter;
-            _fileValidator = fileValidator;
+            _fileManager = fileManager;
             _userManager = userManager;
         }
 
@@ -61,7 +57,7 @@ namespace WebFor.Web.Areas.User.Controllers
             if (viewModel.UserAvatarFile != null)
             {
 
-                if (!_fileValidator.ValidateUploadedFile(viewModel.UserAvatarFile, Core.Enums.UploadFileType.Image, .03, ModelState))
+                if (!_fileManager.ValidateUploadedFile(viewModel.UserAvatarFile, Core.Enums.UploadFileType.Image, .03, ModelState))
                 {
                     return View(viewModel);
                 }
@@ -72,10 +68,10 @@ namespace WebFor.Web.Areas.User.Controllers
 
                 if (model.UserAvatar != null)
                 {
-                    _fileDeleter.DeleteFile(model.UserAvatar, new List<string> { "images", "user-avatar" });
+                    _fileManager.DeleteFile(model.UserAvatar, new List<string> { "images", "user-avatar" });
                 }
 
-                string newAvatarName = await _fileUploader.UploadFile(viewModel.UserAvatarFile, new List<string> { "images", "user-avatar" });
+                string newAvatarName = await _fileManager.UploadFile(viewModel.UserAvatarFile, new List<string> { "images", "user-avatar" });
 
                 user.UserAvatar = newAvatarName;
             }

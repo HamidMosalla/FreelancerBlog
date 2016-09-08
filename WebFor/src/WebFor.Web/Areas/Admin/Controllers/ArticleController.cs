@@ -24,15 +24,15 @@ namespace WebFor.Web.Areas.Admin.Controllers
         private readonly ICkEditorFileUploder _ckEditorFileUploader;
         private readonly IWebForMapper _webForMapper;
         private IArticleServices _articleServices;
-        private readonly IFileDeleter _fileDeleter;
+        private readonly IFileManager _fileManager;
 
-        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IWebForMapper webForMapper, IArticleServices articleServices, IFileDeleter fileDeleter)
+        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IWebForMapper webForMapper, IArticleServices articleServices, IFileManager fileManager)
         {
             _uw = uw;
             _ckEditorFileUploader = ckEditorFileUploader;
             _webForMapper = webForMapper;
             _articleServices = articleServices;
-            _fileDeleter = fileDeleter;
+            _fileManager = fileManager;
         }
 
         [HttpGet]
@@ -319,7 +319,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "ArticleNotFound" });
             }
 
-            _fileDeleter.DeleteEditorImages(model.ArticleBody, new List<string> { "Files", "ArticleUploads" });
+            _fileManager.DeleteEditorImages(model.ArticleBody, new List<string> { "Files", "ArticleUploads" });
 
             int deleteArticleResult = await _uw.ArticleRepository.DeleteArticleAsync(model);
 
