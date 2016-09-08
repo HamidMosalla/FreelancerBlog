@@ -17,24 +17,22 @@ namespace WebFor.Infrastructure.Repository
         {
             _context = context;
         }
+
+
         public void Add(ApplicationUser entity)
         {
-            throw new NotImplementedException();
+            _context.Users.Add(entity);
         }
 
         public void Remove(ApplicationUser entity)
         {
-            throw new NotImplementedException();
+            _context.Users.Remove(entity);
         }
 
-        public void Update(ApplicationUser entity)
+        public void Update(ApplicationUser user)
         {
-            throw new NotImplementedException();
-        }
-
-        public ApplicationUser FindById(string id)
-        {
-            throw new NotImplementedException();
+            _context.Users.Attach(user);
+           _context.Entry(user).State = EntityState.Modified;
         }
 
         public Task<ApplicationUser> FindByIdAsync(string id)
@@ -46,38 +44,13 @@ namespace WebFor.Infrastructure.Repository
             //var user = userManager.FindById(User.Identity.GetUserId());
         }
 
-        public IEnumerable<ApplicationUser> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<List<ApplicationUser>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _context.Users.ToListAsync();
         }
 
         public async Task<int> UpdateUserProfileAsync(ApplicationUser user)
         {
-            //_context.Users.Attach(user, GraphBehavior.SingleObject);
-
-            //var entity = _context.Entry(user);
-
-            //entity.Property(e => e.UserAddress).IsModified = true;
-            //entity.Property(e => e.UserAvatar).IsModified = true;
-            //entity.Property(e => e.UserBio).IsModified = true;
-            //entity.Property(e => e.UserDateOfBirth).IsModified = true;
-            //entity.Property(e => e.UserFacebookProfile).IsModified = true;
-            //entity.Property(e => e.UserFavourites).IsModified = true;
-            //entity.Property(e => e.UserFullName).IsModified = true;
-            //entity.Property(e => e.UserGender).IsModified = true;
-            //entity.Property(e => e.UserGoogleProfile).IsModified = true;
-            //entity.Property(e => e.UserHowFindUs).IsModified = true;
-            //entity.Property(e => e.UserLinkedInProfile).IsModified = true;
-            //entity.Property(e => e.UserOccupation).IsModified = true;
-            //entity.Property(e => e.UserSpeciality).IsModified = true;
-            //entity.Property(e => e.UserTwitterProfile).IsModified = true;
-            //entity.Property(e => e.UserWebSite).IsModified = true;
-
             var model = await _context.Users.SingleAsync(u => u.Id.Equals(user.Id));
 
             model.UserAddress = user.UserAddress;

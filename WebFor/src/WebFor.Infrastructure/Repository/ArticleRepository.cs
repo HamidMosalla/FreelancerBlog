@@ -29,15 +29,36 @@ namespace WebFor.Infrastructure.Repository
             _context.Articles.Remove(entity);
         }
 
+        public void Update(Article entity)
+        {
+            _context.Articles.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public Task<Article> FindByIdAsync(int id)
+        {
+            return
+                _context.Articles.Include(a => a.ApplicationUser)
+                    .Include(a => a.ArticleRatings)
+                    .Include(a => a.ArticleComments)
+                    .SingleOrDefaultAsync(a => a.ArticleId == id);
+        }
+
+        public Task<List<Article>> GetAllAsync()
+        {
+            return
+                _context.Articles.Include(a => a.ApplicationUser)
+                    .Include(a => a.ArticleRatings)
+                    .Include(a => a.ArticleComments)
+                    .ToListAsync();
+        }
+
+
+
         public Task<int> DeleteArticleAsync(Article article)
         {
             _context.Articles.Remove(article);
             return _context.SaveChangesAsync();
-        }
-
-        public void Update(Article entity)
-        {
-            throw new NotImplementedException();
         }
 
         public Task<int> UpdateArticleAsync(Article article)
@@ -87,42 +108,6 @@ namespace WebFor.Infrastructure.Repository
         public Task<List<Article>> GetLatestArticles(int numberOfArticles)
         {
             return _context.Articles.OrderByDescending(a => a.ArticleDateCreated).Take(numberOfArticles).ToListAsync();
-        }
-
-        public Article FindById(int id)
-        {
-            return
-                _context.Articles.Include(a => a.ApplicationUser)
-                    .Include(a => a.ArticleRatings)
-                    .Include(a => a.ArticleComments)
-                    .Single(a => a.ArticleId == id);
-        }
-
-        public Task<Article> FindByIdAsync(int id)
-        {
-            return
-                _context.Articles.Include(a => a.ApplicationUser)
-                    .Include(a => a.ArticleRatings)
-                    .Include(a => a.ArticleComments)
-                    .SingleOrDefaultAsync(a => a.ArticleId == id);
-        }
-
-        public IEnumerable<Article> GetAll()
-        {
-            return
-                _context.Articles.Include(a => a.ApplicationUser)
-                    .Include(a => a.ArticleRatings)
-                    .Include(a => a.ArticleComments)
-                    .ToList();
-        }
-
-        public Task<List<Article>> GetAllAsync()
-        {
-            return
-                _context.Articles.Include(a => a.ApplicationUser)
-                    .Include(a => a.ArticleRatings)
-                    .Include(a => a.ArticleComments)
-                    .ToListAsync();
         }
         #endregion
 

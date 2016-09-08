@@ -17,34 +17,27 @@ namespace WebFor.Infrastructure.Repository
         {
             _context = context;
         }
+
+
         public void Add(Portfolio entity)
         {
-            throw new NotImplementedException();
+            _context.Portfolios.Add(entity);
         }
 
         public void Remove(Portfolio entity)
         {
-            throw new NotImplementedException();
+            _context.Portfolios.Remove(entity);
         }
 
         public void Update(Portfolio entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Portfolio FindById(int id)
-        {
-            throw new NotImplementedException();
+            _context.Portfolios.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
         public Task<Portfolio> FindByIdAsync(int id)
         {
             return _context.Portfolios.SingleOrDefaultAsync(p=>p.PortfolioId.Equals(id));
-        }
-
-        public IEnumerable<Portfolio> GetAll()
-        {
-            throw new NotImplementedException();
         }
 
         public Task<List<Portfolio>> GetAllAsync()

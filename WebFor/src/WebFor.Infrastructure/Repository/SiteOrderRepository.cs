@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebFor.Core.Domain;
 using WebFor.Core.Repository;
@@ -15,44 +17,37 @@ namespace WebFor.Infrastructure.Repository
         {
             _context = context;
         }
+
         public void Add(SiteOrder entity)
         {
-            throw new NotImplementedException();
+            _context.SiteOrders.Add(entity);
         }
 
         public void Remove(SiteOrder entity)
         {
-            throw new NotImplementedException();
+            _context.SiteOrders.Remove(entity);
         }
 
         public void Update(SiteOrder entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public SiteOrder FindById(int id)
-        {
-            throw new NotImplementedException();
+            _context.SiteOrders.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
         public Task<SiteOrder> FindByIdAsync(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<SiteOrder> GetAll()
-        {
-            throw new NotImplementedException();
+            return _context.SiteOrders.SingleAsync(s => s.SiteOrderId.Equals(id));
         }
 
         public Task<List<SiteOrder>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _context.SiteOrders.ToListAsync();
         }
 
         public Task<int> AddSiteOrderAsync(SiteOrder siteOrder)
         {
             _context.SiteOrders.Add(siteOrder);
+
             return _context.SaveChangesAsync();
         }
     }

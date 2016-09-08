@@ -17,34 +17,27 @@ namespace WebFor.Infrastructure.Repository
         {
             _context = context;
         }
+
         public void Add(SlideShow entity)
         {
-            throw new NotImplementedException();
+            _context.SlideShows.Add(entity);
         }
 
         public void Remove(SlideShow entity)
         {
-            throw new NotImplementedException();
+            _context.SlideShows.Remove(entity);
         }
 
         public void Update(SlideShow entity)
         {
-            throw new NotImplementedException();
-        }
+            _context.SlideShows.Attach(entity);
 
-        public SlideShow FindById(int id)
-        {
-            throw new NotImplementedException();
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
         public Task<SlideShow> FindByIdAsync(int id)
         {
             return _context.SlideShows.SingleOrDefaultAsync(s => s.SlideShowId.Equals(id));
-        }
-
-        public IEnumerable<SlideShow> GetAll()
-        {
-            throw new NotImplementedException();
         }
 
         public Task<List<SlideShow>> GetAllAsync()
@@ -55,6 +48,7 @@ namespace WebFor.Infrastructure.Repository
         public Task<int> AddNewSlideShow(SlideShow slideShow)
         {
             _context.SlideShows.Add(slideShow);
+
             return _context.SaveChangesAsync();
         }
 

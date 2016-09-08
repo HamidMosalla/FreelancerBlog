@@ -16,34 +16,27 @@ namespace WebFor.Infrastructure.Repository
         {
             _context = context;
         }
+
+
         public void Add(Contact entity)
         {
-            throw new NotImplementedException();
+            _context.Contacts.Add(entity);
         }
 
         public void Remove(Contact entity)
         {
-            throw new NotImplementedException();
+            _context.Contacts.Remove(entity);
         }
 
         public void Update(Contact entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Contact FindById(int id)
-        {
-            throw new NotImplementedException();
+            _context.Contacts.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
         public Task<Contact> FindByIdAsync(int id)
         {
             return _context.Contacts.SingleOrDefaultAsync(c => c.ContactId.Equals(id));
-        }
-
-        public IEnumerable<Contact> GetAll()
-        {
-            throw new NotImplementedException();
         }
 
         public Task<List<Contact>> GetAllAsync()
