@@ -82,7 +82,11 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<ApplicationUser> FindByUserNameAsync(string userName)
         {
-            return _context.Users.Include(u => u.Articles).ThenInclude(u => u.ArticleRatings).Include(u => u.ArticleComments).SingleOrDefaultAsync(u => u.Email.Equals(userName));
+            return
+                _context.Users.Include(u => u.Articles)
+                    .ThenInclude(u => u.ArticleRatings)
+                    .Include(u => u.ArticleComments)
+                    .SingleOrDefaultAsync(u => u.Email.Equals(userName));
         }
     }
 }

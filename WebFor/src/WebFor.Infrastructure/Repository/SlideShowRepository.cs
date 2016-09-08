@@ -61,7 +61,11 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<List<SlideShow>> GetAllAsyncForHomePage()
         {
-            return _context.SlideShows.OrderBy(s => s.SlideShowPriority).ThenByDescending(s => s.SlideShowDateCreated).Take(10).ToListAsync();
+            return
+                _context.SlideShows.OrderBy(s => s.SlideShowPriority)
+                    .ThenByDescending(s => s.SlideShowDateCreated)
+                    .Take(10)
+                    .ToListAsync();
         }
 
         public Task<int> UpdateSlideShowAsync(SlideShow slideshow)

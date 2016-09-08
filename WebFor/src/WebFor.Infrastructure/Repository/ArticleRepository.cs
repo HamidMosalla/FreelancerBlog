@@ -184,8 +184,10 @@ namespace WebFor.Infrastructure.Repository
         {
             var listOfArticleTags = await _context.ArticleArticleTags.Where(a => a.ArticleId == articleId).ToListAsync();
 
-            var arrayOfTags = listOfArticleTags.Join/* unnecessary, here just for reference <ArticleArticleTag, ArticleTag, int, string>*/(await _context.ArticleTags.ToListAsync(), a => a.ArticleTagId, t => t.ArticleTagId,
-                (a, t) => t.ArticleTagName).ToArray();
+            var arrayOfTags =
+                listOfArticleTags.Join(
+                    await _context.ArticleTags.ToListAsync(), a => a.ArticleTagId, t => t.ArticleTagId,
+                    (a, t) => t.ArticleTagName).ToArray();
 
             return string.Join(",", arrayOfTags);
         }
@@ -203,7 +205,10 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<int> RemoveTagRangeFromArticle(List<ArticleTag> tagsToRemove, int articleId)
         {
-            var listOfaATags = _context.ArticleArticleTags.Join(tagsToRemove, a => a.ArticleTagId, t => t.ArticleTagId, (a, t) => a).Where(c => c.ArticleId == articleId).ToList();
+            var listOfaATags =
+                _context.ArticleArticleTags.Join(tagsToRemove, a => a.ArticleTagId, t => t.ArticleTagId, (a, t) => a)
+                    .Where(c => c.ArticleId == articleId)
+                    .ToList();
 
             _context.ArticleArticleTags.RemoveRange(listOfaATags);
 
@@ -214,7 +219,7 @@ namespace WebFor.Infrastructure.Repository
         {
             foreach (var item in tagsToAdd)
             {
-                _context.ArticleArticleTags.Add(new ArticleArticleTag { Article = article, ArticleTag = item });
+                _context.ArticleArticleTags.Add(new ArticleArticleTag {Article = article, ArticleTag = item});
             }
 
             return _context.SaveChangesAsync();
@@ -281,7 +286,12 @@ namespace WebFor.Infrastructure.Repository
 
         public Task<List<ArticleComment>> GetAllCommentAsync()
         {
-            return _context.ArticleComments.OrderBy(a => a.IsCommentApproved).ThenByDescending(a => a.ArticleCommentDateCreated).Include(a => a.Article).Include(a => a.ApplicationUser).ToListAsync();
+            return
+                _context.ArticleComments.OrderBy(a => a.IsCommentApproved)
+                    .ThenByDescending(a => a.ArticleCommentDateCreated)
+                    .Include(a => a.Article)
+                    .Include(a => a.ApplicationUser)
+                    .ToListAsync();
         }
 
         public Task<int> AddCommentToArticle(ArticleComment articleComment)
