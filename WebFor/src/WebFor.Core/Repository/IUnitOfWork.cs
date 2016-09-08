@@ -7,10 +7,6 @@ namespace WebFor.Core.Repository
     {
         IArticleRepository ArticleRepository { get; }
         IUserRepository UserRepository { get; }
-        IArticleCommentRepository ArticleCommentRepository { get; }
-        IArticleRatingRepository ArticleRatingRepository { get; }
-        IArticleTagRepository ArticleTagRepository { get; }
-        IArticleArticleTagRepository ArticleArticleTagRepository { get; }
         IContactRepository ContactRepository { get; }
         IPortfolioRepository PortfolioRepository { get; }
         ISiteOrderRepository SiteOrderRepository { get; }

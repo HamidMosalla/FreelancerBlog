@@ -24,7 +24,7 @@ namespace WebFor.Web.ViewComponents
 
         public  async Task<IViewComponentResult> InvokeAsync()
         {
-            var articleTags = await _uw.ArticleTagRepository.GetAllAsync();
+            var articleTags = await _uw.ArticleRepository.GetAllArticleTagsAsync();
 
             var articleTagViewModel = _webForMapper.ArticleTagCollectionToArticleTagViewModelCollection(articleTags);
 

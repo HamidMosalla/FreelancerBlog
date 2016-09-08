@@ -51,15 +51,15 @@ namespace WebFor.Infrastructure.Services.ArticleServices
 
                 var exceptAddedTags = viewModelTags.Except(currentArticleTags.Select(c => c.ArticleTagName));
 
-                var tagsToRemoveFromArticle = await _uw.ArticleTagRepository.FindByTagsName(exceptRemovedTags);
+                var tagsToRemoveFromArticle = await _uw.ArticleRepository.FindByTagsName(exceptRemovedTags);
 
-                addTagsResult = await _uw.ArticleTagRepository.AddRangeOfTags(exceptAddedTags);
+                addTagsResult = await _uw.ArticleRepository.AddRangeOfTags(exceptAddedTags);
 
-                var tagsToAddToArticle = await _uw.ArticleTagRepository.FindByTagsName(exceptAddedTags);
+                var tagsToAddToArticle = await _uw.ArticleRepository.FindByTagsName(exceptAddedTags);
 
-                removeTagsFromArticleResult = await _uw.ArticleTagRepository.RemoveTagRangeFromArticle(tagsToRemoveFromArticle, article.ArticleId);
+                removeTagsFromArticleResult = await _uw.ArticleRepository.RemoveTagRangeFromArticle(tagsToRemoveFromArticle, article.ArticleId);
 
-                addTagsToArticleResult = await _uw.ArticleTagRepository.AddTagRangeToArticle(tagsToAddToArticle, article);
+                addTagsToArticleResult = await _uw.ArticleRepository.AddTagRangeToArticle(tagsToAddToArticle, article);
 
                 #region Throw away code after refactoring tags related operations
                 //var preExistingTags = await _uw.ArticleTagRepository.GetAllAsync();
@@ -102,7 +102,7 @@ namespace WebFor.Infrastructure.Services.ArticleServices
             }
             else
             {
-                tagsRemovalResult = await _uw.ArticleTagRepository.RemoveTagRangeFromArticle(currentArticleTags, article.ArticleId);
+                tagsRemovalResult = await _uw.ArticleRepository.RemoveTagRangeFromArticle(currentArticleTags, article.ArticleId);
             }
 
             if (updateArticleResult > 0)

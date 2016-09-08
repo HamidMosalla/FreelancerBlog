@@ -99,9 +99,9 @@ namespace WebFor.Web.Controllers
 
             var userId = _userManager.GetUserId(User);
 
-            if (_uw.ArticleRatingRepository.IsRatedBefore(id, userId))
+            if (_uw.ArticleRepository.IsRatedBefore(id, userId))
             {
-                int updateRatingResult = await _uw.ArticleRatingRepository.UpdateArticleRating(id, rating, userId);
+                int updateRatingResult = await _uw.ArticleRepository.UpdateArticleRating(id, rating, userId);
 
                 if (updateRatingResult > 0)
                 {
@@ -111,7 +111,7 @@ namespace WebFor.Web.Controllers
                 return Json(new { Status = "SomeProblemWithSubmit" });
             }
 
-            int addRatingResult = await _uw.ArticleRatingRepository.AddRatingForArticle(id, rating, userId);
+            int addRatingResult = await _uw.ArticleRepository.AddRatingForArticle(id, rating, userId);
 
             if (addRatingResult > 0)
             {
@@ -138,7 +138,7 @@ namespace WebFor.Web.Controllers
 
             var articleComment = _webForMapper.ArticleCommentViewModelToArticleComment(viewModel);
 
-            int addArticleCommentResult = await _uw.ArticleCommentRepository.AddCommentToArticle(articleComment);
+            int addArticleCommentResult = await _uw.ArticleRepository.AddCommentToArticle(articleComment);
 
             if (addArticleCommentResult > 0)
             {

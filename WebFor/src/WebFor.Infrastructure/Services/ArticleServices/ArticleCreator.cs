@@ -44,11 +44,11 @@ namespace WebFor.Infrastructure.Services.ArticleServices
             {
                 var viewModelTags = articleTags.Split(',');
 
-                addTagsResult = await _uw.ArticleTagRepository.AddRangeOfTags(viewModelTags);
+                addTagsResult = await _uw.ArticleRepository.AddRangeOfTags(viewModelTags);
 
-                var tagsToAddToArticle = await _uw.ArticleTagRepository.FindByTagsName(viewModelTags);
+                var tagsToAddToArticle = await _uw.ArticleRepository.FindByTagsName(viewModelTags);
 
-                addTagsToArticleResult = await _uw.ArticleTagRepository.AddTagRangeToArticle(tagsToAddToArticle, article);
+                addTagsToArticleResult = await _uw.ArticleRepository.AddTagRangeToArticle(tagsToAddToArticle, article);
 
                 #region Throw away code after refactoring tags related operations
                 //var preExistringTags = await _uw.ArticleTagRepository.GetAllAsync();

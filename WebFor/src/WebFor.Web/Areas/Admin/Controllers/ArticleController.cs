@@ -54,7 +54,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ManageArticleComment(int? page)
         {
-            var comments = await _uw.ArticleCommentRepository.GetAllAsync();
+            var comments = await _uw.ArticleRepository.GetAllCommentAsync();
 
             var commentsViewModel = _webForMapper.ArticleCommentCollectionToArticleCommentViewModelCollection(comments);
 
@@ -68,7 +68,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ManageArticleTag(int? page)
         {
-            var tags = await _uw.ArticleTagRepository.GetAllAsync();
+            var tags = await _uw.ArticleRepository.GetAllArticleTagsAsync();
 
             var tagsViewModel = _webForMapper.ArticleTagCollectionToArticleTagViewModelCollection(tags);
 
@@ -88,14 +88,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _uw.ArticleCommentRepository.FindByIdAsync(id);
+            var model = await _uw.ArticleRepository.FindCommentByIdAsync(id);
 
             if (model == null)
             {
                 return Json(new { Status = "ArticleCommentNotFound" });
             }
 
-            int deleteArticleResult = await _uw.ArticleCommentRepository.DeleteArticleCommentAsync(model);
+            int deleteArticleResult = await _uw.ArticleRepository.DeleteArticleCommentAsync(model);
 
             if (deleteArticleResult > 0)
             {
@@ -115,14 +115,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _uw.ArticleTagRepository.FindByIdAsync(id);
+            var model = await _uw.ArticleRepository.FindArticleTagByIdAsync(id);
 
             if (model == null)
             {
                 return Json(new { Status = "ArticleCommentNotFound" });
             }
 
-            int deleteArticleTagResult = await _uw.ArticleTagRepository.DeleteArticleTagAsync(model);
+            int deleteArticleTagResult = await _uw.ArticleRepository.DeleteArticleTagAsync(model);
 
             if (deleteArticleTagResult > 0)
             {
@@ -142,14 +142,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _uw.ArticleCommentRepository.FindByIdAsync(commentId);
+            var model = await _uw.ArticleRepository.FindCommentByIdAsync(commentId);
 
             if (model == null)
             {
                 return Json(new { Status = "ArticleCommentNotFound" });
             }
 
-            int toggleArticleCommentApprovalResult = await _uw.ArticleCommentRepository.ToggleArticleCommentApproval(model);
+            int toggleArticleCommentApprovalResult = await _uw.ArticleRepository.ToggleArticleCommentApproval(model);
 
             if (toggleArticleCommentApprovalResult > 0)
             {
@@ -263,14 +263,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _uw.ArticleCommentRepository.FindByIdAsync(commentId);
+            var model = await _uw.ArticleRepository.FindCommentByIdAsync(commentId);
 
             if (model == null)
             {
                 return Json(new { Status = "ArticleCommentNotFound" });
             }
 
-            int editCommentResult = await _uw.ArticleCommentRepository.EditArticleCommentAsync(model, newCommentBody);
+            int editCommentResult = await _uw.ArticleRepository.EditArticleCommentAsync(model, newCommentBody);
 
             if (editCommentResult > 0)
             {
@@ -289,14 +289,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _uw.ArticleTagRepository.FindByIdAsync(tagId);
+            var model = await _uw.ArticleRepository.FindArticleTagByIdAsync(tagId);
 
             if (model == null)
             {
                 return Json(new { Status = "ArticleTagNotFound" });
             }
 
-            int editArticleTagResult = await _uw.ArticleTagRepository.EditArticleTagAsync(model, newTagName);
+            int editArticleTagResult = await _uw.ArticleRepository.EditArticleTagAsync(model, newTagName);
 
             if (editArticleTagResult > 0)
             {
@@ -335,7 +335,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> TagLookup()
         {
-            var model = await _uw.ArticleTagRepository.GetAllTagNamesArrayAsync();
+            var model = await _uw.ArticleRepository.GetAllTagNamesArrayAsync();
 
             return Json(model);
         }
