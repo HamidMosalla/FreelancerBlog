@@ -34,8 +34,6 @@ namespace WebFor.Core.Repository
 
         void UpdateArticleTag(ArticleTag entity);
 
-        ArticleTag FindArticleTagById(int id);
-
         Task<ArticleTag> FindArticleTagByIdAsync(int id);
 
         IEnumerable<ArticleTag> GetAllArticleTags();

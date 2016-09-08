@@ -136,17 +136,13 @@ namespace WebFor.Infrastructure.Repository
 
         public void RemoveArticleTag(ArticleTag entity)
         {
-            throw new NotImplementedException();
+            _context.ArticleTags.Remove(entity);
         }
 
         public void UpdateArticleTag(ArticleTag entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public ArticleTag FindArticleTagById(int id)
-        {
-            throw new NotImplementedException();
+            _context.ArticleTags.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
         public Task<ArticleTag> FindArticleTagByIdAsync(int id)
