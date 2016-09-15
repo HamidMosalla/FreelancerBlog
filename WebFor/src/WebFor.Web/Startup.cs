@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -85,6 +86,7 @@ namespace WebFor.Web
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<IBuildPaginationLinks, PaginationLinkBuilder>();
+            services.AddTransient<HttpClient>();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<IConfigurationBinderWrapper, ConfigurationBinderWrapper>();
             services.AddSingleton<ILoggerFactoryWrapper, LoggerFactoryWrapper>();

@@ -15,30 +15,27 @@ namespace WebFor.Infrastructure.Services.Shared
     {
 
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly HttpClient _httpClient;
 
-        public CaptchaValidator(IHttpContextAccessor contextAccessor)
+        public CaptchaValidator(IHttpContextAccessor contextAccessor, HttpClient httpClient)
         {
             _contextAccessor = contextAccessor;
+            _httpClient = httpClient;
         }
 
         public async Task<CaptchaResponse> ValidateCaptchaAsync(string secret)
         {
-            using (var client = new HttpClient())
-            {
-                var answer = _contextAccessor.HttpContext.Request.Form["g-recaptcha-response"];
+            var answer = _contextAccessor.HttpContext.Request.Form["g-recaptcha-response"];
 
-                client.BaseAddress = new Uri("https://www.google.com/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClient.BaseAddress = new Uri("https://www.google.com/");
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync($"recaptcha/api/siteverify?secret={secret}&response={answer}");
+            HttpResponseMessage response = await _httpClient.GetAsync($"recaptcha/api/siteverify?secret={secret}&response={answer}");
 
-                //if (response.IsSuccessStatusCode) { }
+            var jsonResponse = await response.Content.ReadAsStringAsync();
 
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-
-                return JsonConvert.DeserializeObject<CaptchaResponse>(jsonResponse);
-            }
+            return JsonConvert.DeserializeObject<CaptchaResponse>(jsonResponse);
         }
     }
 }
