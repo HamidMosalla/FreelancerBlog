@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebFor.Core.Services.Shared;
 using WebFor.Web.Areas.Admin.ViewModels.Portfolio;
 using WebFor.Web.Mapper;
+using WebFor.Core.Enums;
 
 namespace WebFor.Web.Areas.Admin.Controllers
 {
@@ -124,7 +125,11 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
                 _uw.PortfolioRepository.Detach(model);
 
-                _fileManager.DeleteFile(model.PortfolioThumbnail, new List<string> { "images", "portfolio", "thumb" });
+                FileStatus fileDeleteResult = _fileManager.DeleteFile(model.PortfolioThumbnail, new List<string> { "images", "portfolio", "thumb" });
+
+                TempData["FileStatus"] = fileDeleteResult == FileStatus.DeleteSuccess
+                    ? "FileDeleteSuccess"
+                    : "FileNotFound";
 
                 string newThumbName = await _fileManager.UploadFile(viewModel.PortfolioThumbnailFile, new List<string> { "images", "portfolio", "thumb" });
 

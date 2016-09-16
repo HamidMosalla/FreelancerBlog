@@ -22,6 +22,19 @@
     </p>
 }
 
+@if (TempData["FileStatus"] != null)
+{
+    if ((string)TempData["FileStatus"] == "FileDeleteSuccess")
+    {
+       <p>
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>تامبنیل پورتفولیو با موفقیت از دیسک حذف شد.</h4>
+        </div>
+    </p> 
+    }
+}
+
 <table class="table">
     <tr>
 

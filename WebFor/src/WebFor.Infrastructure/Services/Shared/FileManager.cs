@@ -24,44 +24,66 @@ namespace WebFor.Infrastructure.Services.Shared
 
         public async Task<string> UploadFile(IFormFile file, List<string> path)
         {
-            if (file != null && file.Length > 0)
+            if (file == null)
             {
-                var fileName = Path.GetFileNameWithoutExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
-
-                var extension = Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
-
-                var fullFileName = fileName.Replace(" ", "-") + "-" + DateTime.Now.ToString("yyyyMMdd-HHMMssff") + extension;
-
-                path.Insert(0, Environment.WebRootPath);
-
-                var folderPath = Path.Combine(path.ToArray());
-
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
-
-                var fullPath = Path.Combine(folderPath, fullFileName);
-
-                await file.SaveAsAsync(fullPath);
-
-                return fullFileName;
+                throw new ArgumentNullException(nameof(file), "The file argument cannot be null.");
             }
 
-            return null;
+            if (path == null || path.Count == 0)
+            {
+                throw new ArgumentException("The path argument cannot be null or empty.", nameof(path));
+            }
+
+            if (file.Length <= 0) return null;
+
+            var fileName = Path.GetFileNameWithoutExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+
+            var extension = Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+
+            var fullFileName = fileName.Replace(" ", "-") + "-" + DateTime.Now.ToString("yyyyMMdd-HHMMssff") + extension;
+
+            path.Insert(0, Environment.WebRootPath);
+
+            var folderPath = Path.Combine(path.ToArray());
+
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            var fullPath = Path.Combine(folderPath, fullFileName);
+
+            await file.SaveAsAsync(fullPath);
+
+            return fullFileName;
         }
 
-        public void DeleteFile(string fileName, List<string> path)
+        public FileStatus DeleteFile(string fileName, List<string> path)
         {
+            if (string.IsNullOrEmpty(fileName) || string.IsNullOrWhiteSpace(fileName))
+            {
+                throw new ArgumentNullException(nameof(fileName), "The fileName argument cannot be null, empty or whitespace.");
+            }
+
+            if (path == null || path.Count == 0)
+            {
+                throw new ArgumentException("The path argument cannot be null or empty.", nameof(path));
+            }
+
             path.Insert(0, Environment.WebRootPath);
+
             path.Add(fileName);
 
             var fullPath = Path.Combine(path.ToArray());
 
-            if (File.Exists(fullPath))
+            if (!File.Exists(fullPath))
             {
-                File.Delete(fullPath);
+                return FileStatus.FileNotExist;
             }
+
+            File.Delete(fullPath);
+
+            return FileStatus.DeleteSuccess;
         }
 
         public void DeleteEditorImages(string bodyText, List<string> path)

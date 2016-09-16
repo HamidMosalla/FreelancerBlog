@@ -13,7 +13,7 @@ namespace WebFor.Core.Services.Shared
     {
         IHostingEnvironment Environment { get; }
         Task<string> UploadFile(IFormFile file, List<string> path);
-        void DeleteFile(string fileName, List<string> path);
+        FileStatus DeleteFile(string fileName, List<string> path);
         void DeleteEditorImages(string bodyText, List<string> path);
         bool ValidateUploadedFile(IFormFile file, UploadFileType fileType, double maxFileSize, ModelStateDictionary modelState);
     }
