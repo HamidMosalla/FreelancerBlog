@@ -24,6 +24,7 @@ using WebFor.Core.Repository;
 using WebFor.Core.Services.Shared;
 using WebFor.Core.Types;
 using WebFor.Web.ViewModels.Email;
+using WebFor.Core.Wrappers;
 
 namespace WebFor.Tests.Controllers.Root
 {

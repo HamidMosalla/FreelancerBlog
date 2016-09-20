@@ -66,7 +66,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return View(viewModel);
             }
 
-            string fileName = await _fileManager.UploadFile(viewModel.PortfolioThumbnailFile, new List<string> { "images", "portfolio", "thumb" });
+            string fileName = await _fileManager.UploadFileAsync(viewModel.PortfolioThumbnailFile, new List<string> { "images", "portfolio", "thumb" });
 
             var portfolio = _webForMapper.PortfolioViewModelToPorfolio(viewModel, fileName);
 
@@ -131,7 +131,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
                     ? "FileDeleteSuccess"
                     : "FileNotFound";
 
-                string newThumbName = await _fileManager.UploadFile(viewModel.PortfolioThumbnailFile, new List<string> { "images", "portfolio", "thumb" });
+                string newThumbName = await _fileManager.UploadFileAsync(viewModel.PortfolioThumbnailFile, new List<string> { "images", "portfolio", "thumb" });
 
                 portfolio.PortfolioThumbnail = newThumbName;
             }
@@ -166,7 +166,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "PortfolioNotFound" });
             }
 
-            _fileManager.DeleteFile(model.PortfolioThumbnail, new List<string> { "images", "portfolio", "thumb" });
+            FileStatus fileDeleteResult = _fileManager.DeleteFile(model.PortfolioThumbnail, new List<string> { "images", "portfolio", "thumb" });
 
             _fileManager.DeleteEditorImages(model.PortfolioBody, new List<string> { "images", "portfolio", "full" });
 
@@ -174,25 +174,21 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
             if (deletePortfolioResult > 0)
             {
-                return Json(new { Status = "Deleted" });
+                return Json(new { Status = "Deleted", fileStatus = fileDeleteResult == FileStatus.DeleteSuccess ? "FileDeleteSuccess" : "FileDeleteFailure" });
             }
 
             return Json(new { Status = "NotDeletedSomeProblem" });
         }
 
         [HttpPost]
-        public async Task<IActionResult> CkEditorFileUploder(IFormFile upload, string CKEditorFuncNum, string CKEditor,
-           string langCode)
+        public async Task<IActionResult> CkEditorFileUploder(IFormFile file, string ckEditorFuncNum)
         {
-            string vOutput = await _ckEditorFileUploader.UploadAsync(
-                                   upload,
-                                   new List<string>() { "images", "portfolio", "full" },
-                                   "/images/portfolio/full/",
-                                   CKEditorFuncNum,
-                                   CKEditor,
-                                   langCode);
+            string htmlResult =
+                await
+                    _ckEditorFileUploader.UploadFromCkEditorAsync(file, new List<string> {"images", "portfolio", "full"},
+                        ckEditorFuncNum);
 
-            return Content(vOutput, "text/html");
+            return Content(htmlResult, "text/html");
         }
 
         protected override void Dispose(bool disposing)

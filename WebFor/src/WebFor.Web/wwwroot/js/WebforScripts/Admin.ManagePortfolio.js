@@ -12,7 +12,7 @@
             });
         }
 
-        var ProblematicDeleteNotice = function() {
+        var ProblematicDeleteNotice = function () {
             new PNotify({
                 title: 'حذف ناموفق',
                 text: 'مشکلی در حذف مقاله پیش آمده، لطفا دوباره تلاش کنید.',
@@ -23,57 +23,67 @@
         }
 
         $(".DeletePortfolioButton").on("click", function (e) {
-                e.preventDefault();
+            e.preventDefault();
 
-                var $this = $(this);
-                var url = $this.attr("href");
-                var antiForgeryToken = $("input[name='__RequestVerificationToken']").val();
+            var $this = $(this);
+            var url = $this.attr("href");
+            var antiForgeryToken = $("input[name='__RequestVerificationToken']").val();
 
-                (new PNotify({
-                    title: 'تایید حذف',
-                    text: 'آیا از حذف پورتفولیو مورد نظر اطمینان دارید؟',
-                    icon: 'glyphicon glyphicon-question-sign',
-                    hide: false,
-                    confirm: {
-                        confirm: true
-                    },
-                    buttons: {
-                        closer: false,
-                        sticker: false
-                    },
-                    history: {
-                        history: false
-                    }
-                })).get().on('pnotify.confirm', function () {
+            (new PNotify({
+                title: 'تایید حذف',
+                text: 'آیا از حذف پورتفولیو مورد نظر اطمینان دارید؟',
+                icon: 'glyphicon glyphicon-question-sign',
+                hide: false,
+                confirm: {
+                    confirm: true
+                },
+                buttons: {
+                    closer: false,
+                    sticker: false
+                },
+                history: {
+                    history: false
+                }
+            })).get().on('pnotify.confirm', function () {
 
 
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: { __RequestVerificationToken: antiForgeryToken },
-                        dataType: "json",
-                        success: function (response) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: { __RequestVerificationToken: antiForgeryToken },
+                    dataType: "json",
+                    success: function (response) {
 
-                            if (response.status === "Deleted") {
-                                successfulDeleteNotice();
-                                $this.closest("tr").fadeOut(2000);
-                            }
-
-                            if (response.status === "NotDeletedSomeProblem") {
-                                ProblematicDeleteNotice();
-                            }
-
-                        },
-                        error: function (xhr, status, error) {
-                            console.log(xhr.responseText);
-                            alert("message : \n" + "An error occurred, for more info check the js console" + "\n status : \n" + status + " \n error : \n" + error);
+                        if (response.status === "Deleted") {
+                            successfulDeleteNotice();
+                            $this.closest("tr").fadeOut(2000);
                         }
-                    });
 
+                        if (response.fileStatus === "FileDeleteSuccess") {
+                            new PNotify({
+                                title: 'حذف موفق',
+                                text: 'فایل مربوط به این پورتفولیو با موفقیت حذف شد.',
+                                type: 'success',
+                                icon: 'glyphicon glyphicon-ok',
+                                delay: 1000
+                            });
+                        }
 
+                        if (response.status === "NotDeletedSomeProblem") {
+                            ProblematicDeleteNotice();
+                        }
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                        alert("message : \n" + "An error occurred, for more info check the js console" + "\n status : \n" + status + " \n error : \n" + error);
+                    }
                 });
+
 
             });
 
         });
-    })();
+
+    });
+})();

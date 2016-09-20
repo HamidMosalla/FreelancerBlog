@@ -1,6 +1,6 @@
-{
+﻿{
   "version": "1.0.0-*",
-  "description": "WebFor.UnitTests Class Library",
+  "description": "WebFor.IntegrationTests Class Library",
   "authors": [ "User" ],
   "testRunner": "xunit",
 

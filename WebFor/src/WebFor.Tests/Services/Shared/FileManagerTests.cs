@@ -1,45 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using GenFu;
+using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using Xunit;
+using WebFor.Core.Wrappers;
 using WebFor.Infrastructure.Services.Shared;
-using FluentAssertions;
 using WebFor.Core.Enums;
 
-namespace WebFor.Tests.Services.Shared
+namespace WebFor.UnitTests.Services.Shared
 {
-    public class FileManagerTests : IDisposable
+    public class FileManagerTests
     {
         private Mock<IHostingEnvironment> _environment;
+        private Mock<IFormFile> _formFile;
+        private Mock<IFileSystemWrapper> _fileSystem;
+        private Mock<IPathWrapper> _pathWrapper;
+        private Mock<IFileWrapper> _fileWrapper;
+        private Mock<IDirectoryWrapper> _directoryWrapper;
 
         public FileManagerTests()
         {
-            if (!Directory.Exists("C:\\UnitTestFolder"))
-            {
-                Directory.CreateDirectory("C:\\UnitTestFolder");
-            }
-
             _environment = new Mock<IHostingEnvironment>();
+            _formFile = new Mock<IFormFile>();
+            _fileSystem = new Mock<IFileSystemWrapper>();
+            _pathWrapper = new Mock<IPathWrapper>();
+            _fileWrapper = new Mock<IFileWrapper>();
+            _directoryWrapper = new Mock<IDirectoryWrapper>();
+
+            _fileSystem.SetupGet<IFileWrapper>(f => f.File).Returns(_fileWrapper.Object);
+            _fileSystem.SetupGet<IDirectoryWrapper>(f => f.Directory).Returns(_directoryWrapper.Object);
+            _fileSystem.SetupGet<IPathWrapper>(f => f.Path).Returns(_pathWrapper.Object);
+
         }
 
-        public void Dispose()
+        private MemoryStream FakeMemoryStream()
         {
-            if (Directory.Exists("C:\\UnitTestFolder"))
-            {
-                Directory.Delete("C:\\UnitTestFolder");
-            }
+            var fileContent = "Hello World from a Fake File";
+
+            var memoryStream = new MemoryStream();
+
+            var writer = new StreamWriter(memoryStream);
+
+            writer.Write(fileContent);
+
+            writer.Flush();
+
+            memoryStream.Position = 0;
+            return memoryStream;
         }
+
+
 
         [Fact]
         public void DeleteFile_ShouldThrowArgumentNullException_IfFileNameArgumentIsNullOrEmpty()
         {
             //Arrange
-            var sut = new FileManager(_environment.Object);
+            var sut = new FileManager(_environment.Object, _fileSystem.Object);
 
             //Act
             Action deleteFile = () => sut.DeleteFile(null, new List<string>());
@@ -62,7 +82,7 @@ namespace WebFor.Tests.Services.Shared
         public void DeleteFile_ShouldThrowArgumentException_IfPathArgumentIsNullOrEmpty()
         {
             //Arrange
-            var sut = new FileManager(_environment.Object);
+            var sut = new FileManager(_environment.Object, _fileSystem.Object);
 
             //Act
             Action deleteFile = () => sut.DeleteFile("dummy-file-name.jpg", null);
@@ -85,9 +105,11 @@ namespace WebFor.Tests.Services.Shared
         public void DeleteFile_ShouldReturnFileStatusFileNotExist_IfPathToFileDoesNotExist()
         {
             //Arrange
-            var sut = new FileManager(_environment.Object);
+            var sut = new FileManager(_environment.Object, _fileSystem.Object);
 
             _environment.SetupGet(e => e.WebRootPath).Returns("C:\\");
+
+            _fileWrapper.Setup(f => f.Exists(It.IsAny<string>())).Returns(false);
 
             //Act
             var result = sut.DeleteFile("dummy-file-name.jpg", new List<string> { "dummyPath1", "dummyPath2" });
@@ -96,18 +118,17 @@ namespace WebFor.Tests.Services.Shared
             result.Should().NotBeNull();
             result.Should().BeOfType<FileStatus>();
             result.Should().Be(FileStatus.FileNotExist);
+            _pathWrapper.Verify(p => p.Combine(It.IsAny<string[]>()), Times.Once);
+            _fileWrapper.Verify(f => f.Exists(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]
         public void DeleteFile_ShouldReturnFileStatusDeleteSuccess_IfFileExistAndGotDeleted()
         {
             //Arrange
-            var sut = new FileManager(_environment.Object);
+            var sut = new FileManager(_environment.Object, _fileSystem.Object);
 
-            _environment.SetupGet(e => e.WebRootPath).Returns("C:\\");
-
-            var stream = File.Create("C:\\UnitTestFolder\\TestFile.txt");
-            stream.Dispose();
+            _fileWrapper.Setup(f => f.Exists(It.IsAny<string>())).Returns(true);
 
             //Act
             var result = sut.DeleteFile("TestFile.txt", new List<string> { "UnitTestFolder" });
@@ -116,17 +137,21 @@ namespace WebFor.Tests.Services.Shared
             result.Should().NotBeNull();
             result.Should().BeOfType<FileStatus>();
             result.Should().Be(FileStatus.DeleteSuccess);
-            File.Exists("C:\\UnitTestFolder\\TestFile.txt").Should().BeFalse();
+            _pathWrapper.Verify(p => p.Combine(It.IsAny<string[]>()), Times.Once);
+            _fileWrapper.Verify(f => f.Exists(It.IsAny<string>()), Times.Once);
+            _fileWrapper.Verify(f => f.Delete(It.IsAny<string>()), Times.Once);
         }
+
+
 
         [Fact]
         public void UploadFile_ShouldThrowArgumentNullException_IfFileIsNull()
         {
             //Arrange
-            var sut = new FileManager(_environment.Object);
+            var sut = new FileManager(_environment.Object, _fileSystem.Object);
 
             //Act
-            Func<Task> uploadFile = () => sut.UploadFile(null, new List<string>());
+            Func<Task> uploadFile = () => sut.UploadFileAsync(null, new List<string>());
 
             //Assert
             uploadFile.ShouldThrow<ArgumentNullException>()
@@ -141,5 +166,111 @@ namespace WebFor.Tests.Services.Shared
             //    .And.ParamName.Should()
             //    .Be("file");
         }
+
+        [Fact]
+        public void UploadFile_ShouldThrowArgumentException_IfPathIsNullOrEmpty()
+        {
+            //Arrange
+            var sut = new FileManager(_environment.Object, _fileSystem.Object);
+
+            //Act
+            Func<Task> uploadFile = () => sut.UploadFileAsync(_formFile.Object, new List<string>());
+
+            //Assert
+            uploadFile.ShouldThrow<ArgumentException>()
+                .WithMessage("*The path argument cannot be null or empty.*")
+                .And.ParamName.Should()
+                .Be("path");
+        }
+
+        [Fact]
+        public async Task UploadFile_ShouldReturnNull_IfFileLengthIsZero()
+        {
+            //Arrange
+            var sut = new FileManager(_environment.Object, _fileSystem.Object);
+
+            _formFile.SetupGet(f => f.Length).Returns(0);
+
+            //Act
+            var result = await sut.UploadFileAsync(_formFile.Object, new List<string> { "UnitTestFolder" });
+
+            //Assert
+            result.Should().BeNull();
+        }
+
+
+        [Fact]
+        public async Task UploadFile_ShouldCallPathMethods_SpecificNumberOfTimes()
+        {
+            //Arrange
+            var sut = new FileManager(_environment.Object, _fileSystem.Object);
+
+            var memoryStream = FakeMemoryStream();
+
+            _formFile.Setup(m => m.OpenReadStream()).Returns(memoryStream);
+
+            _formFile.SetupGet(f => f.Length).Returns(256);
+
+            _pathWrapper.Setup(p => p.GetFileNameWithoutExtension(It.IsAny<string>())).Returns("dummy-file-name");
+
+            _pathWrapper.Setup(p => p.GetExtension(It.IsAny<string>())).Returns(".txt");
+
+            _pathWrapper.Setup(p => p.Combine(It.IsAny<string[]>())).Returns("C:\\UnitTestFolder");
+
+            _pathWrapper.Setup(p => p.Combine(It.IsAny<string>(), It.IsAny<string>())).Returns("C:\\UnitTestFolder\\dummy-file-name.txt");
+
+            _formFile.SetupGet(f => f.ContentDisposition).Returns("form-data; name=\"UserAvatarFile\"; filename=\"TestFile.txt\"");
+
+            _environment.SetupGet(e => e.WebRootPath).Returns("C:\\");
+
+            //Act
+            var result = await sut.UploadFileAsync(_formFile.Object, new List<string> { "UnitTestFolder" });
+
+            //Assert
+            _pathWrapper.Verify(p => p.GetFileNameWithoutExtension(It.IsAny<string>()), Times.Once);
+            _pathWrapper.Verify(p => p.GetExtension(It.IsAny<string>()), Times.Once);
+            _pathWrapper.Verify(p => p.Combine(It.IsAny<string[]>()), Times.Exactly(2));
+        }
+
+        //[Fact]
+        //public async Task UploadFile_ShouldReturnFileName_IfFileLengthIsZero()
+        //{
+        //    //Arrange
+        //    var sut = new FileManager(_environment.Object, _fileSystem.Object);
+
+        //    var fileContent = "Hello World from a Fake File";
+
+        //    var memoryStream = new MemoryStream();
+
+        //    var writer = new StreamWriter(memoryStream);
+
+        //    writer.Write(fileContent);
+
+        //    writer.Flush();
+
+        //    memoryStream.Position = 0;
+
+        //    _formFile.Setup(m => m.OpenReadStream()).Returns(memoryStream);
+
+        //    _formFile.SetupGet(f => f.Length).Returns(256);
+
+        //    _formFile.SetupGet(f => f.ContentDisposition).Returns("form-data; name=\"UserAvatarFile\"; filename=\"TestFile.txt\"");
+
+        //    _environment.SetupGet(e => e.WebRootPath).Returns("C:\\");
+
+        //    //Act
+        //    var result = await sut.UploadFileAsync(_formFile.Object, new List<string> { "UnitTestFolder" });
+
+        //    //Assert
+        //    result.Should().NotBeNull();
+        //    _pathWrapper.Verify(p => p.GetFileNameWithoutExtension(It.IsAny<string>()), Times.Once);
+        //    _pathWrapper.Verify(p => p.GetExtension(It.IsAny<string>()), Times.Once);
+        //    _pathWrapper.Verify(p => p.Combine(It.IsAny<string>()), Times.Once);
+
+
+        //    result.Should().StartWith("TestFile");
+        //}
+
+
     }
 }

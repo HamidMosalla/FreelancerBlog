@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using WebFor.Core.Services.Shared;
+using WebFor.Core.Wrappers;
 
-namespace WebFor.Infrastructure.Services.Shared
+namespace WebFor.Infrastructure.Wrappers
 {
     public class ConfigurationBinderWrapper : IConfigurationBinderWrapper
     {

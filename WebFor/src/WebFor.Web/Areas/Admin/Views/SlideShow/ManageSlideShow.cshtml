@@ -24,6 +24,17 @@
     </p>
 }
 
+@if (TempData["FileDeleteStatus"] != null)
+{
+    if ((string)TempData["FileDeleteStatus"] == "Success")
+    {
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>فایل عکس اسلاید شو مورد نظر با موفقیت حذف شد.</h4>
+        </div>
+    }
+}
+
 <table class="table">
     <tr>
 

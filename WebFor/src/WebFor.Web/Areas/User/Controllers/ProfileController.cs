@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebFor.Web.Areas.User.ViewModels.Profile;
 using WebFor.Core.Domain;
 using WebFor.Web.Mapper;
+using WebFor.Core.Enums;
 
 namespace WebFor.Web.Areas.User.Controllers
 {
@@ -68,10 +69,12 @@ namespace WebFor.Web.Areas.User.Controllers
 
                 if (model.UserAvatar != null)
                 {
-                    _fileManager.DeleteFile(model.UserAvatar, new List<string> { "images", "user-avatar" });
+                   FileStatus fileDeleteResult =  _fileManager.DeleteFile(model.UserAvatar, new List<string> { "images", "user-avatar" });
+
+                    TempData["FileDeleteStatus"] = fileDeleteResult == FileStatus.DeleteSuccess ? "Success" : "Failure";
                 }
 
-                string newAvatarName = await _fileManager.UploadFile(viewModel.UserAvatarFile, new List<string> { "images", "user-avatar" });
+                string newAvatarName = await _fileManager.UploadFileAsync(viewModel.UserAvatarFile, new List<string> { "images", "user-avatar" });
 
                 user.UserAvatar = newAvatarName;
             }

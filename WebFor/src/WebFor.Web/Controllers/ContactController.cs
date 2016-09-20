@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using WebFor.Web.Mapper;
 using WebFor.Core.Services.Shared;
 using WebFor.Core.Types;
+using WebFor.Core.Wrappers;
 
 namespace WebFor.Web.Controllers
 {

@@ -12,6 +12,7 @@ using cloudscribe.Web.Pagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebFor.Web.Mapper;
+using WebFor.Core.Enums;
 
 namespace WebFor.Web.Areas.Admin.Controllers
 {
@@ -65,7 +66,7 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return View(slideShowViewModel);
             }
 
-            string fileName = await _fileManager.UploadFile(slideShowViewModel.SlideShowPictrureFile, new List<string> { "images", "slider" });
+            string fileName = await _fileManager.UploadFileAsync(slideShowViewModel.SlideShowPictrureFile, new List<string> { "images", "slider" });
 
             var slideShow = _webForMapper.SlideShowViewModelToSlideShow(slideShowViewModel, fileName);
 
@@ -124,9 +125,11 @@ namespace WebFor.Web.Areas.Admin.Controllers
 
                 _uw.SlideShowRepository.Detach(model);
 
-                _fileManager.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
+                FileStatus fileDeleteResult = _fileManager.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
 
-                string newPictureName = await _fileManager.UploadFile(viewModel.SlideShowPictrureFile, new List<string> { "images", "slider" });
+                TempData["FileDeleteStatus"] = fileDeleteResult == FileStatus.DeleteSuccess ? "Success" : "Failure";
+
+                string newPictureName = await _fileManager.UploadFileAsync(viewModel.SlideShowPictrureFile, new List<string> { "images", "slider" });
 
                 slideshow.SlideShowPictrure = newPictureName;
             }
@@ -161,13 +164,13 @@ namespace WebFor.Web.Areas.Admin.Controllers
                 return Json(new { Status = "SlideShowNotFound" });
             }
 
-            _fileManager.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
+            FileStatus fileDeleteResult = _fileManager.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
 
             int deleteSlideShowResult = await _uw.SlideShowRepository.DeleteSlideShowAsync(model);
 
             if (deleteSlideShowResult > 0)
             {
-                return Json(new { Status = "Deleted" });
+                return Json(new { Status = "Deleted", fileDeleteStatus = fileDeleteResult == FileStatus.DeleteSuccess ? "Success" : "Failure" });
             }
 
             return Json(new { Status = "NotDeletedSomeProblem" });

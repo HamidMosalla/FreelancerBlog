@@ -17,6 +17,7 @@ using WebFor.Core.Repository;
 using WebFor.Core.Services.Shared;
 using WebFor.Core.Domain;
 using WebFor.Core.Types;
+using WebFor.Core.Wrappers;
 
 namespace WebFor.Tests.Controllers.Root
 {

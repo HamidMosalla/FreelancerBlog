@@ -3,26 +3,41 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Net.Http.Headers;
 using WebFor.Core.Enums;
 using WebFor.Core.Services.Shared;
+using WebFor.Core.Wrappers;
 
 namespace WebFor.Infrastructure.Services.Shared
 {
-    public class FileManager : IFileManager
+    public class FileManager : IFileManager, ICkEditorFileUploder
     {
         public IHostingEnvironment Environment { get; }
+        public IFileSystemWrapper FileSystem { get; }
+        public IUrlHelper UrlHelper { get; }
 
-        public FileManager(IHostingEnvironment environment)
+        public FileManager(IHostingEnvironment environment, IFileSystemWrapper fileSystem)
         {
             Environment = environment;
+            FileSystem = fileSystem;
         }
 
-        public async Task<string> UploadFile(IFormFile file, List<string> path)
+        public FileManager(IHostingEnvironment environment, IFileSystemWrapper fileSystem, IUrlHelperFactory urlHelperFactory, IActionContextAccessor actionContextAccessor)
+        {
+            Environment = environment;
+            FileSystem = fileSystem;
+            UrlHelper = urlHelperFactory.GetUrlHelper(actionContextAccessor.ActionContext);
+        }
+
+        public async Task<string> UploadFileAsync(IFormFile file, List<string> path)
         {
             if (file == null)
             {
@@ -36,24 +51,24 @@ namespace WebFor.Infrastructure.Services.Shared
 
             if (file.Length <= 0) return null;
 
-            var fileName = Path.GetFileNameWithoutExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+            var fileName = FileSystem.Path.GetFileNameWithoutExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
 
-            var extension = Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+            var extension = FileSystem.Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
 
             var fullFileName = fileName.Replace(" ", "-") + "-" + DateTime.Now.ToString("yyyyMMdd-HHMMssff") + extension;
 
             path.Insert(0, Environment.WebRootPath);
 
-            var folderPath = Path.Combine(path.ToArray());
+            var folderPath = FileSystem.Path.Combine(path.ToArray());
 
-            if (!Directory.Exists(folderPath))
+            if (!FileSystem.Directory.Exists(folderPath))
             {
-                Directory.CreateDirectory(folderPath);
+                FileSystem.Directory.CreateDirectory(folderPath);
             }
 
-            var fullPath = Path.Combine(folderPath, fullFileName);
+            var fullPath = FileSystem.Path.Combine(folderPath, fullFileName);
 
-            await file.SaveAsAsync(fullPath);
+            await FileSystem.File.SaveAsAsync(file, fullPath);
 
             return fullFileName;
         }
@@ -74,14 +89,14 @@ namespace WebFor.Infrastructure.Services.Shared
 
             path.Add(fileName);
 
-            var fullPath = Path.Combine(path.ToArray());
+            var fullPath = FileSystem.Path.Combine(path.ToArray());
 
-            if (!File.Exists(fullPath))
+            if (!FileSystem.File.Exists(fullPath))
             {
                 return FileStatus.FileNotExist;
             }
 
-            File.Delete(fullPath);
+            FileSystem.File.Delete(fullPath);
 
             return FileStatus.DeleteSuccess;
         }
@@ -102,11 +117,11 @@ namespace WebFor.Infrastructure.Services.Shared
                 {
                     path.Add(image);
 
-                    var fullPath = Path.Combine(path.ToArray());
+                    var fullPath = FileSystem.Path.Combine(path.ToArray());
 
-                    if (File.Exists(fullPath))
+                    if (FileSystem.File.Exists(fullPath))
                     {
-                        File.Delete(fullPath);
+                        FileSystem.File.Delete(fullPath);
                     }
 
                     path.Remove(path.Last());
@@ -117,7 +132,7 @@ namespace WebFor.Infrastructure.Services.Shared
         public bool ValidateUploadedFile(IFormFile file, UploadFileType fileType, double maxFileSize, ModelStateDictionary modelState)
         {
 
-            var extension = Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+            var extension = FileSystem.Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
 
             if (file.Length > (maxFileSize * (1024 * 1024)))
             {
@@ -159,6 +174,47 @@ namespace WebFor.Infrastructure.Services.Shared
             }
 
             return false;
+        }
+
+        public async Task<string> UploadFromCkEditorAsync(IFormFile file, List<string> path, string ckEditorFuncNum)
+        {
+            if (file == null)
+            {
+                throw new ArgumentNullException(nameof(file), "File argument cannot be null.");
+            }
+
+            if (path == null || path.Count == 0)
+            {
+                throw new ArgumentException("The path argument cannot be null or empty.", nameof(path));
+            }
+
+            if (file.Length <= 0)
+            {
+                throw new InvalidOperationException("The file length cannot be null");
+            }
+
+            var fileName = FileSystem.Path.GetFileNameWithoutExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+
+            var extension = FileSystem.Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+
+            var fullFileName = fileName + "-" + DateTime.Now.ToString("yyyyMMdd-HHMMssff") + extension;
+
+            var relativeImagePath = UrlHelper.Content($"/{string.Join("/", path)}/" + fullFileName);
+
+            path.Insert(0, Environment.WebRootPath);
+
+            var folderPath = FileSystem.Path.Combine(path.ToArray());
+
+            if (!FileSystem.Directory.Exists(folderPath))
+            {
+                FileSystem.Directory.CreateDirectory(folderPath);
+            }
+
+            var fullPath = FileSystem.Path.Combine(folderPath, fullFileName);
+
+            await FileSystem.File.SaveAsAsync(file, fullPath);
+
+            return $"<html><body><script>window.parent.CKEDITOR.tools.callFunction({ckEditorFuncNum}, \"{relativeImagePath}\", \"The file uploaded successfully.\");</script></body></html>";
         }
     }
 }

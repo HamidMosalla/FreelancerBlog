@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC33B627-F20B-4CFE-8F5F-D2087DD4693A}"
 EndProject
@@ -18,7 +18,11 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.DependencyInjection"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.Web", "src\WebFor.Web\WebFor.Web.xproj", "{05D5D33E-D84A-4D57-8919-D0EF360B5552}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.Tests", "src\WebFor.Tests\WebFor.Tests.xproj", "{E4E92B71-3EE2-4888-B652-4E1442D8ADF6}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.UnitTests", "src\WebFor.Tests\WebFor.UnitTests.xproj", "{E4E92B71-3EE2-4888-B652-4E1442D8ADF6}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.IntegrationTests", "src\WebFor.IntegrationTests\WebFor.IntegrationTests.xproj", "{2327921A-0E1C-4F95-9C5C-539C442C05BC}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.UITests", "src\WebFor.UITests\WebFor.UITests.xproj", "{9C54DE7A-9ED2-4FBE-94FA-B75962027FF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +50,14 @@ Global
 		{E4E92B71-3EE2-4888-B652-4E1442D8ADF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4E92B71-3EE2-4888-B652-4E1442D8ADF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4E92B71-3EE2-4888-B652-4E1442D8ADF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2327921A-0E1C-4F95-9C5C-539C442C05BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2327921A-0E1C-4F95-9C5C-539C442C05BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2327921A-0E1C-4F95-9C5C-539C442C05BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2327921A-0E1C-4F95-9C5C-539C442C05BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C54DE7A-9ED2-4FBE-94FA-B75962027FF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C54DE7A-9ED2-4FBE-94FA-B75962027FF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C54DE7A-9ED2-4FBE-94FA-B75962027FF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C54DE7A-9ED2-4FBE-94FA-B75962027FF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,9 +68,11 @@ Global
 		{CA4780A0-5275-4C72-93C8-4EA4D7C9A68D} = {BC33B627-F20B-4CFE-8F5F-D2087DD4693A}
 		{05D5D33E-D84A-4D57-8919-D0EF360B5552} = {BC33B627-F20B-4CFE-8F5F-D2087DD4693A}
 		{E4E92B71-3EE2-4888-B652-4E1442D8ADF6} = {BC33B627-F20B-4CFE-8F5F-D2087DD4693A}
+		{2327921A-0E1C-4F95-9C5C-539C442C05BC} = {BC33B627-F20B-4CFE-8F5F-D2087DD4693A}
+		{9C54DE7A-9ED2-4FBE-94FA-B75962027FF6} = {BC33B627-F20B-4CFE-8F5F-D2087DD4693A}
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
+		SccNumberOfProjects = 8
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://xellarixtfs.visualstudio.com/defaultcollection
 		SccLocalPath0 = .
@@ -78,9 +92,17 @@ Global
 		SccProjectTopLevelParentUniqueName4 = WebFor.sln
 		SccProjectName4 = src/WebFor.Web
 		SccLocalPath4 = src\\WebFor.Web
-		SccProjectUniqueName5 = src\\WebFor.Tests\\WebFor.Tests.xproj
+		SccProjectUniqueName5 = src\\WebFor.Tests\\WebFor.UnitTests.xproj
 		SccProjectTopLevelParentUniqueName5 = WebFor.sln
 		SccProjectName5 = src/WebFor.Tests
 		SccLocalPath5 = src\\WebFor.Tests
+		SccProjectUniqueName6 = src\\WebFor.IntegrationTests\\WebFor.IntegrationTests.xproj
+		SccProjectTopLevelParentUniqueName6 = WebFor.sln
+		SccProjectName6 = src/WebFor.IntegrationTests
+		SccLocalPath6 = src\\WebFor.IntegrationTests
+		SccProjectUniqueName7 = src\\WebFor.UITests\\WebFor.UITests.xproj
+		SccProjectTopLevelParentUniqueName7 = WebFor.sln
+		SccProjectName7 = src/WebFor.UITests
+		SccLocalPath7 = src\\WebFor.UITests
 	EndGlobalSection
 EndGlobal

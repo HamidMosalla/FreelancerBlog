@@ -339,18 +339,14 @@ namespace WebFor.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CkEditorFileUploder(IFormFile upload, string CKEditorFuncNum, string CKEditor,
-           string langCode)
+        public async Task<IActionResult> CkEditorFileUploder(IFormFile file, string ckEditorFuncNum)
         {
-            string vOutput = await _ckEditorFileUploader.UploadAsync(
-                                   upload,
-                                   new List<string>() { "images", "blog" },
-                                   "/images/blog/",
-                                   CKEditorFuncNum,
-                                   CKEditor,
-                                   langCode);
+            string htmlResult =
+                await
+                    _ckEditorFileUploader.UploadFromCkEditorAsync(file, new List<string> {"images", "blog"},
+                        ckEditorFuncNum);
 
-            return Content(vOutput, "text/html");
+            return Content(htmlResult, "text/html");
         }
 
         protected override void Dispose(bool disposing)

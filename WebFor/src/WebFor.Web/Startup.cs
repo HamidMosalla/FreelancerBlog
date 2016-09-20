@@ -27,6 +27,8 @@ using WebFor.DependencyInjection.Modules.SiteOrder;
 using WebFor.Web.Mapper;
 using WebFor.Web.Services;
 using WebFor.Core.Services.Shared;
+using WebFor.Core.Wrappers;
+using WebFor.Infrastructure.Wrappers;
 
 namespace WebFor.Web
 {
@@ -94,17 +96,16 @@ namespace WebFor.Web
 
             // Autofac container configuration and modules
             var containerBuilder = new ContainerBuilder();
-
             containerBuilder.RegisterModule<UnitOfWorkModule>();
             containerBuilder.RegisterModule<AuthMessageSenderModule>();
             containerBuilder.RegisterModule<WebForDbContextSeedDataModule>();
-            containerBuilder.RegisterModule<CkEditorFileUploderModule>();
             containerBuilder.RegisterModule<FileManagerModule>();
             containerBuilder.RegisterModule<ArticleServicesModule>();
             containerBuilder.RegisterModule<PriceSpecCollectionFactoryModule>();
             containerBuilder.RegisterModule<FinalPriceCalculatorModule>();
             containerBuilder.RegisterModule<CaptchaValidatorModule>();
             containerBuilder.RegisterType<WebForMapper>().As<IWebForMapper>();
+            containerBuilder.RegisterModule<FileSystemWrapperModule>();
 
             containerBuilder.Populate(services);
             var container = containerBuilder.Build();

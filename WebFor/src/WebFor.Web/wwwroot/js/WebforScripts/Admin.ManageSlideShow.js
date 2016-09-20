@@ -2,7 +2,7 @@
     $(function () {
         "use strict";
 
-        var successfulDeleteNotice = function () {
+        var successfulDeleteNotice = function() {
             new PNotify({
                 title: 'حذف موفق',
                 text: 'آیتم مورد نظر با موفقیت حذف شد.',
@@ -12,7 +12,7 @@
             });
         }
 
-        var ProblematicDeleteNotice = function () {
+        var ProblematicDeleteNotice = function() {
             new PNotify({
                 title: 'حذف ناموفق',
                 text: 'مشکلی در حذف کامنت مورد نظر پیش آمده، لطفا دوباره تلاش کنید.',
@@ -22,7 +22,7 @@
             });
         }
 
-        var GeneralSuccessNotice = function () {
+        var GeneralSuccessNotice = function() {
             new PNotify({
                 title: 'عملیات موفق',
                 text: 'عملیات مورد نظر موفقیت آمیز بود.',
@@ -32,7 +32,7 @@
             });
         }
 
-        var GeneralFailureNotice = function () {
+        var GeneralFailureNotice = function() {
             new PNotify({
                 title: 'عملیات ناموفق',
                 text: 'مشکلی در انجام عملیات مورد نظر پیش آمده.',
@@ -78,6 +78,16 @@
                         if (response.status === "Deleted") {
                             successfulDeleteNotice();
                             $this.closest("tr").fadeOut(2000);
+                        }
+
+                        if (response.fileDeleteResult === "Success") {
+                            new PNotify({
+                                title: 'عملیات موفق',
+                                text: 'فایل عکس اسلاید شو مورد نظر با موفقیت حذف شد.',
+                                type: 'success',
+                                icon: 'glyphicon glyphicon-ok',
+                                delay: 1000
+                            });
                         }
 
                         if (response.status === "NotDeletedSomeProblem") {
