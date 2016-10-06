@@ -1,48 +1,8 @@
-﻿(function () {
-    $(function () {
-        "use strict";
+﻿"use strict";
 
-        ajaxSpinnerForPartOfPage("#ArticleTagEditModalContainer");
+var manageArticleTagModule = (function () {
 
-        var successfulDeleteNotice = function () {
-            new PNotify({
-                title: 'حذف موفق',
-                text: 'آیتم مورد نظر با موفقیت حذف شد.',
-                type: 'success',
-                icon: 'glyphicon glyphicon-ok',
-                delay: 1000
-            });
-        }
-
-        var ProblematicDeleteNotice = function () {
-            new PNotify({
-                title: 'حذف ناموفق',
-                text: 'مشکلی در حذف مقاله پیش آمده، لطفا دوباره تلاش کنید.',
-                type: 'warning',
-                icon: 'glyphicon glyphicon-warning-sign',
-                delay: 1000
-            });
-        }
-
-        var GeneralSuccessNotice = function () {
-            new PNotify({
-                title: 'عملیات موفق',
-                text: 'عملیات مورد نظر موفقیت آمیز بود.',
-                type: 'success',
-                icon: 'glyphicon glyphicon-ok',
-                delay: 1000
-            });
-        }
-
-        var GeneralFailureNotice = function () {
-            new PNotify({
-                title: 'عملیات ناموفق',
-                text: 'مشکلی در انجام عملیات مورد نظر پیش آمده.',
-                type: 'success',
-                icon: 'glyphicon glyphicon-ok',
-                delay: 1000
-            });
-        }
+    function deleteTagButtonClickEventHandler() {
 
         //code responsible for deleting the tags
         $(".DeleteArticleTagButton").on("click", function (e) {
@@ -52,23 +12,7 @@
             var url = $this.attr("href");
             var antiForgeryToken = $("input[name='__RequestVerificationToken']").val();
 
-            (new PNotify({
-                title: 'تایید حذف',
-                text: 'آیا از حذف تگ مورد نظر اطمینان دارید؟',
-                icon: 'glyphicon glyphicon-question-sign',
-                hide: false,
-                confirm: {
-                    confirm: true
-                },
-                buttons: {
-                    closer: false,
-                    sticker: false
-                },
-                history: {
-                    history: false
-                }
-            })).get().on('pnotify.confirm', function () {
-
+            pNotifyModule.confirm("تایید حذف", "آیا از حذف تگ مورد نظر اطمینان دارید؟", function () {
 
                 $.ajax({
                     type: "POST",
@@ -78,27 +22,27 @@
                     success: function (response) {
 
                         if (response.status === "Deleted") {
-                            successfulDeleteNotice();
+                            pNotifyModule.successNotice("حذف موفق", "حذف تگ موفقیت آمیز بود.");
                             $this.closest("tr").fadeOut(2000);
                         }
 
                         if (response.status === "NotDeletedSomeProblem") {
-                            ProblematicDeleteNotice();
+                            pNotifyModule.failureNotice("حذف ناموفق", "حذف تگ موفقیت آمیز نبود.");
                         }
 
                     },
                     error: function (xhr, status, error) {
                         console.log(xhr.responseText);
-                        alert("message : \n" + "An error occurred, for more info check the js console" + "\n status : \n" + status + " \n error : \n" + error);
+                        //alert("message : \n" + "An error occurred, for more info check the js console" + "\n status : \n" + status + " \n error : \n" + error);
                     }
                 });
-
 
             });
 
         });
+    }
 
-        // #region code responsible for showing and saving the article tag edit modal
+    function editTagButtonClickEventHandler() {
 
         var articleTagId;
 
@@ -117,7 +61,6 @@
             $("#EditArticleTagModal").modal("show");
 
         });
-
 
         $("#saveEditedTag").on("click", function () {
 
@@ -138,7 +81,7 @@
 
                     if (response.status === "Success") {
 
-                        GeneralSuccessNotice();
+                        pNotifyModule.successNotice("موفق", "ویرایش موفقیت آمیز بود.");
 
                         $("#" + articleTagId).text(articleTagNewTagNameTxt).hide().fadeIn(850);
 
@@ -147,7 +90,7 @@
                     }
 
                     if (response.status === "NotDeletedSomeProblem") {
-                        GeneralFailureNotice();
+                        pNotifyModule.failureNotice("ناموفق", "ویرایش موفقیت آمیز بود.");
                     }
 
                 },
@@ -158,8 +101,16 @@
             });
 
         });
+    }
 
-        // #endregion
+    function initSpinner() {
+        ajaxSpinnerForPartOfPage("#ArticleTagEditModalContainer");
+    }
 
-    });
+    return {
+        wireUpDeleteTagButtonClickEvent: deleteTagButtonClickEventHandler,
+        editTagButtonClickEventHandler: editTagButtonClickEventHandler,
+        initSpinner: initSpinner
+    };
+
 })();

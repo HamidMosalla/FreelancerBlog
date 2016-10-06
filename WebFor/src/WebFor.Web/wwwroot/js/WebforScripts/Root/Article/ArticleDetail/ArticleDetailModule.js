@@ -1,22 +1,8 @@
-﻿(function () {
-    $(function () {
-        "use strict";
+﻿"use strict";
 
-        ajaxSpinnerForPartOfPage("#articleRatingContainer");
-        ajaxSpinnerForPartOfPage("#comment-form");
+var articleDetailModule = (function () {
 
-        //simple rating without tooltip fraction
-
-        //$('#ArticleRating').rating({
-        //    extendSymbol: function (rate) {
-        //        //console.log($(this));
-        //        $(this).tooltip({
-        //            container: 'body',
-        //            placement: 'bottom',
-        //            title: 'Rate ' + rate
-        //        });
-        //    }
-        //});
+    function setUpratingComponent() {
 
         //rating with tooltip fraction
         $('#ArticleRating').rating({
@@ -40,6 +26,9 @@
             }
         });
 
+    }
+
+    function rateComponentClickEventHandler() {
 
         //code responsible for submitting the rating and updating it and showing proper notification
         $('#ArticleRating').on("change", function () {
@@ -54,53 +43,20 @@
                 success: function (response) {
 
                     if (response.status === "YouMustLogin") {
-
                         $this.rating('rate', 0);
-
-                        new PNotify({
-                            title: 'ثبت ناموفق',
-                            text: 'برای امتیاز دادن باید به سایت وارد شوید.',
-                            type: 'warning',
-                            icon: 'glyphicon glyphicon-warning-sign',
-                            delay: 5000
-                        });
-
+                        pNotifyModule.failureNotice("ثبت ناموفق", "برای امتیاز دادن باید به سایت وارد شوید.");
                     }
 
                     if (response.status === "Success") {
-
-                        new PNotify({
-                            title: 'عملیات موفق',
-                            text: 'امتیاز شما با موفقیت ثبت شد.',
-                            type: 'success',
-                            icon: 'glyphicon glyphicon-ok',
-                            delay: 5000
-                        });
-
+                        pNotifyModule.successNotice("عملیات موفق", "امتیاز شما با موفقیت ثبت شد.");
                     }
 
                     if (response.status === "SomeProblemWithSubmit") {
-
-                        new PNotify({
-                            title: 'ثبت ناموفق',
-                            text: 'مشکلی در ثبت امتیاز شما پیش آمده، لطفا دوباره تلاش کنید.',
-                            type: 'danger',
-                            icon: 'glyphicon glyphicon-warning-sign',
-                            delay: 5000
-                        });
-
+                        pNotifyModule.warningNotice("ثبت ناموفق", "مشکلی در ثبت امتیاز شما پیش آمده، لطفا دوباره تلاش کنید.");
                     }
 
                     if (response.status === "UpdatedSuccessfully") {
-
-                        new PNotify({
-                            title: 'عملیات موفق',
-                            text: 'امتیاز شما با موفقیت به روز رسانی شد.',
-                            type: 'success',
-                            icon: 'glyphicon glyphicon-ok',
-                            delay: 5000
-                        });
-
+                        pNotifyModule.successNotice("عملیات موفق", "امتیاز شما با موفقیت به روز رسانی شد.");
                     }
 
                 },
@@ -111,6 +67,10 @@
             });
 
         });
+
+    }
+
+    function commentFormSubmitButtonEventHanlder() {
 
         //code responsible for submitting comment and showing messages
         $("#commentForm").on("submit", function (e) {
@@ -194,6 +154,9 @@
 
         });
 
+    }
+
+    function replyButtonClickEventHandler() {
 
         $(".replyButton").on("click", function (e) {
             e.preventDefault();
@@ -224,6 +187,9 @@
 
         });
 
+    }
+
+    function cencelReplyButtonClickEventHandler() {
 
         $("body").on("click", "#cancelReplyButton", function (e) {
             e.preventDefault();
@@ -234,9 +200,9 @@
             $("#commentHeader").text("نظر خود را ثبت کنید");
 
         });
+    }
 
-
-        // #region showing comment remaining character as user type
+    function setupCommentCharacterCounter() {
 
         var textMax = 8000;
         $('#remainingCharacter').html(textMax + ' کراکتر باقی مانده');
@@ -248,7 +214,23 @@
             $('#remainingCharacter').html(textRemaining + ' کراکتر باقی مانده');
         });
 
-        // #endregion
+    }
 
-    });
+    function setUpSpinner() {
+
+        ajaxSpinnerForPartOfPage("#articleRatingContainer");
+        ajaxSpinnerForPartOfPage("#comment-form");
+
+    }
+
+    return {
+        setUpratingComponent: setUpratingComponent,
+        wireUprateComponentClickEvent: rateComponentClickEventHandler,
+        wireUpcommentFormSubmitButtonEvent: commentFormSubmitButtonEventHanlder,
+        wireUpreplyButtonClickEvent: replyButtonClickEventHandler,
+        wireUpcencelReplyButtonClickEvent: cencelReplyButtonClickEventHandler,
+        setupCommentCharacterCounter: setupCommentCharacterCounter,
+        setUpSpinner: setUpSpinner
+    };
+
 })();

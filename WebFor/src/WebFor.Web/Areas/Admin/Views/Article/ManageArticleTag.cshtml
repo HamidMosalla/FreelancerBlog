@@ -49,7 +49,7 @@
             </div>
 
             <div class="modal-body" id="ArticleTagEditModalContainer">
-                <input type="text" id="ArticleTagEditTxt" class="form-control"/>
+                <input type="text" id="ArticleTagEditTxt" class="form-control" />
             </div>
 
             <div class="modal-footer">
@@ -73,8 +73,9 @@
 
 @section scripts{
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
-    <script src="~/js/webforscripts/admin.managearticletag.js"></script>
     <script src="~/lib/jquery.blockui/jquery.blockui.js"></script>
     <script src="~/lib/spin.js/spin.min.js"></script>
     <script src="~/js/utilities/spin.partofpage.js"></script>
+
+    <script data-main="/js/WebforScripts/Admin/Article/ManageArticleTag/Main" src="~/lib/requirejs/require.min.js"></script>
 }

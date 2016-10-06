@@ -1,50 +1,9 @@
-﻿(function () {
-    $(function () {
-        "use strict";
+﻿"use strict";
 
-        ajaxSpinnerForPartOfPage("#ArticleCommentEditModalContainer");
+var manageArticleCommentModule = (function () {
 
-        var successfulDeleteNotice = function() {
-            new PNotify({
-                title: 'حذف موفق',
-                text: 'آیتم مورد نظر با موفقیت حذف شد.',
-                type: 'success',
-                icon: 'glyphicon glyphicon-ok',
-                delay: 1000
-            });
-        };
+    function deleteArticleCommentButtonClickEventHandler() {
 
-        var problematicDeleteNotice = function() {
-            new PNotify({
-                title: 'حذف ناموفق',
-                text: 'مشکلی در حذف کامنت مورد نظر پیش آمده، لطفا دوباره تلاش کنید.',
-                type: 'warning',
-                icon: 'glyphicon glyphicon-warning-sign',
-                delay: 1000
-            });
-        };
-
-        var generalSuccessNotice = function() {
-            new PNotify({
-                title: 'عملیات موفق',
-                text: 'عملیات مورد نظر موفقیت آمیز بود.',
-                type: 'success',
-                icon: 'glyphicon glyphicon-ok',
-                delay: 1000
-            });
-        };
-
-        var generalFailureNotice = function() {
-            new PNotify({
-                title: 'عملیات ناموفق',
-                text: 'مشکلی در انجام عملیات مورد نظر پیش آمده.',
-                type: 'success',
-                icon: 'glyphicon glyphicon-ok',
-                delay: 1000
-            });
-        };
-
-        //code responsible for deleting comments
         $(".DeleteArticleCommentButton").on("click", function (e) {
             e.preventDefault();
 
@@ -52,23 +11,7 @@
             var url = $this.attr("href");
             var antiForgeryToken = $("input[name='__RequestVerificationToken']").val();
 
-            (new PNotify({
-                title: 'تایید حذف',
-                text: 'آیا از حذف کامنت مورد نظر اطمینان دارید؟',
-                icon: 'glyphicon glyphicon-question-sign',
-                hide: false,
-                confirm: {
-                    confirm: true
-                },
-                buttons: {
-                    closer: false,
-                    sticker: false
-                },
-                history: {
-                    history: false
-                }
-            })).get().on('pnotify.confirm', function () {
-
+            pNotifyModule.confirm("تایید حذف", "آیا از حذف کامنت مورد نظر اطمینان دارید؟", function () {
 
                 $.ajax({
                     type: "POST",
@@ -78,30 +21,34 @@
                     success: function (response) {
 
                         if (response.status === "Deleted") {
-                            successfulDeleteNotice();
+
+                            pNotifyModule.successNotice("حذف موفق", "حذف کامنت موفقیت آمیز بود.");
+
                             $this.closest("tr").fadeOut(2000);
                         }
 
                         if (response.status === "NotDeletedSomeProblem") {
-                            problematicDeleteNotice();
+
+                            pNotifyModule.failureNotice("حذف ناموفق", "حذف کامنت موفقیت آمیز نبود.");
+
                         }
 
                     },
                     error: function (xhr, status, error) {
                         console.log(xhr.responseText);
-                        alert("message : \n" + "An error occurred, for more info check the js console" + "\n status : \n" + status + " \n error : \n" + error);
+                        //alert("message : \n" + "An error occurred, for more info check the js console" + "\n status : \n" + status + " \n error : \n" + error);
                     }
                 });
-
 
             });
 
         });
 
-        //code responsible for changing the approval status of article comment
-        $(".commentApprovalCheckBox").on("change", function (e) {
+    }
 
-            //if (this.checked)
+    function approvalCheckBoxChangeEventHandler() {
+
+        $(".commentApprovalCheckBox").on("change", function (e) {
 
             var antiForgeryToken = $("input[name='__RequestVerificationToken']").val();
             var commentId = $(this).val();
@@ -114,23 +61,24 @@
                 success: function (response) {
 
                     if (response.status === "Success") {
-                        generalSuccessNotice();
+                        pNotifyModule.successNotice("تایید موفق", "تایید کامنت مورد نظر موفقیت آمیز بود.");
                     }
 
                     if (response.status === "NotDeletedSomeProblem") {
-                        generalFailureNotice();
+                        pNotifyModule.failureNotice("تایید موفق", "تایید کامنت مورد نظر موفقیت آمیز نبود.");
                     }
 
                 },
                 error: function (xhr, status, error) {
                     console.log(xhr.responseText);
-                    alert("message : \n" + "An error occurred, for more info check the js console" + "\n status : \n" + status + " \n error : \n" + error);
+                    //alert("message : \n" + "An error occurred, for more info check the js console" + "\n status : \n" + status + " \n error : \n" + error);
                 }
             });
 
-
         });
+    }
 
+    function articleDetailModalButtonClickEvent() {
         //code responsible for showing the article comment detail modal
         $(".articleCommentDetail").on("click", function (e) {
 
@@ -144,10 +92,11 @@
 
             $("#ArticleCommentDetailModal").modal("show");
 
-
         });
+    }
 
-        // #region code responsible for showing and saving the article comment edit modal
+    function articleEditButtonClickEvent() {
+        ajaxSpinnerForPartOfPage("#ArticleCommentEditModalContainer");
 
         var articleCommentId;
 
@@ -167,7 +116,6 @@
 
         });
 
-
         $("#saveEditedComment").on("click", function () {
 
             var antiForgeryToken = $("input[name='__RequestVerificationToken']").val();
@@ -186,12 +134,12 @@
                 success: function (response) {
 
                     if (response.status === "Success") {
-                        generalSuccessNotice();
+                        pNotifyModule.successNotice();
                         $("#ArticleCommentEditModal").modal("hide");
                     }
 
                     if (response.status === "NotDeletedSomeProblem") {
-                        generalFailureNotice();
+                        pNotifyModule.failureNotice();
                     }
 
                 },
@@ -202,9 +150,13 @@
             });
 
         });
+    }
 
-        // #endregion
-        
+    return {
+        wireUpDeleteArticleCommentButtonClickEvent: deleteArticleCommentButtonClickEventHandler,
+        wireUpApprovalCheckBoxChangeEvent: approvalCheckBoxChangeEventHandler,
+        wireUpArticleDetailModalButtonClickEvent: articleDetailModalButtonClickEvent,
+        wireUpArticleEditButtonClickEvent: articleEditButtonClickEvent
+    };
 
-    });
 })();

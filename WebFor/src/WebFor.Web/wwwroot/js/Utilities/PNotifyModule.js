@@ -1,7 +1,7 @@
 ﻿"use strict";
 var pNotifyModule = (function () {
 
-    var successNotice = function (titleMessage, bodyMessage) {
+    var successNotice = function (titleMessage="موفق", bodyMessage="عملیات مورد نظر موفقیت آمیز بود.") {
         new PNotify({
             title: titleMessage,
             text: bodyMessage,
@@ -11,7 +11,7 @@ var pNotifyModule = (function () {
         });
     };
 
-    var warningNotice = function (titleMessage, bodyMessage) {
+    var warningNotice = function (titleMessage="مشکل عملیات", bodyMessage="مشکلی در اجرای عملیات مورد نظر پیش آمده.") {
         new PNotify({
             title: titleMessage,
             text: bodyMessage,
@@ -21,7 +21,7 @@ var pNotifyModule = (function () {
         });
     };
 
-    var failureNotice = function (titleMessage, bodyMessage) {
+    var failureNotice = function (titleMessage="ناموفق", bodyMessage="عملیات مورد نظر موفقیت آمیز نبود.") {
         new PNotify({
             title: titleMessage,
             text: bodyMessage,
@@ -31,7 +31,7 @@ var pNotifyModule = (function () {
         });
     };
 
-    var confirm = function (callBack, title, text) {
+    var confirm = function (title, text, callBack) {
         (new PNotify({
             title: title,
             text: text,
@@ -56,6 +56,7 @@ var pNotifyModule = (function () {
         warningNotice: warningNotice,
         failureNotice: failureNotice,
         confirm: confirm
+
     };
 
 })();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
@@ -50,8 +51,10 @@ namespace WebFor.UnitTests.Services.Shared
             writer.Flush();
 
             memoryStream.Position = 0;
+
             return memoryStream;
         }
+
 
 
 
@@ -128,7 +131,7 @@ namespace WebFor.UnitTests.Services.Shared
             //Arrange
             var sut = new FileManager(_environment.Object, _fileSystem.Object);
 
-            _fileWrapper.Setup(f => f.Exists(It.IsAny<string>())).Returns(true);
+            _fileWrapper.SetupSequence<IFileWrapper, bool>(f => f.Exists(It.IsAny<string>())).Returns(true).Returns(false);
 
             //Act
             var result = sut.DeleteFile("TestFile.txt", new List<string> { "UnitTestFolder" });
@@ -138,9 +141,31 @@ namespace WebFor.UnitTests.Services.Shared
             result.Should().BeOfType<FileStatus>();
             result.Should().Be(FileStatus.DeleteSuccess);
             _pathWrapper.Verify(p => p.Combine(It.IsAny<string[]>()), Times.Once);
-            _fileWrapper.Verify(f => f.Exists(It.IsAny<string>()), Times.Once);
+            _fileWrapper.Verify(f => f.Exists(It.IsAny<string>()), Times.Exactly(2));
             _fileWrapper.Verify(f => f.Delete(It.IsAny<string>()), Times.Once);
         }
+
+        [Fact]
+        public void DeleteFile_ShouldReturnFileStatusDeleteFailed_IfFileExistAndNotDeleted()
+        {
+            //Arrange
+            var sut = new FileManager(_environment.Object, _fileSystem.Object);
+
+            _fileWrapper.SetupSequence<IFileWrapper, bool>(f => f.Exists(It.IsAny<string>())).Returns(true).Returns(true);
+
+            //Act
+            var result = sut.DeleteFile("TestFile.txt", new List<string> { "UnitTestFolder" });
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().BeOfType<FileStatus>();
+            result.Should().Be(FileStatus.DeleteFailed);
+            _pathWrapper.Verify(p => p.Combine(It.IsAny<string[]>()), Times.Once);
+            _fileWrapper.Verify(f => f.Exists(It.IsAny<string>()), Times.Exactly(2));
+            _fileWrapper.Verify(f => f.Delete(It.IsAny<string>()), Times.Once);
+        }
+
+
 
 
 
@@ -232,45 +257,99 @@ namespace WebFor.UnitTests.Services.Shared
             _pathWrapper.Verify(p => p.Combine(It.IsAny<string[]>()), Times.Exactly(2));
         }
 
-        //[Fact]
-        //public async Task UploadFile_ShouldReturnFileName_IfFileLengthIsZero()
-        //{
-        //    //Arrange
-        //    var sut = new FileManager(_environment.Object, _fileSystem.Object);
+        [Fact]
+        public async Task UploadFile_ShouldCallDirectoryMethods_ExactlyOneTime()
+        {
+            //Arrange
+            var sut = new FileManager(_environment.Object, _fileSystem.Object);
 
-        //    var fileContent = "Hello World from a Fake File";
+            var memoryStream = FakeMemoryStream();
 
-        //    var memoryStream = new MemoryStream();
+            _formFile.Setup(m => m.OpenReadStream()).Returns(memoryStream);
 
-        //    var writer = new StreamWriter(memoryStream);
+            _formFile.SetupGet(f => f.Length).Returns(256);
 
-        //    writer.Write(fileContent);
+            _pathWrapper.Setup(p => p.GetFileNameWithoutExtension(It.IsAny<string>())).Returns("dummy-file-name");
 
-        //    writer.Flush();
+            _pathWrapper.Setup(p => p.GetExtension(It.IsAny<string>())).Returns(".txt");
 
-        //    memoryStream.Position = 0;
+            _formFile.SetupGet(f => f.ContentDisposition).Returns("form-data; name=\"UserAvatarFile\"; filename=\"TestFile.txt\"");
 
-        //    _formFile.Setup(m => m.OpenReadStream()).Returns(memoryStream);
+            _environment.SetupGet(e => e.WebRootPath).Returns("C:\\");
 
-        //    _formFile.SetupGet(f => f.Length).Returns(256);
+            _directoryWrapper.Setup(d => d.Exists(It.IsAny<string>())).Returns(false);
 
-        //    _formFile.SetupGet(f => f.ContentDisposition).Returns("form-data; name=\"UserAvatarFile\"; filename=\"TestFile.txt\"");
+            //Act
+            var result = await sut.UploadFileAsync(_formFile.Object, new List<string> { "UnitTestFolder" });
 
-        //    _environment.SetupGet(e => e.WebRootPath).Returns("C:\\");
-
-        //    //Act
-        //    var result = await sut.UploadFileAsync(_formFile.Object, new List<string> { "UnitTestFolder" });
-
-        //    //Assert
-        //    result.Should().NotBeNull();
-        //    _pathWrapper.Verify(p => p.GetFileNameWithoutExtension(It.IsAny<string>()), Times.Once);
-        //    _pathWrapper.Verify(p => p.GetExtension(It.IsAny<string>()), Times.Once);
-        //    _pathWrapper.Verify(p => p.Combine(It.IsAny<string>()), Times.Once);
+            //Assert
+            _directoryWrapper.Verify(d => d.Exists(It.IsAny<string>()), Times.Once);
+            _directoryWrapper.Verify(d => d.CreateDirectory(It.IsAny<string>()), Times.Once);
+        }
 
 
-        //    result.Should().StartWith("TestFile");
-        //}
+        [Fact]
+        public async Task UploadFile_ShouldCallSaveAsAsyncOnFile_Once()
+        {
+            //Arrange
+            var sut = new FileManager(_environment.Object, _fileSystem.Object);
 
+            var memoryStream = FakeMemoryStream();
+
+            _formFile.Setup(m => m.OpenReadStream()).Returns(memoryStream);
+
+            _formFile.SetupGet(f => f.Length).Returns(256);
+
+            _pathWrapper.Setup(p => p.GetFileNameWithoutExtension(It.IsAny<string>())).Returns("dummy-file-name");
+
+            _pathWrapper.Setup(p => p.GetExtension(It.IsAny<string>())).Returns(".txt");
+
+            _pathWrapper.Setup(p => p.Combine(It.IsAny<string[]>())).Returns("C:\\UnitTestFolder");
+
+            _pathWrapper.Setup(p => p.Combine(It.IsAny<string>(), It.IsAny<string>())).Returns("C:\\UnitTestFolder\\dummy-file-name.txt");
+
+            _formFile.SetupGet(f => f.ContentDisposition).Returns("form-data; name=\"UserAvatarFile\"; filename=\"TestFile.txt\"");
+
+            _environment.SetupGet(e => e.WebRootPath).Returns("C:\\");
+
+            //Act
+            var result = await sut.UploadFileAsync(_formFile.Object, new List<string> { "UnitTestFolder" });
+
+            //Assert
+            _fileWrapper.Verify(f => f.SaveAsAsync(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task UploadFile_ShouldReturnResult_WithTheCorrectFileName()
+        {
+            //Arrange
+            var sut = new FileManager(_environment.Object, _fileSystem.Object);
+
+            var memoryStream = FakeMemoryStream();
+
+            _formFile.Setup(m => m.OpenReadStream()).Returns(memoryStream);
+
+            _formFile.SetupGet(f => f.Length).Returns(256);
+
+            _pathWrapper.Setup(p => p.GetFileNameWithoutExtension(It.IsAny<string>())).Returns("dummy-file-name");
+
+            _pathWrapper.Setup(p => p.GetExtension(It.IsAny<string>())).Returns(".txt");
+
+            _pathWrapper.Setup(p => p.Combine(It.IsAny<string[]>())).Returns("C:\\UnitTestFolder");
+
+            _pathWrapper.Setup(p => p.Combine(It.IsAny<string>(), It.IsAny<string>())).Returns("C:\\UnitTestFolder\\dummy-file-name.txt");
+
+            _formFile.SetupGet(f => f.ContentDisposition).Returns("form-data; name=\"UserAvatarFile\"; filename=\"TestFile.txt\"");
+
+            _environment.SetupGet(e => e.WebRootPath).Returns("C:\\");
+
+            //Act
+            var result = await sut.UploadFileAsync(_formFile.Object, new List<string> { "UnitTestFolder" });
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Should().StartWith("dummy");
+        }
 
     }
 }

@@ -26,12 +26,12 @@
 {
     if ((string)TempData["FileStatus"] == "FileDeleteSuccess")
     {
-       <p>
-        <div class="alert alert-warning alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4>تامبنیل پورتفولیو با موفقیت از دیسک حذف شد.</h4>
-        </div>
-    </p> 
+        <p>
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4>تامبنیل پورتفولیو با موفقیت از دیسک حذف شد.</h4>
+            </div>
+        </p>
     }
 }
 
@@ -98,5 +98,6 @@
 
 @section scripts{
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
-    <script src="~/js/webforscripts/admin.manageportfolio.js"></script>
+
+    <script data-main="/js/WebforScripts/Admin/Portfolio/ManagePortfolio/Main" src="~/lib/requirejs/require.min.js"></script>
 }

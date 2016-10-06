@@ -98,7 +98,12 @@ namespace WebFor.Infrastructure.Services.Shared
 
             FileSystem.File.Delete(fullPath);
 
-            return FileStatus.DeleteSuccess;
+            if (!FileSystem.File.Exists(fullPath))
+            {
+                return FileStatus.DeleteSuccess;
+            }
+
+            return FileStatus.DeleteFailed;
         }
 
         public void DeleteEditorImages(string bodyText, List<string> path)

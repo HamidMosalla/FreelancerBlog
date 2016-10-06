@@ -1,10 +1,16 @@
-﻿(function () {
-    $(function () {
-        "use strict";
+﻿"use strict";
 
+var indexModule = (function () {
+
+    function initSpinner() {
         ajaxSpinnerForPartOfPage("#show_form");
+    }
 
+    function initSmoothScroll() {
         $('.smooth-scroll').click(function () { $('html, body').animate({ scrollTop: $($.attr(this, 'href')).offset().top }, 500); return false; });
+    }
+
+    function nextStepButtonClickEventHandler() {
 
         // go to the next step
         $(".done").click(function (e) {
@@ -23,6 +29,10 @@
             }
 
         });
+
+    }
+
+    function expandCollapseEventHandler() {
 
         //expand and collapse the heading
         $('.payment-wizard li .wizard-heading').click(function () {
@@ -43,6 +53,10 @@
             }
 
         });
+
+    }
+
+    function submitFormEventHanlder() {
 
         //submitting the final form
         $("#calculateFinalPriceForm").on("submit", function (e) {
@@ -78,13 +92,9 @@
                         //console.log(response.status);
 
                         if (response.status === "FailedTheCaptchaValidation") {
-                            new PNotify({
-                                title: 'عملیات ناموفق',
-                                text: 'لطفا قسمت کپچا را تکمیل نمایید.',
-                                type: 'danger',
-                                icon: 'glyphicon glyphicon-warning-sign',
-                                delay: 3000
-                            });
+
+                            pNotifyModule.failureNotice("عملیات ناموفق", "لطفا قسمت کپچا را تکمیل نمایید.");
+
                             return;
                         }
 
@@ -116,5 +126,14 @@
 
         });
 
-    });
+    }
+
+    return {
+        initSpinner: initSpinner,
+        initSmoothScroll: initSmoothScroll,
+        wireUpnextStepButtonClickEvent: nextStepButtonClickEventHandler,
+        wireUpexpandCollapseEvent: expandCollapseEventHandler,
+        wireUpsubmitFormEvent: submitFormEventHanlder
+    };
+
 })();

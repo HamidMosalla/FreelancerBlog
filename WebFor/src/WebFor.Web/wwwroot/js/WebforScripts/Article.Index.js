@@ -1,8 +1,0 @@
-﻿(function () {
-	$(function () {
-		"use strict";
-
-
-
-	});
-})();

@@ -28,7 +28,8 @@ namespace WebFor.Infrastructure.EntityFramework
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=178.63.87.81,1435;Database=WebForDb;Integrated Security=False;User ID=WebForDbUser;Password=U8wAnb%dLF@Gj&;MultipleActiveResultSets=true");
+            //optionsBuilder.UseSqlServer("Server=178.63.87.81,1435;Database=WebForDb;Integrated Security=False;User ID=WebForDbUser;Password=U8wAnb%dLF@Gj&;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=WebForDb;Trusted_Connection=True;MultipleActiveResultSets=true");
             base.OnConfiguring(optionsBuilder); 
         }
         protected override void OnModelCreating(ModelBuilder builder)

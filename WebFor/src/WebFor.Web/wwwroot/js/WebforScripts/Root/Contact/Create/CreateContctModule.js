@@ -1,32 +1,12 @@
-﻿(function () {
-    $(function () {
-        "use strict";
+﻿"use strict";
 
-        ajaxSpinnerForPartOfPage("#contact-page");
+var createContctModule = (function () {
 
+    function makeYesScriptVisible() {
         $("#YesScript").show();
+    }
 
-        var successfulCreateNotice = function () {
-            new PNotify({
-                title: 'ثبت موفق',
-                text: 'پیغام شما با موفقیت ثبت شد، هم اکنون به صفحه اصلی هدایت میشوید.',
-                type: 'success',
-                icon: 'glyphicon glyphicon-ok',
-                delay: 3000
-            });
-        }
-
-        var ProblematicCreateNotice = function () {
-            new PNotify({
-                title: 'ثبت ناموفق',
-                text: 'مشکلی در ثبت پیغام شما پیش آمده، لطفا دوباره تلاش کنید، اگر موفق به ثبت نشدید، با مدیریت سایت تماس بگیرید.',
-                type: 'warning',
-                icon: 'glyphicon glyphicon-warning-sign',
-                delay: 1000
-            });
-        }
-
-
+    function contactFormSubmitEventHanlder() {
         $("#ContactForm").on("submit", function (e) {
             e.preventDefault();
 
@@ -50,22 +30,18 @@
                         //console.log(response);
 
                         if (response.status === "Success") {
-                            successfulCreateNotice();
+
+                            pNotifyModule.successNotice("ثبت موفق", "نظرات شما به موفقیت ثبت شد.");
+
                             setTimeout(function () { window.location.replace("/Home/Index"); }, 3000);
                         }
 
                         if (response.status === "FailedTheCaptchaValidation") {
-                            new PNotify({
-                                title: 'عملیات ناموفق',
-                                text: 'لطفا قسمت کپچا را تکمیل نمایید.',
-                                type: 'danger',
-                                icon: 'glyphicon glyphicon-warning-sign',
-                                delay: 3000
-                            });
+                            pNotifyModule.failureNotice("عملیات ناموفق", "لطفا قسمت کپچا را تکمیل نماییدد.");
                         }
 
                         if (response.status === "ProblematicSubmit") {
-                            ProblematicCreateNotice();
+                            pNotifyModule.warningNotice("ثبت ناموفق", "مشکلی در ثبت پیش آمده، لطفا بعد از چند دقیقه دوباره تلاش کنید.");
                         }
 
                     },
@@ -79,7 +55,16 @@
             }
 
         });
+    }
 
+    function initSpinner() {
+        ajaxSpinnerForPartOfPage("#contact-page");
+    }
 
-    });
+    return {
+        makeYesScriptVisible: makeYesScriptVisible,
+        wireUpcontactFormSubmitEvent: contactFormSubmitEventHanlder,
+         initSpinner: initSpinner
+    };
+
 })();

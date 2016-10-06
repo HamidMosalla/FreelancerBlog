@@ -9,43 +9,7 @@
     <meta name="author" content="حمید مصلی نژاد">
     <title>@ViewData["Title"] - وب برای ایران</title>
 
-
-    <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link href="~/lib/bootstrap/dist/css/bootstrap-rtl.css" rel="stylesheet" />
-        <link href="~/lib/animate.css/animate.css" rel="stylesheet" />
-        <link href="~/css/main.css" rel="stylesheet" />
-        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    </environment>
-    <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link href="~/lib/bootstrap/dist/css/bootstrap-rtl.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        <link href="~/lib/animate.css/animate.min.css" rel="stylesheet" />
-
-        <link href="~/css/main.css" rel="stylesheet" />
-        <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    </environment>
-
-
-    <!--[if lt IE 9]>
-
-
-    <script src="~/lib/modernizr/bin/modernizr-custom.js"></script>
-        <script src="~/lib/respondjs/dest/respond.min.js"></script>
-        <script src="~/lib/respondjs/dest/respond.matchmedia.addlistener.min.js"></script>
-            <![endif]-->
-    <!--[if lt IE 8]>
-
-
-    <script src="~/lib/modernizr/bin/modernizr-custom.js"></script>
-                <script src="~/lib/respondjs/dest/respond.min.js"></script>
-        <script src="~/lib/respondjs/dest/respond.matchmedia.addlistener.min.js"></script>
-            <![endif]-->
-
-
+    @Html.Partial("_CSSPartial")
 
     <link rel="shortcut icon" href="~/images/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/images/ico/apple-touch-icon-144-precomposed.png">
@@ -82,33 +46,7 @@
         @await Html.PartialAsync("_Footer")
     </footer>
 
-    <environment names="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/Utilities/convertDate.js"></script>
-        <script src="~/js/main.js"></script>
-        <script src="~/lib/isotope/dist/isotope.pkgd.js"></script>
-    </environment>
-
-    <environment names="Staging,Production">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery">
-
-
-
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
-
-
-
-        </script>
-        <script src="~/lib/isotope/dist/isotope.pkgd.min.js"></script>
-        <script src="~/js/Utilities/convertDate.js"></script>
-        <script src="~/js/main.js"></script>
-    </environment>
+    @Html.Partial("_ScriptsPartial")
 
     @RenderSection("scripts", required: false)
 </body>
