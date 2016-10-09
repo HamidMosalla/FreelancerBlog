@@ -1,10 +1,13 @@
-﻿@using System.Threading.Tasks
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Threading.Tasks
 @using WebFor.Web.ViewModels.Article
 @using WebFor.Web.Areas.Admin.ViewModels.Article
 @model List<ArticleTagViewModel>
 
+@inject IViewLocalizer Localizer
+
 <div class="widget tags">
-    <h3>برچسب ها</h3>
+    <h3>@Localizer["Tags"]</h3>
     <ul class="tag-cloud">
         @foreach (var tag in Model)
         {

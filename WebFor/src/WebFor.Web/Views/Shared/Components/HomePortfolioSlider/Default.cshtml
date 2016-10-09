@@ -1,13 +1,16 @@
-﻿@using System.Threading.Tasks
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Threading.Tasks
 @using WebFor.Web.Areas.Admin.ViewModels.Portfolio
 @model List<PortfolioViewModel>
+
+@inject IViewLocalizer Localizer
 
 <div class="container">
     <div class="row">
 
         <div class="col-md-3">
-            <h3>آخرین پروژه ها</h3>
-            <p>آخرین پروژه های انجام شده با جزئیات و عکس</p>
+            <h3>@Localizer["LatestProjects"]</h3>
+            <p>@Localizer["LatestProjectsDesc"]</p>
             <div class="btn-group">
                 <a class="btn btn-danger" href="#scroller" data-slide="next"><i class="fa fa-angle-right"></i></a>
                 <a class="btn btn-danger" href="#scroller" data-slide="prev"><i class="fa fa-angle-left"></i></a>
@@ -36,9 +39,9 @@
                                                     @portfolio.PortfolioTitle
                                                 </h5>
                                                 <div class="overlay">
-                                                    <a class="preview btn btn-danger" href="/Portfolio/Detail/@portfolio.PortfolioId/@portfolio.PortfolioTitle.Replace(' ', '-')" data-toggle="tooltip" title="مشاهده جزئیات" target="_blank"><i class="fa fa-eye"></i></a>
-                                                    <a class="preview btn btn-primary" href="@portfolio.PortfolioSiteAddress" data-toggle="tooltip" title="مشاهده وب سایت" target="_blank"><i class="fa fa-globe"></i></a>
-                                                    <a class="preview btn btn-default" href="javascript:void(0)" data-toggle="tooltip" title="مشاهده گاری تصاویر"><i class="fa fa-image"></i></a>
+                                                    <a class="preview btn btn-danger" href="/Portfolio/Detail/@portfolio.PortfolioId/@portfolio.PortfolioTitle.Replace(' ', '-')" data-toggle="tooltip" title="@Localizer["ViewDetail"]" target="_blank"><i class="fa fa-eye"></i></a>
+                                                    <a class="preview btn btn-primary" href="@portfolio.PortfolioSiteAddress" data-toggle="tooltip" title="@Localizer["ViewWebSite"]" target="_blank"><i class="fa fa-globe"></i></a>
+                                                    <a class="preview btn btn-default" href="javascript:void(0)" data-toggle="tooltip" title="@Localizer["ViewPictureGallery"]"><i class="fa fa-image"></i></a>
                                                 </div>
                                             </div>
                                         </div>

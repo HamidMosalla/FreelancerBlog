@@ -1,9 +1,13 @@
-﻿@using System.Threading.Tasks
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Threading.Tasks
 @using WebFor.Web.ViewModels.Article
 @using WebFor.Web.Areas.Admin.ViewModels.Article
 @model List<ArticleViewModel>
 
-<h4>آخرین مطالب بلاگ</h4>
+@inject IViewLocalizer Localizer
+
+<h4>@Localizer["LastestBlogPosts"]</h4>
+
 <div>
 
     @foreach (var article in Model)
@@ -12,7 +16,7 @@
 
             <div class="media-body">
                 <span class="media-heading"><a href="/Article/Detail/@article.ArticleId/@article.ArticleTitle.Replace(' ', '-')">@article.ArticleTitle</a></span>
-                <small class="muted">ارسال شده در <span class="persianDate">@article.ArticleDateCreated.ToString("MM/dd/yyyy")</span></small>
+                <small class="muted"> @Localizer["SentOn"] <span class="persianDate">@article.ArticleDateCreated.ToString("MM/dd/yyyy")</span></small>
             </div>
         </div>
     }
