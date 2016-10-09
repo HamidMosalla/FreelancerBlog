@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
     Layout = "_Layout";
 }
 
@@ -10,13 +13,13 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <h1>وبلاگ</h1>
-                <p>آخرین مقالات در مورد تکنولوژی و نکات آموزشی</p>
+                <h1>@Localizer["Blog<H1>"]</h1>
+                <p>@Localizer["BlogDesc<P>"]</p>
             </div>
             <div class="col-sm-6">
                 <ul class="breadcrumb pull-right">
-                    <li><a href="/Home/Index">خانه</a></li>
-                    <li class="active">وبلاگ</li>
+                    <li><a href="/Home/Index">@Localizer["Home<H1>"]</a></li>
+                    <li class="active">@Localizer["Blog<H1>"]</li>
                 </ul>
             </div>
         </div>
@@ -36,7 +39,7 @@
             <div class="widget search">
                 <form role="form">
                     <div class="input-group">
-                        <input type="text" class="form-control" autocomplete="off" placeholder="جستجو">
+                        <input type="text" class="form-control" autocomplete="off" placeholder="@Localizer["Search"]">
                         <span class="input-group-btn">
                             <button class="btn btn-danger" type="button"><i class="fa fa-search"></i></button>
                         </span>

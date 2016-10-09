@@ -1,7 +1,11 @@
-﻿@{
-    ViewData["Title"] = "خانه";
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["PageTitle"];
     Layout = "~/views/shared/_layout.cshtml";
 }
+
 
 @section styles{
     <style>
@@ -64,44 +68,40 @@
 
     <div class="col-lg-3 specialty">
         <img alt="RESEARCH &amp; DISCOVERY" src="~/images/index/5411d3383cb97584393720.png">
-        <h3 style="height: 30px;">جستجو و تحلیل</h3>
-        <p style="height: 129px;">بدون تعریف مسئله، پیدا کردن راه حل ممکن نیست، یا اگر راه حلی باشد راه حل واقعی نیست، جستجو و تحلیل نیاز مشتری یکی از مهمترین مراحلی است که برای رسیدن به موفقیت لازم است، از اینرو ما این مرحله را بسار جدی میگیریم.</p>
-    </div>
+        <h3 style="height: 30px;">@Localizer["SearchAndAnalysis<H3>"]</h3>
+        <p style="height: 129px;">@Localizer["SearchAndAnalysis<P>"]</p>
     </div>
 
     <div class="col-lg-3 specialty">
         <img alt="UX STRATEGY &amp; DESIGN" src="~/images/index/5411d346048d9848730509.png">
-        <h3 style="height: 30px;">طراحی و دیزاین</h3>
-        <p style="height: 129px;">ما برای انجام پروژه های شما از به روزترین استاندارد های روز و متخصص این امر بهره خواهیم برد، ما به کاری که انجام می دهیم علاقه مندیم و به آن افتخار می کنیم، و در تمام مراحل انجام پروژه جویای افکار و نظرات مشتریان هستیم تا راه حل ساخته شده با خواسته مشتری مطابقت داشته باشد.</p>
+        <h3 style="height: 30px;">@Localizer["DesignAndDevelopment<H3>"]</h3>
+        <p style="height: 129px;">@Localizer["DesignAndDevelopment<P>"]</p>
 
-    </div>
     </div>
 
     <div class="col-lg-3 specialty">
         <img alt="ENGINEERING" src="~/images/index/5411d350c0fe9095486801.png">
-        <h3 style="height: 30px;">مهندسی</h3>
-        <p style="height: 129px;">ما از هر نوع راه حلی که بتواند مسئله مورد نظر را به بهترین وجه ممکن حل کند استفاده خواهیم کرد، و خود را محدود به یک پلتفرم خاص نمی دانیم. ما تنها به دلیل اینکه به یک تکنولوژی خاص تسلط داریم از آن استفاده نمیکنیم، بلکه در فاز تحقیق مناسبترین تکنولوژی برای حل مسئله تجاری که مشتری ارائه داده انتخاب می کنیم.</p>
+        <h3 style="height: 30px;">@Localizer["Engeneering<H3>"]</h3>
+        <p style="height: 129px;">@Localizer["Engeneering<P>"]</p>
 
-    </div>
     </div>
 
     <div class="col-lg-3 specialty">
         <img alt="QA &amp; DEPLOYMENT" src="~/images/index/5411d35a68552974185863.png">
-        <h3 style="height: 30px;">آموزش و نصب</h3>
-        <p style="height: 129px;">مرحله پایانی که تحویل پروژه به مشتری می باشد یکی از مهمترین مراحل کار ما است، زیرا در این مرحله باید آموزش لازم به مشتری برای استفاده از راه حل ساخته شده داده شود، و بعد از در نظر گرفتن و تست نهایی پروژه، پروژه برای مشتری راه اندازی خواهد شد.</p>
+        <h3 style="height: 30px;">@Localizer["Deployment<H3>"]</h3>
+        <p style="height: 129px;">@Localizer["Deployment<P>"]</p>
 
-    </div>
     </div>
 
 </section>
 
 <section class="bg-3 text-center">
-    <h1>خود را به مشتری های بالقوه خود بشناسانید!</h1>
-    <h2>فروشنده هستید؟ آیا میدانستید با راه اندازی وبسایت می تواند فروش خود را چند برابر کنید و خود را به مشتریان بالقوه خود بشناسانید؟</h2>
-    <h2>هم اکنون وبسایت و امکانات مورد نظر انلاین خود را از طریق محاسبه گر قیمت سایت انتخاب نمایید.</h2>
+    <h1>@Localizer["PresentYourSelf<H1>"]</h1>
+    <h2>@Localizer["PresentYourSelf<H2>"]</h2>
+    <h2>@Localizer["PresentYourSelf2<H2>"]</h2>
     <br />
     <br />
-    <a href="/SiteOrder/Index#calculator" class="btn btn-default btn-lg">محاسبه گر قیمت</a>
+    <a href="/SiteOrder/Index#calculator" class="btn btn-default btn-lg">@Localizer["PriceCalculator<A>"]</a>
     <p class="lead"></p>
 </section>
 
@@ -111,7 +111,7 @@
 
 
 <section class="visit-more">
-    <a href="/Article/Index" class="nm-link">می خواهید بیشتر بدانید؟<span>از وبلاگ ما بازدید کنید</span></a>
+    @Localizer["VisitOurBlog"]
 </section>
 
 

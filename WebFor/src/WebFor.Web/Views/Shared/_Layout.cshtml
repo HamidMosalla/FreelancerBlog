@@ -1,13 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<!DOCTYPE html>
 <html lang="fa">
 <head>
 
     @RenderSection("MetaTags", required: false)
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="طراحی وب سایت های سفارشی، مقاله های متنوع در خصوص تکنولوژی های وب">
-    <meta name="author" content="حمید مصلی نژاد">
-    <title>@ViewData["Title"] - وب برای ایران</title>
+    <meta name="description" content="@Localizer["MetaDescription"]">
+    <meta name="author" content="@Localizer["Author"]">
+    <title>@ViewData["Title"] - @Localizer["WebSiteName"]</title>
 
     @Html.Partial("_CSSPartial")
 
@@ -23,11 +26,11 @@
 
     <noscript>
         <div id="noscript">
-            جاوا اسکریپت غیرفعال است، برای استفاده بهتر از امکانات سایت لطفا آن را فعال کنید.
+            @Localizer["NoScript"]
         </div>
     </noscript>
 
-    <header class="navbar navbar-inverse navbar-fixed-top wet-asphalt" role="banner">
+    <header class="navbar navbar-inverse navbar-fixed-top wet-asphalt pull-left" role="banner">
         @await Html.PartialAsync("_NavigationMenu")
     </header>
 

@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
     Layout = "_Layout";
 }
 
@@ -10,13 +13,13 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <h1>نمونه کارها</h1>
-                <p>آخرین نمونه کارها با جزئیات در مورد تکنولوژی های استفاده شده</p>
+                <h1>@Localizer["WorkSample"]</h1>
+                <p>@Localizer["WorkSampleDesc"]</p>
             </div>
             <div class="col-sm-6">
                 <ul class="breadcrumb pull-right">
-                    <li><a href="/Home/Index">خانه</a></li>
-                    <li class="active"><a href="/Portfolio/Index">پورتفولیو</a></li>
+                    <li><a href="/Home/Index">@Localizer["Home"]</a></li>
+                    <li class="active"><a href="/Portfolio/Index">@Localizer["Portfolio"]</a></li>
                     <li class="active"><a href="/Portfolio/Detail/@ViewData["PortfolioId"]">@ViewData["PortfolioTitle"]</a></li>
                 </ul>
             </div>
@@ -30,7 +33,6 @@
         <div class="col-sm-12">
             @RenderBody()
         </div>
-
 
     </div>
 </section>

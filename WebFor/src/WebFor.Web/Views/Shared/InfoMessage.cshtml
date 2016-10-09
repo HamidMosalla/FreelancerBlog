@@ -1,18 +1,21 @@
-﻿@{
-    ViewBag.Title = "اطلاع رسانی";
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = Localizer["Notification"];
 }
 
 <section id="title" class="emerald">
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <h1>اطلاع رسانی</h1>
-                <p>جهت اظلاع</p>
+                <h1>@Localizer["Notification"]</h1>
+                <p>@Localizer["NotificationDesc"]</p>
             </div>
             <div class="col-sm-6">
                 <ul class="breadcrumb pull-right">
-                    <li><a href="/Home/Index">خانه</a></li>
-                    <li class="active">اطلاع رسانی</li>
+                    <li><a href="/Home/Index">@Localizer["Home"]</a></li>
+                    <li class="active">@Localizer["Notification"]</li>
                 </ul>
             </div>
         </div>
@@ -24,8 +27,10 @@
     <div class="row" style="padding: 20px;">
         <div class="col-md-4 col-sm-4 col-xs-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-4">
             <div class="alert alert-warning">
-                <h2 class="text-info text-center">نام کاربری شما در سیستم ثبت شد، ولی تا زمان تایید آن از طریق ایمیل اجازه ورود ندارید. ما یک ایمیل حاوی لینک فعال سازی برای شما ارسال کردیم، لطفا ایمیل خود را چک کنید، اگر ایمیل در اینباکس شما موجود نبود، هرزنامه های خود را چک کنید.</h2>
-                <a class="btn btn-success" href="/Home/Index">بازگشت به خانه</a>
+                <h2 class="text-info text-center">
+                    @Localizer["ConfirmEmail"]
+                </h2>
+                <a class="btn btn-success" href="/Home/Index">@Localizer["BackToHome"]</a>
             </div>
         </div>
     </div>
@@ -36,9 +41,11 @@
     <div class="row" style="padding: 20px;">
         <div class="col-md-4 col-sm-4 col-xs-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-4">
             <div class="alert alert-warning">
-                <h2 class="text-info text-center">اکانت شما با موفقیت تایید شد، هم اکنون میتوانید به سایت وارد شوید.</h2>
-                <a class="btn btn-info" href="/Account/Login">ورود</a>
-                <a class="btn btn-success" href="/Home/Index">بازگشت به خانه</a>
+                <h2 class="text-info text-center">
+                    @Localizer["EmailConfirmSuccess"]
+                </h2>
+                <a class="btn btn-info" href="/Account/Login">@Localizer["Login"]</a>
+                <a class="btn btn-success" href="/Home/Index">@Localizer["BackToHome"]</a>
             </div>
         </div>
     </div>
@@ -50,8 +57,10 @@
     <div class="row" style="padding: 20px;">
         <div class="col-md-4 col-sm-4 col-xs-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-4">
             <div class="alert alert-warning">
-                <h2 class="text-info text-center">یک ایمیل  حاوی لینک فعال سازی برای شما ارسال کردیم، لطفا ایمیل خود را چک کنید، اگر ایمیل در اینباکس شما موجود نبود، هرزنامه های خود را چک کنید.</h2>
-                <a class="btn btn-success" href="/Home/Index">بازگشت به خانه</a>
+                <h2 class="text-info text-center">
+                    @Localizer["CheckYourInbox"]
+                </h2>
+                <a class="btn btn-success" href="/Home/Index">@Localizer["BackToHome"]</a>
             </div>
         </div>
     </div>
@@ -62,8 +71,10 @@
     <div class="row" style="padding: 20px;">
         <div class="col-md-4 col-sm-4 col-xs-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-4">
             <div class="alert alert-warning">
-                <h2 class="text-info text-center">ایمیلی حاوی توضیحات لازم برای بازیابی پسورد به شما ارسال گردید، لطفا پسورد خود را از طریق لینکی که در ایمیل موجود است بازنشانی کنید.</h2>
-                <a class="btn btn-success" href="/Home/Index">بازگشت به خانه</a>
+                <h2 class="text-info text-center">
+                    @Localizer["ResetPasswordCheckEmail"]
+                </h2>
+                <a class="btn btn-success" href="/Home/Index">@Localizer["BackToHome"]</a>
             </div>
         </div>
     </div>
@@ -74,8 +85,10 @@
     <div class="row" style="padding: 20px;">
         <div class="col-md-4 col-sm-4 col-xs-4 col-md-offset-4 col-sm-offset-4 col-xs-offset-4">
             <div class="alert alert-warning">
-                <h2 class="text-info text-center">پسورد شما با موفقیت بازنشانی شد، شما هم اکنون میتوانید با پسورد جدید خود به سایت وارد شوید.</h2>
-                <a class="btn btn-success" href="/Home/Index">بازگشت به خانه</a>
+                <h2 class="text-info text-center">
+                @Localizer["PasswordResetSuccess"]
+                </h2>
+                <a class="btn btn-success" href="/Home/Index">@Localizer["BackToHome"]</a>
             </div>
         </div>
     </div>

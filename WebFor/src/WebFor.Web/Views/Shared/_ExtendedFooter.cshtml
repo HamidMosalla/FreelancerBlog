@@ -1,34 +1,39 @@
-﻿<div class="container">
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+<div class="container">
     <div class="row">
 
 
         <div class="col-md-3 col-sm-6">
-            <h4>درباره ما</h4>
-            <p>وب برای ایران با هدف ارائه دادن سرویس ها و راه حل های تحت وب و همچنین اطلاع رسانی در زمینه تکنولوژی تحت وب راه اندازی شده است. لیست خدمات را می تواند در قسمت سرویس های ما مشاهده کنید.</p>
+            <h4>@Localizer["AboutUs<H4>"]</h4>
+            <p>
+                @Localizer["AboutUsIntro<P>"]
+            </p>
         </div>
 
 
         <div class="col-md-3 col-sm-6">
-            <h4>وب برای ایران</h4>
+            <h4>@Localizer["WebSiteName"]</h4>
             <div>
                 <ul>
-                    <li class="fa fa-chevron-left"> <a href="/Home/About">درباره ما</a></li>
-                    <br/>
-                    @*<li class="fa fa-chevron-left"> <a href="#">ملاقات با تیم</a></li>
+                    <li class="fa fa-chevron-left"> <a href="/Home/About">@Localizer["AboutUs<A>"]</a></li>
+                    <br />
+                    @*<li class="fa fa-chevron-left"> <a href="#">@Localizer["Meeting<A>"]</a></li>
                         <br />*@
-                    @*<li class="fa fa-chevron-left"> <a href="#">شرکای تجاری</a></li>
+                    @*<li class="fa fa-chevron-left"> <a href="#">@Localizer["Partners<A>"]</a></li>
                         <br />*@
-                    <li class="fa fa-chevron-left"> <a href="/Home/Services">سرویس های ما</a></li>
-                    <br/>
-                    <li class="fa fa-chevron-left"> <a href="/Home/Faq">سوالات متداول</a></li>
-                    <br/>
-                    <li class="fa fa-chevron-left"> <a href="/Contact/Create">تماس با ما</a></li>
-                    <br/>
-                    <li class="fa fa-chevron-left"> <a href="/Home/PrivacyPolicy">حریم خصوصی</a></li>
-                    <br/>
-                    <li class="fa fa-chevron-left"> <a href="/Home/TermsAndConditions">شرایط و ضوابط</a></li>
-                    <br/>
-                    <li class="fa fa-chevron-left"> <a href="#" id="copyright-anchor">کپی رایت</a></li>
+                    <li class="fa fa-chevron-left"> <a href="/Home/Services">@Localizer["OurServices<A>"]</a></li>
+                    <br />
+                    <li class="fa fa-chevron-left"> <a href="/Home/Faq">@Localizer["FAQ<A>"]</a></li>
+                    <br />
+                    <li class="fa fa-chevron-left"> <a href="/Contact/Create">@Localizer["ContactUs<A>"]</a></li>
+                    <br />
+                    <li class="fa fa-chevron-left"> <a href="/Home/PrivacyPolicy">@Localizer["PrivacyPolicy<A>"]</a></li>
+                    <br />
+                    <li class="fa fa-chevron-left"> <a href="/Home/TermsAndConditions">@Localizer["TermsAndConditions<A>"]</a></li>
+                    <br />
+                    <li class="fa fa-chevron-left"> <a href="#" id="copyright-anchor">@Localizer["Copyright"]</a></li>
                 </ul>
             </div>
 
@@ -41,21 +46,16 @@
 
 
         <div class="col-md-3 col-sm-6">
-            <h4>آدرس</h4>
+            <h4>@Localizer["Address"]</h4>
 
-            <address>
-                <strong>دفتر وب برای ایران</strong><br>
-                استان فارس - جهرم<br>
-                بلوار مصطفی خمینی<br>
-                <abbr title="Phone">تلفن: </abbr> 3310-377-0910
-            </address>
+            @Localizer["AddressTag"]
 
-            <h4>خبرنامه</h4>
+            <h4>@Localizer["NewsLetter"]</h4>
             <form id="news-letter-form" role="form">
                 <div class="input-group">
-                    <input type="text" class="form-control" autocomplete="off" placeholder="ایمیل خود را وارد کنید" required />
+                    <input type="text" class="form-control" autocomplete="off" placeholder="@Localizer["EmailPlaceHolder"]" required />
                     <span class="input-group-btn">
-                        <button class="btn btn-danger" type="submit">ثبت!</button>
+                        <button class="btn btn-danger" type="submit">@Localizer["Submit"]</button>
                     </span>
                 </div>
             </form>
@@ -71,21 +71,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="notification-modal-label">اطلاع</h4>
+                <h4 class="modal-title" id="notification-modal-label">@Localizer["ModalLabel"]</h4>
             </div>
             <div class="modal-body">
 
                 <div class="alert alert-success" id="news-letter-alert" style="display: none;">
-                    ایمیل شما با موفقیت در لیست خبر نامه ثبت شد.
+                    @Localizer["ModalAlertMessage"]
                 </div>
 
                 <div class="alert alert-success" id="copyright-alert" style="display: none;">
-                    کپی برداری از مطالب این سایت با ذکر منبع مجاز می باشد.
+                   @Localizer["CopyrightMessage"]
                 </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"> @Localizer["Close"]</button>
             </div>
         </div>
     </div>

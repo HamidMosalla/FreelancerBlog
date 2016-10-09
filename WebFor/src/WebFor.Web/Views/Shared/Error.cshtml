@@ -1,14 +1,17 @@
-﻿@{
-    ViewData["Title"] = "خطا";
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer["Error"];
 }
 
 @if (ViewBag.StatusCode == 404)
 {
     <section id="error" class="container">
         <div class="col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
-            <h1>404 یافت نشد.</h1>
-            <p style="font-size: medium;">صفحه مورد نظر شما یافت نشد، لطفا از درست بودن آدرس اطمینان حاصل فرمایید، اگر بار هم صفحه مورد نظر یافت نشد با مدیریت تماس بگیرید.</p>
-            <a class="btn btn-success" href="/Home/Index">بازگشت به خانه</a>
+            <h1>@Localizer["NotFound<H1>"]</h1>
+            <p style="font-size: medium;">@Localizer["NotFoundDesc"]</p>
+            <a class="btn btn-success" href="/Home/Index">@Localizer["BackToHome"]</a>
         </div>
     </section>
 }
@@ -16,8 +19,8 @@
 @if (ViewBag.StatusCode == 500 || ViewBag.StatusCode == 0)
 {
     <section id="error" class="container">
-        <h1>خطا</h1>
-        <p style="font-size: medium;">خطایی در پردازش درخواست شما پیش آمده، لطفا پس از چند دقیقه دوباره تلاش کنید، اگر مشکل بر طرف نشد با مدیریت سایت تماس بگیرید.</p>
-        <a class="btn btn-success" href="/Home/Index">بازگشت به خانه</a>
+        <h1>@Localizer["Error"]</h1>
+        <p style="font-size: medium;">@Localizer["InternalServerErrorDesc"]</p>
+        <a class="btn btn-success" href="/Home/Index">@Localizer["BackToHome"]</a>
     </section>
 }
