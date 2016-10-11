@@ -22,13 +22,13 @@ namespace WebFor.Web.Resources {
     // with the /str option, or rebuild your VS project.
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class FuckFuck {
+    public class DataAnnotations {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
-        internal FuckFuck() {
+        internal DataAnnotations() {
         }
         
         /// <summary>
@@ -38,7 +38,7 @@ namespace WebFor.Web.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WebFor.Web.Resources.FuckFuck", typeof(FuckFuck).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WebFor.Web.Resources.DataAnnotations", typeof(DataAnnotations).GetTypeInfo().Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -60,11 +60,11 @@ namespace WebFor.Web.Resources {
         }
         
         /// <summary>
-        ///    Looks up a localized string similar to Something.
+        ///    Looks up a localized string similar to Full Name.
         /// </summary>
-        public static string Huh {
+        public static string FullName {
             get {
-                return ResourceManager.GetString("Huh", resourceCulture);
+                return ResourceManager.GetString("FullName", resourceCulture);
             }
         }
     }

@@ -132,4 +132,7 @@
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="TemplateCredit" xml:space="preserve">
+    <value>&lt;a href="http://shapebootstrap.net/"&gt;Template By: ShapeBootstrap&lt;/a&gt;</value>
+  </data>
 </root>

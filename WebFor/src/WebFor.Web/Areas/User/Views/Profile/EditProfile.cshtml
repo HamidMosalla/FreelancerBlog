@@ -1,7 +1,9 @@
-﻿@model WebFor.Web.Areas.User.ViewModels.Profile.UserProfileViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model WebFor.Web.Areas.User.ViewModels.Profile.UserProfileViewModel
+@inject IViewLocalizer Localizer
 
 @{
-    ViewData["Title"] = "ویرایش پروفایل";
+    ViewData["Title"] = Localizer["ProfilePageTitle"];
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -57,12 +59,12 @@
             <label class="col-md-2 control-label"></label>
             <div class="col-md-8 col-sm-8 col-xs-8">
                 <fieldset style="border: 1px solid #808080; padding-right: 15px;">
-                    <legend>جنیست</legend>
+                    <legend>@Localizer["GenderLegend"]</legend>
                     <input asp-for="UserGender" value="Male" type="radio" />
-                    <label asp-for="UserGender">مرد</label>
+                    <label asp-for="UserGender">@Localizer["GenderLabelMale"]</label>
                     &nbsp;
                     <input asp-for="UserGender" value="Female" type="radio" />
-                    <label asp-for="UserGender">زن</label>
+                    <label asp-for="UserGender">@Localizer["GenderLabelFemale"]</label>
                 </fieldset>
                 <span asp-validation-for="UserGender" class="text-danger"></span>
             </div>
@@ -160,11 +162,11 @@
         <div class="form-group">
             <label asp-for="UserAvatarFile" class="col-md-2 control-label"></label>
             <div class="col-md-4">
-                <input asp-for="UserAvatarFile" type="file" accept=".jpg,.jpeg,.gif,.png" class="filestyle" data-buttonText="انتخاب تامبنیل" />
+                <input asp-for="UserAvatarFile" type="file" accept=".jpg,.jpeg,.gif,.png" class="filestyle" data-buttonText="@Localizer["InputFileButtonText"]" />
                 <span asp-validation-for="UserAvatarFile" class="text-danger" />
 
                 <div class="panel panel-default">
-                    <div class="panel-heading">آواتار فعلی</div>
+                    <div class="panel-heading">@Localizer["CurrentAvatar"]</div>
                     <div class="panel-body">
                         <img src="~/images/user-avatar/@(Model.UserAvatar ?? (Model.UserGender == "Male" ? "default-image-male.jpg" : "default-image-female.jpg"))" class="img-thumbnail" />
                     </div>
@@ -175,7 +177,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="ذخیره" class="btn btn-lg btn-default" />
+                <input type="submit" value="@Localizer["SubmitButtonText"]" class="btn btn-lg btn-default" />
             </div>
         </div>
     </div>

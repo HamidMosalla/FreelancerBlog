@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using WebFor.Core.Domain;
+using WebFor.Web.Resources;
 
 namespace WebFor.Web.Areas.User.ViewModels.Profile
 {
@@ -12,9 +13,9 @@ namespace WebFor.Web.Areas.User.ViewModels.Profile
     {
         public string Id { get; set; }
 
-        [Required(ErrorMessage ="پر کردن نام و نام خانوادگی اجباری میباشد.")]
-        [Display(Name ="نام و نام خانوادگی")]
-        [MaxLength(92, ErrorMessage = "مقدار فیلد نمی تواند از 92 کراکتر بیشتر باشد.")]
+        [Required(ErrorMessage = "UserFullNameRequired")]
+        [Display(Name ="FullName", ResourceType = typeof(Resources.DataAnnotations))]
+        [MaxLength(92, ErrorMessage = "MaxLengthValidation")]
         public string UserFullName { get; set; }
 
 

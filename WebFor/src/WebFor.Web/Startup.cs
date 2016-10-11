@@ -78,8 +78,8 @@ namespace WebFor.Web
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddMvc()
-              .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-              .AddDataAnnotationsLocalization();
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
 
             services.AddMemoryCache();
 

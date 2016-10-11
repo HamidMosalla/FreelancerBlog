@@ -117,16 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MetaAuthor" xml:space="preserve">
-    <value>حمید مصلی نژاد</value>
+  <data name="CurrentAvatar" xml:space="preserve">
+    <value>آواتار فعلی</value>
   </data>
-  <data name="MetaDescription" xml:space="preserve">
-    <value>طراحی وب سایت های سفارشی، مقاله های متنوع در خصوص تکنولوژی های وب</value>
+  <data name="GenderLabelFemale" xml:space="preserve">
+    <value>زن</value>
   </data>
-  <data name="NoScriptTag" xml:space="preserve">
-    <value>جاوا اسکریپت غیرفعال است، برای استفاده بهتر از امکانات سایت لطفا آن را فعال کنید.</value>
+  <data name="GenderLabelMale" xml:space="preserve">
+    <value>مرد</value>
   </data>
-  <data name="WebSiteName" xml:space="preserve">
-    <value>وب برای ایران</value>
+  <data name="GenderLegend" xml:space="preserve">
+    <value>جنیست</value>
+  </data>
+  <data name="InputFileButtonText" xml:space="preserve">
+    <value>انتخاب تامبنیل</value>
+  </data>
+  <data name="ProfilePageTitle" xml:space="preserve">
+    <value>ویرایش پروفایل</value>
+  </data>
+  <data name="SubmitButtonText" xml:space="preserve">
+    <value>ذخیره</value>
   </data>
 </root>
