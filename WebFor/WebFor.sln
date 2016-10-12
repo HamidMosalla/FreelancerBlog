@@ -71,38 +71,4 @@ Global
 		{2327921A-0E1C-4F95-9C5C-539C442C05BC} = {BC33B627-F20B-4CFE-8F5F-D2087DD4693A}
 		{9C54DE7A-9ED2-4FBE-94FA-B75962027FF6} = {BC33B627-F20B-4CFE-8F5F-D2087DD4693A}
 	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://xellarixtfs.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = src\\WebFor.Core\\WebFor.Core.xproj
-		SccProjectTopLevelParentUniqueName1 = WebFor.sln
-		SccProjectName1 = src/WebFor.Core
-		SccLocalPath1 = src\\WebFor.Core
-		SccProjectUniqueName2 = src\\WebFor.Infrastructure\\WebFor.Infrastructure.xproj
-		SccProjectTopLevelParentUniqueName2 = WebFor.sln
-		SccProjectName2 = src/WebFor.Infrastructure
-		SccLocalPath2 = src\\WebFor.Infrastructure
-		SccProjectUniqueName3 = src\\WebFor.DependencyInjection\\WebFor.DependencyInjection.xproj
-		SccProjectTopLevelParentUniqueName3 = WebFor.sln
-		SccProjectName3 = src/WebFor.DependencyInjection
-		SccLocalPath3 = src\\WebFor.DependencyInjection
-		SccProjectUniqueName4 = src\\WebFor.Web\\WebFor.Web.xproj
-		SccProjectTopLevelParentUniqueName4 = WebFor.sln
-		SccProjectName4 = src/WebFor.Web
-		SccLocalPath4 = src\\WebFor.Web
-		SccProjectUniqueName5 = src\\WebFor.Tests\\WebFor.UnitTests.xproj
-		SccProjectTopLevelParentUniqueName5 = WebFor.sln
-		SccProjectName5 = src/WebFor.Tests
-		SccLocalPath5 = src\\WebFor.Tests
-		SccProjectUniqueName6 = src\\WebFor.IntegrationTests\\WebFor.IntegrationTests.xproj
-		SccProjectTopLevelParentUniqueName6 = WebFor.sln
-		SccProjectName6 = src/WebFor.IntegrationTests
-		SccLocalPath6 = src\\WebFor.IntegrationTests
-		SccProjectUniqueName7 = src\\WebFor.UITests\\WebFor.UITests.xproj
-		SccProjectTopLevelParentUniqueName7 = WebFor.sln
-		SccProjectName7 = src/WebFor.UITests
-		SccLocalPath7 = src\\WebFor.UITests
-	EndGlobalSection
 EndGlobal
