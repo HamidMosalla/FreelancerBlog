@@ -39,7 +39,7 @@ I've started building this project when Asp.Net Core RC1 was released, and I've 
 - JavaScript Module Pattern  
 - Unit Test  
 
-As you can see a lot of this server side technologies are in beta (except the Asp.Net Core itself), but I continue to update them as newer versions become available
+As you can see a lot of this server side technologies are in beta (except the Asp.Net Core itself), but I continue to update them as newer versions become available.
 
 # What you need to run it?
 - Visual Studio 2015 Update 3  
