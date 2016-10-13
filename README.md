@@ -46,4 +46,4 @@ As you can see a lot of this server side technologies are in beta (except the As
 - SQL Server  
 
 # Things to note
-Please note that the use of some paradigms in this project is an overkill, you most certainly don't need a multi layered onion architecture for a simple blog, one should introduce complexity when there is a need for it as [YAGNI](http://deviq.com/yagni/) principle states, but I've done it mostly for educational purposes and also I wanted to have a good jump start template for more complex projects.
+Please note that the use of some paradigms in this project is an overkill, you most certainly don't need a multilayered onion architecture for a simple blog, one should introduce complexity when there is a need for it as [YAGNI](http://deviq.com/yagni/) principle states, but I've done it mostly for educational purposes and also I wanted to have a good jump start template for more complex projects.
