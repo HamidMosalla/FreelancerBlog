@@ -3,7 +3,7 @@ I've started building this project when Asp.Net RC1 was released, and I added ne
 
 #What's in it?  
 
-## Server Side:  
+## Server Side:
 C#  
 Asp.Net Core 1.0 RTM  
 Entity Framework Core 1.0 RTM  
@@ -15,7 +15,7 @@ Moq 4.6.25-alpha
 GenFu 1.1.1  
 FluentAssertions 4.13.0  
 
-##Client Side:  
+##Client Side:
 JavaScript  
 jQuery  
 Bootstrap  
@@ -27,10 +27,10 @@ Requirejs
 Spin.js  
 RespondJs  
 
-##Practices and Paradigm:  
+##Practices and Paradigm:
 SOLID  
 Ports and Adapters Architecture    
-DDD
+DDD  
 Dependency Inversion Principle  
 Repository Pattern  
 Unit Of Work Pattern  
@@ -42,8 +42,8 @@ Unit Test
 As you can see a lot of this server side technologies are in beta (except the Asp.Net Core itself), but I continue to update them as newer version become available
 
 #What you need to run it?
-Visual Studio 2015 Update 3
-SQL Server
+Visual Studio 2015 Update 3  
+SQL Server  
 
 #Things to note
-Please note that the use of some of paradigms in this project is an overkill, you most certainly don't need a multi layered onion architecture for a simple blog, one should introduce complexity when there is a need for it as [YAGNI](http://deviq.com/yagni/) states, but I've done it mostly of educational purposes and also I wanted to have a good jump start template for more complex projects.
+Please note that the use of some paradigms in this project is an overkill, you most certainly don't need a multi layered onion architecture for a simple blog, one should introduce complexity when there is a need for it as [YAGNI](http://deviq.com/yagni/) states, but I've done it mostly of educational purposes and also I wanted to have a good jump start template for more complex projects.
