@@ -1,32 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using FluentAssertions;
+using GenFu;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Configuration;
-using Moq;
-using WebFor.Web.Mapper;
-using WebFor.Web.Controllers;
-using Xunit;
 using Microsoft.Extensions.Logging;
-using FluentAssertions;
-using GenFu;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.Routing;
-using WebFor.Tests.Fixtures;
+using Moq;
 using WebFor.Tests.HandMadeFakes;
+using WebFor.Web.Controllers;
+using WebFor.Web.Mapper;
 using WebFor.Web.ViewModels.Account;
+using WebFor.Web.ViewModels.Email;
+using Xunit;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.Shared;
-using WebFor.Core.Types;
-using WebFor.Web.ViewModels.Email;
 using WebFor.Core.Wrappers;
+using WebFor.Core.Types;
+using WebFor.UnitTests.HandMadeFakes;
 
-namespace WebFor.Tests.Controllers.Root
+namespace WebFor.UnitTests.Controllers.Root
 {
     public class AccountControllerTests
     {

@@ -15,7 +15,7 @@ using GenFu;
 using WebFor.Core.Domain;
 using WebFor.Web.Areas.Admin.ViewModels.Portfolio;
 
-namespace WebFor.Tests.Controllers.Root
+namespace WebFor.UnitTests.Controllers.Root
 {
     public class PortfolioControllerTests
     {

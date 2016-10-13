@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Moq;
-using WebFor.Core.Repository;
-using WebFor.Tests.Collections;
-using WebFor.Tests.Fixtures;
+using WebFor.UnitTests.Fixtures;
 using WebFor.Web.Controllers;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace WebFor.Tests.Controllers.Root
+namespace WebFor.UnitTests.Controllers.Root
 {
 
     //[Collection("Unit Of Work Collection")]

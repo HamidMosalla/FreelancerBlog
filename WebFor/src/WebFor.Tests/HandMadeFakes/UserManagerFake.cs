@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 using Moq;
 using WebFor.Core.Domain;
 
-namespace WebFor.Tests.HandMadeFakes
+namespace WebFor.UnitTests.HandMadeFakes
 {
     public class UserManagerFake : UserManager<ApplicationUser>
     {

@@ -1,7 +1,7 @@
 ﻿using Moq;
 using WebFor.Core.Repository;
 
-namespace WebFor.Tests.Fixtures
+namespace WebFor.UnitTests.Fixtures
 {
     public class UnitOfWorkFixture
     {

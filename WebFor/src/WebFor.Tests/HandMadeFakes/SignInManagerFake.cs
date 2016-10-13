@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
-using WebFor.Tests.Fixtures;
 using WebFor.Core.Domain;
+using WebFor.UnitTests.HandMadeFakes;
 
 namespace WebFor.Tests.HandMadeFakes
 {

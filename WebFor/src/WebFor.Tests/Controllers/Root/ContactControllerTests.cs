@@ -15,11 +15,11 @@ using WebFor.Web.ViewModels.Contact;
 using Xunit;
 using WebFor.Core.Repository;
 using WebFor.Core.Services.Shared;
-using WebFor.Core.Domain;
-using WebFor.Core.Types;
 using WebFor.Core.Wrappers;
+using WebFor.Core.Types;
+using WebFor.Core.Domain;
 
-namespace WebFor.Tests.Controllers.Root
+namespace WebFor.UnitTests.Controllers.Root
 {
     public class ContactControllerTests
     {

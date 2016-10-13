@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Moq;
-using WebFor.Infrastructure.Services.Shared;
-using Xunit;
-using FluentAssertions;
-using GenFu;
 using Microsoft.Extensions.Primitives;
-using Moq.Protected;
+using Moq;
+using WebFor.UnitTests.HandMadeFakes;
+using Xunit;
+using WebFor.Infrastructure.Services.Shared;
+using FluentAssertions;
 using WebFor.Core.Types;
-using WebFor.Tests.HandMadeFakes;
 
-namespace WebFor.Tests.Services.Shared
+namespace WebFor.UnitTests.Services.Shared
 {
     public class CaptchaValidatorTests
     {
