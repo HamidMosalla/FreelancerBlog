@@ -1,5 +1,5 @@
 # WebForAspNetCore
-I've started building this project when Asp.Net RC1 was released, and I added new features to it and upgrade it ever since. At first my intention was to fiddle with Asp.Net Core a little to learn, but then I've decided to make it into a project that can be useable. This project didn't build to be a flexible CMS, but that doesn't mean you can't use bits and pieces of it in your project, because many part of this project are needs that reoccur.
+I've started building this project when Asp.Net RC1 was released, and I added new features to it and upgrade it ever since. At first my intention was to fiddle with Asp.Net Core a little to learn, but then I've decided to make it into a project that can be useable. This project didn't build to be a flexible CMS, but that doesn't mean you can't use bits and pieces of it in your project, because many parts of this project are needs that reoccur. If you saw some gobbledygook characters don't panic, it's because the main language of this blog was Persian, but I'm in the process of transforming it to support multiple language using Asp.Net Core built in localization mechanism. 
 
 #What's in it?  
 
@@ -16,7 +16,7 @@ GenFu 1.1.1
 FluentAssertions 4.13.0  
 
 ##Client Side:  
-Javascript  
+JavaScript  
 jQuery  
 Bootstrap  
 CkEditor  
@@ -29,7 +29,8 @@ RespondJs
 
 ##Practices and Paradigm:  
 SOLID  
-Ports and Adapters Architecure  
+Ports and Adapters Architecture    
+DDD
 Dependency Inversion Principle  
 Repository Pattern  
 Unit Of Work Pattern  
@@ -37,3 +38,12 @@ Adapter Pattern
 Strategy Pattern  
 JavaScript Module Pattern  
 Unit Test  
+
+As you can see a lot of this server side technologies are in beta (except the Asp.Net Core itself), but I continue to update them as newer version become available
+
+#What you need to run it?
+Visual Studio 2015 Update 3
+SQL Server
+
+#Things to note
+Please note that the use of some of paradigms in this project is an overkill, you most certainly don't need a multi layered onion architecture for a simple blog, one should introduce complexity when there is a need for it as [YAGNI](http://deviq.com/yagni/) states, but I've done it mostly of educational purposes and also I wanted to have a good jump start template for more complex projects.
