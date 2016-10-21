@@ -1,5 +1,5 @@
 # WebFor AspNetCore
-I've started building this project when Asp.Net Core RC1 was released, and I've added new features to it and upgrade it ever since. At first my intention was to fiddle with Asp.Net Core a little to learn, but then I've decided to make it into a project that can be useable. This project hasn't built to be a flexible CMS, but that doesn't mean you can't use bits and pieces of it in your project, because many parts of this project are needs that reoccur. If you saw some gobbledygook characters don't panic, it's because the main language of this blog was Persian, but I'm in the process of transforming it to support multiple language using Asp.Net Core built in localization mechanism. 
+I've started building this project when Asp.Net Core RC1 was released, and I've added new features to it and upgrade it ever since. At first my intention was to fiddle with Asp.Net Core a little to learn, but then I've decided to make it into a project that can be useable. This project hasn't built to be a flexible CMS, but that doesn't mean you can't use bits and pieces of it in your project, because many parts of this project are needs that reoccur. If you saw some alphabet that you didn't recognize, don't worry, it's because the main language of this blog was Persian, but I'm in the process of transforming it to support multiple language using Asp.Net Core built in localization mechanism. 
 
 # What's in it?  
 
@@ -27,7 +27,7 @@ I've started building this project when Asp.Net Core RC1 was released, and I've 
 - Spin.js  
 - RespondJs  
 
-## Practices and Paradigm:
+## Practices and Paradigms:
 - SOLID  
 - Ports and Adapters Architecture    
 - DDD  
@@ -41,7 +41,7 @@ I've started building this project when Asp.Net Core RC1 was released, and I've 
 
 As you can see a lot of this server side technologies are in beta (except the Asp.Net Core itself), but I continue to update them as newer versions become available.
 
-# What you need to run it?
+# What do you need to run it?
 - Visual Studio 2015 Update 3  
 - SQL Server  
 
