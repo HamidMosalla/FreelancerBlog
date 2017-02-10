@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -25,7 +26,7 @@ namespace WebFor.Tests.HandMadeFakes
             _signInResult = signInResult;
         }
 
-        public SignInManagerFake(IHttpContextAccessor contextAccessor, SignInResult signInResult, ExternalLoginInfo externalLoginInfo)
+        public SignInManagerFake(IHttpContextAccessor contextAccessor, SignInResult signInResult, ExternalLoginInfo externalLoginInfo, bool isSignIn = false)
         : base(new UserManagerFake(isUserConfirmed: false),
               contextAccessor,
               new Mock<IUserClaimsPrincipalFactory<ApplicationUser>>().Object,
@@ -59,6 +60,11 @@ namespace WebFor.Tests.HandMadeFakes
         public override Task<SignInResult> ExternalLoginSignInAsync(string loginProvider, string providerKey, bool isPersistent)
         {
             return Task.FromResult(_signInResult);
+        }
+
+        public override bool IsSignedIn(ClaimsPrincipal principal)
+        {
+            return true;
         }
     }
 }

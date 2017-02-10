@@ -953,5 +953,29 @@ namespace WebFor.UnitTests.Controllers.Root
             result.ViewData["LoginProvider"].Should().Be(signInManager.GetExternalLoginInfoAsync().Result.LoginProvider);
         }
 
+        [Fact]
+        public async Task ExternalLoginConfirmation_ShouldRedirectToActionIndexOfManageController_IfTheUserIsSignedIn()
+        {
+            //Arrange
+            var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
+            var signInManager = new SignInManagerFake(
+                _httpContextAccessor.Object,
+                Microsoft.AspNetCore.Identity.SignInResult.Failed,
+                new ExternalLoginInfo(new System.Security.Claims.ClaimsPrincipal(), string.Empty, string.Empty, string.Empty),
+                isSignIn:true);
+
+
+            var sut = new AccountController(userManager, signInManager, _emailSender.Object,
+                _smsSender.Object, _loggerFactoryWrapper.Object, _captchaValidator.Object, _configuration.Object,
+                _razorViewToString.Object, _configurationWrapper.Object);
+
+            //Act
+            var result = (RedirectToActionResult) await sut.ExternalLoginConfirmation(It.IsAny<ExternalLoginConfirmationViewModel>());
+
+            result.Should().BeOfType<RedirectToActionResult>();
+            result.ControllerName.Should().Be("Manage");
+            result.ActionName.Should().Be("Index");
+        }
+
     }
 }
