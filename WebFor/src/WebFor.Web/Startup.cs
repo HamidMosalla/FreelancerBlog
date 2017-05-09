@@ -49,7 +49,7 @@ namespace WebFor.Web
             if (env.IsDevelopment())
             {
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                //////builder.AddUserSecrets();
+                builder.AddUserSecrets("aspnet5-WebFor-23975498-e4cd-4072-bc80-0fca99fd4a83");
             }
 
             builder.AddEnvironmentVariables();
@@ -65,15 +65,15 @@ namespace WebFor.Web
             services.AddDbContext<WebForDbContext>(options =>
                 options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
-            //////services.AddIdentity<ApplicationUser, IdentityRole>(o =>
-            //////{
-            //////    o.Password.RequireDigit = false;
-            //////    o.Password.RequireLowercase = false;
-            //////    o.Password.RequireNonAlphanumeric = false;
-            //////    o.Password.RequireUppercase = false;
-            //////    o.Password.RequiredLength = 6;
-            //////}).AddEntityFrameworkStores<WebForDbContext>()
-            //////  .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>(o =>
+            {
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequiredLength = 6;
+            }).AddEntityFrameworkStores<WebForDbContext>()
+              .AddDefaultTokenProviders();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
