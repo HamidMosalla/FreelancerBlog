@@ -1,28 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC33B627-F20B-4CFE-8F5F-D2087DD4693A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{66AB89F9-53F8-4455-B9CC-841552C93CD5}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.Core", "src\WebFor.Core\WebFor.Core.xproj", "{19D59DD9-1914-4CD6-8FBD-DD17F5C95AE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebFor.Core", "src\WebFor.Core\WebFor.Core.csproj", "{19D59DD9-1914-4CD6-8FBD-DD17F5C95AE1}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.Infrastructure", "src\WebFor.Infrastructure\WebFor.Infrastructure.xproj", "{280B4AC9-9385-49E2-B595-F039D78A7F02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebFor.Infrastructure", "src\WebFor.Infrastructure\WebFor.Infrastructure.csproj", "{280B4AC9-9385-49E2-B595-F039D78A7F02}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.DependencyInjection", "src\WebFor.DependencyInjection\WebFor.DependencyInjection.xproj", "{CA4780A0-5275-4C72-93C8-4EA4D7C9A68D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebFor.DependencyInjection", "src\WebFor.DependencyInjection\WebFor.DependencyInjection.csproj", "{CA4780A0-5275-4C72-93C8-4EA4D7C9A68D}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.Web", "src\WebFor.Web\WebFor.Web.xproj", "{05D5D33E-D84A-4D57-8919-D0EF360B5552}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebFor.Web", "src\WebFor.Web\WebFor.Web.csproj", "{05D5D33E-D84A-4D57-8919-D0EF360B5552}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.UnitTests", "src\WebFor.Tests\WebFor.UnitTests.xproj", "{E4E92B71-3EE2-4888-B652-4E1442D8ADF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebFor.Tests", "src\WebFor.Tests\WebFor.Tests.csproj", "{E4E92B71-3EE2-4888-B652-4E1442D8ADF6}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.IntegrationTests", "src\WebFor.IntegrationTests\WebFor.IntegrationTests.xproj", "{2327921A-0E1C-4F95-9C5C-539C442C05BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebFor.IntegrationTests", "src\WebFor.IntegrationTests\WebFor.IntegrationTests.csproj", "{2327921A-0E1C-4F95-9C5C-539C442C05BC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebFor.UITests", "src\WebFor.UITests\WebFor.UITests.xproj", "{9C54DE7A-9ED2-4FBE-94FA-B75962027FF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebFor.UITests", "src\WebFor.UITests\WebFor.UITests.csproj", "{9C54DE7A-9ED2-4FBE-94FA-B75962027FF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

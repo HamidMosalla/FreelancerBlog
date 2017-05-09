@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>WebFor.DependencyInjection Class Library</Description>
+    <Authors>User</Authors>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <AssemblyName>WebFor.DependencyInjection</AssemblyName>
+    <PackageId>WebFor.DependencyInjection</PackageId>
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebFor.Core\WebFor.Core.csproj" />
+    <ProjectReference Include="..\WebFor.Infrastructure\WebFor.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.0.0-rc3-293" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.0.0-rc3-280" />
+  </ItemGroup>
+
+</Project>
