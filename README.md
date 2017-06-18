@@ -1,4 +1,4 @@
-# WebFor AspNetCore
+# FreelancerBlog
 I've started building this project when Asp.Net Core RC1 was released, and I've added new features to it and upgrade it ever since. At first my intention was to fiddle with Asp.Net Core a little to learn, but then I've decided to make it into a project that can be useable. This project hasn't built to be a flexible CMS, but that doesn't mean you can't use bits and pieces of it in your project, because many parts of this project are needs that reoccur. If you saw some alphabet that you didn't recognize, don't worry, it's because the main language of this blog was Persian, but I'm in the process of transforming it to support multiple language using Asp.Net Core built in localization mechanism. 
 
 # What's in it?  
@@ -44,6 +44,3 @@ As you can see a lot of this server side technologies are in beta (except the As
 # What do you need to run it?
 - Visual Studio 2015 Update 3  
 - SQL Server  
-
-# Things to note
-Please note that the use of some paradigms in this project is an overkill, you most certainly don't need a multilayered onion architecture for a simple blog, one should introduce complexity when there is a need for it as [YAGNI](http://deviq.com/yagni/) principle states, but I've done it mostly for educational purposes and also I wanted to have a good jump start template for more complex projects.
