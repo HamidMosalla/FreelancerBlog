@@ -1,11 +1,12 @@
 ﻿@using System.Security.Claims
 @using System.Threading.Tasks
 @using FreelancerBlog.Areas.Admin.ViewModels.Article
+@using FreelancerBlog.Core.Domain
 @using FreelancerBlog.ViewModels.Article
-@using WebFor.Core.Domain
+
 @using Microsoft.Extensions.Configuration;
 
-@model FreelancerBlog.Areas.Admin.ViewModels.Article.ArticleViewModel
+@model ArticleViewModel
 
 @{
     ViewData["Title"] = Model.ArticleTitle;
