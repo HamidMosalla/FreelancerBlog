@@ -1,0 +1,41 @@
+﻿@using FreelancerBlog.Areas.Admin.ViewModels.Article
+@model ArticleViewModel
+
+@{
+    ViewData["Title"] = "کنترل پنل";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+
+}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">کنترل پنل</div>
+    <div class="panel-body">
+
+        <a href="/Admin/Article/Create">ایجاد مقاله</a><br />
+        <a href="/Admin/Article/ManageArticle">مدیریت مقاله</a><br />
+        <a href="/Admin/Article/ManageArticleComment">مدیریت کامنت</a><br />
+        <a href="/Admin/Article/ManageArticleTag">مدیریت تگ مقاله</a><br /><br />
+
+        <a href="/Admin/Contact/ManageContact">مدیریت ارتباط مقاله</a><br /><br />
+
+
+        <a href="/Admin/Portfolio/Create">ایجاد پوتفولیو</a><br />
+        <a href="/Admin/Portfolio/ManagePortfolio">مدیریت پوتفولیو</a><br /><br />
+
+
+        <a href="/Admin/SlideShow/Create">ایجاد اسلاید شو</a><br />
+        <a href="/Admin/SlideShow/ManageSlideShow">مدیریت اسلاید شو</a><br /><br />
+
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+
+}

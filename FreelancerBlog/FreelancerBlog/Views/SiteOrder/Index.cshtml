@@ -1,0 +1,73 @@
+﻿@using FreelancerBlog.ViewModels.SiteOrder
+@model FreelancerBlog.ViewModels.SiteOrder.SiteOrderViewModel
+
+@{
+    ViewData["Title"] = "سفارش وبسایت";
+}
+
+@section styles{
+    @*<link href="~/lib/jquery-smart-wizard/smart_wizard.css" rel="stylesheet" />*@
+    <link href="~/css/site-order.css" rel="stylesheet" />
+    <link href="~/css/site-order-wizard.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-select/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/lib/pnotify/dist/pnotify.custom.min.css" rel="stylesheet" />
+    <link href="~/css/checkbox-slider.css" rel="stylesheet" />
+}
+
+<section id="title" style="background-image: url(/images/site-order/bg-masthead-website-cost.jpg); height: 424px; color: white;">
+
+    @{ Html.RenderPartial("_PricePageIntro"); }
+
+</section>
+
+<section class="row" style="padding-bottom: 0;">
+
+    @{ Html.RenderPartial("_PriceDescription"); }
+
+</section>
+
+<section class="website-cost-calculator" id="calculator" style="padding-bottom: 0;">
+
+    @{ Html.RenderPartial("_PriceCalculator"); }
+
+</section>
+
+<section class="yellow-stripes-section-wrapper">
+
+    @{ Html.RenderPartial("_PristList"); }
+
+</section>
+
+<article class="main">
+
+    @{ Html.RenderPartial("_PriceTable"); }
+
+</article>
+
+<section id="recent-works" style="background-color: #FCCE00;">
+
+    @await Component.InvokeAsync("HomePortfolioSlider")
+
+</section>
+
+<section class="white-section-wrapper">
+
+    @{ Html.RenderPartial("_CostBreakDown"); }
+
+</section>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery.blockui/jquery.blockui.js"></script>
+    <script src="~/lib/spin.js/spin.min.js"></script>
+    <script src="~/js/utilities/spin.partofpage.js"></script>
+    <script src="~/lib/bootstrap-select/bootstrap-select.min.js"></script>
+    <script src="~/lib/tableexport/jquery.base64.utf8.js"></script>
+    <script src="~/lib/tableexport/tableexport.js"></script>
+    <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
+
+    <script data-main="/js/WebforScripts/Root/SiteOrder/Index/Main" src="~/lib/requirejs/require.min.js"></script>
+
+    <script src='https://www.google.com/recaptcha/api.js?hl=fa'></script>
+}

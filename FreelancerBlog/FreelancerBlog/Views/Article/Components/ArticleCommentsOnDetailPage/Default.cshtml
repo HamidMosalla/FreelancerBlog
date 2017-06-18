@@ -1,0 +1,41 @@
+﻿@using System.Threading.Tasks
+@using FreelancerBlog.ViewModels.Article
+@model FreelancerBlog.ViewModels.Article.ArticleCommentTreeViewModel
+
+@if (Model.Comments.Any(s => s.ArticleCommentParentId == Model.CommentSeed))
+{
+    foreach (var node in Model.Comments)
+    {
+        if (node.ArticleCommentParentId == Model.CommentSeed)
+        {
+            var inner = new ArticleCommentTreeViewModel { CommentSeed = node.ArticleCommentId, Comments = Model.Comments };
+
+            <div class="media" id="@node.ArticleCommentId">
+                <div class="pull-left">
+                    <img alt="" src="@node.ArticleCommentGravatar" class="avatar img-circle">
+                </div>
+                <div class="media-body">
+                    <div class="well">
+
+                        <div class="media-heading">
+
+                            <strong>@node.ArticleCommentName</strong>&nbsp; @(node.ArticleCommentParentId != null ? " - در پاسخ به " + node.ArticleCommentParent.ArticleCommentName : "")
+                            <small style="padding-right: 10px;"><i class="fa fa-calendar"></i>&nbsp; <span class="ArticleDateCreated"> @node.ArticleCommentDateCreated.ToString("MM/dd/yyyy")</span></small>
+                            <a href="#" class="pull-left replyButton" data-parent-id="@node.ArticleCommentId" data-commentor-name="@node.ArticleCommentName"><i class="fa fa-repeat"></i> پاسخ</a>
+
+                        </div>
+
+                        <div style="max-width: 540px; -ms-word-wrap: break-word; word-wrap: break-word; white-space: pre-wrap;" class="text-justify">
+                            <p>@node.ArticleCommentBody</p>
+                        </div>
+
+
+                    </div>
+
+                    @await Component.InvokeAsync("ArticleCommentsOnDetailPage", new { commentTree = inner })
+
+                </div>
+            </div>
+        }
+    }
+}

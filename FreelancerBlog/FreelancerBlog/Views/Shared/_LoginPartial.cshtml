@@ -1,0 +1,47 @@
+﻿@using FreelancerBlog.Core.Domain
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IViewLocalizer Localizer
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="caret"></i> @UserManager.GetUserName(User).Split('@').First() <i class="caret"></i> </a>
+                <ul class="dropdown-menu">
+
+                    <li><a href="/Manage/Index">@Localizer["ManageAccount"]</a></li>
+                    <li><a href="/Manage/ChangePassword">@Localizer["ChangePassword"]</a></li>
+                    <li><a href="/User/Profile/EditProfile">@Localizer["UpdateProfile"]</a></li>
+                    <li><a href="/User/Profile/ProfileDetail/@UserManager.GetUserName(User)">@Localizer["ViewProfile"]</a></li>
+                    <li><a href="/Manage/ManageLogins">@Localizer["LoginWithOtherServices"]</a></li>
+
+                    <li class="divider" style="background-color: gray;"></li>
+
+                    <li><a href="#">@Localizer["SubmitArticle"]</a></li>
+                    <li><a href="#">@Localizer["EditArticle"]</a></li>
+
+                    <li class="divider" style="background-color: gray;"></li>
+
+                    <button type="submit" class="btn btn-link navbar-btn navbar-link">@Localizer["SignOff"]</button>
+
+                </ul>
+            </li>
+
+
+        </ul>
+    </form>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a asp-controller="Account" asp-action="Register">@Localizer["Register"]</a></li>
+        <li><a asp-controller="Account" asp-action="Login">@Localizer["SignIn"]</a></li>
+    </ul>
+}

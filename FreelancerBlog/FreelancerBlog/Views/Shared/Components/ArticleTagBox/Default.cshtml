@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Threading.Tasks
+@using FreelancerBlog.Areas.Admin.ViewModels.Article
+@model List<FreelancerBlog.Areas.Admin.ViewModels.Article.ArticleTagViewModel>
+
+@inject IViewLocalizer Localizer
+
+<div class="widget tags">
+    <h3>@Localizer["Tags"]</h3>
+    <ul class="tag-cloud">
+        @foreach (var tag in Model)
+        {
+            <li><a class="btn btn-xs btn-primary" href="/Article/Tag/@tag.ArticleTagId/@tag.ArticleTagName.Replace(' ', '-')">@tag.ArticleTagName</a></li>
+        }
+    </ul>
+</div>

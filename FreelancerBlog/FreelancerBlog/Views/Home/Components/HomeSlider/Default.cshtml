@@ -1,0 +1,43 @@
+﻿@using System.Threading.Tasks
+@using FreelancerBlog.Areas.Admin.ViewModels.SlideShow
+@model List<FreelancerBlog.Areas.Admin.ViewModels.SlideShow.SlideShowViewModel>
+
+<div id="IndexCarousel" class="carousel slide" data-ride="carousel">
+
+    <ol class="carousel-indicators">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <li data-target="#IndexCarousel" data-slide-to="@i" class="@(i == 0 ? "active" : string.Empty)"></li>
+        }
+    </ol>
+
+    <div class="carousel-inner">
+        @foreach (var slide in Model)
+        {
+            <div class="item @(Model.ElementAt(0).Equals(slide) ? "active" : string.Empty)" style="background-image: url(/images/slider/@slide.SlideShowPictrure)">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="carousel-content center centered">
+                                <h2 class="boxed animation animated-item-1">@slide.SlideShowTitle</h2>
+                                <br>
+                                <p class="boxed animation animated-item-2 text-justify" style="max-width:620px; -ms-word-wrap: break-word; word-wrap: break-word; white-space: pre-wrap;">@slide.SlideShowBody</p>
+                                <br>
+                                <a class="btn btn-md animation animated-item-3" href="@slide.SlideShowLink">بیشتر...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <a class="left carousel-control prev hidden-xs" href="#IndexCarousel" data-slide="prev">
+        <i class="fa fa-angle-left"></i>
+    </a>
+
+    <a class="right carousel-control next hidden-xs" href="#IndexCarousel" data-slide="next">
+        <i class="fa fa-angle-right"></i>
+    </a>
+
+</div>

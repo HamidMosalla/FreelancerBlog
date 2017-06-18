@@ -1,0 +1,72 @@
+﻿@using FreelancerBlog.Areas.Admin.ViewModels.SlideShow
+@model SlideShowViewModelEdit
+
+@{
+    ViewData["Title"] = "ویرایش اسلاید شو";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section styles{
+
+}
+
+<form asp-action="Edit" asp-controller="SlideShow" id="SlideShowForm" enctype="multipart/form-data">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        @Html.HiddenFor(model=>model.SlideShowId)
+
+        <div class="form-group">
+            <label asp-for="SlideShowTitle" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="SlideShowTitle" class="form-control" />
+                <span asp-validation-for="SlideShowTitle" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SlideShowBody" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <textarea asp-for="SlideShowBody" cols="16" rows="10" style="max-width: 480px;" class="form-control"></textarea>
+                <span asp-validation-for="SlideShowBody" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SlideShowPriority " class="col-md-2 control-label"></label>
+            <div class="col-md-3">
+                <input asp-for="SlideShowPriority" class="form-control" />
+                <span asp-validation-for="SlideShowPriority" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SlideShowLink " class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="SlideShowLink" class="form-control" />
+                <span asp-validation-for="SlideShowLink" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SlideShowPictrureFile " class="col-md-2 control-label"></label>
+            <div class="col-md-4">
+                <input asp-for="SlideShowPictrureFile" accept=".jpg,.jpeg,.gif,.png" type="file" class="filestyle" data-buttonText="انتخاب تصویر" />
+                <span asp-validation-for="SlideShowPictrureFile" class="text-danger" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ذخیره" class="btn btn-lg btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap-filestyle/src/bootstrap-filestyle.min.js"></script>
+}

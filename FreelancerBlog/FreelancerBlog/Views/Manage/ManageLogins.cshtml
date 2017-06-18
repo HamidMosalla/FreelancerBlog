@@ -1,0 +1,93 @@
+﻿@model FreelancerBlog.ViewModels.Manage.ManageLoginsViewModel
+@using FreelancerBlog.ViewModels.Manage
+@using Microsoft.AspNetCore.Http.Authentication
+@{
+    ViewData["Title"] = "مدیریت لاگین های خارجی";
+}
+
+@section styles{
+    <link href="~/css/colorgraph.css" rel="stylesheet" />
+}
+
+<section id="title" class="emerald">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>مدیریت لاگین های خارجی</h1>
+                <p>اکانت های خارجی خود را به اکانت سایت متصل کنید و از آن طریق وارد شوید.</p>
+            </div>
+            <div class="col-sm-6">
+                <ul class="breadcrumb pull-right">
+                    <li><a href="/Home/Index">خانه</a></li>
+                    <li class="active"><a href="/Manage/ManageLogins">مدیریت لاگین های خارجی</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+@if ((string)ViewData["StatusMessage"] != string.Empty)
+{
+    <div class="alert alert-warning alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        @ViewData["StatusMessage"]
+    </div>
+}
+
+<br />
+<br />
+<br />
+<br />
+<div class="row">
+    <div class="col-md-4 col-sm-4 col-xs-4 col-md-offset-3">
+
+        @if (Model.CurrentLogins.Count > 0)
+        {
+            <h4>سرویس های ثبت شده</h4>
+            <table class="table">
+                <tbody>
+                    @foreach (var account in Model.CurrentLogins)
+                {
+                        <tr>
+                            <td>@account.LoginProvider</td>
+                            <td>
+                                @if ((bool)ViewData["ShowRemoveButton"])
+                                {
+                                    <form asp-controller="Manage" asp-action="RemoveLogin" method="post" class="form-horizontal" role="form">
+                                        <div>
+                                            <input asp-for="@account.LoginProvider" type="hidden" />
+                                            <input asp-for="@account.ProviderKey" type="hidden" />
+                                            <input type="submit" class="btn btn-default" value="حذف" title="Remove this @account.LoginProvider login from your account" />
+                                        </div>
+                                    </form>
+                                }
+                                else
+                                {
+                                    @: &nbsp;
+                            }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        @if (Model.OtherLogins.Count > 0)
+        {
+            <h4>سرویس های خارجی دیگری ثبت کنید</h4>
+            <hr />
+            <form asp-controller="Manage" asp-action="LinkLogin" method="post" class="form-horizontal" role="form">
+                <div id="socialLoginList">
+                    <p>
+                        @foreach (var provider in Model.OtherLogins)
+                        {
+                            <button type="submit" class="btn btn-default" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">@provider.AuthenticationScheme</button>
+                        }
+                    </p>
+                </div>
+            </form>
+        }
+    </div>
+</div>
+
+<br/>
+<br />

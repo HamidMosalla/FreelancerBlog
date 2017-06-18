@@ -1,0 +1,51 @@
+﻿@using System.Security.Claims
+@using System.Threading.Tasks
+@using FreelancerBlog.Areas.Admin.ViewModels.Portfolio
+@model IEnumerable<FreelancerBlog.Areas.Admin.ViewModels.Portfolio.PortfolioViewModel>
+
+@{
+    ViewData["Title"] = "نمونه کارها";
+    Layout = "~/views/shared/_PortfolioLayout .cshtml";
+}
+
+@section PortfolioStyles{
+
+}
+
+<section id="portfolio" class="container">
+
+    <ul class="portfolio-filter">
+
+        <li><a class="btn btn-default active" href="#" data-filter="*">All</a></li>
+
+        @foreach (var portfolio in Model.SelectMany(m => m.PortfolioCategoryList).Distinct())
+        {
+            <li><a class="btn btn-default" href="#" data-filter=".@portfolio">@portfolio</a></li>
+        }
+
+    </ul>
+
+
+    <ul class="portfolio-items col-3">
+        @foreach (var portfolio in Model)
+        {
+            <li class="portfolio-item @string.Join(" ", portfolio.PortfolioCategoryList)">
+                <div class="item-inner">
+                    <img src="/images/portfolio/thumb/@portfolio.PortfolioThumbnail" alt="@portfolio.PortfolioTitle">
+                    <h5>@portfolio.PortfolioTitle</h5>
+                    <div class="overlay">
+                        <a class="preview btn btn-danger" href="/Portfolio/Detail/@portfolio.PortfolioId/@portfolio.PortfolioTitle.Replace(' ', '-')" data-toggle="tooltip" title="مشاهده جزئیات" target="_blank"><i class="fa fa-eye"></i></a>
+                        <a class="preview btn btn-primary" href="@portfolio.PortfolioSiteAddress" data-toggle="tooltip" title="مشاهده وب سایت" target="_blank"><i class="fa fa-globe"></i></a>
+                        <a class="preview btn btn-default" href="javascript:void(0)" data-toggle="tooltip" title="مشاهده گاری تصاویر"><i class="fa fa-image"></i></a>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+
+</section>
+
+
+@section PortfolioScripts{
+    <script src="~/js/webforscripts/portfolio.detail.js"></script>
+}

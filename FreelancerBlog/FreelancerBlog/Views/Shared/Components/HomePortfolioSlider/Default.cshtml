@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using System.Threading.Tasks
+@using FreelancerBlog.Areas.Admin.ViewModels.Portfolio
+@model List<FreelancerBlog.Areas.Admin.ViewModels.Portfolio.PortfolioViewModel>
+
+@inject IViewLocalizer Localizer
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-md-3">
+            <h3>@Localizer["LatestProjects"]</h3>
+            <p>@Localizer["LatestProjectsDesc"]</p>
+            <div class="btn-group">
+                <a class="btn btn-danger" href="#scroller" data-slide="next"><i class="fa fa-angle-right"></i></a>
+                <a class="btn btn-danger" href="#scroller" data-slide="prev"><i class="fa fa-angle-left"></i></a>
+            </div>
+            <p class="gap"></p>
+        </div>
+
+
+        <div class="col-md-9">
+            <div id="scroller" class="carousel slide">
+                <div class="carousel-inner">
+
+                    @for (int i = 0; i < (Model.Count % 3 == 0 ? (Model.Count / 3) : (Model.Count / 3) + 1); i++)
+                    {
+                        <div class="item @(i == 0 ? "active" : string.Empty)">
+                            <div class="row">
+
+
+                                @foreach (var portfolio in Model.Skip(i * 3).Take(3))
+                                {
+                                    <div class="col-xs-4">
+                                        <div class="portfolio-item">
+                                            <div class="item-inner">
+                                                <img class="img-responsive" src="~/images/portfolio/thumb/@portfolio.PortfolioThumbnail" alt="@portfolio.PortfolioTitle">
+                                                <h5>
+                                                    @portfolio.PortfolioTitle
+                                                </h5>
+                                                <div class="overlay">
+                                                    <a class="preview btn btn-danger" href="/Portfolio/Detail/@portfolio.PortfolioId/@portfolio.PortfolioTitle.Replace(' ', '-')" data-toggle="tooltip" title="@Localizer["ViewDetail"]" target="_blank"><i class="fa fa-eye"></i></a>
+                                                    <a class="preview btn btn-primary" href="@portfolio.PortfolioSiteAddress" data-toggle="tooltip" title="@Localizer["ViewWebSite"]" target="_blank"><i class="fa fa-globe"></i></a>
+                                                    <a class="preview btn btn-default" href="javascript:void(0)" data-toggle="tooltip" title="@Localizer["ViewPictureGallery"]"><i class="fa fa-image"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+
+                            </div>
+                        </div>
+                    }
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

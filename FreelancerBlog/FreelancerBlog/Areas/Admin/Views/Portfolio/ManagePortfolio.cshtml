@@ -1,0 +1,104 @@
+﻿@using System.Threading.Tasks
+@using cloudscribe.Web.Pagination
+@using FreelancerBlog.Areas.Admin.ViewModels.Portfolio
+@model IPagedList<PortfolioViewModel>
+
+@{
+    ViewData["Title"] = "مدیریت پورتفولیو";
+}
+
+@section styles{
+    <link href="~/lib/pnotify/dist/pnotify.custom.min.css" rel="stylesheet" />
+}
+
+@Html.AntiForgeryToken()
+
+@if (@TempData["PonrtfolioMessage"] != null)
+{
+    <p>
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4>@TempData["PonrtfolioMessage"]</h4>
+        </div>
+    </p>
+}
+
+@if (TempData["FileStatus"] != null)
+{
+    if ((string)TempData["FileStatus"] == "FileDeleteSuccess")
+    {
+        <p>
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4>تامبنیل پورتفولیو با موفقیت از دیسک حذف شد.</h4>
+            </div>
+        </p>
+    }
+}
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Single().PortfolioTitle)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Single().PortfolioCategory)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Single().PortfolioSiteAddress)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Single().PortfolioDateCreated)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td>
+                <a href="/Portfolio/Detail/@item.PortfolioId/@item.PortfolioTitle.Replace(" ", "-")">@item.PortfolioTitle</a>
+            </td>
+
+            <td>
+                @item.PortfolioCategory
+            </td>
+
+            <td>
+                <a href="@item.PortfolioSiteAddress">@item.PortfolioSiteAddress</a>
+            </td>
+
+            <td>
+                <span class="persianDate">@item.PortfolioDateCreated</span>
+            </td>
+
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PortfolioId" class="btn btn-warning">ویرایش</a>
+                <a asp-action="Delete" asp-route-id="@item.PortfolioId" class="btn btn-danger DeletePortfolioButton">حذف</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="text-center">
+    <cs-pager cs-paging-pagesize="@Model.PageSize"
+              cs-paging-pagenumber="@Model.PageNumber"
+              cs-paging-totalitems="@Model.TotalItemCount"
+              cs-pagenumber-param="page"
+              asp-controller="Portfolio"
+              asp-action="ManagePortfolio">
+
+    </cs-pager>
+</div>
+
+@section scripts{
+    <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
+
+    <script data-main="/js/WebforScripts/Admin/Portfolio/ManagePortfolio/Main" src="~/lib/requirejs/require.min.js"></script>
+}

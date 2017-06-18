@@ -1,0 +1,47 @@
+﻿@using System.Security.Claims
+@using System.Threading.Tasks
+@using FreelancerBlog.Areas.Admin.ViewModels.Portfolio
+@model FreelancerBlog.Areas.Admin.ViewModels.Portfolio.PortfolioViewModel
+
+@{
+    ViewData["Title"] = "جزئیات پورتفولیو";
+    ViewData["PortfolioId"] = Model.PortfolioId;
+    ViewData["PortfolioTitle"] = Model.PortfolioTitle;
+    Layout = "~/views/shared/_PortfolioLayout .cshtml";
+}
+
+@section PortfolioStyles{
+
+}
+
+<div class="blog">
+    <div class="blog-item">
+        @*<img width="100%" alt="" src="images/blog/blog2.jpg" class="img-responsive img-blog">*@
+        <div class="blog-content">
+
+            <h3>@Model.PortfolioTitle</h3>
+
+            <div class="entry-meta">
+                <span><i class="fa fa-user"></i> <a href="#author-well">&nbsp;حمید مصلی نژاد</a></span>
+
+                <span><i class="fa fa-calendar"></i>&nbsp;تاریخ اتمام پروژه: <span class="persianDate">@Model.PortfolioDateBuilt</span></span>
+
+                <span><i class="fa fa-globe"></i> <a href="@Model.PortfolioSiteAddress">&nbsp;آدرس وب سایت</a></span>
+
+                <span><i class="fa fa-folder"></i> تکنولوژی های مورد استفاده: @Model.PortfolioCategory </span>
+            </div>
+
+            <div style="min-width:600px;">
+                @Html.Raw(Model.PortfolioBody)
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+@section PortfolioScripts{
+    <script src="~/js/WebforScripts/Root/Portfolio/Detail.js"></script>
+}

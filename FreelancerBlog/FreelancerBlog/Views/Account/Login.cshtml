@@ -1,0 +1,129 @@
+﻿@using System.Threading.Tasks
+@using FreelancerBlog.ViewModels.Account
+@model FreelancerBlog.ViewModels.Account.LoginViewModel
+
+
+@{
+    ViewData["Title"] = "ورود";
+}
+
+@section styles{
+    <link href="~/css/colorgraph.css" rel="stylesheet" />
+    <link href="~/lib/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-social/bootstrap-social.css" rel="stylesheet" />
+}
+
+<section id="title" class="emerald">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>ورود</h1>
+                <p>از طریق شبکه های اجتماعی به سایت وارد شوید، یا در صورت تمایل می توانید ثبت نام کنید.</p>
+            </div>
+            <div class="col-sm-6">
+                <ul class="breadcrumb pull-right">
+                    <li><a href="/Home/Index">خانه</a></li>
+                    <li class="active"><a href="/Account/Login">ورود</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row">
+    <div class="col-md-4 col-sm-4 col-xs-4 col-md-offset-3">
+        <section>
+            <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form" style="max-width: 600px;">
+
+                <div class="col-md-10">
+                    <h2>
+                        ورود به سایت <br /><small>با استفاده از اکانت محلی خود وارد شوید.</small>
+                    </h2>
+                    <hr class="colorgraph">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    @if (ViewData["LoginMessage"] != null)
+                    {
+                        if ((string)ViewData["LoginMessage"] == "EmailIsNotConfirmed")
+                        {
+                            <div class="alert alert-warning alert-dismissable text-justify">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                اکانت شما هنوز تایید نشده، برای ورود لازم است اکانت خود را از طریق لینک فعال سازی که به ایمیل شما ارسال شده فعال کنید.
+                                اگر ایمیلی دریافت نکردید، پوشه هرزنامه های خود را چک کنید، اگر ایمیلی یافت نشد، برای ارسال دوباره لینک فعال سازی اقدام کنید.
+                            </div>
+                        }
+                    }
+
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input asp-for="Email" placeholder="ایمیل" class="form-control input-lg" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <input asp-for="Password" placeholder="پسورد" class="form-control input-lg" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <div class="checkbox checkbox-primary">
+                            <input type="checkbox" asp-for="RememberMe">
+                            <label asp-for="RememberMe">به خاطر داشتن؟</label>
+                        </div>
+                        <span asp-validation-for="RememberMe" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <button type="submit" class="btn btn-lg btn-success" style="width: 100%;">ورود</button>
+
+                        <br /><br />
+
+                        <p>
+                            <a asp-action="Register">نام کاربری ندارید؟ ثبت نام کنید.</a>
+                        </p>
+
+                        <p>
+                            <a asp-action="ForgotPassword">پسورد خود را فراموش کرده اید؟</a>
+                        </p>
+
+                        <p>
+                            <a asp-action="ResendConfirmEmail">ارسال دوباره لینک فعال سازی؟</a>
+                        </p>
+
+                        <hr class="colorgraph">
+                    </div>
+                </div>
+
+
+
+            </form>
+        </section>
+    </div>
+
+
+    <div class="col-md-3 col-sm-3 col-xs-3">
+        <h2>ورود به سایت</h2>
+        <hr class="colorgraph">
+        @{ await Html.RenderPartialAsync("_SocialLoginPartial"); }
+        <hr class="colorgraph">
+    </div>
+
+
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
