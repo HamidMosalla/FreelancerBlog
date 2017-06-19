@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreelancerBlog", "FreelancerBlog\FreelancerBlog.csproj", "{8CBC61FC-4052-4A00-85BF-3A2A8953C3AD}"
 EndProject
@@ -16,6 +16,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreelancerBlog.UnitTests", "FreelancerBlog.UnitTests\FreelancerBlog.UnitTests.csproj", "{05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreelancerBlog.UITests", "FreelancerBlog.UITests\FreelancerBlog.UITests.csproj", "{F4953E18-F779-44C0-B2CC-878176118F41}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E16284F0-5EB6-4CC4-8542-4860CE24901C}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
