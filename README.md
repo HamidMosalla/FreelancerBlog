@@ -1,7 +1,7 @@
 # FreelancerBlog
 FreelancerBlog is a multi-language blogging solution for freelancers built with Asp.Net Core. It gives its user the ability to post content, portfolio, different price plans etc.
 
-# Constituent Parts 
+# Constituent Parts
 
 ## Server Side:
 - C#  
