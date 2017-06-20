@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace WebFor.UnitTests.Controllers.Root
+namespace FreelancerBlog.UnitTests.Controllers.Root
 {
 
     //[Collection("Unit Of Work Collection")]
