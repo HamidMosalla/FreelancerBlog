@@ -7,6 +7,36 @@
   <PropertyGroup>
     <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ArticleSharedModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Article\Create\Main.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Article\Edit\Main.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticleComment\Main.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticleComment\ManageArticleCommentModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticleTag\Main.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticleTag\ManageArticleTagModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticle\Main.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticle\ManageArticleModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Contact\ManageContact\Main.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Contact\ManageContact\ManageContactModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Portfolio\Create\Main.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Portfolio\Create\PortfolioCreateModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Portfolio\ManagePortfolio\Main.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Portfolio\ManagePortfolio\ManagePortfolioModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\SlideShow\ManageSlideShow\Main.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\SlideShow\ManageSlideShow\ManageSlideShowModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Root\Account\Register.js" />
+    <Content Include="wwwroot\js\CustomScripts\Root\Article\ArticleDetail\ArticleDetailModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Root\Article\ArticleDetail\Main.js" />
+    <Content Include="wwwroot\js\CustomScripts\Root\Contact\Create\CreateContctModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Root\Contact\Create\Main.js" />
+    <Content Include="wwwroot\js\CustomScripts\Root\Home\Index.js" />
+    <Content Include="wwwroot\js\CustomScripts\Root\Portfolio\Detail.js" />
+    <Content Include="wwwroot\js\CustomScripts\Root\SiteOrder\Index\IndexModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Root\SiteOrder\Index\Main.js" />
+    <Content Include="wwwroot\js\CustomScripts\User\Profile\EditProfile.js" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.1.0" />
