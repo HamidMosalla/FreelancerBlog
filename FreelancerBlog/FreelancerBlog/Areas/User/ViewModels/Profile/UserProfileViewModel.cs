@@ -11,7 +11,7 @@ namespace FreelancerBlog.Areas.User.ViewModels.Profile
         public string Id { get; set; }
 
         [Required(ErrorMessage = "UserFullNameRequired")]
-        [Display(Name ="FullName", ResourceType = typeof(WebFor.Web.Resources.DataAnnotations))]
+        [Display(Name ="FullName", ResourceType = typeof(Resources.DataAnnotations))]
         [MaxLength(92, ErrorMessage = "MaxLengthValidation")]
         public string UserFullName { get; set; }
 

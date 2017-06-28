@@ -1,7 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.UnitTests.HandMadeFakes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -9,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 
-namespace WebFor.Tests.HandMadeFakes
+namespace FreelancerBlog.UnitTests.HandMadeFakes
 {
     public class SignInManagerFake : SignInManager<ApplicationUser>
     {

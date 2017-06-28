@@ -8,7 +8,7 @@ namespace FreelancerBlog.Infrastructure.EntityFramework
 {
     public class FreelancerBlogContextSeedData
     {
-        private FreelancerBlogContext _context;
+        private readonly FreelancerBlogContext _context;
 
         public FreelancerBlogContextSeedData(FreelancerBlogContext context)
         {

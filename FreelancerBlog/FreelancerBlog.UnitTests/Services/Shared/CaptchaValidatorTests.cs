@@ -2,16 +2,16 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
-using Moq;
-using Xunit;
 using FluentAssertions;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.Infrastructure.Services.Shared;
 using FreelancerBlog.UnitTests.HandMadeFakes;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
+using Moq;
+using Xunit;
 
-namespace WebFor.UnitTests.Services.Shared
+namespace FreelancerBlog.UnitTests.Services.Shared
 {
     public class CaptchaValidatorTests
     {

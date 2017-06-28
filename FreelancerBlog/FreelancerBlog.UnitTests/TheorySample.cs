@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Xunit;
+﻿using Xunit;
 
-namespace WebFor.Tests
+namespace FreelancerBlog.UnitTests
 {
     public class MemoryCalculator 
     {

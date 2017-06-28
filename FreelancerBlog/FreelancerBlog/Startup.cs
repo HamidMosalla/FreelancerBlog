@@ -45,7 +45,7 @@ namespace FreelancerBlog
             if (env.IsDevelopment())
             {
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets("aspnet5-WebFor-23975498-e4cd-4072-bc80-0fca99fd4a83");
+                builder.AddUserSecrets("aspnet5-freelancerblog-23975498-e4cd-4072-bc80-0fca99fd4a83");
             }
 
             builder.AddEnvironmentVariables();
@@ -82,7 +82,7 @@ namespace FreelancerBlog
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
-                options.CookieName = ".WebFor";
+                options.CookieName = ".FreelancerBlog";
             });
 
             services.Configure<AuthMessageSenderSecrets>(Configuration.GetSection("AuthMessageSenderSecrets"));
@@ -102,7 +102,7 @@ namespace FreelancerBlog
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule<UnitOfWorkModule>();
             containerBuilder.RegisterModule<AuthMessageSenderModule>();
-            containerBuilder.RegisterModule<WebForDbContextSeedDataModule>();
+            containerBuilder.RegisterModule<FreelancerBlogDbContextSeedDataModule>();
             containerBuilder.RegisterModule<FileManagerModule>();
             containerBuilder.RegisterModule<ArticleServicesModule>();
             containerBuilder.RegisterModule<PriceSpecCollectionFactoryModule>();
@@ -142,7 +142,7 @@ namespace FreelancerBlog
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions()
             {
-                AuthenticationScheme = "WebForCookieMiddlewareInstance",
+                AuthenticationScheme = "FreelancerBlogCookieMiddlewareInstance",
                 LoginPath = new PathString("/Account/Login/"),
                 AccessDeniedPath = new PathString("/Account/Forbidden/"),
                 AutomaticAuthenticate = true,
@@ -182,7 +182,7 @@ namespace FreelancerBlog
             {
                 ConsumerKey = Configuration["OAuth:Twitter:ConsumerKey"],
                 ConsumerSecret = Configuration["OAuth:Twitter:ConsumerSecret"],
-                DisplayName = "WebFor Twitter Auth"
+                DisplayName = "FreelancerBlog Twitter Auth"
             };
 
             var microsoftAccountOptions = new MicrosoftAccountOptions
@@ -190,7 +190,7 @@ namespace FreelancerBlog
                 ClientId = Configuration["OAuth:Microsoft:ClientId"],
                 ClientSecret = Configuration["OAuth:Microsoft:ClientSecret"],
                 //Scope.Add("wl.emails, wl.basic"),
-                DisplayName = "WebFor Microsoft OAuth"
+                DisplayName = "FreelancerBlog Microsoft OAuth"
             };
 
             app.UseGoogleAuthentication(googleOption);

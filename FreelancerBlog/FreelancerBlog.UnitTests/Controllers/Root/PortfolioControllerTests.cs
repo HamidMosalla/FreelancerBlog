@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Moq;
-using Xunit;
 using FluentAssertions;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.Controllers;
@@ -14,26 +7,29 @@ using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Mapper;
 using GenFu;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Xunit;
 
-namespace WebFor.UnitTests.Controllers.Root
+namespace FreelancerBlog.UnitTests.Controllers.Root
 {
     public class PortfolioControllerTests
     {
         private Mock<IUnitOfWork> _uw;
-        private Mock<IFreelancerBlogMapper> _webForMapper;
+        private Mock<IFreelancerBlogMapper> _freelancerBlogMapper;
         private Mock<IPortfolioRepository> _portfolioRepository;
 
         public PortfolioControllerTests()
         {
             _uw = new Mock<IUnitOfWork>();
-            _webForMapper = new Mock<IFreelancerBlogMapper>();
+            _freelancerBlogMapper = new Mock<IFreelancerBlogMapper>();
             _portfolioRepository = new Mock<IPortfolioRepository>();
 
             _uw.SetupGet<IPortfolioRepository>(u => u.PortfolioRepository).Returns(_portfolioRepository.Object);
 
-            _webForMapper.Setup(w => w.PortfolioToPorfolioViewModel(It.IsAny<Portfolio>())).Returns(A.New<PortfolioViewModel>());
+            _freelancerBlogMapper.Setup(w => w.PortfolioToPorfolioViewModel(It.IsAny<Portfolio>())).Returns(A.New<PortfolioViewModel>());
 
-            _webForMapper.Setup(w => w.PortfolioCollectionToPortfolioViewModelCollection(It.IsAny<List<Portfolio>>()))
+            _freelancerBlogMapper.Setup(w => w.PortfolioCollectionToPortfolioViewModelCollection(It.IsAny<List<Portfolio>>()))
                 .Returns(A.ListOf<PortfolioViewModel>(10));
         }
 
@@ -41,7 +37,7 @@ namespace WebFor.UnitTests.Controllers.Root
         public async Task Detail_ShoudReturnBadRequest_IfIdIsNotSupplied()
         {
             //Arrange
-            var sut = new PortfolioController(_uw.Object, _webForMapper.Object);
+            var sut = new PortfolioController(_uw.Object, _freelancerBlogMapper.Object);
 
             //Act
             var result = (BadRequestResult)await sut.Detail(default(int));
@@ -56,7 +52,7 @@ namespace WebFor.UnitTests.Controllers.Root
         public async Task Detail_ShoudReturnNotFound_IfPorfolioDetailNotFound()
         {
             //Arrange
-            var sut = new PortfolioController(_uw.Object, _webForMapper.Object);
+            var sut = new PortfolioController(_uw.Object, _freelancerBlogMapper.Object);
 
             //_portfolioRepository.Setup(p => p.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(null);
 
@@ -73,7 +69,7 @@ namespace WebFor.UnitTests.Controllers.Root
         public async Task Detail_ShoudReturnRequestedDetailView_IfPorfolioDetailExist()
         {
             //Arrange
-            var sut = new PortfolioController(_uw.Object, _webForMapper.Object);
+            var sut = new PortfolioController(_uw.Object, _freelancerBlogMapper.Object);
 
             _portfolioRepository.Setup(p => p.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(A.New<Portfolio>());
 
@@ -91,7 +87,7 @@ namespace WebFor.UnitTests.Controllers.Root
         public async Task Detail_ShoudReturnPortfolioDetailViewModel_IfPorfolioDetailExist()
         {
             //Arrange
-            var sut = new PortfolioController(_uw.Object, _webForMapper.Object);
+            var sut = new PortfolioController(_uw.Object, _freelancerBlogMapper.Object);
 
             _portfolioRepository.Setup(p => p.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(A.New<Portfolio>());
 
@@ -111,7 +107,7 @@ namespace WebFor.UnitTests.Controllers.Root
         public async Task Index_ShoudReturnIndexView_Always()
         {
             //Arrange
-            var sut = new PortfolioController(_uw.Object, _webForMapper.Object);
+            var sut = new PortfolioController(_uw.Object, _freelancerBlogMapper.Object);
 
             _portfolioRepository.Setup(p => p.GetAllAsync()).ReturnsAsync(A.ListOf<Portfolio>(10));
 
@@ -128,7 +124,7 @@ namespace WebFor.UnitTests.Controllers.Root
         public async Task Index_ShoudReturnIndexWithPortfolioViewModel_Always()
         {
             //Arrange
-            var sut = new PortfolioController(_uw.Object, _webForMapper.Object);
+            var sut = new PortfolioController(_uw.Object, _freelancerBlogMapper.Object);
 
             _portfolioRepository.Setup(p => p.GetAllAsync()).ReturnsAsync(A.ListOf<Portfolio>(10));
 

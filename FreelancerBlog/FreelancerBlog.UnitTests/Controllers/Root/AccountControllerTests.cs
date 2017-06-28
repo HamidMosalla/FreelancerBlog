@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
-using WebFor.Tests.HandMadeFakes;
 using Xunit;
 
 namespace FreelancerBlog.UnitTests.Controllers.Root
@@ -26,7 +25,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
     {
         private Mock<IUnitOfWork> _uw;
         private Mock<IContactRepository> _contactRepository;
-        private Mock<IFreelancerBlogMapper> _webForMapper;
+        private Mock<IFreelancerBlogMapper> _freelancerBlogMapper;
         private Mock<HttpContext> _httpContext;
         private Mock<ICaptchaValidator> _captchaValidator;
         private Mock<IConfigurationBinderWrapper> _configurationWrapper;
@@ -54,7 +53,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             _emailSender = new Mock<IEmailSender>();
             _uw = new Mock<IUnitOfWork>();
             _contactRepository = new Mock<IContactRepository>();
-            _webForMapper = new Mock<IFreelancerBlogMapper>();
+            _freelancerBlogMapper = new Mock<IFreelancerBlogMapper>();
             _captchaValidator = new Mock<ICaptchaValidator>();
             _configurationWrapper = new Mock<IConfigurationBinderWrapper>();
             _httpContext = new Mock<HttpContext>();

@@ -36,12 +36,12 @@ namespace FreelancerBlog.Infrastructure.Services.Shared
             //};
 
             //smtp.Credentials = credential;
-            //smtp.Host = "mail.webfor.ir";
+            //smtp.Host = "mail.server.com";
             //smtp.Port = 25;
             //return smtp.SendMailAsync(mailMessage);
 
             var mailMessage = new MimeMessage();
-            mailMessage.From.Add(new MailboxAddress("WebFor", _authMessageSenderSecrets.Email));
+            mailMessage.From.Add(new MailboxAddress("FreelancerBlog", _authMessageSenderSecrets.Email));
             mailMessage.To.Add(new MailboxAddress("Client", email));
             mailMessage.Subject = subject;
 
@@ -50,7 +50,7 @@ namespace FreelancerBlog.Infrastructure.Services.Shared
             mailMessage.Body = bodyBuilder.ToMessageBody();
 
             var client = new SmtpClient();
-            client.Connect("mail.webfor.ir", 25, false);
+            client.Connect("mail.address.com", 25, false);
 
             // Note: since we don't have an OAuth2 token, disable
             // the XOAUTH2 authentication mechanism.

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\files\PriceList.xlsx" />
     <Content Include="wwwroot\js\CustomScripts\Admin\Article\ArticleSharedModule.js" />
     <Content Include="wwwroot\js\CustomScripts\Admin\Article\Create\Main.js" />
     <Content Include="wwwroot\js\CustomScripts\Admin\Article\Edit\Main.js" />
@@ -36,6 +37,182 @@
     <Content Include="wwwroot\js\CustomScripts\Root\SiteOrder\Index\IndexModule.js" />
     <Content Include="wwwroot\js\CustomScripts\Root\SiteOrder\Index\Main.js" />
     <Content Include="wwwroot\js\CustomScripts\User\Profile\EditProfile.js" />
+    <Content Include="wwwroot\lib\awesome-bootstrap-checkbox\awesome-bootstrap-checkbox.css" />
+    <Content Include="wwwroot\lib\bootstrap-rating\bootstrap-rating.css" />
+    <Content Include="wwwroot\lib\bootstrap-rating\bootstrap-rating.min.js" />
+    <Content Include="wwwroot\lib\bootstrap-select\bootstrap-select.min.css" />
+    <Content Include="wwwroot\lib\bootstrap-select\bootstrap-select.min.js" />
+    <Content Include="wwwroot\lib\bootstrap-social\bootstrap-social.css" />
+    <Content Include="wwwroot\lib\bootstrap-social\bootstrap-social.less" />
+    <Content Include="wwwroot\lib\bootstrap-social\bootstrap-social.scss" />
+    <Content Include="wwwroot\lib\ckeditor\adapters\jquery.js" />
+    <Content Include="wwwroot\lib\ckeditor\build-config.js" />
+    <Content Include="wwwroot\lib\ckeditor\ckeditor.js" />
+    <Content Include="wwwroot\lib\ckeditor\config.js" />
+    <Content Include="wwwroot\lib\ckeditor\config.portfolio.js" />
+    <Content Include="wwwroot\lib\ckeditor\contents.css" />
+    <Content Include="wwwroot\lib\ckeditor\lang\en.js" />
+    <Content Include="wwwroot\lib\ckeditor\lang\fa.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\a11yhelp\dialogs\lang\en.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\a11yhelp\dialogs\lang\fa.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\about\dialogs\about.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\about\dialogs\hidpi\logo_ckeditor.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\about\dialogs\logo_ckeditor.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\clipboard\dialogs\paste.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\colordialog\dialogs\colordialog.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\dialog\dialogDefinition.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\div\dialogs\div.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\find\dialogs\find.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\flash\dialogs\flash.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\flash\images\placeholder.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\forms\dialogs\button.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\forms\dialogs\checkbox.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\forms\dialogs\form.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\forms\dialogs\hiddenfield.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\forms\dialogs\radio.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\forms\dialogs\select.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\forms\dialogs\textarea.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\forms\dialogs\textfield.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\forms\images\hiddenfield.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\icons.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\icons_hidpi.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\iframe\dialogs\iframe.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\iframe\images\placeholder.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\image\dialogs\image.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\image\images\noimage.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\link\dialogs\anchor.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\link\dialogs\link.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\link\images\anchor.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\link\images\hidpi\anchor.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\liststyle\dialogs\liststyle.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\magicline\images\hidpi\icon-rtl.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\magicline\images\hidpi\icon.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\magicline\images\icon-rtl.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\magicline\images\icon.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\pagebreak\images\pagebreak.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\pastefromword\filter\default.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\preview\preview.html" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\scayt\CHANGELOG.md" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\scayt\dialogs\options.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\scayt\dialogs\toolbar.css" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\scayt\LICENSE.md" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\scayt\README.md" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\showblocks\images\block_address.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\showblocks\images\block_blockquote.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\showblocks\images\block_div.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\showblocks\images\block_h1.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\showblocks\images\block_h2.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\showblocks\images\block_h3.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\showblocks\images\block_h4.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\showblocks\images\block_h5.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\showblocks\images\block_h6.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\showblocks\images\block_p.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\showblocks\images\block_pre.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\dialogs\smiley.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\angel_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\angel_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\angry_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\angry_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\broken_heart.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\broken_heart.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\confused_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\confused_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\cry_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\cry_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\devil_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\devil_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\embaressed_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\embarrassed_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\embarrassed_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\envelope.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\envelope.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\heart.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\heart.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\kiss.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\kiss.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\lightbulb.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\lightbulb.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\omg_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\omg_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\regular_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\regular_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\sad_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\sad_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\shades_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\shades_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\teeth_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\teeth_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\thumbs_down.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\thumbs_down.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\thumbs_up.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\thumbs_up.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\tongue_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\tongue_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\tounge_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\whatchutalkingabout_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\wink_smile.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\smiley\images\wink_smile.png" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\specialchar\dialogs\lang\en.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\specialchar\dialogs\lang\fa.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\specialchar\dialogs\lang\_translationstatus.txt" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\specialchar\dialogs\specialchar.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\tabletools\dialogs\tableCell.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\table\dialogs\table.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\templates\dialogs\templates.css" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\templates\dialogs\templates.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\templates\templates\default.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\templates\templates\images\template1.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\templates\templates\images\template2.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\templates\templates\images\template3.gif" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\wsc\dialogs\ciframe.html" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\wsc\dialogs\tmpFrameset.html" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\wsc\dialogs\wsc.css" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\wsc\dialogs\wsc.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\wsc\dialogs\wsc_ie.js" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\wsc\LICENSE.md" />
+    <Content Include="wwwroot\lib\ckeditor\plugins\wsc\README.md" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\dialog.css" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\dialog_ie.css" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\dialog_ie7.css" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\dialog_ie8.css" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\dialog_iequirks.css" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\editor.css" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\editor_gecko.css" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\editor_ie.css" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\editor_ie7.css" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\editor_ie8.css" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\editor_iequirks.css" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\icons.png" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\icons_hidpi.png" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\images\arrow.png" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\images\close.png" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\images\hidpi\close.png" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\images\hidpi\lock-open.png" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\images\hidpi\lock.png" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\images\hidpi\refresh.png" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\images\lock-open.png" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\images\lock.png" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\images\refresh.png" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\images\spinner.gif" />
+    <Content Include="wwwroot\lib\ckeditor\skins\moono\readme.md" />
+    <Content Include="wwwroot\lib\ckeditor\styles.js" />
+    <Content Include="wwwroot\lib\Gravatar\gravatar.js" />
+    <Content Include="wwwroot\lib\jquery-serializeJSON\serializeJSON.js" />
+    <Content Include="wwwroot\lib\jquery.blockUI\jquery.blockUI.js" />
+    <Content Include="wwwroot\lib\parallax\parallax.js" />
+    <Content Include="wwwroot\lib\pickday\moment.min.js" />
+    <Content Include="wwwroot\lib\pickday\pikaday.css" />
+    <Content Include="wwwroot\lib\pickday\pikaday.jquery.js" />
+    <Content Include="wwwroot\lib\pickday\pikaday.js" />
+    <Content Include="wwwroot\lib\prism\prism.css" />
+    <Content Include="wwwroot\lib\prism\prism.js" />
+    <Content Include="wwwroot\lib\requirejs\require.js" />
+    <Content Include="wwwroot\lib\requirejs\require.min.js" />
+    <Content Include="wwwroot\lib\tableExport\jquery.base64.UTF8.js" />
+    <Content Include="wwwroot\lib\tableExport\tableExport.js" />
   </ItemGroup>
   
   <ItemGroup>
@@ -75,6 +252,21 @@
     <ProjectReference Include="..\FreelancerBlog.Core\FreelancerBlog.Core.csproj" />
     <ProjectReference Include="..\FreelancerBlog.DependencyInjection\FreelancerBlog.DependencyInjection.csproj" />
     <ProjectReference Include="..\FreelancerBlog.Infrastructure\FreelancerBlog.Infrastructure.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Compile Update="Resources\DataAnnotations.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DataAnnotations.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\DataAnnotations.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DataAnnotations.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

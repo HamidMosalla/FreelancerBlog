@@ -19,13 +19,13 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
 using Xunit;
 
-namespace WebFor.UnitTests.Controllers.Root
+namespace FreelancerBlog.UnitTests.Controllers.Root
 {
     public class ContactControllerTests
     {
         private Mock<IUnitOfWork> _uw;
         private Mock<IContactRepository> _contactRepository;
-        private Mock<IFreelancerBlogMapper> _webForMapper;
+        private Mock<IFreelancerBlogMapper> _freelancerBlogMapper;
         private Mock<ICaptchaValidator> _captchaValidator;
         private Mock<IConfigurationBinderWrapper> _configurationWrapper;
         private Mock<TempDataDictionary> _tempData;
@@ -35,7 +35,7 @@ namespace WebFor.UnitTests.Controllers.Root
         {
             _uw = new Mock<IUnitOfWork>();
             _contactRepository = new Mock<IContactRepository>();
-            _webForMapper = new Mock<IFreelancerBlogMapper>();
+            _freelancerBlogMapper = new Mock<IFreelancerBlogMapper>();
             _captchaValidator = new Mock<ICaptchaValidator>();
             _configurationWrapper = new Mock<IConfigurationBinderWrapper>();
             var httpContext = new Mock<HttpContext>();
@@ -49,7 +49,7 @@ namespace WebFor.UnitTests.Controllers.Root
         void Create_SouldReturn_CreateView()
         {
             //arrange
-            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+            var sut = new ContactController(_uw.Object, _freelancerBlogMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
             //act
             var result = (ViewResult)sut.Create();
@@ -74,7 +74,7 @@ namespace WebFor.UnitTests.Controllers.Root
 
             _uw.Setup(u => u.ContactRepository.AddNewContactAsync(new Contact { })).ReturnsAsync(0);
 
-            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+            var sut = new ContactController(_uw.Object, _freelancerBlogMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
             var result = (ViewResult)await sut.Create(new ContactViewModel(), false);
 
@@ -98,7 +98,7 @@ namespace WebFor.UnitTests.Controllers.Root
 
             _uw.Setup(u => u.ContactRepository.AddNewContactAsync(new Contact { })).ReturnsAsync(0);
 
-            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+            var sut = new ContactController(_uw.Object, _freelancerBlogMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
             var result = (ViewResult)await sut.Create(new ContactViewModel(), false);
 
@@ -123,7 +123,7 @@ namespace WebFor.UnitTests.Controllers.Root
 
             _uw.Setup(u => u.ContactRepository.AddNewContactAsync(new Contact { })).ReturnsAsync(0);
 
-            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+            var sut = new ContactController(_uw.Object, _freelancerBlogMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
             var result = (ViewResult)await sut.Create(new ContactViewModel(), false);
 
@@ -145,7 +145,7 @@ namespace WebFor.UnitTests.Controllers.Root
                     Success = "false"
                 });
 
-            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+            var sut = new ContactController(_uw.Object, _freelancerBlogMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
             var result = (JsonResult)await sut.Create(new ContactViewModel(), false);
 
@@ -173,7 +173,7 @@ namespace WebFor.UnitTests.Controllers.Root
 
             _uw.Setup(u => u.ContactRepository.AddNewContactAsync(new Contact { })).ReturnsAsync(0);
 
-            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+            var sut = new ContactController(_uw.Object, _freelancerBlogMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
             sut.ViewData.ModelState.AddModelError("Key", "ErrorMessage");
 
@@ -207,7 +207,7 @@ namespace WebFor.UnitTests.Controllers.Root
 
             var contactViewModel = A.New<ContactViewModel>();
 
-            _webForMapper.Setup(s => s.ContactViewModelToContact(It.IsAny<ContactViewModel>())).Returns(A.New<Contact>());
+            _freelancerBlogMapper.Setup(s => s.ContactViewModelToContact(It.IsAny<ContactViewModel>())).Returns(A.New<Contact>());
 
             //It.IsAny<Contact>() means what ever passed in
 
@@ -215,7 +215,7 @@ namespace WebFor.UnitTests.Controllers.Root
 
             _uw.SetupGet<IContactRepository>(u => u.ContactRepository).Returns(_contactRepository.Object);
 
-            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+            var sut = new ContactController(_uw.Object, _freelancerBlogMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
             var result = (ViewResult)await sut.Create(contactViewModel, false);
 
@@ -238,13 +238,13 @@ namespace WebFor.UnitTests.Controllers.Root
 
             var contactViewModel = A.New<ContactViewModel>();
 
-            _webForMapper.Setup(s => s.ContactViewModelToContact(It.IsAny<ContactViewModel>())).Returns(A.New<Contact>());
+            _freelancerBlogMapper.Setup(s => s.ContactViewModelToContact(It.IsAny<ContactViewModel>())).Returns(A.New<Contact>());
 
             _contactRepository.Setup(c => c.AddNewContactAsync(It.IsAny<Contact>())).ReturnsAsync(10);
 
             _uw.SetupGet<IContactRepository>(u => u.ContactRepository).Returns(_contactRepository.Object);
 
-            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+            var sut = new ContactController(_uw.Object, _freelancerBlogMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
             var result = (JsonResult)await sut.Create(contactViewModel, true);
 
@@ -268,13 +268,13 @@ namespace WebFor.UnitTests.Controllers.Root
 
             var contactViewModel = A.New<ContactViewModel>();
 
-            _webForMapper.Setup(s => s.ContactViewModelToContact(It.IsAny<ContactViewModel>())).Returns(A.New<Contact>());
+            _freelancerBlogMapper.Setup(s => s.ContactViewModelToContact(It.IsAny<ContactViewModel>())).Returns(A.New<Contact>());
 
             _contactRepository.Setup(c => c.AddNewContactAsync(It.IsAny<Contact>())).ReturnsAsync(0);
 
             _uw.SetupGet<IContactRepository>(u => u.ContactRepository).Returns(_contactRepository.Object);
 
-            var sut = new ContactController(_uw.Object, _webForMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
+            var sut = new ContactController(_uw.Object, _freelancerBlogMapper.Object, _captchaValidator.Object, _configurationWrapper.Object);
 
             var result = (JsonResult)await sut.Create(contactViewModel, true);
 
