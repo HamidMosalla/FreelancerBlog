@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.IO;
 using FreelancerBlog.Core.Wrappers;
 
-namespace WebFor.Infrastructure.Wrappers
+namespace FreelancerBlog.Infrastructure.Wrappers
 {
     public class PathWrapper : IPathWrapper
     {

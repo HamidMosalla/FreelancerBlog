@@ -9,19 +9,19 @@ namespace FreelancerBlog.ViewComponents
     {
 
         private IUnitOfWork _uw;
-        private IWebForMapper _webForMapper;
+        private IFreelancerBlogMapper _freelancerBlogMapper;
 
-        public HomePortfolioSlider(IUnitOfWork uw, IWebForMapper webForMapper)
+        public HomePortfolioSlider(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper)
         {
             _uw = uw;
-            _webForMapper = webForMapper;
+            _freelancerBlogMapper = freelancerBlogMapper;
         }
 
         public  async Task<IViewComponentResult> InvokeAsync()
         {
             var portfolios = await _uw.PortfolioRepository.GetAllAsync();
 
-            var portfoliosViewModel = _webForMapper.PortfolioCollectionToPortfolioViewModelCollection(portfolios);
+            var portfoliosViewModel = _freelancerBlogMapper.PortfolioCollectionToPortfolioViewModelCollection(portfolios);
 
             return View(portfoliosViewModel);
         }

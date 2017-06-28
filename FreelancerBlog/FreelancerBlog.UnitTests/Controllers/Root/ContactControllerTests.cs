@@ -25,7 +25,7 @@ namespace WebFor.UnitTests.Controllers.Root
     {
         private Mock<IUnitOfWork> _uw;
         private Mock<IContactRepository> _contactRepository;
-        private Mock<IWebForMapper> _webForMapper;
+        private Mock<IFreelancerBlogMapper> _webForMapper;
         private Mock<ICaptchaValidator> _captchaValidator;
         private Mock<IConfigurationBinderWrapper> _configurationWrapper;
         private Mock<TempDataDictionary> _tempData;
@@ -35,7 +35,7 @@ namespace WebFor.UnitTests.Controllers.Root
         {
             _uw = new Mock<IUnitOfWork>();
             _contactRepository = new Mock<IContactRepository>();
-            _webForMapper = new Mock<IWebForMapper>();
+            _webForMapper = new Mock<IFreelancerBlogMapper>();
             _captchaValidator = new Mock<ICaptchaValidator>();
             _configurationWrapper = new Mock<IConfigurationBinderWrapper>();
             var httpContext = new Mock<HttpContext>();
@@ -287,7 +287,7 @@ namespace WebFor.UnitTests.Controllers.Root
             //with unobservable1 behavior, for more info visit: http://stackoverflow.com/a/29509950/1650277
             //_contactRepository.VerifyAll();
             //_contactRepository.Verify(c => c.AddNewContactAsync(It.IsAny<Contact>()), Times.Once);
-            //_webForMapper.Verify(w => w.ContactViewModelToContact(It.IsAny<ContactViewModel>()), Times.Once);
+            //_freelancerBlogMapper.Verify(w => w.ContactViewModelToContact(It.IsAny<ContactViewModel>()), Times.Once);
         }
     }
 }

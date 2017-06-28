@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Linq;
 using FreelancerBlog.Core.Domain;
-using Microsoft.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace WebFor.Infrastructure.EntityFramework
+namespace FreelancerBlog.Infrastructure.EntityFramework
 {
-    public class WebForDbContextSeedData
+    public class FreelancerBlogContextSeedData
     {
-        private WebForDbContext _context;
+        private FreelancerBlogContext _context;
 
-        public WebForDbContextSeedData(WebForDbContext context)
+        public FreelancerBlogContextSeedData(FreelancerBlogContext context)
         {
             _context = context;
         }

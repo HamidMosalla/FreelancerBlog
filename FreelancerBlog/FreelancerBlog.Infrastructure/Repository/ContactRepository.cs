@@ -2,16 +2,16 @@
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Repository;
+using FreelancerBlog.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using WebFor.Infrastructure.EntityFramework;
 
 namespace FreelancerBlog.Infrastructure.Repository
 {
     public class ContactRepository:IContactRepository
     {
-        private WebForDbContext _context;
+        private FreelancerBlogContext _context;
 
-        public ContactRepository(WebForDbContext context)
+        public ContactRepository(FreelancerBlogContext context)
         {
             _context = context;
         }

@@ -1,7 +1,6 @@
 ﻿using Autofac;
 using FreelancerBlog.Core.Wrappers;
 using FreelancerBlog.Infrastructure.Wrappers;
-using WebFor.Infrastructure.Wrappers;
 
 namespace FreelancerBlog.DependencyInjection.Modules
 {

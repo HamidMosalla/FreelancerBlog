@@ -12,12 +12,12 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     public class ContactController : Controller
     {
         private IUnitOfWork _uw;
-        private IWebForMapper _webForMapper;
+        private IFreelancerBlogMapper _freelancerBlogMapper;
 
-        public ContactController(IUnitOfWork uw, IWebForMapper webForMapper)
+        public ContactController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper)
         {
             _uw = uw;
-            _webForMapper = webForMapper;
+            _freelancerBlogMapper = freelancerBlogMapper;
         }
 
         [HttpGet]
@@ -25,7 +25,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var contacts = await _uw.ContactRepository.GetAllAsync();
 
-            var contactsViewModel = _webForMapper.ContactCollectionToContactViewModelCollection(contacts);
+            var contactsViewModel = _freelancerBlogMapper.ContactCollectionToContactViewModelCollection(contacts);
 
             var pageNumber = page ?? 1;
 

@@ -12,14 +12,14 @@ namespace FreelancerBlog.Controllers
     public class ContactController : Controller
     {
         private IUnitOfWork _uw;
-        private IWebForMapper _webForMapper;
+        private IFreelancerBlogMapper _freelancerBlogMapper;
         private ICaptchaValidator _captchaValidator;
         private IConfigurationBinderWrapper _configurationWrapper;
 
-        public ContactController(IUnitOfWork uw, IWebForMapper webForMapper, ICaptchaValidator captchaValidator, IConfigurationBinderWrapper configurationWrapper)
+        public ContactController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, ICaptchaValidator captchaValidator, IConfigurationBinderWrapper configurationWrapper)
         {
             _uw = uw;
-            _webForMapper = webForMapper;
+            _freelancerBlogMapper = freelancerBlogMapper;
             _captchaValidator = captchaValidator;
             _configurationWrapper = configurationWrapper;
         }
@@ -46,7 +46,7 @@ namespace FreelancerBlog.Controllers
 
             if (isJavascriptEnabled)
             {
-                var contact = _webForMapper.ContactViewModelToContact(contactViewModel);
+                var contact = _freelancerBlogMapper.ContactViewModelToContact(contactViewModel);
 
                 int addContactResult = await _uw.ContactRepository.AddNewContactAsync(contact);
 
@@ -58,7 +58,7 @@ namespace FreelancerBlog.Controllers
                 return Json(new { Status = "ProblematicSubmit" });
             }
 
-            var contactWioutJavascript = _webForMapper.ContactViewModelToContact(contactViewModel);
+            var contactWioutJavascript = _freelancerBlogMapper.ContactViewModelToContact(contactViewModel);
 
             int addContactResultWioutJavascript = await _uw.ContactRepository.AddNewContactAsync(contactWioutJavascript);
 

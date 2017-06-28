@@ -1,11 +1,10 @@
-﻿using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FreelancerBlog.Core.Services.Shared;
-using FreelancerBlog.Infrastructure.Services.Shared;
 using MailKit.Net.Smtp;
+using Microsoft.Extensions.Options;
 using MimeKit;
 
-namespace WebFor.Infrastructure.Services.Shared
+namespace FreelancerBlog.Infrastructure.Services.Shared
 {
     // This class is used by the application to send Email and SMS
     // when you turn on two-factor authentication in ASP.NET Identity.

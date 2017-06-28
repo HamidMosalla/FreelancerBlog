@@ -15,15 +15,15 @@ namespace FreelancerBlog.Controllers
     public class ArticleController : Controller
     {
         private IUnitOfWork _uw;
-        private IWebForMapper _webForMapper;
+        private IFreelancerBlogMapper _freelancerBlogMapper;
         private readonly UserManager<ApplicationUser> _userManager;
         private ICaptchaValidator _captchaValidator;
         private IConfiguration _configuration;
 
-        public ArticleController(IUnitOfWork uw, IWebForMapper webForMapper, UserManager<ApplicationUser> userManager, ICaptchaValidator captchaValidator, IConfiguration configuration)
+        public ArticleController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, UserManager<ApplicationUser> userManager, ICaptchaValidator captchaValidator, IConfiguration configuration)
         {
             _uw = uw;
-            _webForMapper = webForMapper;
+            _freelancerBlogMapper = freelancerBlogMapper;
             _userManager = userManager;
             _captchaValidator = captchaValidator;
             _configuration = configuration;
@@ -34,7 +34,7 @@ namespace FreelancerBlog.Controllers
         {
             var articles = await _uw.ArticleRepository.GetAllAsync();
 
-            var articlesViewModel = _webForMapper.ArticleCollectionToArticleViewModelCollection(articles);
+            var articlesViewModel = _freelancerBlogMapper.ArticleCollectionToArticleViewModelCollection(articles);
 
             var pageNumber = page ?? 1;
 
@@ -53,7 +53,7 @@ namespace FreelancerBlog.Controllers
 
             var articles = await _uw.ArticleRepository.GetArticlesByTag(id);
 
-            var articlesViewModel = _webForMapper.ArticleCollectionToArticleViewModelCollection(articles);
+            var articlesViewModel = _freelancerBlogMapper.ArticleCollectionToArticleViewModelCollection(articles);
 
             var pageNumber = page ?? 1;
 
@@ -79,7 +79,7 @@ namespace FreelancerBlog.Controllers
 
             await _uw.ArticleRepository.IncreaseArticleViewCount(id);
 
-            var articleViewModel = await _webForMapper.ArticleToArticleViewModelWithTagsAsync(article);
+            var articleViewModel = await _freelancerBlogMapper.ArticleToArticleViewModelWithTagsAsync(article);
 
             return View(articleViewModel);
         }
@@ -130,7 +130,7 @@ namespace FreelancerBlog.Controllers
                 return Json(new { Status = "CannotHaveEmptyArgument" });
             }
 
-            var articleComment = _webForMapper.ArticleCommentViewModelToArticleComment(viewModel);
+            var articleComment = _freelancerBlogMapper.ArticleCommentViewModelToArticleComment(viewModel);
 
             int addArticleCommentResult = await _uw.ArticleRepository.AddCommentToArticle(articleComment);
 

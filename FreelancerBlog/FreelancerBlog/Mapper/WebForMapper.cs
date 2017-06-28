@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FreelancerBlog.Mapper
 {
-    public interface IWebForMapper
+    public interface IFreelancerBlogMapper
     {
         ArticleViewModel ArticleToArticleViewModel(Article article);
         Task<ArticleViewModel> ArticleToArticleViewModelWithTagsAsync(Article article);
@@ -41,14 +41,14 @@ namespace FreelancerBlog.Mapper
         Portfolio PortfolioViewModelEditToPortfolio(PortfolioViewModelEdit viewModel);
     }
 
-    public class WebForMapper : IWebForMapper
+    public class FreelancerBlogMapper : IFreelancerBlogMapper
     {
 
         private IUnitOfWork _uw;
         private readonly IHttpContextAccessor contextAccessor;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public WebForMapper(IUnitOfWork uw, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager)
+        public FreelancerBlogMapper(IUnitOfWork uw, IHttpContextAccessor contextAccessor, UserManager<ApplicationUser> userManager)
         {
             _uw = uw;
             this.contextAccessor = contextAccessor;
@@ -162,17 +162,14 @@ namespace FreelancerBlog.Mapper
         {
             var viewModels = Mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios);
 
-            var viewModelWithCategory = viewModels.Select(
-                v =>
+            var viewModelWithCategory = viewModels.Select(v =>
                 {
-                    v.PortfolioCategoryList =
-                        portfolios.Single(p => p.PortfolioId.Equals(v.PortfolioId))
-                            .PortfolioCategory.Split(',')
-                            .ToList();
+                    v.PortfolioCategoryList = portfolios.Single(p => p.PortfolioId.Equals(v.PortfolioId))
+                                                        .PortfolioCategory.Split(',')
+                                                        .ToList();
 
                     return v;
-                }
-                ).ToList();
+                }).ToList();
 
             return viewModelWithCategory;
         }

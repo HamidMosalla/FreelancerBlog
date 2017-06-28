@@ -8,12 +8,12 @@ namespace FreelancerBlog.Controllers
     public class PortfolioController : Controller
     {
         private IUnitOfWork _uw;
-        private IWebForMapper _webForMapper;
+        private IFreelancerBlogMapper _freelancerBlogMapper;
 
-        public PortfolioController(IUnitOfWork uw, IWebForMapper webForMapper)
+        public PortfolioController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper)
         {
             _uw = uw;
-            _webForMapper = webForMapper;
+            _freelancerBlogMapper = freelancerBlogMapper;
         }
 
         [HttpGet]
@@ -31,7 +31,7 @@ namespace FreelancerBlog.Controllers
                 return NotFound();
             }
 
-            var viewModel = _webForMapper.PortfolioToPorfolioViewModel(model);
+            var viewModel = _freelancerBlogMapper.PortfolioToPorfolioViewModel(model);
 
             return View(viewModel);
         }
@@ -41,7 +41,7 @@ namespace FreelancerBlog.Controllers
         {
             var model = await _uw.PortfolioRepository.GetAllAsync();
 
-            var viewModel = _webForMapper.PortfolioCollectionToPortfolioViewModelCollection(model);
+            var viewModel = _freelancerBlogMapper.PortfolioCollectionToPortfolioViewModelCollection(model);
 
             return View(viewModel);
         }

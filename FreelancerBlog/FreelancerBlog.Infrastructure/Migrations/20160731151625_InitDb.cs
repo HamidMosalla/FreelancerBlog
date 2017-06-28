@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace WebFor.Infrastructure.Migrations
+namespace FreelancerBlog.Infrastructure.Migrations
 {
     public partial class InitDb : Migration
     {

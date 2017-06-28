@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using FreelancerBlog.Core.Repository;
-using WebFor.Infrastructure.Repository;
+using FreelancerBlog.Infrastructure.Repository;
 
 namespace FreelancerBlog.DependencyInjection.Modules
 {

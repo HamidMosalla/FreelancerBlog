@@ -20,15 +20,15 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     {
         private readonly IUnitOfWork _uw;
         private readonly ICkEditorFileUploder _ckEditorFileUploader;
-        private readonly IWebForMapper _webForMapper;
+        private readonly IFreelancerBlogMapper _freelancerBlogMapper;
         private IArticleServices _articleServices;
         private readonly IFileManager _fileManager;
 
-        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IWebForMapper webForMapper, IArticleServices articleServices, IFileManager fileManager)
+        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IFreelancerBlogMapper freelancerBlogMapper, IArticleServices articleServices, IFileManager fileManager)
         {
             _uw = uw;
             _ckEditorFileUploader = ckEditorFileUploader;
-            _webForMapper = webForMapper;
+            _freelancerBlogMapper = freelancerBlogMapper;
             _articleServices = articleServices;
             _fileManager = fileManager;
         }
@@ -38,7 +38,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var articles = await _uw.ArticleRepository.GetAllAsync();
 
-            var articlesViewModel = _webForMapper.ArticleCollectionToArticleViewModelCollection(articles);
+            var articlesViewModel = _freelancerBlogMapper.ArticleCollectionToArticleViewModelCollection(articles);
 
             var pageNumber = page ?? 1;
 
@@ -52,7 +52,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var comments = await _uw.ArticleRepository.GetAllCommentAsync();
 
-            var commentsViewModel = _webForMapper.ArticleCommentCollectionToArticleCommentViewModelCollection(comments);
+            var commentsViewModel = _freelancerBlogMapper.ArticleCommentCollectionToArticleCommentViewModelCollection(comments);
 
             var pageNumber = page ?? 1;
 
@@ -66,7 +66,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var tags = await _uw.ArticleRepository.GetAllArticleTagsAsync();
 
-            var tagsViewModel = _webForMapper.ArticleTagCollectionToArticleTagViewModelCollection(tags);
+            var tagsViewModel = _freelancerBlogMapper.ArticleTagCollectionToArticleTagViewModelCollection(tags);
 
             var pageNumber = page ?? 1;
 
@@ -167,7 +167,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid) return View(viewModel);
 
-            var model = _webForMapper.ArticleViewModelToArticle(viewModel);
+            var model = _freelancerBlogMapper.ArticleViewModelToArticle(viewModel);
 
             List<ArticleStatus> result = await _articleServices.CreateNewArticleAsync(model, viewModel.ArticleTags);
 
@@ -208,7 +208,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var articleViewModel = await _webForMapper.ArticleToArticleViewModelWithTagsAsync(article);
+            var articleViewModel = await _freelancerBlogMapper.ArticleToArticleViewModelWithTagsAsync(article);
 
             return View(articleViewModel);
         }
@@ -219,7 +219,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid) return View(viewModel);
 
-            var article = _webForMapper.ArticleViewModelToArticle(viewModel);
+            var article = _freelancerBlogMapper.ArticleViewModelToArticle(viewModel);
 
             List<ArticleStatus> result = await _articleServices.EditArticleAsync(article, viewModel.ArticleTags);
 

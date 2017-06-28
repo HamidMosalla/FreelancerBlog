@@ -1,13 +1,13 @@
 ﻿using System;
+using FreelancerBlog.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using WebFor.Infrastructure.EntityFramework;
 
-namespace WebFor.Infrastructure.Migrations
+namespace FreelancerBlog.Infrastructure.Migrations
 {
-    [DbContext(typeof(WebForDbContext))]
+    [DbContext(typeof(FreelancerBlogContext))]
     [Migration("20160731151625_InitDb")]
     partial class InitDb
     {

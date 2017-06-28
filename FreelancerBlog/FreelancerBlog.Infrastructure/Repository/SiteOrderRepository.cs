@@ -1,19 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Repository;
-using WebFor.Infrastructure.EntityFramework;
+using FreelancerBlog.Infrastructure.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 
-namespace WebFor.Infrastructure.Repository
+namespace FreelancerBlog.Infrastructure.Repository
 {
     public class SiteOrderRepository : ISiteOrderRepository
     {
-        private WebForDbContext _context;
+        private FreelancerBlogContext _context;
 
-        public SiteOrderRepository(WebForDbContext context)
+        public SiteOrderRepository(FreelancerBlogContext context)
         {
             _context = context;
         }

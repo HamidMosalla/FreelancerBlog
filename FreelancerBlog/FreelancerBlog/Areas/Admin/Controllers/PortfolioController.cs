@@ -17,14 +17,14 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     public class PortfolioController : Controller
     {
         private IUnitOfWork _uw;
-        private IWebForMapper _webForMapper;
+        private IFreelancerBlogMapper _freelancerBlogMapper;
         private ICkEditorFileUploder _ckEditorFileUploader;
         private IFileManager _fileManager;
 
-        public PortfolioController(IUnitOfWork uw, IWebForMapper webForMapper, IFileManager fileManager, ICkEditorFileUploder ckEditorFileUploader)
+        public PortfolioController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, IFileManager fileManager, ICkEditorFileUploder ckEditorFileUploader)
         {
             _uw = uw;
-            _webForMapper = webForMapper;
+            _freelancerBlogMapper = freelancerBlogMapper;
             _fileManager = fileManager;
             _ckEditorFileUploader = ckEditorFileUploader;
         }
@@ -34,7 +34,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var portfolios = await _uw.PortfolioRepository.GetAllAsync();
 
-            var portfoliosViewModel = _webForMapper.PortfolioCollectionToPortfolioViewModelCollection(portfolios);
+            var portfoliosViewModel = _freelancerBlogMapper.PortfolioCollectionToPortfolioViewModelCollection(portfolios);
 
             var pageNumber = page ?? 1;
 
@@ -63,7 +63,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             string fileName = await _fileManager.UploadFileAsync(viewModel.PortfolioThumbnailFile, new List<string> { "images", "portfolio", "thumb" });
 
-            var portfolio = _webForMapper.PortfolioViewModelToPorfolio(viewModel, fileName);
+            var portfolio = _freelancerBlogMapper.PortfolioViewModelToPorfolio(viewModel, fileName);
 
             int createPortfolioResult = await _uw.PortfolioRepository.AddNewPortfolio(portfolio);
 
@@ -92,7 +92,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var viewModel = _webForMapper.PortfolioToPortfolioViewModelEdit(model);
+            var viewModel = _freelancerBlogMapper.PortfolioToPortfolioViewModelEdit(model);
 
             return View(viewModel);
         }
@@ -106,7 +106,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return View(viewModel);
             }
 
-            var portfolio = _webForMapper.PortfolioViewModelEditToPortfolio(viewModel);
+            var portfolio = _freelancerBlogMapper.PortfolioViewModelEditToPortfolio(viewModel);
 
             if (viewModel.PortfolioThumbnailFile != null)
             {

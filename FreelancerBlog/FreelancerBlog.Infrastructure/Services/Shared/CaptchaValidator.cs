@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -9,7 +7,7 @@ using FreelancerBlog.Core.Types;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace WebFor.Infrastructure.Services.Shared
+namespace FreelancerBlog.Infrastructure.Services.Shared
 {
     public class CaptchaValidator : ICaptchaValidator
     {

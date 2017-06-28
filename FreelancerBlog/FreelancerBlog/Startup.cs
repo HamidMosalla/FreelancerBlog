@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using System.Text.Encodings.Web;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using WebFor.Infrastructure;
-using WebFor.Infrastructure.EntityFramework;
-using WebFor.Infrastructure.Services.Shared;
+using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using cloudscribe.Web.Pagination;
@@ -21,21 +12,25 @@ using FreelancerBlog.Core.Wrappers;
 using FreelancerBlog.DependencyInjection.Modules;
 using FreelancerBlog.DependencyInjection.Modules.Article;
 using FreelancerBlog.DependencyInjection.Modules.SiteOrder;
+using FreelancerBlog.Infrastructure.EntityFramework;
 using FreelancerBlog.Infrastructure.Services.Shared;
 using FreelancerBlog.Infrastructure.Wrappers;
 using FreelancerBlog.Mapper;
 using Microsoft.AspNetCore.Authentication.OAuth;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using WebFor.Infrastructure.Wrappers;
+using Microsoft.Extensions.Logging;
 
-namespace WebFor.Web
+namespace FreelancerBlog
 {
     public class Startup
     {
@@ -63,7 +58,7 @@ namespace WebFor.Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<WebForDbContext>(options =>
+            services.AddDbContext<FreelancerBlogContext>(options =>
                 options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(o =>
@@ -73,7 +68,7 @@ namespace WebFor.Web
                 o.Password.RequireNonAlphanumeric = false;
                 o.Password.RequireUppercase = false;
                 o.Password.RequiredLength = 6;
-            }).AddEntityFrameworkStores<WebForDbContext>()
+            }).AddEntityFrameworkStores<FreelancerBlogContext>()
               .AddDefaultTokenProviders();
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
@@ -113,7 +108,7 @@ namespace WebFor.Web
             containerBuilder.RegisterModule<PriceSpecCollectionFactoryModule>();
             containerBuilder.RegisterModule<FinalPriceCalculatorModule>();
             containerBuilder.RegisterModule<CaptchaValidatorModule>();
-            containerBuilder.RegisterType<WebForMapper>().As<IWebForMapper>();
+            containerBuilder.RegisterType<FreelancerBlogMapper>().As<IFreelancerBlogMapper>();
             containerBuilder.RegisterModule<FileSystemWrapperModule>();
 
             containerBuilder.Populate(services);
@@ -122,7 +117,7 @@ namespace WebFor.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, WebForDbContextSeedData seeder)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, FreelancerBlogContextSeedData seeder)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();

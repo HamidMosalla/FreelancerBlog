@@ -3,16 +3,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Repository;
+using FreelancerBlog.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using WebFor.Infrastructure.EntityFramework;
 
 namespace FreelancerBlog.Infrastructure.Repository
 {
     public class PortfolioRepository : IPortfolioRepository
     {
-        private WebForDbContext _context;
+        private FreelancerBlogContext _context;
 
-        public PortfolioRepository(WebForDbContext context)
+        public PortfolioRepository(FreelancerBlogContext context)
         {
             _context = context;
         }

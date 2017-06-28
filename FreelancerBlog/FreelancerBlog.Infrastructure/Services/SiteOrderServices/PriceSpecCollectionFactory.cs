@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using FreelancerBlog.Core.Services.SiteOrderServices;
-using WebFor.Infrastructure.Services.SiteOrderServices;
 
-namespace WebFor.Infrastructure.Services.SiteOrderServices
+namespace FreelancerBlog.Infrastructure.Services.SiteOrderServices
 {
     public class PriceSpec
     {

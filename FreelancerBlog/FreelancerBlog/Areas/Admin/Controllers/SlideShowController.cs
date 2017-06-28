@@ -16,14 +16,14 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     public class SlideShowController : Controller
     {
         private IUnitOfWork _uw;
-        private IWebForMapper _webForMapper;
+        private IFreelancerBlogMapper _freelancerBlogMapper;
         private IFileManager _fileManager;
 
 
-        public SlideShowController(IUnitOfWork uw, IWebForMapper webForMapper, IFileManager fileManager)
+        public SlideShowController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, IFileManager fileManager)
         {
             _uw = uw;
-            _webForMapper = webForMapper;
+            _freelancerBlogMapper = freelancerBlogMapper;
             _fileManager = fileManager;
         }
 
@@ -32,7 +32,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var slideShows = await _uw.SlideShowRepository.GetAllAsync();
 
-            var slideShowsViewModel = _webForMapper.SlideShowCollectionToSlideShowCollectionViewModel(slideShows);
+            var slideShowsViewModel = _freelancerBlogMapper.SlideShowCollectionToSlideShowCollectionViewModel(slideShows);
 
             var pageNumber = page ?? 1;
 
@@ -63,7 +63,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             string fileName = await _fileManager.UploadFileAsync(slideShowViewModel.SlideShowPictrureFile, new List<string> { "images", "slider" });
 
-            var slideShow = _webForMapper.SlideShowViewModelToSlideShow(slideShowViewModel, fileName);
+            var slideShow = _freelancerBlogMapper.SlideShowViewModelToSlideShow(slideShowViewModel, fileName);
 
             int addSlideShowResult = await _uw.SlideShowRepository.AddNewSlideShow(slideShow);
 
@@ -92,7 +92,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var viewModel = _webForMapper.SlideShowToSlideShowViewModelEdit(model);
+            var viewModel = _freelancerBlogMapper.SlideShowToSlideShowViewModelEdit(model);
 
             return View(viewModel);
         }
@@ -106,7 +106,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return View(viewModel);
             }
 
-            var slideshow = _webForMapper.SlideShowViewModelEditToSlideShow(viewModel);
+            var slideshow = _freelancerBlogMapper.SlideShowViewModelEditToSlideShow(viewModel);
 
             if (viewModel.SlideShowPictrureFile != null)
             {

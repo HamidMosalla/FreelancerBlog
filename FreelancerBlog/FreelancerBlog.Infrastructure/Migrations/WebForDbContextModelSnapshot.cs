@@ -1,13 +1,12 @@
 ﻿using System;
+using FreelancerBlog.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using WebFor.Infrastructure.EntityFramework;
 
-namespace WebFor.Infrastructure.Migrations
+namespace FreelancerBlog.Infrastructure.Migrations
 {
-    [DbContext(typeof(WebForDbContext))]
+    [DbContext(typeof(FreelancerBlogContext))]
     partial class WebForDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

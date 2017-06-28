@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using Xunit;
-using WebFor.Infrastructure.Services.Shared;
 using FluentAssertions;
 using FreelancerBlog.Core.Types;
+using FreelancerBlog.Infrastructure.Services.Shared;
 using FreelancerBlog.UnitTests.HandMadeFakes;
 
 namespace WebFor.UnitTests.Services.Shared

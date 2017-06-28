@@ -9,7 +9,6 @@ using FreelancerBlog.Infrastructure.Wrappers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using WebFor.Infrastructure.Wrappers;
 using Xunit;
 
 namespace FreelancerBlog.IntegrationTests.Services.Shared

@@ -20,13 +20,13 @@ namespace WebFor.UnitTests.Controllers.Root
     public class PortfolioControllerTests
     {
         private Mock<IUnitOfWork> _uw;
-        private Mock<IWebForMapper> _webForMapper;
+        private Mock<IFreelancerBlogMapper> _webForMapper;
         private Mock<IPortfolioRepository> _portfolioRepository;
 
         public PortfolioControllerTests()
         {
             _uw = new Mock<IUnitOfWork>();
-            _webForMapper = new Mock<IWebForMapper>();
+            _webForMapper = new Mock<IFreelancerBlogMapper>();
             _portfolioRepository = new Mock<IPortfolioRepository>();
 
             _uw.SetupGet<IPortfolioRepository>(u => u.PortfolioRepository).Returns(_portfolioRepository.Object);

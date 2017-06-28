@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Repository;
+using FreelancerBlog.Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using WebFor.Infrastructure.EntityFramework;
 
-namespace WebFor.Infrastructure.Repository
+namespace FreelancerBlog.Infrastructure.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private WebForDbContext _context;
+        private FreelancerBlogContext _context;
 
-        public UserRepository(WebForDbContext context)
+        public UserRepository(FreelancerBlogContext context)
         {
             _context = context;
         }

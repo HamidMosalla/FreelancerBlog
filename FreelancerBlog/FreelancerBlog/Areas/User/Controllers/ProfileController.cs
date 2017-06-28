@@ -17,15 +17,15 @@ namespace FreelancerBlog.Areas.User.Controllers
     public class ProfileController : Controller
     {
         private IUnitOfWork _uw;
-        private IWebForMapper _webForMapper;
+        private IFreelancerBlogMapper _freelancerBlogMapper;
         private IFileManager _fileManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
 
-        public ProfileController(IUnitOfWork uw, IWebForMapper webForMapper, IFileManager fileManager, UserManager<ApplicationUser> userManager)
+        public ProfileController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, IFileManager fileManager, UserManager<ApplicationUser> userManager)
         {
             _uw = uw;
-            _webForMapper = webForMapper;
+            _freelancerBlogMapper = freelancerBlogMapper;
             _fileManager = fileManager;
             _userManager = userManager;
         }
@@ -35,7 +35,7 @@ namespace FreelancerBlog.Areas.User.Controllers
         {
             var user = await _uw.UserRepository.FindByIdAsync(_userManager.GetUserId(User));
 
-            var userProfileViewModel = _webForMapper.UserToUserProfileViewModel(user);
+            var userProfileViewModel = _freelancerBlogMapper.UserToUserProfileViewModel(user);
 
             return View(userProfileViewModel);
         }
@@ -52,7 +52,7 @@ namespace FreelancerBlog.Areas.User.Controllers
             //there is no need to map here, since the issue with tracking
             //that is the identity system already track the logged in user
             //just pass the viewModel to the updateuser method.
-            var user = _webForMapper.UserProfileViewModelToUser(viewModel);
+            var user = _freelancerBlogMapper.UserProfileViewModelToUser(viewModel);
 
             if (viewModel.UserAvatarFile != null)
             {
@@ -106,7 +106,7 @@ namespace FreelancerBlog.Areas.User.Controllers
                 return NotFound();
             }
 
-            var userProfileViewModel = _webForMapper.UserToUserProfileViewModel(user);
+            var userProfileViewModel = _freelancerBlogMapper.UserToUserProfileViewModel(user);
 
             return View(userProfileViewModel);
         }

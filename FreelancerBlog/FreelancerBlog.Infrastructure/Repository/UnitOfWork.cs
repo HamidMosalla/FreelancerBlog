@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Repository;
-using FreelancerBlog.Infrastructure.Repository;
-using WebFor.Infrastructure.EntityFramework;
+using FreelancerBlog.Infrastructure.EntityFramework;
 
-namespace WebFor.Infrastructure.Repository
+namespace FreelancerBlog.Infrastructure.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
 
-        private readonly WebForDbContext _context;
+        private readonly FreelancerBlogContext _context;
 
-        public UnitOfWork(WebForDbContext context)
+        public UnitOfWork(FreelancerBlogContext context)
         {
             _context = context;
         }

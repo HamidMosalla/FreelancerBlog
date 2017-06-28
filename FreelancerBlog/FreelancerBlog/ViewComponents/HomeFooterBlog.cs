@@ -9,19 +9,19 @@ namespace FreelancerBlog.ViewComponents
     {
 
         private IUnitOfWork _uw;
-        private IWebForMapper _webForMapper;
+        private IFreelancerBlogMapper _freelancerBlogMapper;
 
-        public HomeFooterBlog(IUnitOfWork uw, IWebForMapper webForMapper)
+        public HomeFooterBlog(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper)
         {
             _uw = uw;
-            _webForMapper = webForMapper;
+            _freelancerBlogMapper = freelancerBlogMapper;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var articles = await _uw.ArticleRepository.GetLatestArticles(3);
 
-            var articlesViewModel = _webForMapper.ArticleCollectionToArticleViewModelCollection(articles);
+            var articlesViewModel = _freelancerBlogMapper.ArticleCollectionToArticleViewModelCollection(articles);
 
             return View(articlesViewModel);
         }

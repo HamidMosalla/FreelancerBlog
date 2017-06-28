@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using FreelancerBlog.Core.Services.Shared;
-using WebFor.Infrastructure.Services.Shared;
+using FreelancerBlog.Infrastructure.Services.Shared;
 
 namespace FreelancerBlog.DependencyInjection.Modules
 {

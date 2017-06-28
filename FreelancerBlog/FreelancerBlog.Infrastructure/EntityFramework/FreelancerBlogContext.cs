@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FreelancerBlog.Core.Domain;
+﻿using FreelancerBlog.Core.Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace WebFor.Infrastructure.EntityFramework
+namespace FreelancerBlog.Infrastructure.EntityFramework
 {
-    public class WebForDbContext : IdentityDbContext<ApplicationUser>
+    public class FreelancerBlogContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Article> Articles { get; set; }
         public DbSet<ArticleComment> ArticleComments { get; set; }
@@ -21,24 +17,25 @@ namespace WebFor.Infrastructure.EntityFramework
         public DbSet<SiteOrder> SiteOrders { get; set; }
         public DbSet<SlideShow> SlideShows { get; set; }
 
-        public WebForDbContext(DbContextOptions<WebForDbContext> options) : base(options)
+        public FreelancerBlogContext()
+        {
+            
+        }
+
+        public FreelancerBlogContext(DbContextOptions<FreelancerBlogContext> options) : base(options)
         {
             
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=WebForDb;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=FreelancerBlogDb;Trusted_Connection=True;MultipleActiveResultSets=true");
             base.OnConfiguring(optionsBuilder); 
         }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             /*
-             because tooling preview doesn't allow ef migrations in class libraries, we temporarily use this approach =>
-                 adding migrations: dotnet ef --startup-project ../WebFor.Web/ migrations add InitDb
-                 running the migrations: dotnet ef --startup-project ../WebFor.Web/ database update
-
-             for normal circumstances =>
                  adding migrations: dotnet ef migrations add Initial
                  running the migrations: dotnet ef database update
              */

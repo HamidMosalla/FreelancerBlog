@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using WebFor.Infrastructure.EntityFramework;
+using FreelancerBlog.Infrastructure.EntityFramework;
 
 namespace FreelancerBlog.DependencyInjection.Modules
 {
@@ -7,7 +7,7 @@ namespace FreelancerBlog.DependencyInjection.Modules
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<WebForDbContextSeedData>();
+            builder.RegisterType<FreelancerBlogContextSeedData>();
         }
     }
 }
