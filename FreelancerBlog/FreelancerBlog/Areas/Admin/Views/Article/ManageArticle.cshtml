@@ -117,6 +117,7 @@
 
 @section scripts{
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
-
-    <script data-main="/js/CustomScripts/Admin/Article/ManageArticle/Main" src="~/lib/requirejs/require.min.js"></script>
+    <script src="~/js/Utilities/PNotifyModule.js"></script>
+    <script src="~/js/CustomScripts/Admin/Article/ManageArticleModule.js"></script>
+    <script>jQuery(manageArticleModule.Run)</script>
 }

@@ -1,0 +1,4 @@
+"format esm";
+
+class q {
+}

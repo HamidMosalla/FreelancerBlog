@@ -1,6 +1,5 @@
-﻿"use strict";
-
-var articleSharedModule = (function () {
+﻿define("ArticleSharedModule", function () {
+    "use strict";
 
     function setupTypeAheadForTafInput() {
         $('#ArticleTags').tagsinput({
@@ -26,9 +25,13 @@ var articleSharedModule = (function () {
         var editor = CKEDITOR.replace('ArticleBody');
     }
 
-    return {
-        setupTypeAheadForTafInput: setupTypeAheadForTafInput,
-        setupCkEditorSettings: setupCkEditorSettings
+    var Run = function () {
+        setupTypeAheadForTafInput();
+        setupCkEditorSettings();
     };
 
-})();
+    return {
+        Run: Run
+    };
+
+});

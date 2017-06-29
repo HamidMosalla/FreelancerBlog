@@ -78,11 +78,15 @@
 </form>
 
 @section Scripts {
+    <script src="~/lib/system.js/dist/system.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/ckeditor/ckeditor.js"></script>
     <script src="~/lib/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
     <script src="~/lib/bootstrap3-typeahead/bootstrap3-typeahead.min.js"></script>
-
-    <script data-main="/js/CustomScripts/Admin/Article/Edit/Main" src="~/lib/requirejs/require.min.js"></script>
+    <script>
+        SystemJS.import('/js/CustomScripts/Admin/Article/ArticleSharedModule.js').then(function (articleSharedModule) {
+            articleSharedModule.Run();
+        });
+    </script>
 }

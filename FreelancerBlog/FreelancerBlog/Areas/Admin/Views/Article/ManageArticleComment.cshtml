@@ -153,11 +153,15 @@
 </div>
 
 @section scripts{
+    <script src="~/lib/system.js/dist/system.js"></script>
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
+    <script src="~/js/Utilities/PNotifyModule.js"></script>
     <script src="~/lib/jquery.blockui/jquery.blockui.js"></script>
     <script src="~/lib/spin.js/spin.min.js"></script>
     <script src="~/js/utilities/spin.partofpage.js"></script>
-
-    <script data-main="/js/CustomScripts/Admin/Article/ManageArticleComment/Main" src="~/lib/requirejs/require.min.js"></script>
-
+    <script>
+        SystemJS.import('/js/CustomScripts/Admin/Article/ManageArticleCommentModule.js').then(function (manageArticleCommentModule) {
+            manageArticleCommentModule.Run();
+        });
+    </script>
 }

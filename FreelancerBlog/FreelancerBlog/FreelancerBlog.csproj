@@ -9,23 +9,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\js\CustomScripts\Admin\Portfolio\Create\**" />
+    <Compile Remove="wwwroot\js\CustomScripts\Admin\Portfolio\ManagePortfolio\**" />
+    <Content Remove="wwwroot\js\CustomScripts\Admin\Portfolio\Create\**" />
+    <Content Remove="wwwroot\js\CustomScripts\Admin\Portfolio\ManagePortfolio\**" />
+    <EmbeddedResource Remove="wwwroot\js\CustomScripts\Admin\Portfolio\Create\**" />
+    <EmbeddedResource Remove="wwwroot\js\CustomScripts\Admin\Portfolio\ManagePortfolio\**" />
+    <None Remove="wwwroot\js\CustomScripts\Admin\Portfolio\Create\**" />
+    <None Remove="wwwroot\js\CustomScripts\Admin\Portfolio\ManagePortfolio\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\css\index.css" />
     <Content Include="wwwroot\files\PriceList.xlsx" />
     <Content Include="wwwroot\js\CustomScripts\Admin\Article\ArticleSharedModule.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Article\Create\Main.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Article\Edit\Main.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticleComment\Main.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticleComment\ManageArticleCommentModule.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticleTag\Main.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticleTag\ManageArticleTagModule.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticle\Main.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticle\ManageArticleModule.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Contact\ManageContact\Main.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Contact\ManageContact\ManageContactModule.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Portfolio\Create\Main.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Portfolio\Create\PortfolioCreateModule.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Portfolio\ManagePortfolio\Main.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\Portfolio\ManagePortfolio\ManagePortfolioModule.js" />
-    <Content Include="wwwroot\js\CustomScripts\Admin\SlideShow\ManageSlideShow\Main.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticleCommentModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticleModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Article\ManageArticleTagModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Contact\ManageContactModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\Portfolio\ManagePortfolioModule.js" />
+    <Content Include="wwwroot\js\CustomScripts\Admin\SlideShow\ManageSlideShowModule.js" />
     <Content Include="wwwroot\js\CustomScripts\Admin\SlideShow\ManageSlideShow\ManageSlideShowModule.js" />
     <Content Include="wwwroot\js\CustomScripts\Root\Account\Register.js" />
     <Content Include="wwwroot\js\CustomScripts\Root\Article\ArticleDetail\ArticleDetailModule.js" />
@@ -207,6 +210,8 @@
     <Content Include="wwwroot\lib\pickday\pikaday.css" />
     <Content Include="wwwroot\lib\pickday\pikaday.jquery.js" />
     <Content Include="wwwroot\lib\pickday\pikaday.js" />
+    <Content Include="wwwroot\lib\pnotify\dist\pnotify.custom.min.css" />
+    <Content Include="wwwroot\lib\pnotify\dist\pnotify.custom.min.js" />
     <Content Include="wwwroot\lib\prism\prism.css" />
     <Content Include="wwwroot\lib\prism\prism.js" />
     <Content Include="wwwroot\lib\requirejs\require.js" />
