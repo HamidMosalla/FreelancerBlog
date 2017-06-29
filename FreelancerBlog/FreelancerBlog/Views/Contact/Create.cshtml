@@ -109,11 +109,13 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
+    <script src="~/js/Utilities/PNotifyModule.js"></script>
     <script src="~/lib/jquery.blockui/jquery.blockui.js"></script>
     <script src="~/lib/spin.js/spin.min.js"></script>
     <script src="~/js/utilities/spin.partofpage.js"></script>
-
-     <script data-main="/js/CustomScripts/Root/Contact/Create/Main" src="~/lib/requirejs/require.min.js"></script>
-
+    <script src="~/js/CustomScripts/Root/Contact/CreateContctModule.js"></script>
     <script src='https://www.google.com/recaptcha/api.js?hl=fa'></script>
+    <script>
+        jQuery(createContctModule.Run);
+    </script>
 }

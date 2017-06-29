@@ -66,8 +66,10 @@
     <script src="~/lib/tableexport/jquery.base64.utf8.js"></script>
     <script src="~/lib/tableexport/tableexport.js"></script>
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
-
-    <script data-main="/js/CustomScripts/Root/SiteOrder/Index/Main" src="~/lib/requirejs/require.min.js"></script>
-
+    <script src="~/js/Utilities/PNotifyModule.js"></script>
+    <script src="~/js/CustomScripts/Root/SiteOrder/SiteOrderModule.js"></script>
     <script src='https://www.google.com/recaptcha/api.js?hl=fa'></script>
+    <script>
+        jQuery(siteOrderModule.Run);
+    </script>
 }
