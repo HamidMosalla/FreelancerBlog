@@ -4,10 +4,10 @@
 @model IPagedList<ContactViewModel>
 
 @{
-    ViewData["Title"] = "مدیریت مقاله";
+    ViewData["Title"] = "مدیریت ارتباط با ما";
 }
 
-<h2>مدیریت نظرات</h2>
+<h2>مدیریت ارتباط با ما</h2>
 
 @section styles{
     <link href="~/lib/pnotify/dist/pnotify.custom.min.css" rel="stylesheet" />
@@ -40,7 +40,6 @@
     @foreach (var item in Model)
     {
         <tr>
-
             <td>
                 @item.ContactName
             </td>
