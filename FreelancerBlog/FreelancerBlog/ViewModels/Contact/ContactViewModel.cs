@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FreelancerBlog.ViewModels.Contact
 {
@@ -33,5 +35,11 @@ namespace FreelancerBlog.ViewModels.Contact
         [Range(1000000000, double.MaxValue, ErrorMessage = "لطفا یک شماره تلفن معتبر وارد کنید.")]
         [Display(Name = "تلفن تماس گیرنده")]
         public string ContactPhone { get; set; }
+
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
+        public string ContactText { get; set; }
+        public string ContactDrop { get; set; }
+        public List<SelectListItem> ContactDropSelectListItems { get; set; }
     }
 }

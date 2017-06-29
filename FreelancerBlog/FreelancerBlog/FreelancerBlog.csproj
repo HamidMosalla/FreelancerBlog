@@ -203,6 +203,7 @@
     <Content Include="wwwroot\lib\Gravatar\gravatar.js" />
     <Content Include="wwwroot\lib\jquery-serializeJSON\serializeJSON.js" />
     <Content Include="wwwroot\lib\jquery.blockUI\jquery.blockUI.js" />
+    <Content Include="wwwroot\lib\knockout\dist\knockout.mapping-latest.js" />
     <Content Include="wwwroot\lib\parallax\parallax.js" />
     <Content Include="wwwroot\lib\pickday\moment.min.js" />
     <Content Include="wwwroot\lib\pickday\pikaday.css" />

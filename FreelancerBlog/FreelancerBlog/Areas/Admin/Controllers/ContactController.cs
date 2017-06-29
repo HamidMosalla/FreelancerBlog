@@ -1,9 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using cloudscribe.Web.Pagination;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Mapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FreelancerBlog.Areas.Admin.Controllers
 {
@@ -25,7 +28,17 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var contacts = await _uw.ContactRepository.GetAllAsync();
 
-            var contactsViewModel = _freelancerBlogMapper.ContactCollectionToContactViewModelCollection(contacts);
+            var contactsViewModel = _freelancerBlogMapper.ContactCollectionToContactViewModelCollection(contacts).Take(2).ToList();
+
+            contactsViewModel.ForEach(c => c.ContactText = c.ContactId + " - Numb");
+            contactsViewModel.ForEach(c => c.ContactDropSelectListItems =
+                new List<SelectListItem>
+                {
+                    new SelectListItem {Text = 1.ToString(), Value = 1.ToString(), Selected = true},
+                    new SelectListItem {Text = 2.ToString(), Value = 2.ToString()}
+                });
+            contactsViewModel.ForEach(c => c.Price = 0);
+            contactsViewModel.ForEach(c => c.Quantity = 1);
 
             var pageNumber = page ?? 1;
 
