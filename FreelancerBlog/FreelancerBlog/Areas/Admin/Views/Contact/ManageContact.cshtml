@@ -67,7 +67,7 @@
         </td>
     </tr>
     <!-- /ko -->
-    <a  class="btn btn-success" id="print-array">sdf</a>
+    <a class="btn btn-success" id="print-array">sdf</a>
 </table>
 
 <div class="modal fade" id="ContactDetailModal" tabindex="-1" role="dialog" aria-labelledby="ContactDetailModal-label" aria-hidden="true">
@@ -102,7 +102,7 @@
 
 @section scripts{
     <script src="~/lib/knockout/dist/knockout.js"></script>
-<script src="~/lib/knockout/dist/knockout.mapping-latest.js"></script>
+    <script src="~/lib/knockout/dist/knockout.mapping-latest.js"></script>
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
     <script src="~/js/Utilities/PNotifyModule.js"></script>
     <script src="~/lib/jquery.blockui/jquery.blockui.js"></script>
@@ -116,9 +116,26 @@
 
         var jsonModel = @Json.Serialize(Model);
 
-        var ManageContactViewModel = function(modelData) {
-            //this.contacts = ko.observableArray(modelData);
-            this.contacts =  ko.mapping.fromJS(modelData);
+        var BuildObservableSelectListItems = function (modelData) {
+            this.disabled = ko.observable(modelData.disabled);
+            this.selected = ko.observable(modelData.selected);
+            this.text = ko.observable(modelData.text);
+            this.value = ko.observable(modelData.value);
+        }
+
+        var ManageContactViewModel = function (modelData) {
+
+            //var mapping = {
+            //    'contactDropSelectListItems': {
+            //        create: function (options) {
+            //            //return new ko.mapping.fromJS(options.data);
+            //            return new BuildObservableSelectListItems(options.data);
+            //        }
+            //    }
+            //}
+
+            this.contacts = ko.observableArray(modelData);
+            //this.contacts = ko.mapping.fromJS(modelData, mapping);
             this.getPersianDate = function(date) {
                 return new Date(date).toLocaleDateString("fa-IR").replace(' ه‍.ش.', '');
             };
