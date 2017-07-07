@@ -34,41 +34,36 @@
             @Html.DisplayNameFor(model => model.Single().ContactDate)
         </th>
 
-        <th>متن تکست</th>
-        <th>دراپ</th>
-        <th>تعداد</th>
-        <th>قیمت</th>
-
         <th></th>
     </tr>
 
-    <!-- ko foreach: contacts-->
-    <tr>
-        <td data-bind="text: contactName"> </td>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ContactName
+            </td>
 
-        <td data-bind="text: contactEmail"></td>
+            <td>
+                @item.ContactEmail
+            </td>
 
-        <td data-bind="text: contactPhone"></td>
+            <td>
+                @item.ContactPhone
+            </td>
 
-        <td data-bind="text: $root.getPersianDate(contactDate)"></td>
+            <td>
+                <span class="persianDate">@item.ContactDate.ToString("MM/dd/yyyy")</span>
+            </td>
 
-        <td><input data-bind="value: contactText" /></td>
-        <td>
-            <select data-bind="foreach: contactDropSelectListItems">
-                <option data-bind="value: value, text: text, attr: {'data-value': value, selected: selected}"></option>
-            </select>
-        </td>
-        <td><input data-bind="value: quantity" type="number" /></td>
-        <td data-bind="text: price"></td>
-
-        <td>
-            <a data-bind='attr: { "data-contact-body": contactBody }' class="btn btn-default contactDetail">جزئیات</a>
-            <a data-bind="attr: { href: '/DeleteContact/' + contactId }" class="btn btn-danger DeleteContactButton">حذف</a>
-        </td>
-    </tr>
-    <!-- /ko -->
-    <a class="btn btn-success" id="print-array">sdf</a>
+            <td>
+                <a href="#" class="btn btn-default contactDetail" data-contact-body="@item.ContactBody">جزئیات</a>
+                <a asp-action="DeleteContact" asp-route-id="@item.ContactId" class="btn btn-danger DeleteContactButton">حذف</a>
+            </td>
+        </tr>
+    }
 </table>
+
 
 <div class="modal fade" id="ContactDetailModal" tabindex="-1" role="dialog" aria-labelledby="ContactDetailModal-label" aria-hidden="true">
     <div class="modal-dialog">
@@ -89,66 +84,24 @@
     </div>
 </div>
 
-@*<div class="text-center">
-        <cs-pager cs-paging-pagesize="@Model.PageSize"
-                  cs-paging-pagenumber="@Model.PageNumber"
-                  cs-paging-totalitems="@Model.TotalItemCount"
-                  cs-pagenumber-param="page"
-                  asp-controller="Contact"
-                  asp-action="ManageContact">
+<div class="text-center">
+    <cs-pager cs-paging-pagesize="@Model.PageSize"
+              cs-paging-pagenumber="@Model.PageNumber"
+              cs-paging-totalitems="@Model.TotalItemCount"
+              cs-pagenumber-param="page"
+              asp-controller="Contact"
+              asp-action="ManageContact">
 
-        </cs-pager>
-    </div>*@
+    </cs-pager>
+</div>
 
 @section scripts{
-    <script src="~/lib/knockout/dist/knockout.js"></script>
-    <script src="~/lib/knockout/dist/knockout.mapping-latest.js"></script>
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
     <script src="~/js/Utilities/PNotifyModule.js"></script>
     <script src="~/lib/jquery.blockui/jquery.blockui.js"></script>
     <script src="~/lib/spin.js/spin.min.js"></script>
     <script src="~/js/utilities/spin.wholepage.js"></script>
 
-    @*<script src="~/js/CustomScripts/Admin/Contact/ManageContactModule.js"></script>
-        <script>jQuery(manageContactModule.Run)</script>*@
-
-    <script>
-
-        var jsonModel = @Json.Serialize(Model);
-
-        var BuildObservableSelectListItems = function (modelData) {
-            this.disabled = ko.observable(modelData.disabled);
-            this.selected = ko.observable(modelData.selected);
-            this.text = ko.observable(modelData.text);
-            this.value = ko.observable(modelData.value);
-        }
-
-        var ManageContactViewModel = function (modelData) {
-
-            //var mapping = {
-            //    'contactDropSelectListItems': {
-            //        create: function (options) {
-            //            //return new ko.mapping.fromJS(options.data);
-            //            return new BuildObservableSelectListItems(options.data);
-            //        }
-            //    }
-            //}
-
-            this.contacts = ko.observableArray(modelData);
-            //this.contacts = ko.mapping.fromJS(modelData, mapping);
-            this.getPersianDate = function(date) {
-                return new Date(date).toLocaleDateString("fa-IR").replace(' ه‍.ش.', '');
-            };
-        };
-
-        var viewModel = new ManageContactViewModel(jsonModel);
-
-        ko.applyBindings(viewModel);
-
-        $("#print-array").click(function() {
-            var plainJs = ko.toJSON(viewModel);
-            console.log(plainJs);
-        });
-
-    </script>
+    <script src="~/js/CustomScripts/Admin/Contact/ManageContactModule.js"></script>
+    <script>jQuery(manageContactModule.Run)</script>
 }
