@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using cloudscribe.Web.Pagination;
@@ -18,16 +19,14 @@ namespace FreelancerBlog.Controllers
     public class ArticleController : Controller
     {
         private IUnitOfWork _uw;
-        private IFreelancerBlogMapper _freelancerBlogMapper;
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
         private ICaptchaValidator _captchaValidator;
         private IConfiguration _configuration;
 
-        public ArticleController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, UserManager<ApplicationUser> userManager, ICaptchaValidator captchaValidator, IConfiguration configuration, IMapper mapper)
+        public ArticleController(IUnitOfWork uw, UserManager<ApplicationUser> userManager, ICaptchaValidator captchaValidator, IConfiguration configuration, IMapper mapper)
         {
             _uw = uw;
-            _freelancerBlogMapper = freelancerBlogMapper;
             _mapper = mapper;
             _userManager = userManager;
             _captchaValidator = captchaValidator;
@@ -84,7 +83,11 @@ namespace FreelancerBlog.Controllers
 
             await _uw.ArticleRepository.IncreaseArticleViewCount(id);
 
-            var articleViewModel = await _freelancerBlogMapper.ArticleToArticleViewModelWithTagsAsync(article);
+            var articleViewModel = _mapper.Map<Article, ArticleViewModel>(article);
+            articleViewModel.ArticleTags = await _uw.ArticleRepository.GetTagsByArticleIdAsync(article.ArticleId);
+            articleViewModel.ArticleTagsList = await _uw.ArticleRepository.GetCurrentArticleTagsAsync(article.ArticleId);
+            articleViewModel.SumOfRating = articleViewModel.ArticleRatings.Sum(a => a.ArticleRatingScore) / articleViewModel.ArticleRatings.Count;
+            articleViewModel.CurrentUserRating = articleViewModel.ArticleRatings.SingleOrDefault(a => a.UserIDfk == _userManager.GetUserId(User));
 
             return View(articleViewModel);
         }

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.AutoMapper;
@@ -11,13 +13,11 @@ namespace FreelancerBlog.Controllers
     public class PortfolioController : Controller
     {
         private IUnitOfWork _uw;
-        private IFreelancerBlogMapper _freelancerBlogMapper;
         private readonly IMapper _mapper;
 
-        public PortfolioController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, IMapper mapper)
+        public PortfolioController(IUnitOfWork uw, IMapper mapper)
         {
             _uw = uw;
-            _freelancerBlogMapper = freelancerBlogMapper;
             _mapper = mapper;
         }
 
@@ -46,7 +46,9 @@ namespace FreelancerBlog.Controllers
         {
             var model = await _uw.PortfolioRepository.GetAllAsync();
 
-            var viewModel = _freelancerBlogMapper.PortfolioCollectionToPortfolioViewModelCollection(model);
+            var viewModel = _mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(model);
+
+            viewModel.ForEach(v => v.PortfolioCategoryList = model.Single(p => p.PortfolioId.Equals(v.PortfolioId)).PortfolioCategory.Split(',').ToList());
 
             return View(viewModel);
         }

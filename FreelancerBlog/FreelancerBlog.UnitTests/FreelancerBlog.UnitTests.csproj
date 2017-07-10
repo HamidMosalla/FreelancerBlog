@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Root\AccountControllerTests.cs" />
     <Compile Remove="Controllers\Root\ContactControllerTests.cs" />
     <Compile Remove="Controllers\Root\PortfolioControllerTests.cs" />
   </ItemGroup>

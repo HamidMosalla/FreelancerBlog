@@ -13,13 +13,11 @@ namespace FreelancerBlog.ViewComponents
     {
 
         private IUnitOfWork _uw;
-        private IFreelancerBlogMapper _freelancerBlogMapper;
         private readonly IMapper _mapper;
 
-        public ArticleTagBox(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, IMapper mapper)
+        public ArticleTagBox(IUnitOfWork uw, IMapper mapper)
         {
             _uw = uw;
-            _freelancerBlogMapper = freelancerBlogMapper;
             _mapper = mapper;
         }
 

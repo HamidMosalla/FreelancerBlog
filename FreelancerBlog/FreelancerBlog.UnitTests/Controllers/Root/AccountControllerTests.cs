@@ -25,7 +25,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
     {
         private Mock<IUnitOfWork> _uw;
         private Mock<IContactRepository> _contactRepository;
-        private Mock<IFreelancerBlogMapper> _freelancerBlogMapper;
+        private Mock<ICustomMapper> _freelancerBlogMapper;
         private Mock<HttpContext> _httpContext;
         private Mock<ICaptchaValidator> _captchaValidator;
         private Mock<IConfigurationBinderWrapper> _configurationWrapper;
@@ -53,7 +53,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             _emailSender = new Mock<IEmailSender>();
             _uw = new Mock<IUnitOfWork>();
             _contactRepository = new Mock<IContactRepository>();
-            _freelancerBlogMapper = new Mock<IFreelancerBlogMapper>();
+            _freelancerBlogMapper = new Mock<ICustomMapper>();
             _captchaValidator = new Mock<ICaptchaValidator>();
             _configurationWrapper = new Mock<IConfigurationBinderWrapper>();
             _httpContext = new Mock<HttpContext>();

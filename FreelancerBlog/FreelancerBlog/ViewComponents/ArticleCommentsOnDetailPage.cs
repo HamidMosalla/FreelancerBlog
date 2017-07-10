@@ -10,12 +10,10 @@ namespace FreelancerBlog.ViewComponents
     {
 
         private IUnitOfWork _uw;
-        private IFreelancerBlogMapper _freelancerBlogMapper;
 
-        public ArticleCommentsOnDetailPage(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper)
+        public ArticleCommentsOnDetailPage(IUnitOfWork uw)
         {
             _uw = uw;
-            _freelancerBlogMapper = freelancerBlogMapper;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(ArticleCommentTreeViewModel commentTree)

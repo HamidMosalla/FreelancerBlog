@@ -7,7 +7,6 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using cloudscribe.Web.Pagination;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Wrappers;
@@ -111,7 +110,6 @@ namespace FreelancerBlog
             containerBuilder.RegisterModule<PriceSpecCollectionFactoryModule>();
             containerBuilder.RegisterModule<FinalPriceCalculatorModule>();
             containerBuilder.RegisterModule<CaptchaValidatorModule>();
-            containerBuilder.RegisterType<FreelancerBlogMapper>().As<IFreelancerBlogMapper>();
             containerBuilder.RegisterModule<FileSystemWrapperModule>();
 
             containerBuilder.Populate(services);

@@ -18,13 +18,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     public class ContactController : Controller
     {
         private IUnitOfWork _uw;
-        private IFreelancerBlogMapper _freelancerBlogMapper;
         private readonly IMapper _mapper;
 
-        public ContactController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper)
+        public ContactController(IUnitOfWork uw)
         {
             _uw = uw;
-            _freelancerBlogMapper = freelancerBlogMapper;
         }
 
         [HttpGet]

@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using cloudscribe.Web.Pagination;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Enums;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.Shared;
@@ -17,16 +20,16 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     public class PortfolioController : Controller
     {
         private IUnitOfWork _uw;
-        private IFreelancerBlogMapper _freelancerBlogMapper;
+        private readonly IMapper _mapper;
         private ICkEditorFileUploder _ckEditorFileUploader;
         private IFileManager _fileManager;
 
-        public PortfolioController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, IFileManager fileManager, ICkEditorFileUploder ckEditorFileUploader)
+        public PortfolioController(IUnitOfWork uw, IFileManager fileManager, ICkEditorFileUploder ckEditorFileUploader, IMapper mapper)
         {
             _uw = uw;
-            _freelancerBlogMapper = freelancerBlogMapper;
             _fileManager = fileManager;
             _ckEditorFileUploader = ckEditorFileUploader;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -34,7 +37,9 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var portfolios = await _uw.PortfolioRepository.GetAllAsync();
 
-            var portfoliosViewModel = _freelancerBlogMapper.PortfolioCollectionToPortfolioViewModelCollection(portfolios);
+            var portfoliosViewModel = _mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios);
+
+            portfoliosViewModel.ForEach(v => v.PortfolioCategoryList = portfolios.Single(p => p.PortfolioId.Equals(v.PortfolioId)).PortfolioCategory.Split(',').ToList());
 
             var pageNumber = page ?? 1;
 
@@ -63,7 +68,10 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             string fileName = await _fileManager.UploadFileAsync(viewModel.PortfolioThumbnailFile, new List<string> { "images", "portfolio", "thumb" });
 
-            var portfolio = _freelancerBlogMapper.PortfolioViewModelToPorfolio(viewModel, fileName);
+            var portfolio = _mapper.Map<PortfolioViewModel, Portfolio>(viewModel);
+
+            portfolio.PortfolioThumbnail = fileName;
+            portfolio.PortfolioCategory = string.Join(",", viewModel.PortfolioCategoryList);
 
             int createPortfolioResult = await _uw.PortfolioRepository.AddNewPortfolio(portfolio);
 
@@ -92,7 +100,10 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var viewModel = _freelancerBlogMapper.PortfolioToPortfolioViewModelEdit(model);
+            var viewModel = _mapper.Map<Portfolio, PortfolioViewModelEdit>(model);
+
+            viewModel.CurrentThumbnail = model.PortfolioThumbnail;
+            viewModel.PortfolioCategoryList = model.PortfolioCategory.Split(',').ToList();
 
             return View(viewModel);
         }
@@ -106,7 +117,9 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return View(viewModel);
             }
 
-            var portfolio = _freelancerBlogMapper.PortfolioViewModelEditToPortfolio(viewModel);
+            var portfolio = _mapper.Map<PortfolioViewModelEdit, Portfolio>(viewModel);
+
+            portfolio.PortfolioCategory = string.Join(",", viewModel.PortfolioCategoryList);
 
             if (viewModel.PortfolioThumbnailFile != null)
             {

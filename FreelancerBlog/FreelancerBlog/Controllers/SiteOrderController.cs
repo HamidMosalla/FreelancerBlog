@@ -16,19 +16,17 @@ namespace FreelancerBlog.Controllers
     public class SiteOrderController : Controller
     {
         private IUnitOfWork _uw;
-        private IFreelancerBlogMapper _freelancerBlogMapper;
         private readonly IMapper _mapper;
         private IPriceSpecCollectionFactory<PriceSpec, object> _priceSpecCollectionFactory;
         private IFinalPriceCalculator<PriceSpec> _finalPriceCalculator;
         private ICaptchaValidator _captchaValidator;
         private IConfiguration _configuration;
 
-        public SiteOrderController(IPriceSpecCollectionFactory<PriceSpec, object> priceSpecCollectionFactory, IFinalPriceCalculator<PriceSpec> finalPriceCalculator, IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, ICaptchaValidator captchaValidator, IConfiguration configuration)
+        public SiteOrderController(IPriceSpecCollectionFactory<PriceSpec, object> priceSpecCollectionFactory, IFinalPriceCalculator<PriceSpec> finalPriceCalculator, IUnitOfWork uw, ICaptchaValidator captchaValidator, IConfiguration configuration)
         {
             _priceSpecCollectionFactory = priceSpecCollectionFactory;
             _finalPriceCalculator = finalPriceCalculator;
             _uw = uw;
-            _freelancerBlogMapper = freelancerBlogMapper;
             _captchaValidator = captchaValidator;
             _configuration = configuration;
         }

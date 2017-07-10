@@ -14,15 +14,13 @@ namespace FreelancerBlog.Controllers
     public class ContactController : Controller
     {
         private IUnitOfWork _uw;
-        private IFreelancerBlogMapper _freelancerBlogMapper;
         private readonly IMapper _mapper;
         private ICaptchaValidator _captchaValidator;
         private IConfigurationBinderWrapper _configurationWrapper;
 
-        public ContactController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, ICaptchaValidator captchaValidator, IConfigurationBinderWrapper configurationWrapper, IMapper mapper)
+        public ContactController(IUnitOfWork uw, ICaptchaValidator captchaValidator, IConfigurationBinderWrapper configurationWrapper, IMapper mapper)
         {
             _uw = uw;
-            _freelancerBlogMapper = freelancerBlogMapper;
             _captchaValidator = captchaValidator;
             _configurationWrapper = configurationWrapper;
             _mapper = mapper;

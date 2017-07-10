@@ -13,6 +13,7 @@ using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.ViewModels.Article;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreelancerBlog.Areas.Admin.Controllers
@@ -23,19 +24,19 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     {
         private readonly IUnitOfWork _uw;
         private readonly ICkEditorFileUploder _ckEditorFileUploader;
-        private readonly IFreelancerBlogMapper _freelancerBlogMapper;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private IArticleServices _articleServices;
         private readonly IFileManager _fileManager;
 
-        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IFreelancerBlogMapper freelancerBlogMapper, IArticleServices articleServices, IFileManager fileManager, IMapper mapper)
+        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IArticleServices articleServices, IFileManager fileManager, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _uw = uw;
             _ckEditorFileUploader = ckEditorFileUploader;
-            _freelancerBlogMapper = freelancerBlogMapper;
             _articleServices = articleServices;
             _fileManager = fileManager;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -213,7 +214,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var articleViewModel = await _freelancerBlogMapper.ArticleToArticleViewModelWithTagsAsync(article);
+            var articleViewModel = _mapper.Map<Article, ArticleViewModel>(article);
+            articleViewModel.ArticleTags = await _uw.ArticleRepository.GetTagsByArticleIdAsync(article.ArticleId);
+            articleViewModel.ArticleTagsList = await _uw.ArticleRepository.GetCurrentArticleTagsAsync(article.ArticleId);
+            articleViewModel.SumOfRating = articleViewModel.ArticleRatings.Sum(a => a.ArticleRatingScore) / articleViewModel.ArticleRatings.Count;
+            articleViewModel.CurrentUserRating = articleViewModel.ArticleRatings.SingleOrDefault(a => a.UserIDfk == _userManager.GetUserId(User));
 
             return View(articleViewModel);
         }

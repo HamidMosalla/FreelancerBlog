@@ -18,15 +18,13 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     public class SlideShowController : Controller
     {
         private IUnitOfWork _uw;
-        private IFreelancerBlogMapper _freelancerBlogMapper;
         private readonly IMapper _mapper;
         private IFileManager _fileManager;
 
 
-        public SlideShowController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, IFileManager fileManager)
+        public SlideShowController(IUnitOfWork uw, IFileManager fileManager)
         {
             _uw = uw;
-            _freelancerBlogMapper = freelancerBlogMapper;
             _fileManager = fileManager;
         }
 
@@ -66,7 +64,9 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             string fileName = await _fileManager.UploadFileAsync(slideShowViewModel.SlideShowPictrureFile, new List<string> { "images", "slider" });
 
-            var slideShow = _freelancerBlogMapper.SlideShowViewModelToSlideShow(slideShowViewModel, fileName);
+            var slideShow = _mapper.Map<SlideShowViewModel, SlideShow>(slideShowViewModel);
+
+            slideShow.SlideShowPictrure = fileName;
 
             int addSlideShowResult = await _uw.SlideShowRepository.AddNewSlideShow(slideShow);
 

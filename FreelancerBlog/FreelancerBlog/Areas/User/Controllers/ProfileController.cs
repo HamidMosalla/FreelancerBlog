@@ -18,16 +18,14 @@ namespace FreelancerBlog.Areas.User.Controllers
     public class ProfileController : Controller
     {
         private IUnitOfWork _uw;
-        private IFreelancerBlogMapper _freelancerBlogMapper;
         private readonly IMapper _mapper;
         private IFileManager _fileManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
 
-        public ProfileController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, IFileManager fileManager, UserManager<ApplicationUser> userManager, IMapper mapper)
+        public ProfileController(IUnitOfWork uw, IFileManager fileManager, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _uw = uw;
-            _freelancerBlogMapper = freelancerBlogMapper;
             _fileManager = fileManager;
             _userManager = userManager;
             _mapper = mapper;
