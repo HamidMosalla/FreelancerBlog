@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
+using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Controllers;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Repository;
-using FreelancerBlog.Mapper;
 using GenFu;
 using Microsoft.AspNetCore.Mvc;
 using Moq;

@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using cloudscribe.Web.Pagination;
 using FreelancerBlog.Areas.Admin.ViewModels.SlideShow;
+using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Enums;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.Shared;
-using FreelancerBlog.Mapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +19,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     {
         private IUnitOfWork _uw;
         private IFreelancerBlogMapper _freelancerBlogMapper;
+        private readonly IMapper _mapper;
         private IFileManager _fileManager;
 
 
@@ -32,7 +35,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var slideShows = await _uw.SlideShowRepository.GetAllAsync();
 
-            var slideShowsViewModel = _freelancerBlogMapper.SlideShowCollectionToSlideShowCollectionViewModel(slideShows);
+            var slideShowsViewModel = _mapper.Map<List<SlideShow>, List<SlideShowViewModel>>(slideShows);
 
             var pageNumber = page ?? 1;
 
@@ -92,7 +95,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var viewModel = _freelancerBlogMapper.SlideShowToSlideShowViewModelEdit(model);
+            var viewModel = _mapper.Map<SlideShow, SlideShowViewModelEdit>(model);
 
             return View(viewModel);
         }
@@ -106,7 +109,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return View(viewModel);
             }
 
-            var slideshow = _freelancerBlogMapper.SlideShowViewModelEditToSlideShow(viewModel);
+            var slideshow = _mapper.Map<SlideShowViewModelEdit, SlideShow>(viewModel);
 
             if (viewModel.SlideShowPictrureFile != null)
             {

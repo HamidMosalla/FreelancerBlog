@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
 using FluentAssertions;
+using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Controllers;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.Core.Wrappers;
-using FreelancerBlog.Mapper;
 using FreelancerBlog.UnitTests.HandMadeFakes;
 using FreelancerBlog.ViewModels.Account;
 using FreelancerBlog.ViewModels.Email;

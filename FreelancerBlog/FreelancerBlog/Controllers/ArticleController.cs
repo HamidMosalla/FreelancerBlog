@@ -1,10 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using cloudscribe.Web.Pagination;
+using FreelancerBlog.Areas.Admin.ViewModels.Article;
+using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
-using FreelancerBlog.Mapper;
 using FreelancerBlog.ViewModels.Article;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,14 +19,16 @@ namespace FreelancerBlog.Controllers
     {
         private IUnitOfWork _uw;
         private IFreelancerBlogMapper _freelancerBlogMapper;
+        private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
         private ICaptchaValidator _captchaValidator;
         private IConfiguration _configuration;
 
-        public ArticleController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, UserManager<ApplicationUser> userManager, ICaptchaValidator captchaValidator, IConfiguration configuration)
+        public ArticleController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, UserManager<ApplicationUser> userManager, ICaptchaValidator captchaValidator, IConfiguration configuration, IMapper mapper)
         {
             _uw = uw;
             _freelancerBlogMapper = freelancerBlogMapper;
+            _mapper = mapper;
             _userManager = userManager;
             _captchaValidator = captchaValidator;
             _configuration = configuration;
@@ -34,7 +39,7 @@ namespace FreelancerBlog.Controllers
         {
             var articles = await _uw.ArticleRepository.GetAllAsync();
 
-            var articlesViewModel = _freelancerBlogMapper.ArticleCollectionToArticleViewModelCollection(articles);
+            var articlesViewModel =  _mapper.Map<List<Article>, List<ArticleViewModel>>(articles);
 
             var pageNumber = page ?? 1;
 
@@ -53,7 +58,7 @@ namespace FreelancerBlog.Controllers
 
             var articles = await _uw.ArticleRepository.GetArticlesByTag(id);
 
-            var articlesViewModel = _freelancerBlogMapper.ArticleCollectionToArticleViewModelCollection(articles);
+            var articlesViewModel = _mapper.Map<List<Article>, List<ArticleViewModel>>(articles);
 
             var pageNumber = page ?? 1;
 
@@ -130,7 +135,7 @@ namespace FreelancerBlog.Controllers
                 return Json(new { Status = "CannotHaveEmptyArgument" });
             }
 
-            var articleComment = _freelancerBlogMapper.ArticleCommentViewModelToArticleComment(viewModel);
+            var articleComment = _mapper.Map<ArticleCommentViewModel, ArticleComment>(viewModel);
 
             int addArticleCommentResult = await _uw.ArticleRepository.AddCommentToArticle(articleComment);
 

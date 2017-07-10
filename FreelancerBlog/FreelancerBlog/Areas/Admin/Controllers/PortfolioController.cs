@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using cloudscribe.Web.Pagination;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
+using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Enums;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.Shared;
-using FreelancerBlog.Mapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

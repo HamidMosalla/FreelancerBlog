@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
+using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.Core.Wrappers;
-using FreelancerBlog.Mapper;
 using FreelancerBlog.ViewModels.Contact;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,15 +15,17 @@ namespace FreelancerBlog.Controllers
     {
         private IUnitOfWork _uw;
         private IFreelancerBlogMapper _freelancerBlogMapper;
+        private readonly IMapper _mapper;
         private ICaptchaValidator _captchaValidator;
         private IConfigurationBinderWrapper _configurationWrapper;
 
-        public ContactController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, ICaptchaValidator captchaValidator, IConfigurationBinderWrapper configurationWrapper)
+        public ContactController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, ICaptchaValidator captchaValidator, IConfigurationBinderWrapper configurationWrapper, IMapper mapper)
         {
             _uw = uw;
             _freelancerBlogMapper = freelancerBlogMapper;
             _captchaValidator = captchaValidator;
             _configurationWrapper = configurationWrapper;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -46,7 +50,7 @@ namespace FreelancerBlog.Controllers
 
             if (isJavascriptEnabled)
             {
-                var contact = _freelancerBlogMapper.ContactViewModelToContact(contactViewModel);
+                var contact = _mapper.Map<ContactViewModel, Contact>(contactViewModel);
 
                 int addContactResult = await _uw.ContactRepository.AddNewContactAsync(contact);
 
@@ -58,7 +62,7 @@ namespace FreelancerBlog.Controllers
                 return Json(new { Status = "ProblematicSubmit" });
             }
 
-            var contactWioutJavascript = _freelancerBlogMapper.ContactViewModelToContact(contactViewModel);
+            var contactWioutJavascript = _mapper.Map<ContactViewModel, Contact>(contactViewModel);
 
             int addContactResultWioutJavascript = await _uw.ContactRepository.AddNewContactAsync(contactWioutJavascript);
 

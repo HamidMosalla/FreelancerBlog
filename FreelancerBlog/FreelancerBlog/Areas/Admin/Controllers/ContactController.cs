@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using cloudscribe.Web.Pagination;
+using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Repository;
-using FreelancerBlog.Mapper;
+using FreelancerBlog.ViewModels.Contact;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,6 +19,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     {
         private IUnitOfWork _uw;
         private IFreelancerBlogMapper _freelancerBlogMapper;
+        private readonly IMapper _mapper;
 
         public ContactController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper)
         {
@@ -28,7 +32,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var contacts = await _uw.ContactRepository.GetAllAsync();
 
-            var contactsViewModel = _freelancerBlogMapper.ContactCollectionToContactViewModelCollection(contacts).Take(2).ToList();
+            var contactsViewModel = _mapper.Map<List<Contact>, List<ContactViewModel>>(contacts);
 
             var pageNumber = page ?? 1;
 

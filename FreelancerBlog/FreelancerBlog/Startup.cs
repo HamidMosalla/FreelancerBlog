@@ -5,7 +5,9 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
 using cloudscribe.Web.Pagination;
+using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Wrappers;
@@ -15,7 +17,6 @@ using FreelancerBlog.DependencyInjection.Modules.SiteOrder;
 using FreelancerBlog.Infrastructure.EntityFramework;
 using FreelancerBlog.Infrastructure.Services.Shared;
 using FreelancerBlog.Infrastructure.Wrappers;
-using FreelancerBlog.Mapper;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -76,6 +77,8 @@ namespace FreelancerBlog
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
+
+            services.AddAutoMapper();
 
             services.AddMemoryCache();
 

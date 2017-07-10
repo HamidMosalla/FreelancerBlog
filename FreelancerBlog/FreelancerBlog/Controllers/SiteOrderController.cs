@@ -1,10 +1,12 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
+using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Services.SiteOrderServices;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.Infrastructure.Services.SiteOrderServices;
-using FreelancerBlog.Mapper;
 using FreelancerBlog.ViewModels.SiteOrder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +17,7 @@ namespace FreelancerBlog.Controllers
     {
         private IUnitOfWork _uw;
         private IFreelancerBlogMapper _freelancerBlogMapper;
+        private readonly IMapper _mapper;
         private IPriceSpecCollectionFactory<PriceSpec, object> _priceSpecCollectionFactory;
         private IFinalPriceCalculator<PriceSpec> _finalPriceCalculator;
         private ICaptchaValidator _captchaValidator;
@@ -57,7 +60,7 @@ namespace FreelancerBlog.Controllers
 
             var finalPrice = _finalPriceCalculator.CalculateFinalPrice(priceSpecCollection);
 
-            var siteOrder = _freelancerBlogMapper.SiteOrderViewModelToSiteOrder(viewModel);
+            var siteOrder = _mapper.Map<SiteOrderViewModel, SiteOrder>(viewModel);
 
             int addSiteOrderAsyncResult = await _uw.SiteOrderRepository.AddSiteOrderAsync(siteOrder);
 

@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using cloudscribe.Web.Pagination;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
+using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Enums;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.ArticleServices;
 using FreelancerBlog.Core.Services.Shared;
-using FreelancerBlog.Mapper;
+using FreelancerBlog.ViewModels.Article;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,16 +24,18 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         private readonly IUnitOfWork _uw;
         private readonly ICkEditorFileUploder _ckEditorFileUploader;
         private readonly IFreelancerBlogMapper _freelancerBlogMapper;
+        private readonly IMapper _mapper;
         private IArticleServices _articleServices;
         private readonly IFileManager _fileManager;
 
-        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IFreelancerBlogMapper freelancerBlogMapper, IArticleServices articleServices, IFileManager fileManager)
+        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IFreelancerBlogMapper freelancerBlogMapper, IArticleServices articleServices, IFileManager fileManager, IMapper mapper)
         {
             _uw = uw;
             _ckEditorFileUploader = ckEditorFileUploader;
             _freelancerBlogMapper = freelancerBlogMapper;
             _articleServices = articleServices;
             _fileManager = fileManager;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -38,7 +43,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var articles = await _uw.ArticleRepository.GetAllAsync();
 
-            var articlesViewModel = _freelancerBlogMapper.ArticleCollectionToArticleViewModelCollection(articles);
+            var articlesViewModel = _mapper.Map<List<Article>, List<ArticleViewModel>>(articles); ;
 
             var pageNumber = page ?? 1;
 
@@ -52,7 +57,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var comments = await _uw.ArticleRepository.GetAllCommentAsync();
 
-            var commentsViewModel = _freelancerBlogMapper.ArticleCommentCollectionToArticleCommentViewModelCollection(comments);
+            var commentsViewModel = _mapper.Map<List<ArticleComment>, List<ArticleCommentViewModel>>(comments);
 
             var pageNumber = page ?? 1;
 
@@ -66,7 +71,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var tags = await _uw.ArticleRepository.GetAllArticleTagsAsync();
 
-            var tagsViewModel = _freelancerBlogMapper.ArticleTagCollectionToArticleTagViewModelCollection(tags);
+            var tagsViewModel = _mapper.Map<List<ArticleTag>, List<ArticleTagViewModel>>(tags);
 
             var pageNumber = page ?? 1;
 
@@ -167,7 +172,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid) return View(viewModel);
 
-            var model = _freelancerBlogMapper.ArticleViewModelToArticle(viewModel);
+            var model = _mapper.Map<ArticleViewModel, Article>(viewModel);
 
             List<ArticleStatus> result = await _articleServices.CreateNewArticleAsync(model, viewModel.ArticleTags);
 
@@ -219,7 +224,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid) return View(viewModel);
 
-            var article = _freelancerBlogMapper.ArticleViewModelToArticle(viewModel);
+            var article = _mapper.Map<ArticleViewModel, Article>(viewModel);
 
             List<ArticleStatus> result = await _articleServices.EditArticleAsync(article, viewModel.ArticleTags);
 

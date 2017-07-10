@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
+using FreelancerBlog.Areas.Admin.ViewModels.Article;
+using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Repository;
-using FreelancerBlog.Mapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreelancerBlog.ViewComponents
@@ -10,6 +14,7 @@ namespace FreelancerBlog.ViewComponents
 
         private IUnitOfWork _uw;
         private IFreelancerBlogMapper _freelancerBlogMapper;
+        private readonly IMapper _mapper;
 
         public HomeFooterBlog(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper)
         {
@@ -21,7 +26,7 @@ namespace FreelancerBlog.ViewComponents
         {
             var articles = await _uw.ArticleRepository.GetLatestArticles(3);
 
-            var articlesViewModel = _freelancerBlogMapper.ArticleCollectionToArticleViewModelCollection(articles);
+            var articlesViewModel = _mapper.Map<List<Article>, List<ArticleViewModel>>(articles);
 
             return View(articlesViewModel);
         }

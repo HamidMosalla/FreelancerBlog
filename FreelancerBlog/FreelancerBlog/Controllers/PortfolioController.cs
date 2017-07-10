@@ -1,6 +1,9 @@
 ﻿using System.Threading.Tasks;
+using AutoMapper;
+using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
+using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Repository;
-using FreelancerBlog.Mapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreelancerBlog.Controllers
@@ -9,11 +12,13 @@ namespace FreelancerBlog.Controllers
     {
         private IUnitOfWork _uw;
         private IFreelancerBlogMapper _freelancerBlogMapper;
+        private readonly IMapper _mapper;
 
-        public PortfolioController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper)
+        public PortfolioController(IUnitOfWork uw, IFreelancerBlogMapper freelancerBlogMapper, IMapper mapper)
         {
             _uw = uw;
             _freelancerBlogMapper = freelancerBlogMapper;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -31,7 +36,7 @@ namespace FreelancerBlog.Controllers
                 return NotFound();
             }
 
-            var viewModel = _freelancerBlogMapper.PortfolioToPorfolioViewModel(model);
+            var viewModel = _mapper.Map<Portfolio, PortfolioViewModel>(model);
 
             return View(viewModel);
         }

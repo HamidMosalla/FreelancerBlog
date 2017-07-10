@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Repository;
-using FreelancerBlog.Mapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreelancerBlog.ViewComponents
