@@ -49,41 +49,6 @@ namespace FreelancerBlog.Infrastructure.Services.ArticleServices
 
                 addTagsToArticleResult = await _uw.ArticleRepository.AddTagRangeToArticle(tagsToAddToArticle, article);
 
-                #region Throw away code after refactoring tags related operations
-                //var preExistringTags = await _uw.ArticleTagRepository.GetAllAsync();
-                //var newTags = articleTags.Split(',');
-
-                //var tagList = new List<ArticleTag>();
-                //var joinTableArtTagList = new List<ArticleArticleTag>();
-                //ArticleTag tag;
-
-                //foreach (var item in newTags)
-                //{
-                //    if (preExistringTags.All(p => p.ArticleTagName != item))
-                //    {
-                //        tag = new ArticleTag { ArticleTagName = item };
-                //        tagList.Add(tag);
-
-
-                //    }
-                //    else
-                //    {
-                //        tag = preExistringTags.Single(p => p.ArticleTagName == item);
-                //    }
-
-                //    var joinTableArticleTag = new ArticleArticleTag
-                //    {
-                //        Article = article,
-                //        ArticleTag = tag
-                //    };
-                //    joinTableArtTagList.Add(joinTableArticleTag);
-                //}
-
-                ////await _uw.ArticleTagRepository.AddRangeOfTags(tagList); just for now, it broke the create method
-
-                //_uw.ArticleArticleTagRepository.AddRange(joinTableArtTagList);
-                #endregion
-
             }
 
             if (addArticleResult > 0)
@@ -113,17 +78,6 @@ namespace FreelancerBlog.Infrastructure.Services.ArticleServices
             int addTagsToArticleResult = 0;
             int tagsRemovalResult = 0;
 
-            #region Leftover code related to article update
-            //current approach is probably better, one less query to the database
-            //var oldArticle = await _uw.ArticleRepository.FindByIdAsync(article.ArticleId);
-
-            //oldArticle.ArticleBody = article.ArticleBody;
-            //oldArticle.ArticleTitle = article.ArticleTitle;
-            //oldArticle.ArticleSummary = article.ArticleSummary;
-            //oldArticle.ArticleStatus = article.ArticleStatus;
-            //oldArticle.ArticleDateModified = DateTime.Now;
-            #endregion
-
             int updateArticleResult = await _uw.ArticleRepository.UpdateArticleAsync(article);
 
             var currentArticleTags = await _uw.ArticleRepository.GetCurrentArticleTagsAsync(article.ArticleId);
@@ -145,45 +99,6 @@ namespace FreelancerBlog.Infrastructure.Services.ArticleServices
                 removeTagsFromArticleResult = await _uw.ArticleRepository.RemoveTagRangeFromArticle(tagsToRemoveFromArticle, article.ArticleId);
 
                 addTagsToArticleResult = await _uw.ArticleRepository.AddTagRangeToArticle(tagsToAddToArticle, article);
-
-                #region Throw away code after refactoring tags related operations
-                //var preExistingTags = await _uw.ArticleTagRepository.GetAllAsync();
-
-                //var tagList = new List<ArticleTag>();
-                //var joinTableArtTagList = new List<ArticleArticleTag>();
-                //ArticleTag tag;
-
-                //foreach (var item in viewModelTags)
-                //{
-                //    if (preExistingTags.All(p => p.ArticleTagName != item))
-                //    {
-                //        tag = new ArticleTag { ArticleTagName = item };
-                //        tagList.Add(tag);
-                //    }
-                //    else
-                //    {
-                //        tag = preExistingTags.Single(p => p.ArticleTagName == item);
-                //    }
-
-                //    if (currentArticleTags.All(c => c.ArticleTagId != tag.ArticleTagId))
-                //    {
-                //        var joinTableArticleTag = new ArticleArticleTag
-                //        {
-                //            Article = article,
-                //            ArticleTag = tag
-                //        };
-                //        joinTableArtTagList.Add(joinTableArticleTag);
-                //    }
-
-                //}
-
-                //_uw.ArticleTagRepository.AddRange(tagList);
-                //await _uw.SaveAsync();
-
-                //_uw.ArticleArticleTagRepository.AddRange(joinTableArtTagList);
-                //await _uw.SaveAsync();
-                #endregion
-
             }
             else
             {
