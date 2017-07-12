@@ -3,24 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreelancerBlog", "FreelancerBlog\FreelancerBlog.csproj", "{8CBC61FC-4052-4A00-85BF-3A2A8953C3AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreelancerBlog", "FreelancerBlog\FreelancerBlog.csproj", "{8CBC61FC-4052-4A00-85BF-3A2A8953C3AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreelancerBlog.Core", "FreelancerBlog.Core\FreelancerBlog.Core.csproj", "{D310980E-6DC4-402A-BEB5-F96B77B6E072}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreelancerBlog.Core", "FreelancerBlog.Core\FreelancerBlog.Core.csproj", "{D310980E-6DC4-402A-BEB5-F96B77B6E072}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreelancerBlog.DependencyInjection", "FreelancerBlog.DependencyInjection\FreelancerBlog.DependencyInjection.csproj", "{3AEA2F3A-89F4-4F4E-9929-728A853F9C60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreelancerBlog.Infrastructure", "FreelancerBlog.Infrastructure\FreelancerBlog.Infrastructure.csproj", "{1445D6F1-688B-422C-83A0-4C17BC57E0F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreelancerBlog.Infrastructure", "FreelancerBlog.Infrastructure\FreelancerBlog.Infrastructure.csproj", "{1445D6F1-688B-422C-83A0-4C17BC57E0F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreelancerBlog.IntegrationTests", "FreelancerBlog.IntegrationTests\FreelancerBlog.IntegrationTests.csproj", "{A983C7D9-E9B7-48A6-B22E-DA7A83710BC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreelancerBlog.IntegrationTests", "FreelancerBlog.IntegrationTests\FreelancerBlog.IntegrationTests.csproj", "{A983C7D9-E9B7-48A6-B22E-DA7A83710BC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreelancerBlog.UnitTests", "FreelancerBlog.UnitTests\FreelancerBlog.UnitTests.csproj", "{05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreelancerBlog.UnitTests", "FreelancerBlog.UnitTests\FreelancerBlog.UnitTests.csproj", "{05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreelancerBlog.UITests", "FreelancerBlog.UITests\FreelancerBlog.UITests.csproj", "{F4953E18-F779-44C0-B2CC-878176118F41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreelancerBlog.UITests", "FreelancerBlog.UITests\FreelancerBlog.UITests.csproj", "{F4953E18-F779-44C0-B2CC-878176118F41}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E16284F0-5EB6-4CC4-8542-4860CE24901C}"
 	ProjectSection(SolutionItems) = preProject
 		..\README.md = ..\README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreelancerBlog.Services", "FreelancerBlog.Services\FreelancerBlog.Services.csproj", "{8053C5DB-8C41-4E51-B21E-FFACE5031F5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreelancerBlog.Data", "FreelancerBlog.Data\FreelancerBlog.Data.csproj", "{09668EBB-4029-44B1-B08D-D6937E54D5C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +38,6 @@ Global
 		{D310980E-6DC4-402A-BEB5-F96B77B6E072}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D310980E-6DC4-402A-BEB5-F96B77B6E072}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D310980E-6DC4-402A-BEB5-F96B77B6E072}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3AEA2F3A-89F4-4F4E-9929-728A853F9C60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3AEA2F3A-89F4-4F4E-9929-728A853F9C60}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3AEA2F3A-89F4-4F4E-9929-728A853F9C60}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3AEA2F3A-89F4-4F4E-9929-728A853F9C60}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1445D6F1-688B-422C-83A0-4C17BC57E0F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1445D6F1-688B-422C-83A0-4C17BC57E0F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1445D6F1-688B-422C-83A0-4C17BC57E0F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -56,6 +54,14 @@ Global
 		{F4953E18-F779-44C0-B2CC-878176118F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4953E18-F779-44C0-B2CC-878176118F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4953E18-F779-44C0-B2CC-878176118F41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8053C5DB-8C41-4E51-B21E-FFACE5031F5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8053C5DB-8C41-4E51-B21E-FFACE5031F5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8053C5DB-8C41-4E51-B21E-FFACE5031F5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8053C5DB-8C41-4E51-B21E-FFACE5031F5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09668EBB-4029-44B1-B08D-D6937E54D5C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09668EBB-4029-44B1-B08D-D6937E54D5C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09668EBB-4029-44B1-B08D-D6937E54D5C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09668EBB-4029-44B1-B08D-D6937E54D5C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

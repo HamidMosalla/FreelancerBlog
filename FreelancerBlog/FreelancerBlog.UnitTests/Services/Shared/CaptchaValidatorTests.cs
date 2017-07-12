@@ -4,7 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using FreelancerBlog.Core.Types;
-using FreelancerBlog.Infrastructure.Services.Shared;
+using FreelancerBlog.Services.Shared;
 using FreelancerBlog.UnitTests.HandMadeFakes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;

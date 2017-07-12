@@ -6,7 +6,7 @@ using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Services.SiteOrderServices;
 using FreelancerBlog.Core.Types;
-using FreelancerBlog.Infrastructure.Services.SiteOrderServices;
+using FreelancerBlog.Services.SiteOrderServices;
 using FreelancerBlog.ViewModels.SiteOrder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using FreelancerBlog.Core.Enums;
 using FreelancerBlog.Core.Wrappers;
-using FreelancerBlog.Infrastructure.Services.Shared;
+using FreelancerBlog.Services.Shared;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Moq;

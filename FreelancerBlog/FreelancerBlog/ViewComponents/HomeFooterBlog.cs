@@ -15,9 +15,10 @@ namespace FreelancerBlog.ViewComponents
         private IUnitOfWork _uw;
         private readonly IMapper _mapper;
 
-        public HomeFooterBlog(IUnitOfWork uw)
+        public HomeFooterBlog(IUnitOfWork uw, IMapper mapper)
         {
             _uw = uw;
+            _mapper = mapper;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()

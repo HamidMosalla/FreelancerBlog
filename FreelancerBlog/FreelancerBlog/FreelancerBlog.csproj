@@ -255,7 +255,6 @@
   
   <ItemGroup>
     <ProjectReference Include="..\FreelancerBlog.Core\FreelancerBlog.Core.csproj" />
-    <ProjectReference Include="..\FreelancerBlog.DependencyInjection\FreelancerBlog.DependencyInjection.csproj" />
     <ProjectReference Include="..\FreelancerBlog.Infrastructure\FreelancerBlog.Infrastructure.csproj" />
   </ItemGroup>
   
