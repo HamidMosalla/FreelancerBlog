@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
+using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Autofac.Features.Variance;
 using AutoMapper;
 using cloudscribe.Web.Pagination;
 using FreelancerBlog.Core.Domain;
@@ -16,6 +19,7 @@ using FreelancerBlog.Infrastructure.DependencyInjection.Article;
 using FreelancerBlog.Infrastructure.DependencyInjection.SiteOrder;
 using FreelancerBlog.Services.Shared;
 using FreelancerBlog.Services.Wrappers;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +32,10 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
+using System.Linq;
+using System.Runtime.Loader;
 
 namespace FreelancerBlog
 {
@@ -99,19 +106,40 @@ namespace FreelancerBlog
             services.AddScoped<IRazorViewToString, RazorViewToString>();
 
             // Autofac container configuration and modules
-            var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule<UnitOfWorkModule>();
-            containerBuilder.RegisterModule<AuthMessageSenderModule>();
-            containerBuilder.RegisterModule<FreelancerBlogDbContextSeedDataModule>();
-            containerBuilder.RegisterModule<FileManagerModule>();
-            containerBuilder.RegisterModule<ArticleServicesModule>();
-            containerBuilder.RegisterModule<PriceSpecCollectionFactoryModule>();
-            containerBuilder.RegisterModule<FinalPriceCalculatorModule>();
-            containerBuilder.RegisterModule<CaptchaValidatorModule>();
-            containerBuilder.RegisterModule<FileSystemWrapperModule>();
+            var builder = new ContainerBuilder();
+            builder.RegisterSource(new ContravariantRegistrationSource());
+            builder.RegisterType<Mediator>().As<IMediator>().InstancePerLifetimeScope();
+            builder.Register<SingleInstanceFactory>(ctx =>
+                {
+                    var c = ctx.Resolve<IComponentContext>();
+                    return t =>
+                    {
+                        object o;
+                        return c.TryResolve(t, out o) ? o : null;
+                    };
+                }).InstancePerLifetimeScope();
+            builder.Register<MultiInstanceFactory>(ctx =>
+                {
+                    var c = ctx.Resolve<IComponentContext>();
+                    return t => (IEnumerable<object>)c.Resolve(typeof(IEnumerable<>).MakeGenericType(t));
+                }).InstancePerLifetimeScope();
 
-            containerBuilder.Populate(services);
-            var container = containerBuilder.Build();
+            var dataAssembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("FreelancerBlog.Data"));
+            var servicesAssembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("FreelancerBlog.Services"));
+            builder.RegisterAssemblyTypes(dataAssembly, servicesAssembly).AsImplementedInterfaces();
+
+            builder.RegisterModule<UnitOfWorkModule>();
+            builder.RegisterModule<AuthMessageSenderModule>();
+            builder.RegisterModule<FreelancerBlogDbContextSeedDataModule>();
+            builder.RegisterModule<FileManagerModule>();
+            builder.RegisterModule<ArticleServicesModule>();
+            builder.RegisterModule<PriceSpecCollectionFactoryModule>();
+            builder.RegisterModule<FinalPriceCalculatorModule>();
+            builder.RegisterModule<CaptchaValidatorModule>();
+            builder.RegisterModule<FileSystemWrapperModule>();
+
+            builder.Populate(services);
+            var container = builder.Build();
             return container.Resolve<IServiceProvider>();
         }
 

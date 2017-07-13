@@ -6,10 +6,12 @@ using cloudscribe.Web.Pagination;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.Queries.Article;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.ViewModels.Article;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -20,14 +22,16 @@ namespace FreelancerBlog.Controllers
     {
         private IUnitOfWork _uw;
         private readonly IMapper _mapper;
+        private IMediator _mediator;
         private readonly UserManager<ApplicationUser> _userManager;
         private ICaptchaValidator _captchaValidator;
         private IConfiguration _configuration;
 
-        public ArticleController(IUnitOfWork uw, UserManager<ApplicationUser> userManager, ICaptchaValidator captchaValidator, IConfiguration configuration, IMapper mapper)
+        public ArticleController(IUnitOfWork uw, UserManager<ApplicationUser> userManager, ICaptchaValidator captchaValidator, IConfiguration configuration, IMapper mapper, IMediator mediator)
         {
             _uw = uw;
             _mapper = mapper;
+            _mediator = mediator;
             _userManager = userManager;
             _captchaValidator = captchaValidator;
             _configuration = configuration;
@@ -74,7 +78,7 @@ namespace FreelancerBlog.Controllers
                 return BadRequest();
             }
 
-            var article = await _uw.ArticleRepository.FindByIdAsync(id);
+            var article = await _mediator.Send(new ArticleByArticleIdQuery { ArticleId = 4 });
 
             if (article == null)
             {

@@ -1,4 +1,7 @@
-﻿using FreelancerBlog.Core.Repository;
+﻿using System.Threading.Tasks;
+using FreelancerBlog.Core.Queries;
+using FreelancerBlog.Core.Repository;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreelancerBlog.Controllers
@@ -7,7 +10,7 @@ namespace FreelancerBlog.Controllers
     {
         private IUnitOfWork _uw;
 
-        public HomeController(IUnitOfWork uw)
+        public HomeController(IUnitOfWork uw, IMediator mediator)
         {
             _uw = uw;
         }

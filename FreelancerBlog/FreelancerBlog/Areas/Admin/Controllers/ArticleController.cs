@@ -5,12 +5,16 @@ using AutoMapper;
 using cloudscribe.Web.Pagination;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Commands.Articles;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Enums;
+using FreelancerBlog.Core.Queries.Article;
+using FreelancerBlog.Core.Queries.ArticleTags;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.ArticleServices;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.ViewModels.Article;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -26,10 +30,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         private readonly ICkEditorFileUploder _ckEditorFileUploader;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
+        private IMediator _mediator;
         private IArticleServices _articleServices;
         private readonly IFileManager _fileManager;
 
-        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IArticleServices articleServices, IFileManager fileManager, IMapper mapper, UserManager<ApplicationUser> userManager)
+        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IArticleServices articleServices, IFileManager fileManager, IMapper mapper, UserManager<ApplicationUser> userManager, IMediator mediator)
         {
             _uw = uw;
             _ckEditorFileUploader = ckEditorFileUploader;
@@ -37,6 +42,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
             _fileManager = fileManager;
             _mapper = mapper;
             _userManager = userManager;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -295,7 +301,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _uw.ArticleRepository.FindArticleTagByIdAsync(tagId);
+            var model = await _mediator.Send(new FindArticleTagByIdQuery {ArticleTagId = tagId});
 
             if (model == null)
             {
@@ -320,7 +326,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
             {
                 return Json(new { Status = "IdCannotBeNull" });
             }
-            var model = await _uw.ArticleRepository.FindByIdAsync(id);
+            var model = await _mediator.Send(new ArticleByArticleIdQuery { ArticleId = id });
 
             if (model == null)
             {
@@ -329,19 +335,14 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             _fileManager.DeleteEditorImages(model.ArticleBody, new List<string> { "Files", "ArticleUploads" });
 
-            int deleteArticleResult = await _uw.ArticleRepository.DeleteArticleAsync(model);
+            await _mediator.Send(new DeleteArticleCommand {Article = model});
 
-            if (deleteArticleResult > 0)
-            {
-                return Json(new { Status = "Deleted" });
-            }
-
-            return Json(new { Status = "NotDeletedSomeProblem" });
+            return Json(new { Status = "Deleted" });
         }
 
         public async Task<IActionResult> TagLookup()
         {
-            var model = await _uw.ArticleRepository.GetAllTagNamesArrayAsync();
+            var model = await _mediator.Send(new GetAllTagNamesQuery());
 
             return Json(model);
         }
@@ -349,19 +350,9 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CkEditorFileUploder(IFormFile file, string ckEditorFuncNum)
         {
-            string htmlResult =
-                await
-                    _ckEditorFileUploader.UploadFromCkEditorAsync(file, new List<string> {"images", "blog"},
-                        ckEditorFuncNum);
+            string htmlResult = await _ckEditorFileUploader.UploadFromCkEditorAsync(file, new List<string> { "images", "blog" }, ckEditorFuncNum);
 
             return Content(htmlResult, "text/html");
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            _uw.Dispose();
-            base.Dispose(disposing);
-        }
-
     }
 }
