@@ -5,7 +5,7 @@ using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
-namespace FreelancerBlog.Infrastructure.Repository
+namespace FreelancerBlog.Data.Repository
 {
     public class SiteOrderRepository : ISiteOrderRepository
     {

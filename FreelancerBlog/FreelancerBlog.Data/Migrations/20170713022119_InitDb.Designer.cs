@@ -1,14 +1,14 @@
 ﻿using System;
-using FreelancerBlog.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using FreelancerBlog.Data.EntityFramework;
 
 namespace FreelancerBlog.Data.Migrations
 {
     [DbContext(typeof(FreelancerBlogContext))]
-    [Migration("20170628122758_InitDb")]
+    [Migration("20170713022119_InitDb")]
     partial class InitDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

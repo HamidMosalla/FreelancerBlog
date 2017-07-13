@@ -15,4 +15,8 @@
     <ProjectReference Include="..\FreelancerBlog.Services\FreelancerBlog.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Logging\" />
+  </ItemGroup>
+
 </Project>

@@ -1,8 +1,9 @@
 ﻿using System;
-using FreelancerBlog.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using FreelancerBlog.Data.EntityFramework;
 
 namespace FreelancerBlog.Data.Migrations
 {

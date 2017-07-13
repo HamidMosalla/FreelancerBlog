@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Data.EntityFramework;
 
-namespace FreelancerBlog.Infrastructure.Repository
+namespace FreelancerBlog.Data.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {

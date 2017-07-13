@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using FreelancerBlog.Core.Repository;
-using FreelancerBlog.Infrastructure.Repository;
+using FreelancerBlog.Data.Repository;
 
 namespace FreelancerBlog.Infrastructure.DependencyInjection
 {
