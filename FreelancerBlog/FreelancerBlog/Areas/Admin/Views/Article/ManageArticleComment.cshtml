@@ -1,7 +1,6 @@
 ﻿@using System.Threading.Tasks
-@using cloudscribe.Web.Pagination
 @using FreelancerBlog.ViewModels.Article
-@model IPagedList<ArticleCommentViewModel>
+@model IEnumerable<ArticleCommentViewModel>
 
 @{
     ViewData["Title"] = "مدیریت مقاله";
@@ -138,18 +137,6 @@
             </div>
         </div>
     </div>
-</div>
-
-
-<div class="text-center">
-    <cs-pager cs-paging-pagesize="@Model.PageSize"
-              cs-paging-pagenumber="@Model.PageNumber"
-              cs-paging-totalitems="@Model.TotalItemCount"
-              cs-pagenumber-param="page"
-              asp-controller="Article"
-              asp-action="ManageArticleComment">
-
-    </cs-pager>
 </div>
 
 @section scripts{

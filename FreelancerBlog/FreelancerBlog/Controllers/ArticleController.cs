@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using cloudscribe.Web.Pagination;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Domain;
@@ -38,21 +37,17 @@ namespace FreelancerBlog.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index()
         {
             var articles = await _uw.ArticleRepository.GetAllAsync();
 
             var articlesViewModel =  _mapper.Map<List<Article>, List<ArticleViewModel>>(articles);
 
-            var pageNumber = page ?? 1;
-
-            var pagedArticle = articlesViewModel.ToPagedList(pageNumber - 1, 20);
-
-            return View(pagedArticle);
+            return View(articlesViewModel);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Tag(int id, int? page)
+        public async Task<IActionResult> Tag(int id)
         {
             if (id == 0)
             {
@@ -63,11 +58,7 @@ namespace FreelancerBlog.Controllers
 
             var articlesViewModel = _mapper.Map<List<Article>, List<ArticleViewModel>>(articles);
 
-            var pageNumber = page ?? 1;
-
-            var pagedArticle = articlesViewModel.ToPagedList(pageNumber - 1, 20);
-
-            return View(pagedArticle);
+            return View(articlesViewModel);
         }
 
         [HttpGet]

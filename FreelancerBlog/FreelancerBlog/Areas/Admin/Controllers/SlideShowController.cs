@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using cloudscribe.Web.Pagination;
 using FreelancerBlog.Areas.Admin.ViewModels.SlideShow;
 using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Domain;
@@ -29,17 +28,13 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ManageSlideShow(int? page)
+        public async Task<IActionResult> ManageSlideShow()
         {
             var slideShows = await _uw.SlideShowRepository.GetAllAsync();
 
             var slideShowsViewModel = _mapper.Map<List<SlideShow>, List<SlideShowViewModel>>(slideShows);
 
-            var pageNumber = page ?? 1;
-
-            var pagedSlideShow = slideShowsViewModel.ToPagedList(pageNumber - 1, 20);
-
-            return View(pagedSlideShow);
+            return View(slideShowsViewModel);
         }
 
         [HttpGet]

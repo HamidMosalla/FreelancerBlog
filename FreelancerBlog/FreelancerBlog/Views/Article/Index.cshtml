@@ -1,7 +1,6 @@
 ﻿@using System.Threading.Tasks
-@using cloudscribe.Web.Pagination
 @using FreelancerBlog.Areas.Admin.ViewModels.Article
-@model IPagedList<ArticleViewModel>
+@model IEnumerable<ArticleViewModel>
 
 @{
     ViewData["Title"] = "لیست مقالات";
@@ -39,20 +38,6 @@
         </div>
     </div>
 }
-
-<div class="text-center" style="font-size: large;">
-    <cs-pager cs-paging-pagesize="@Model.PageSize"
-              cs-paging-pagenumber="@Model.PageNumber"
-              cs-paging-totalitems="@Model.TotalItemCount"
-              cs-next-page-text=">"
-              cs-previous-page-text="<"
-              cs-pagenumber-param="page"
-              asp-controller="Article"
-              asp-action="Index">
-
-    </cs-pager>
-</div>
-
 
 @section BlogScripts{
    

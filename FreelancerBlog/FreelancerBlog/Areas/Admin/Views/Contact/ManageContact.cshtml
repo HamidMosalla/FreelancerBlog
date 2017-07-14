@@ -1,7 +1,6 @@
 ﻿@using System.Threading.Tasks
-@using cloudscribe.Web.Pagination
 @using FreelancerBlog.ViewModels.Contact
-@model IPagedList<ContactViewModel>
+@model IEnumerable<ContactViewModel>
 
 @{
     ViewData["Title"] = "مدیریت ارتباط با ما";
@@ -82,17 +81,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="text-center">
-    <cs-pager cs-paging-pagesize="@Model.PageSize"
-              cs-paging-pagenumber="@Model.PageNumber"
-              cs-paging-totalitems="@Model.TotalItemCount"
-              cs-pagenumber-param="page"
-              asp-controller="Contact"
-              asp-action="ManageContact">
-
-    </cs-pager>
 </div>
 
 @section scripts{

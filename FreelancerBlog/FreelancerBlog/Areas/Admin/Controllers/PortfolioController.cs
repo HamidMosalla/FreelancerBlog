@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using cloudscribe.Web.Pagination;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Domain;
@@ -33,7 +32,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ManagePortfolio(int? page)
+        public async Task<IActionResult> ManagePortfolio()
         {
             var portfolios = await _uw.PortfolioRepository.GetAllAsync();
 
@@ -41,11 +40,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             portfoliosViewModel.ForEach(v => v.PortfolioCategoryList = portfolios.Single(p => p.PortfolioId.Equals(v.PortfolioId)).PortfolioCategory.Split(',').ToList());
 
-            var pageNumber = page ?? 1;
-
-            var pagedPortfolios = portfoliosViewModel.ToPagedList(pageNumber - 1, 20);
-
-            return View(pagedPortfolios);
+            return View(portfoliosViewModel);
         }
 
         [HttpGet]

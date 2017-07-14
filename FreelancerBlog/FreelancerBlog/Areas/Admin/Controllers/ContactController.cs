@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using cloudscribe.Web.Pagination;
 using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Repository;
@@ -26,17 +25,13 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ManageContact(int? page)
+        public async Task<IActionResult> ManageContact()
         {
             var contacts = await _uw.ContactRepository.GetAllAsync();
 
             var contactsViewModel = _mapper.Map<List<Contact>, List<ContactViewModel>>(contacts);
 
-            var pageNumber = page ?? 1;
-
-            var pagedContact = contactsViewModel.ToPagedList(pageNumber - 1, 20);
-
-            return View(pagedContact);
+            return View(contactsViewModel);
         }
 
         [HttpPost]
@@ -63,12 +58,6 @@ namespace FreelancerBlog.Areas.Admin.Controllers
             }
 
             return Json(new { Status = "NotDeletedSomeProblem" });
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            _uw.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

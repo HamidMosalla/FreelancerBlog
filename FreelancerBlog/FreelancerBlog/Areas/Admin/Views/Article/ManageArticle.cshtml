@@ -1,5 +1,6 @@
 ﻿@using System.Threading.Tasks
-@model cloudscribe.Web.Pagination.IPagedList<FreelancerBlog.Areas.Admin.ViewModels.Article.ArticleViewModel>
+@using FreelancerBlog.Areas.Admin.ViewModels.Article
+@model IEnumerable<ArticleViewModel>
 
 @{
     ViewData["Title"] = "مدیریت مقاله";
@@ -97,23 +98,12 @@
 
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ArticleId" class="btn btn-warning">ویرایش</a>
-                <a asp-action="Details" @*asp-route-area="" *@ asp-route-id="@item.ArticleId" asp-route-title="@item.ArticleTitle.Replace(' ', '-')" class="btn btn-default">جزئیات</a>
+                <a asp-action="Details"asp-route-area=""asp-route-id="@item.ArticleId" asp-route-title="@item.ArticleTitle.Replace(' ', '-')" class="btn btn-default">جزئیات</a>
                 <a asp-action="Delete" asp-route-id="@item.ArticleId" class="btn btn-danger DeleteArticleButton">حذف</a>
             </td>
         </tr>
     }
 </table>
-
-<div class="text-center">
-    <cs-pager cs-paging-pagesize="@Model.PageSize"
-              cs-paging-pagenumber="@Model.PageNumber"
-              cs-paging-totalitems="@Model.TotalItemCount"
-              cs-pagenumber-param="page"
-              asp-controller="Article"
-              asp-action="ManageArticle">
-
-    </cs-pager>
-</div>
 
 @section scripts{
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>

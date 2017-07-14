@@ -1,7 +1,6 @@
 ﻿@using System.Threading.Tasks
-@using cloudscribe.Web.Pagination
 @using FreelancerBlog.Areas.Admin.ViewModels.SlideShow
-@model IPagedList<SlideShowViewModel>
+@model IEnumerable<SlideShowViewModel>
 
 @{
     ViewData["Title"] = "مدیریت اسلاید شو";
@@ -98,17 +97,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<div class="text-center">
-    <cs-pager cs-paging-pagesize="@Model.PageSize"
-              cs-paging-pagenumber="@Model.PageNumber"
-              cs-paging-totalitems="@Model.TotalItemCount"
-              cs-pagenumber-param="page"
-              asp-controller="SlideShow"
-              asp-action="ManageSlideShow">
-
-    </cs-pager>
 </div>
 
 @section scripts{

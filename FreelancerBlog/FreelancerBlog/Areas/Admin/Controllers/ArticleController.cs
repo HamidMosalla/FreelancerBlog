@@ -2,13 +2,15 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using cloudscribe.Web.Pagination;
+using AutoMapper.QueryableExtensions;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Commands.Articles;
+using FreelancerBlog.Core.Commands.ArticleTags;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Enums;
 using FreelancerBlog.Core.Queries.Article;
+using FreelancerBlog.Core.Queries.Articles;
 using FreelancerBlog.Core.Queries.ArticleTags;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.ArticleServices;
@@ -46,45 +48,33 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ManageArticle(int? page)
+        public async Task<IActionResult> ManageArticle()
         {
-            var articles = await _uw.ArticleRepository.GetAllAsync();
+            var articles = await _mediator.Send(new GetAriclesQuery());
 
-            var articlesViewModel = _mapper.Map<List<Article>, List<ArticleViewModel>>(articles); ;
+            var articlesViewModel = articles.ProjectTo<ArticleViewModel>().ToList();
 
-            var pageNumber = page ?? 1;
-
-            var pagedArticle = articlesViewModel.ToPagedList(pageNumber - 1, 20);
-
-            return View(pagedArticle);
+            return View(articlesViewModel);
         }
 
         [HttpGet]
-        public async Task<IActionResult> ManageArticleComment(int? page)
+        public async Task<IActionResult> ManageArticleComment()
         {
             var comments = await _uw.ArticleRepository.GetAllCommentAsync();
 
             var commentsViewModel = _mapper.Map<List<ArticleComment>, List<ArticleCommentViewModel>>(comments);
 
-            var pageNumber = page ?? 1;
-
-            var pagedArticleComment = commentsViewModel.ToPagedList(pageNumber - 1, 20);
-
-            return View(pagedArticleComment);
+            return View(commentsViewModel);
         }
 
         [HttpGet]
-        public async Task<IActionResult> ManageArticleTag(int? page)
+        public async Task<IActionResult> ManageArticleTag()
         {
             var tags = await _uw.ArticleRepository.GetAllArticleTagsAsync();
 
             var tagsViewModel = _mapper.Map<List<ArticleTag>, List<ArticleTagViewModel>>(tags);
 
-            var pageNumber = page ?? 1;
-
-            var pagedArticleTag = tagsViewModel.ToPagedList(pageNumber - 1, 20);
-
-            return View(pagedArticleTag);
+            return View(tagsViewModel);
         }
 
         [HttpPost]
@@ -301,21 +291,16 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _mediator.Send(new FindArticleTagByIdQuery {ArticleTagId = tagId});
+            var model = await _mediator.Send(new FindArticleTagByIdQuery { ArticleTagId = tagId });
 
             if (model == null)
             {
                 return Json(new { Status = "ArticleTagNotFound" });
             }
 
-            int editArticleTagResult = await _uw.ArticleRepository.EditArticleTagAsync(model, newTagName);
+            await _mediator.Send(new EditArticleTagCommand { ArticleTag = model, NewTagName = newTagName });
 
-            if (editArticleTagResult > 0)
-            {
-                return Json(new { Status = "Success" });
-            }
-
-            return Json(new { Status = "NotDeletedSomeProblem" });
+            return Json(new { Status = "Success" });
         }
 
         [HttpPost]
@@ -335,7 +320,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             _fileManager.DeleteEditorImages(model.ArticleBody, new List<string> { "Files", "ArticleUploads" });
 
-            await _mediator.Send(new DeleteArticleCommand {Article = model});
+            await _mediator.Send(new DeleteArticleCommand { Article = model });
 
             return Json(new { Status = "Deleted" });
         }

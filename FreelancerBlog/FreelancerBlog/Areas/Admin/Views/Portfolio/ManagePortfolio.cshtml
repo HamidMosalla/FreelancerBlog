@@ -1,7 +1,6 @@
 ﻿@using System.Threading.Tasks
-@using cloudscribe.Web.Pagination
 @using FreelancerBlog.Areas.Admin.ViewModels.Portfolio
-@model IPagedList<PortfolioViewModel>
+@model IEnumerable<PortfolioViewModel>
 
 @{
     ViewData["Title"] = "مدیریت پورتفولیو";
@@ -85,17 +84,6 @@
         </tr>
     }
 </table>
-
-<div class="text-center">
-    <cs-pager cs-paging-pagesize="@Model.PageSize"
-              cs-paging-pagenumber="@Model.PageNumber"
-              cs-paging-totalitems="@Model.TotalItemCount"
-              cs-pagenumber-param="page"
-              asp-controller="Portfolio"
-              asp-action="ManagePortfolio">
-
-    </cs-pager>
-</div>
 
 @section scripts{
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>

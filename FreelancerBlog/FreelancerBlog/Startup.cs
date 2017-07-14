@@ -9,7 +9,6 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Features.Variance;
 using AutoMapper;
-using cloudscribe.Web.Pagination;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Wrappers;
@@ -98,7 +97,6 @@ namespace FreelancerBlog
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
-            services.AddTransient<IBuildPaginationLinks, PaginationLinkBuilder>();
             services.AddTransient<HttpClient>();
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<IConfigurationBinderWrapper, ConfigurationBinderWrapper>();
