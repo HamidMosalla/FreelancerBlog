@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.Queries.Portfolios;
+using FreelancerBlog.Data.EntityFramework;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+
+namespace FreelancerBlog.Data.Queries.Portfolios
+{
+    class PortfolioByIdQueryHandler: IAsyncRequestHandler<PortfolioByIdQuery, Portfolio>
+    {
+        private FreelancerBlogContext _context;
+
+        public PortfolioByIdQueryHandler(FreelancerBlogContext context)
+        {
+            _context = context;
+        }
+
+        public Task<Portfolio> Handle(PortfolioByIdQuery message)
+        {
+            return _context.Portfolios.SingleAsync(p => p.PortfolioId == message.PortfolioId);
+        }
+    }
+}

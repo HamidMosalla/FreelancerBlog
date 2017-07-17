@@ -3,11 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
-using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Commands.Portfolios;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Enums;
-using FreelancerBlog.Core.Repository;
+using FreelancerBlog.Core.Queries.Portfolios;
 using FreelancerBlog.Core.Services.Shared;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,25 +19,25 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class PortfolioController : Controller
     {
-        private IUnitOfWork _uw;
         private readonly IMapper _mapper;
+        private IMediator _mediator;
         private ICkEditorFileUploder _ckEditorFileUploader;
         private IFileManager _fileManager;
 
-        public PortfolioController(IUnitOfWork uw, IFileManager fileManager, ICkEditorFileUploder ckEditorFileUploader, IMapper mapper)
+        public PortfolioController(IFileManager fileManager, ICkEditorFileUploder ckEditorFileUploader, IMapper mapper, IMediator mediator)
         {
-            _uw = uw;
             _fileManager = fileManager;
             _ckEditorFileUploader = ckEditorFileUploader;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> ManagePortfolio()
         {
-            var portfolios = await _uw.PortfolioRepository.GetAllAsync();
+            var portfolios = await _mediator.Send(new GetAllPortfoliosQuery());
 
-            var portfoliosViewModel = _mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios);
+            var portfoliosViewModel = _mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios.ToList());
 
             portfoliosViewModel.ForEach(v => v.PortfolioCategoryList = portfolios.Single(p => p.PortfolioId.Equals(v.PortfolioId)).PortfolioCategory.Split(',').ToList());
 
@@ -68,16 +69,9 @@ namespace FreelancerBlog.Areas.Admin.Controllers
             portfolio.PortfolioThumbnail = fileName;
             portfolio.PortfolioCategory = string.Join(",", viewModel.PortfolioCategoryList);
 
-            int createPortfolioResult = await _uw.PortfolioRepository.AddNewPortfolio(portfolio);
+            await _mediator.Send(new AddNewPortfolioCommand { Portfolio = portfolio });
 
-            if (createPortfolioResult > 0)
-            {
-                TempData["PonrtfolioMessage"] = "پورتفولیو با موفقیت ثبت شد.";
-                return RedirectToAction("ManagePortfolio");
-            }
-
-            TempData["PonrtfolioMessage"] = "مشکلی در ثبت پورتفولیو پیش آمده، اسلاید شو با موفقیت ثبت نشد.";
-
+            TempData["PonrtfolioMessage"] = "پورتفولیو با موفقیت ثبت شد.";
             return RedirectToAction("ManagePortfolio");
         }
 
@@ -88,7 +82,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return BadRequest();
             }
 
-            var model = await _uw.PortfolioRepository.FindByIdAsync(id);
+            var model = await _mediator.Send(new PortfolioByIdQuery { PortfolioId = id });
 
             if (model == null)
             {
@@ -124,32 +118,20 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                     return View(viewModel);
                 }
 
-                var model = await _uw.PortfolioRepository.FindByIdAsync(viewModel.PortfolioId);
-
-                _uw.PortfolioRepository.Detach(model);
+                var model = await _mediator.Send(new PortfolioByIdQuery { PortfolioId = viewModel.PortfolioId });
 
                 FileStatus fileDeleteResult = _fileManager.DeleteFile(model.PortfolioThumbnail, new List<string> { "images", "portfolio", "thumb" });
 
-                TempData["FileStatus"] = fileDeleteResult == FileStatus.DeleteSuccess
-                    ? "FileDeleteSuccess"
-                    : "FileNotFound";
+                TempData["FileStatus"] = fileDeleteResult == FileStatus.DeleteSuccess ? "FileDeleteSuccess" : "FileNotFound";
 
                 string newThumbName = await _fileManager.UploadFileAsync(viewModel.PortfolioThumbnailFile, new List<string> { "images", "portfolio", "thumb" });
 
                 portfolio.PortfolioThumbnail = newThumbName;
             }
 
-            int portfolioUpdateResult = await _uw.PortfolioRepository.UpdatePortfolioAsync(portfolio);
+            await _mediator.Send(new UpdatePortfolioCommand { Portfolio = portfolio });
 
-            if (portfolioUpdateResult > 0)
-            {
-                TempData["PonrtfolioMessage"] = "پورتفولیو با موفقیت ویرایش شد.";
-
-                return RedirectToAction("ManagePortfolio");
-            }
-
-            TempData["PonrtfolioMessage"] = "مشکلی در ویرایش پورتفولیو پیش آمده، لطفا دوباره تلاش کنید.";
-
+            TempData["PonrtfolioMessage"] = "پورتفولیو با موفقیت ویرایش شد.";
             return RedirectToAction("ManagePortfolio");
         }
 
@@ -162,7 +144,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _uw.PortfolioRepository.FindByIdAsync(id);
+            var model = await _mediator.Send(new PortfolioByIdQuery { PortfolioId = id });
 
             if (model == null)
             {
@@ -173,32 +155,17 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             _fileManager.DeleteEditorImages(model.PortfolioBody, new List<string> { "images", "portfolio", "full" });
 
-            int deletePortfolioResult = await _uw.PortfolioRepository.DeletePortfolioAsync(model);
+            await _mediator.Send(new DeletePortfolioCommand { Portfolio = model });
 
-            if (deletePortfolioResult > 0)
-            {
-                return Json(new { Status = "Deleted", fileStatus = fileDeleteResult == FileStatus.DeleteSuccess ? "FileDeleteSuccess" : "FileDeleteFailure" });
-            }
-
-            return Json(new { Status = "NotDeletedSomeProblem" });
+            return Json(new { Status = "Deleted", fileStatus = fileDeleteResult == FileStatus.DeleteSuccess ? "FileDeleteSuccess" : "FileDeleteFailure" });
         }
 
         [HttpPost]
         public async Task<IActionResult> CkEditorFileUploder(IFormFile file, string ckEditorFuncNum)
         {
-            string htmlResult =
-                await
-                    _ckEditorFileUploader.UploadFromCkEditorAsync(file, new List<string> {"images", "portfolio", "full"},
-                        ckEditorFuncNum);
+            string htmlResult = await _ckEditorFileUploader.UploadFromCkEditorAsync(file, new List<string> { "images", "portfolio", "full" }, ckEditorFuncNum);
 
             return Content(htmlResult, "text/html");
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            _uw.Dispose();
-            base.Dispose(disposing);
-        }
-
     }
 }

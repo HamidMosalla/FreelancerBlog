@@ -3,10 +3,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.User.ViewModels.Profile;
 using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Commands.ApplicationUsers;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Enums;
+using FreelancerBlog.Core.Queries.ApplicationUsers;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.Shared;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,24 +20,24 @@ namespace FreelancerBlog.Areas.User.Controllers
     [Authorize]
     public class ProfileController : Controller
     {
-        private IUnitOfWork _uw;
         private readonly IMapper _mapper;
+        private IMediator _mediator;
         private IFileManager _fileManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
 
-        public ProfileController(IUnitOfWork uw, IFileManager fileManager, UserManager<ApplicationUser> userManager, IMapper mapper)
+        public ProfileController(IFileManager fileManager, UserManager<ApplicationUser> userManager, IMapper mapper, IMediator mediator)
         {
-            _uw = uw;
             _fileManager = fileManager;
             _userManager = userManager;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> EditProfile()
         {
-            var user = await _uw.UserRepository.FindByIdAsync(_userManager.GetUserId(User));
+            var user = await _mediator.Send(new UserByIdQuery { ApplicationUserId = _userManager.GetUserId(User) });
 
             var userProfileViewModel = _mapper.Map<ApplicationUser, UserProfileViewModel>(user);
 
@@ -50,9 +53,6 @@ namespace FreelancerBlog.Areas.User.Controllers
                 return View(viewModel);
             }
 
-            //there is no need to map here, since the issue with tracking
-            //that is the identity system already track the logged in user
-            //just pass the viewModel to the updateuser method.
             var user = _mapper.Map<UserProfileViewModel, ApplicationUser>(viewModel);
 
             if (viewModel.UserAvatarFile != null)
@@ -63,9 +63,9 @@ namespace FreelancerBlog.Areas.User.Controllers
                     return View(viewModel);
                 }
 
-                var model = await _uw.UserRepository.FindByIdAsync(viewModel.Id);
+                var model = await _mediator.Send(new UserByIdQuery { ApplicationUserId = viewModel.Id });
 
-                _uw.UserRepository.Detach(model);
+                //_uw.UserRepository.Detach(model);
 
                 if (model.UserAvatar != null)
                 {
@@ -79,15 +79,9 @@ namespace FreelancerBlog.Areas.User.Controllers
                 user.UserAvatar = newAvatarName;
             }
 
-            int editUserResult = await _uw.UserRepository.UpdateUserProfileAsync(user);
+            await _mediator.Send(new UpdateUserProfileCommand { ApplicationUser = user });
 
-            if (editUserResult > 0)
-            {
-                TempData["EditProfileMessage"] = "EditProfileSuccess";
-                return RedirectToAction("Index", "Manage", new { Area = "" });
-            }
-
-            TempData["EditProfileMessage"] = "EditProfileFailed";
+            TempData["EditProfileMessage"] = "EditProfileSuccess";
             return RedirectToAction("Index", "Manage", new { Area = "" });
         }
 
@@ -100,7 +94,7 @@ namespace FreelancerBlog.Areas.User.Controllers
                 return BadRequest();
             }
 
-            var user = await _uw.UserRepository.FindByUserNameAsync(userName);
+            var user = await _mediator.Send(new UserByUserNameQuery { UserName = userName });
 
             if (user == null)
             {
@@ -110,12 +104,6 @@ namespace FreelancerBlog.Areas.User.Controllers
             var userProfileViewModel = _mapper.Map<ApplicationUser, UserProfileViewModel>(user);
 
             return View(userProfileViewModel);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            _uw.Dispose();
-            base.Dispose(disposing);
         }
     }
 }

@@ -5,11 +5,13 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Commands.ArticleComments;
 using FreelancerBlog.Core.Commands.Articles;
 using FreelancerBlog.Core.Commands.ArticleTags;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Enums;
 using FreelancerBlog.Core.Queries.Article;
+using FreelancerBlog.Core.Queries.ArticleComments;
 using FreelancerBlog.Core.Queries.Articles;
 using FreelancerBlog.Core.Queries.ArticleTags;
 using FreelancerBlog.Core.Repository;
@@ -28,7 +30,6 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class ArticleController : Controller
     {
-        private readonly IUnitOfWork _uw;
         private readonly ICkEditorFileUploder _ckEditorFileUploader;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
@@ -36,9 +37,8 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         private IArticleServices _articleServices;
         private readonly IFileManager _fileManager;
 
-        public ArticleController(IUnitOfWork uw, ICkEditorFileUploder ckEditorFileUploader, IArticleServices articleServices, IFileManager fileManager, IMapper mapper, UserManager<ApplicationUser> userManager, IMediator mediator)
+        public ArticleController(ICkEditorFileUploder ckEditorFileUploader, IArticleServices articleServices, IFileManager fileManager, IMapper mapper, UserManager<ApplicationUser> userManager, IMediator mediator)
         {
-            _uw = uw;
             _ckEditorFileUploader = ckEditorFileUploader;
             _articleServices = articleServices;
             _fileManager = fileManager;
@@ -60,9 +60,9 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ManageArticleComment()
         {
-            var comments = await _uw.ArticleRepository.GetAllCommentAsync();
+            var comments = await _mediator.Send(new GetAllCommentsQuery { });
 
-            var commentsViewModel = _mapper.Map<List<ArticleComment>, List<ArticleCommentViewModel>>(comments);
+            var commentsViewModel = _mapper.Map<List<ArticleComment>, List<ArticleCommentViewModel>>(comments.ToList());
 
             return View(commentsViewModel);
         }
@@ -70,9 +70,9 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> ManageArticleTag()
         {
-            var tags = await _uw.ArticleRepository.GetAllArticleTagsAsync();
+            var tags = await _mediator.Send(new GetAllArticleTagsQuery { });
 
-            var tagsViewModel = _mapper.Map<List<ArticleTag>, List<ArticleTagViewModel>>(tags);
+            var tagsViewModel = _mapper.Map<List<ArticleTag>, List<ArticleTagViewModel>>(tags.ToList());
 
             return View(tagsViewModel);
         }
@@ -86,21 +86,16 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _uw.ArticleRepository.FindCommentByIdAsync(id);
+            var model = await _mediator.Send(new ArticleCommentByIdQuery { ArticleCommentId = id });
 
             if (model == null)
             {
                 return Json(new { Status = "ArticleCommentNotFound" });
             }
 
-            int deleteArticleResult = await _uw.ArticleRepository.DeleteArticleCommentAsync(model);
+            await _mediator.Send(new DeleteArticleCommentCommand { ArticleComment = model });
 
-            if (deleteArticleResult > 0)
-            {
-                return Json(new { Status = "Deleted" });
-            }
-
-            return Json(new { Status = "NotDeletedSomeProblem" });
+            return Json(new { Status = "Deleted" });
         }
 
 
@@ -113,21 +108,16 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _uw.ArticleRepository.FindArticleTagByIdAsync(id);
+            var model = await _mediator.Send(new FindArticleTagByIdQuery { ArticleTagId = id });
 
             if (model == null)
             {
                 return Json(new { Status = "ArticleCommentNotFound" });
             }
 
-            int deleteArticleTagResult = await _uw.ArticleRepository.DeleteArticleTagAsync(model);
+            await _mediator.Send(new DeleteArticleTagCommand { ArticleTag = model });
 
-            if (deleteArticleTagResult > 0)
-            {
-                return Json(new { Status = "Deleted" });
-            }
-
-            return Json(new { Status = "NotDeletedSomeProblem" });
+            return Json(new { Status = "Deleted" });
         }
 
 
@@ -140,21 +130,16 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _uw.ArticleRepository.FindCommentByIdAsync(commentId);
+            var model = await _mediator.Send(new ArticleCommentByIdQuery { ArticleCommentId = commentId });
 
             if (model == null)
             {
                 return Json(new { Status = "ArticleCommentNotFound" });
             }
 
-            int toggleArticleCommentApprovalResult = await _uw.ArticleRepository.ToggleArticleCommentApproval(model);
+            await _mediator.Send(new ToggleArticleCommentApprovalCommand { ArticleComment = model });
 
-            if (toggleArticleCommentApprovalResult > 0)
-            {
-                return Json(new { Status = "Success" });
-            }
-
-            return Json(new { Status = "NotDeletedSomeProblem" });
+            return Json(new { Status = "Success" });
         }
 
         [HttpGet]
@@ -171,9 +156,9 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             var model = _mapper.Map<ArticleViewModel, Article>(viewModel);
 
-            List<ArticleStatus> result = await _articleServices.CreateNewArticleAsync(model, viewModel.ArticleTags);
+            var result = await _mediator.Send(new CreateNewArticleCommand { Article = model, ArticleTags = viewModel.ArticleTags });
 
-            if (!result.Any(r => r == ArticleStatus.ArticleCreateSucess))
+            if (result.All(r => r != ArticleStatus.ArticleCreateSucess))
             {
                 TempData["ViewMessage"] = "مشکلی در ثبت مقاله پیش آمده، مقاله با موفقیت ثبت نشد.";
 
@@ -203,7 +188,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return BadRequest();
             }
 
-            var article = await _uw.ArticleRepository.FindByIdAsync(id);
+            var article = await _mediator.Send(new ArticleByArticleIdQuery { ArticleId = id });
 
             if (article == null)
             {
@@ -211,8 +196,8 @@ namespace FreelancerBlog.Areas.Admin.Controllers
             }
 
             var articleViewModel = _mapper.Map<Article, ArticleViewModel>(article);
-            articleViewModel.ArticleTags = await _uw.ArticleRepository.GetTagsByArticleIdAsync(article.ArticleId);
-            articleViewModel.ArticleTagsList = await _uw.ArticleRepository.GetCurrentArticleTagsAsync(article.ArticleId);
+            articleViewModel.ArticleTags = await _mediator.Send(new TagsByArticleIdQuery { ArticleId = article.ArticleId });
+            articleViewModel.ArticleTagsList = await _mediator.Send(new GetCurrentArticleTagsQuery { ArticleId = article.ArticleId });
             articleViewModel.SumOfRating = articleViewModel.ArticleRatings.Sum(a => a.ArticleRatingScore) / articleViewModel.ArticleRatings.Count;
             articleViewModel.CurrentUserRating = articleViewModel.ArticleRatings.SingleOrDefault(a => a.UserIDfk == _userManager.GetUserId(User));
 
@@ -229,7 +214,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             List<ArticleStatus> result = await _articleServices.EditArticleAsync(article, viewModel.ArticleTags);
 
-            if (!result.Any(r => r == ArticleStatus.ArticleEditSucess))
+            if (result.All(r => r != ArticleStatus.ArticleEditSucess))
             {
                 TempData["ViewMessage"] = "مشکلی در ویرایش مقاله پیش آمده، مقاله با موفقیت ثبت نشد.";
 
@@ -265,21 +250,16 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _uw.ArticleRepository.FindCommentByIdAsync(commentId);
+            var model = await _mediator.Send(new ArticleCommentByIdQuery { ArticleCommentId = commentId });
 
             if (model == null)
             {
                 return Json(new { Status = "ArticleCommentNotFound" });
             }
 
-            int editCommentResult = await _uw.ArticleRepository.EditArticleCommentAsync(model, newCommentBody);
+            await _mediator.Send(new EditArticleCommentCommand { ArticleComment = model, NewCommentBody = newCommentBody });
 
-            if (editCommentResult > 0)
-            {
-                return Json(new { Status = "Success" });
-            }
-
-            return Json(new { Status = "NotDeletedSomeProblem" });
+            return Json(new { Status = "Success" });
         }
 
         [HttpPost]

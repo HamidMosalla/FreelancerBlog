@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.SlideShow;
-using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Commands.SlideShows;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Enums;
-using FreelancerBlog.Core.Repository;
+using FreelancerBlog.Core.Queries.SlideShows;
 using FreelancerBlog.Core.Services.Shared;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,23 +18,23 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class SlideShowController : Controller
     {
-        private IUnitOfWork _uw;
         private readonly IMapper _mapper;
+        private IMediator _mediator;
         private IFileManager _fileManager;
 
 
-        public SlideShowController(IUnitOfWork uw, IFileManager fileManager)
+        public SlideShowController(IFileManager fileManager, IMediator mediator)
         {
-            _uw = uw;
             _fileManager = fileManager;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> ManageSlideShow()
         {
-            var slideShows = await _uw.SlideShowRepository.GetAllAsync();
+            var slideShows = await _mediator.Send(new AllSlideShowsQuery());
 
-            var slideShowsViewModel = _mapper.Map<List<SlideShow>, List<SlideShowViewModel>>(slideShows);
+            var slideShowsViewModel = _mapper.Map<List<SlideShow>, List<SlideShowViewModel>>(slideShows.ToList());
 
             return View(slideShowsViewModel);
         }
@@ -63,16 +65,9 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             slideShow.SlideShowPictrure = fileName;
 
-            int addSlideShowResult = await _uw.SlideShowRepository.AddNewSlideShow(slideShow);
+            await _mediator.Send(new AddNewSlideShowCommand { SlideShow = slideShow });
 
-            if (addSlideShowResult > 0)
-            {
-                TempData["SlideShowMessage"] = "اسلاید شو با موفقیت ثبت شد.";
-                return RedirectToAction("ManageSlideShow");
-            }
-
-            TempData["SlideShowMessage"] = "مشکلی در ثبت اسلاید شو پیش آمده، اسلاید شو با موفقیت ثبت نشد.";
-
+            TempData["SlideShowMessage"] = "اسلاید شو با موفقیت ثبت شد.";
             return RedirectToAction("ManageSlideShow");
         }
 
@@ -83,7 +78,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return BadRequest();
             }
 
-            var model = await _uw.SlideShowRepository.FindByIdAsync(id);
+            var model = await _mediator.Send(new SlideShowByIdQuery { SlideShowId = id });
 
             if (model == null)
             {
@@ -114,9 +109,9 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                     return View(viewModel);
                 }
 
-                var model = await _uw.SlideShowRepository.FindByIdAsync(viewModel.SlideShowId);
+                var model = await _mediator.Send(new SlideShowByIdQuery { SlideShowId = viewModel.SlideShowId });
 
-                _uw.SlideShowRepository.Detach(model);
+                //_uw.SlideShowRepository.Detach(model);
 
                 FileStatus fileDeleteResult = _fileManager.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
 
@@ -127,16 +122,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 slideshow.SlideShowPictrure = newPictureName;
             }
 
-            int slideShowUpdateResult = await _uw.SlideShowRepository.UpdateSlideShowAsync(slideshow);
-
-            if (slideShowUpdateResult > 0)
-            {
-                TempData["SlideShowMessage"] = "اسلاید شو با موفقیت ویرایش شد.";
-
-                return RedirectToAction("ManageSlideShow");
-            }
-
-            TempData["SlideShowMessage"] = "مشکلی در ویرایش اسلاید شو پیش آمده، لطفا دوباره تلاش کنید.";
+            await _mediator.Send(new UpdateSlideShowCommand { SlideShow = slideshow });
 
             return RedirectToAction("ManageSlideShow");
         }
@@ -150,7 +136,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _uw.SlideShowRepository.FindByIdAsync(id);
+            var model = await _mediator.Send(new SlideShowByIdQuery { SlideShowId = id });
 
             if (model == null)
             {
@@ -159,21 +145,9 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             FileStatus fileDeleteResult = _fileManager.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
 
-            int deleteSlideShowResult = await _uw.SlideShowRepository.DeleteSlideShowAsync(model);
+            await _mediator.Send(new DeleteSlideShowCommand { SlideShow = model });
 
-            if (deleteSlideShowResult > 0)
-            {
-                return Json(new { Status = "Deleted", fileDeleteStatus = fileDeleteResult == FileStatus.DeleteSuccess ? "Success" : "Failure" });
-            }
-
-            return Json(new { Status = "NotDeletedSomeProblem" });
+            return Json(new { Status = "Deleted", fileDeleteStatus = fileDeleteResult == FileStatus.DeleteSuccess ? "Success" : "Failure" });
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            _uw.Dispose();
-            base.Dispose(disposing);
-        }
-
     }
 }

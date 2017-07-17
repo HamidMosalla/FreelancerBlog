@@ -3,9 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Commands.Contacts;
 using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.Queries.Contacts;
 using FreelancerBlog.Core.Repository;
 using FreelancerBlog.ViewModels.Contact;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,20 +19,20 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class ContactController : Controller
     {
-        private IUnitOfWork _uw;
         private readonly IMapper _mapper;
+        private IMediator _mediator;
 
-        public ContactController(IUnitOfWork uw)
+        public ContactController(IMediator mediator)
         {
-            _uw = uw;
+            _mediator = mediator;
         }
 
         [HttpGet]
         public async Task<IActionResult> ManageContact()
         {
-            var contacts = await _uw.ContactRepository.GetAllAsync();
+            var contacts = await _mediator.Send(new GetAllContactQuery());
 
-            var contactsViewModel = _mapper.Map<List<Contact>, List<ContactViewModel>>(contacts);
+            var contactsViewModel = _mapper.Map<List<Contact>, List<ContactViewModel>>(contacts.ToList());
 
             return View(contactsViewModel);
         }
@@ -43,21 +46,16 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 return Json(new { Status = "IdCannotBeNull" });
             }
 
-            var model = await _uw.ContactRepository.FindByIdAsync(id);
+            var model = await _mediator.Send(new ContactByIdQuery { ContactId = id });
 
             if (model == null)
             {
                 return Json(new { Status = "ContactNotFound" });
             }
 
-            int deleteContactResult = await _uw.ContactRepository.DeleteContactAsync(model);
+            await _mediator.Send(new DeleteContactCommand { Contact = model });
 
-            if (deleteContactResult > 0)
-            {
-                return Json(new { Status = "Deleted" });
-            }
-
-            return Json(new { Status = "NotDeletedSomeProblem" });
+            return Json(new { Status = "Deleted" });
         }
     }
 }
