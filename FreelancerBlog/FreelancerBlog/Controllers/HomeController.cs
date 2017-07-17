@@ -1,20 +1,9 @@
-﻿using System.Threading.Tasks;
-using FreelancerBlog.Core.Queries;
-using FreelancerBlog.Core.Repository;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace FreelancerBlog.Controllers
 {
     public class HomeController : Controller
     {
-        private IUnitOfWork _uw;
-
-        public HomeController(IUnitOfWork uw, IMediator mediator)
-        {
-            _uw = uw;
-        }
-
         public IActionResult Index()
         {
             return View("Index");
@@ -48,17 +37,9 @@ namespace FreelancerBlog.Controllers
         [Route("/Error/Status/{statusCode?}")]
         public IActionResult Error(int statusCode)
         {
-            //It gave 404 because of missing css and js map file and missing stylesheet
             ViewBag.StatusCode = statusCode;
 
             return View();
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            _uw.Dispose();
-            base.Dispose(disposing);
-        }
-
     }
 }

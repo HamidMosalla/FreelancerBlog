@@ -4,9 +4,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Commands.ArticleComments;
+using FreelancerBlog.Core.Commands.Articles;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Queries.Article;
-using FreelancerBlog.Core.Repository;
+using FreelancerBlog.Core.Queries.Articles;
+using FreelancerBlog.Core.Queries.ArticleTags;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.ViewModels.Article;
@@ -19,16 +22,14 @@ namespace FreelancerBlog.Controllers
 {
     public class ArticleController : Controller
     {
-        private IUnitOfWork _uw;
         private readonly IMapper _mapper;
         private IMediator _mediator;
         private readonly UserManager<ApplicationUser> _userManager;
         private ICaptchaValidator _captchaValidator;
         private IConfiguration _configuration;
 
-        public ArticleController(IUnitOfWork uw, UserManager<ApplicationUser> userManager, ICaptchaValidator captchaValidator, IConfiguration configuration, IMapper mapper, IMediator mediator)
+        public ArticleController(UserManager<ApplicationUser> userManager, ICaptchaValidator captchaValidator, IConfiguration configuration, IMapper mapper, IMediator mediator)
         {
-            _uw = uw;
             _mapper = mapper;
             _mediator = mediator;
             _userManager = userManager;
@@ -39,9 +40,9 @@ namespace FreelancerBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var articles = await _uw.ArticleRepository.GetAllAsync();
+            var articles = await _mediator.Send(new GetAriclesQuery());
 
-            var articlesViewModel =  _mapper.Map<List<Article>, List<ArticleViewModel>>(articles);
+            var articlesViewModel = _mapper.Map<List<Article>, List<ArticleViewModel>>(articles.ToList());
 
             return View(articlesViewModel);
         }
@@ -54,9 +55,9 @@ namespace FreelancerBlog.Controllers
                 return BadRequest();
             }
 
-            var articles = await _uw.ArticleRepository.GetArticlesByTag(id);
+            var articles = await _mediator.Send(new ArticlesByTagQuery { TagId = id });
 
-            var articlesViewModel = _mapper.Map<List<Article>, List<ArticleViewModel>>(articles);
+            var articlesViewModel = _mapper.Map<List<Article>, List<ArticleViewModel>>(articles.ToList());
 
             return View(articlesViewModel);
         }
@@ -76,11 +77,11 @@ namespace FreelancerBlog.Controllers
                 return NotFound();
             }
 
-            await _uw.ArticleRepository.IncreaseArticleViewCount(id);
+            await _mediator.Send(new IncreaseArticleViewCountCommand { ArticleId = id });
 
             var articleViewModel = _mapper.Map<Article, ArticleViewModel>(article);
-            articleViewModel.ArticleTags = await _uw.ArticleRepository.GetTagsByArticleIdAsync(article.ArticleId);
-            articleViewModel.ArticleTagsList = await _uw.ArticleRepository.GetCurrentArticleTagsAsync(article.ArticleId);
+            articleViewModel.ArticleTags = await _mediator.Send(new TagsByArticleIdQuery { ArticleId = article.ArticleId }); ;
+            articleViewModel.ArticleTagsList = await _mediator.Send(new GetCurrentArticleTagsQuery { ArticleId = article.ArticleId });
             articleViewModel.SumOfRating = articleViewModel.ArticleRatings.Sum(a => a.ArticleRatingScore) / articleViewModel.ArticleRatings.Count;
             articleViewModel.CurrentUserRating = articleViewModel.ArticleRatings.SingleOrDefault(a => a.UserIDfk == _userManager.GetUserId(User));
 
@@ -95,27 +96,18 @@ namespace FreelancerBlog.Controllers
             }
 
             var userId = _userManager.GetUserId(User);
+            var rateBefore = await _mediator.Send(new ArticleRatedBeforeQuery { ArticleId = id, UserId = userId });
 
-            if (_uw.ArticleRepository.IsRatedBefore(id, userId))
+            if (rateBefore)
             {
-                int updateRatingResult = await _uw.ArticleRepository.UpdateArticleRating(id, rating, userId);
+                await _mediator.Send(new UpdateArticleRatingCommand { ArticleId = id, ArticleRating = rating, UserId = userId });
 
-                if (updateRatingResult > 0)
-                {
-                    return Json(new { Status = "UpdatedSuccessfully" });
-                }
-
-                return Json(new { Status = "SomeProblemWithSubmit" });
+                return Json(new { Status = "UpdatedSuccessfully" });
             }
 
-            int addRatingResult = await _uw.ArticleRepository.AddRatingForArticle(id, rating, userId);
+            await _mediator.Send(new AddRatingToArticleCommand { ArticleId = id, ArticleRating = rating, UserId = userId });
 
-            if (addRatingResult > 0)
-            {
-                return Json(new { Status = "Success" });
-            }
-
-            return Json(new { Status = "SomeProblemWithSubmit" });
+            return Json(new { Status = "Success" });
         }
 
         [HttpPost]
@@ -135,20 +127,9 @@ namespace FreelancerBlog.Controllers
 
             var articleComment = _mapper.Map<ArticleCommentViewModel, ArticleComment>(viewModel);
 
-            int addArticleCommentResult = await _uw.ArticleRepository.AddCommentToArticle(articleComment);
+            await _mediator.Send(new AddCommentToArticleCommand { ArticleComment = articleComment });
 
-            if (addArticleCommentResult > 0)
-            {
-                return Json(new { Status = "Success" });
-            }
-
-            return Json(new { Status = "ProblematicSubmit" });
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            _uw.Dispose();
-            base.Dispose(disposing);
+            return Json(new { Status = "Success" });
         }
     }
 }

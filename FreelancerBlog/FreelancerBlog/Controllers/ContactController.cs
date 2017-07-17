@@ -1,29 +1,30 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.AutoMapper;
+using FreelancerBlog.Core.Commands.Contacts;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.Core.Wrappers;
 using FreelancerBlog.ViewModels.Contact;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreelancerBlog.Controllers
 {
     public class ContactController : Controller
     {
-        private IUnitOfWork _uw;
         private readonly IMapper _mapper;
+        private IMediator _mediator;
         private ICaptchaValidator _captchaValidator;
         private IConfigurationBinderWrapper _configurationWrapper;
 
-        public ContactController(IUnitOfWork uw, ICaptchaValidator captchaValidator, IConfigurationBinderWrapper configurationWrapper, IMapper mapper)
+        public ContactController(ICaptchaValidator captchaValidator, IConfigurationBinderWrapper configurationWrapper, IMapper mapper, IMediator mediator)
         {
-            _uw = uw;
             _captchaValidator = captchaValidator;
             _configurationWrapper = configurationWrapper;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -38,7 +39,6 @@ namespace FreelancerBlog.Controllers
         {
             CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configurationWrapper.GetValue<string>("reChaptchaSecret:server-secret"));
 
-
             if (captchaResult.Success != "true")
             {
                 return Json(new { status = "FailedTheCaptchaValidation" });
@@ -50,34 +50,20 @@ namespace FreelancerBlog.Controllers
             {
                 var contact = _mapper.Map<ContactViewModel, Contact>(contactViewModel);
 
-                int addContactResult = await _uw.ContactRepository.AddNewContactAsync(contact);
+                await _mediator.Send(new AddNewContactCommand { Contact = contact });
 
-                if (addContactResult > 0)
-                {
-                    return Json(new { Status = "Success" });
-                }
-
-                return Json(new { Status = "ProblematicSubmit" });
+                return Json(new { Status = "Success" });
             }
 
             var contactWioutJavascript = _mapper.Map<ContactViewModel, Contact>(contactViewModel);
 
-            int addContactResultWioutJavascript = await _uw.ContactRepository.AddNewContactAsync(contactWioutJavascript);
+            await _mediator.Send(new AddNewContactCommand { Contact = contactWioutJavascript });
 
-            if (addContactResultWioutJavascript > 0)
-            {
-                return View("Success");
-            }
+            return View("Success");
 
-            ViewData["CreateContactMessage"] = "NothingToSaveOrThereWasAProblem";
+            //ViewData["CreateContactMessage"] = "NothingToSaveOrThereWasAProblem";
 
-            return View("Create", contactViewModel);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            _uw.Dispose();
-            base.Dispose(disposing);
+            //return View("Create", contactViewModel);
         }
     }
 }

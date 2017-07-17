@@ -1,17 +1,17 @@
-﻿using FreelancerBlog.Core.Repository;
-using Moq;
+﻿//using FreelancerBlog.Core.Repository;
+//using Moq;
 
-namespace FreelancerBlog.UnitTests.Fixtures
-{
-    public class UnitOfWorkFixture
-    {
+//namespace FreelancerBlog.UnitTests.Fixtures
+//{
+//    public class UnitOfWorkFixture
+//    {
 
-        public Mock<IUnitOfWork> _uw { get; set; }
+//        public Mock<IUnitOfWork> _uw { get; set; }
 
-        public UnitOfWorkFixture()
-        {
-            _uw = new Mock<IUnitOfWork>();
-        }
+//        public UnitOfWorkFixture()
+//        {
+//            _uw = new Mock<IUnitOfWork>();
+//        }
 
-    }
-}
+//    }
+//}

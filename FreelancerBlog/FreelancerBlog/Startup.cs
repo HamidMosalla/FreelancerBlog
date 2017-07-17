@@ -14,7 +14,6 @@ using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Wrappers;
 using FreelancerBlog.Data.EntityFramework;
 using FreelancerBlog.Infrastructure.DependencyInjection;
-using FreelancerBlog.Infrastructure.DependencyInjection.Article;
 using FreelancerBlog.Infrastructure.DependencyInjection.SiteOrder;
 using FreelancerBlog.Services.Shared;
 using FreelancerBlog.Services.Wrappers;
@@ -126,11 +125,9 @@ namespace FreelancerBlog
             var servicesAssembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("FreelancerBlog.Services"));
             builder.RegisterAssemblyTypes(dataAssembly, servicesAssembly).AsImplementedInterfaces();
 
-            builder.RegisterModule<UnitOfWorkModule>();
             builder.RegisterModule<AuthMessageSenderModule>();
             builder.RegisterModule<FreelancerBlogDbContextSeedDataModule>();
             builder.RegisterModule<FileManagerModule>();
-            builder.RegisterModule<ArticleServicesModule>();
             builder.RegisterModule<PriceSpecCollectionFactoryModule>();
             builder.RegisterModule<FinalPriceCalculatorModule>();
             builder.RegisterModule<CaptchaValidatorModule>();

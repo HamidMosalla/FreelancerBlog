@@ -1,34 +1,34 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.SlideShow;
 using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.Core.Repository;
+using FreelancerBlog.Core.Queries.SlideShows;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreelancerBlog.ViewComponents
 {
     public class HomeSlider : ViewComponent
     {
-
-        private IUnitOfWork _uw;
         private readonly IMapper _mapper;
+        private IMediator _mediator;
 
-        public HomeSlider(IUnitOfWork uw, IMapper mapper)
+        public HomeSlider(IMapper mapper, IMediator mediator)
         {
-            _uw = uw;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         public  async Task<IViewComponentResult> InvokeAsync()
         {
-            var slideShows = await _uw.SlideShowRepository.GetAllAsyncForHomePage();
+            var slideShows = await _mediator.Send(new GetAllSlideShowForHomePageQuery());
 
-            var slideShowViewModel = _mapper.Map<List<SlideShow>, List<SlideShowViewModel>>(slideShows);
+            var slideShowViewModel = _mapper.Map<List<SlideShow>, List<SlideShowViewModel>>(slideShows.ToList());
 
             return View(slideShowViewModel);
         }
-
     }
 }

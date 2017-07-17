@@ -6,7 +6,6 @@ using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Commands.Contacts;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Queries.Contacts;
-using FreelancerBlog.Core.Repository;
 using FreelancerBlog.ViewModels.Contact;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

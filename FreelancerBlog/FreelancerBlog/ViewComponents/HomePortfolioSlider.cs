@@ -3,34 +3,33 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.Core.Repository;
+using FreelancerBlog.Core.Queries.Portfolios;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreelancerBlog.ViewComponents
 {
     public class HomePortfolioSlider : ViewComponent
     {
-        private IUnitOfWork _uw;
         private readonly IMapper _mapper;
+        private IMediator _mediator;
 
-        public HomePortfolioSlider(IUnitOfWork uw, IMapper mapper)
+        public HomePortfolioSlider(IMapper mapper, IMediator mediator)
         {
-            _uw = uw;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         public  async Task<IViewComponentResult> InvokeAsync()
         {
-            var portfolios = await _uw.PortfolioRepository.GetAllAsync();
+            var portfolios = await _mediator.Send(new GetAllPortfoliosQuery());
 
-            var portfoliosViewModel = _mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios);
+            var portfoliosViewModel = _mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios.ToList());
 
             portfoliosViewModel.ForEach(v => v.PortfolioCategoryList = portfolios.Single(p => p.PortfolioId.Equals(v.PortfolioId)).PortfolioCategory.Split(',').ToList());
 
             return View(portfoliosViewModel);
         }
-
     }
 }

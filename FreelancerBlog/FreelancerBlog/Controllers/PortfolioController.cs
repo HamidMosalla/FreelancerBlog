@@ -3,22 +3,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.Core.Repository;
+using FreelancerBlog.Core.Queries.Portfolios;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreelancerBlog.Controllers
 {
     public class PortfolioController : Controller
     {
-        private IUnitOfWork _uw;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public PortfolioController(IUnitOfWork uw, IMapper mapper)
+        public PortfolioController(IMapper mapper, IMediator mediator)
         {
-            _uw = uw;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -29,7 +29,7 @@ namespace FreelancerBlog.Controllers
                 return BadRequest();
             }
 
-            var model = await _uw.PortfolioRepository.FindByIdAsync(id);
+            var model = await _mediator.Send(new PortfolioByIdQuery {PortfolioId = id});
 
             if (model == null)
             {
@@ -44,20 +44,13 @@ namespace FreelancerBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var model = await _uw.PortfolioRepository.GetAllAsync();
+            var portfolios = await _mediator.Send(new GetAllPortfoliosQuery());
 
-            var viewModel = _mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(model);
+            var viewModel = _mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios.ToList());
 
-            viewModel.ForEach(v => v.PortfolioCategoryList = model.Single(p => p.PortfolioId.Equals(v.PortfolioId)).PortfolioCategory.Split(',').ToList());
+            viewModel.ForEach(v => v.PortfolioCategoryList = portfolios.Single(p => p.PortfolioId.Equals(v.PortfolioId)).PortfolioCategory.Split(',').ToList());
 
             return View(viewModel);
         }
-
-        protected override void Dispose(bool disposing)
-        {
-            _uw.Dispose();
-            base.Dispose(disposing);
-        }
-
     }
 }

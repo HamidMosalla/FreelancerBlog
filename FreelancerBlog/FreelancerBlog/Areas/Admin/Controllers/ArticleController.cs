@@ -14,8 +14,6 @@ using FreelancerBlog.Core.Queries.Article;
 using FreelancerBlog.Core.Queries.ArticleComments;
 using FreelancerBlog.Core.Queries.Articles;
 using FreelancerBlog.Core.Queries.ArticleTags;
-using FreelancerBlog.Core.Repository;
-using FreelancerBlog.Core.Services.ArticleServices;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.ViewModels.Article;
 using MediatR;
@@ -34,13 +32,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private IMediator _mediator;
-        private IArticleServices _articleServices;
         private readonly IFileManager _fileManager;
 
-        public ArticleController(ICkEditorFileUploder ckEditorFileUploader, IArticleServices articleServices, IFileManager fileManager, IMapper mapper, UserManager<ApplicationUser> userManager, IMediator mediator)
+        public ArticleController(ICkEditorFileUploder ckEditorFileUploader, IFileManager fileManager, IMapper mapper, UserManager<ApplicationUser> userManager, IMediator mediator)
         {
             _ckEditorFileUploader = ckEditorFileUploader;
-            _articleServices = articleServices;
             _fileManager = fileManager;
             _mapper = mapper;
             _userManager = userManager;
@@ -212,7 +208,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             var article = _mapper.Map<ArticleViewModel, Article>(viewModel);
 
-            List<ArticleStatus> result = await _articleServices.EditArticleAsync(article, viewModel.ArticleTags);
+            List<ArticleStatus> result = await _mediator.Send(new EditArticleCommand {Article = article, ArticleTags = viewModel.ArticleTags});
 
             if (result.All(r => r != ArticleStatus.ArticleEditSucess))
             {

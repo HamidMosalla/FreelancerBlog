@@ -2,12 +2,10 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.User.ViewModels.Profile;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Commands.ApplicationUsers;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Enums;
 using FreelancerBlog.Core.Queries.ApplicationUsers;
-using FreelancerBlog.Core.Repository;
 using FreelancerBlog.Core.Services.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

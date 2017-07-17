@@ -1,34 +1,33 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.Core.Repository;
+using FreelancerBlog.Core.Queries.ArticleTags;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreelancerBlog.ViewComponents
 {
     public class ArticleTagBox : ViewComponent
     {
-
-        private IUnitOfWork _uw;
         private readonly IMapper _mapper;
+        private IMediator _context;
 
-        public ArticleTagBox(IUnitOfWork uw, IMapper mapper)
+        public ArticleTagBox(IMapper mapper, IMediator context)
         {
-            _uw = uw;
             _mapper = mapper;
+            _context = context;
         }
 
-        public  async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
-            var articleTags = await _uw.ArticleRepository.GetAllArticleTagsAsync();
+            var articleTags = await _context.Send(new GetAllArticleTagsQuery());
 
-            var articleTagViewModel = _mapper.Map<List<ArticleTag>, List<ArticleTagViewModel>>(articleTags);
+            var articleTagViewModel = _mapper.Map<List<ArticleTag>, List<ArticleTagViewModel>>(articleTags.ToList());
 
             return View(articleTagViewModel);
         }
-
     }
 }
