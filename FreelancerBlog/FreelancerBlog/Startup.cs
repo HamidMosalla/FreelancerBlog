@@ -80,6 +80,8 @@ namespace FreelancerBlog
                     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                     .AddDataAnnotationsLocalization();
 
+            services.AddMvcJQueryDataTables();
+
             services.AddAutoMapper();
 
             services.AddMemoryCache();
@@ -237,6 +239,8 @@ namespace FreelancerBlog
                 // UI strings that we have localized.
                 SupportedUICultures = supportedCultures
             });
+
+            app.UseMvcJQueryDataTables();
 
             app.UseMvc(routes =>
             {

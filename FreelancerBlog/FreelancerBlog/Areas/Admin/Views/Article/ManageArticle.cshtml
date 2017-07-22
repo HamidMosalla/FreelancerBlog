@@ -10,6 +10,7 @@
 
 @section styles{
     <link href="~/lib/pnotify/dist/pnotify.custom.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.css" />
 }
 
 @Html.AntiForgeryToken()
@@ -54,60 +55,40 @@
     </p>
 }
 
-<table class="table">
-    <tr>
 
-        <th>
-            @Html.DisplayNameFor(model => model.Single().ArticleTitle)
-        </th>
 
-        <th>
-            @Html.DisplayNameFor(model => model.Single().ArticleStatus)
-        </th>
+<table class="table table-hover table-striped table-responsive" id="article-table">
 
-        <th>
-            @Html.DisplayNameFor(model => model.Single().ArticleDateCreated)
-        </th>
-
-        <th>
-            @Html.DisplayNameFor(model => model.Single().ArticleDateModified)
-        </th>
-
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Single().ArticleTitle)
+            </th>
 
-            <td>
-                @item.ArticleTitle
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Single().ArticleStatus)
+            </th>
 
-            <td>
-                @item.ArticleStatus
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Single().ArticleDateCreated)
+            </th>
 
-            <td>
-                @item.ArticleDateCreated
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Single().ArticleDateModified)
+            </th>
 
-            <td>
-                @(item.ArticleDateModified ?? DateTime.MinValue)
-            </td>
-
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ArticleId" class="btn btn-warning">ویرایش</a>
-                <a asp-action="Details"asp-route-area=""asp-route-id="@item.ArticleId" asp-route-title="@item.ArticleTitle.Replace(' ', '-')" class="btn btn-default">جزئیات</a>
-                <a asp-action="Delete" asp-route-id="@item.ArticleId" class="btn btn-danger DeleteArticleButton">حذف</a>
-            </td>
+            <th></th>
         </tr>
-    }
+    </thead>
+
+    <tbody> </tbody>
+
 </table>
 
 @section scripts{
     <script src="~/lib/pnotify/dist/pnotify.custom.min.js"></script>
     <script src="~/js/Utilities/PNotifyModule.js"></script>
     <script src="~/js/CustomScripts/Admin/Article/ManageArticleModule.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.js"></script>
     <script>jQuery(manageArticleModule.Run)</script>
 }

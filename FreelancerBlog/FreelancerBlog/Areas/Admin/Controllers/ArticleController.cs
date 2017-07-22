@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Mvc.JQuery.DataTables;
 
 namespace FreelancerBlog.Areas.Admin.Controllers
 {
@@ -44,13 +45,23 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ManageArticle()
+        public IActionResult ManageArticle() => View();
+
+        [HttpGet]
+        public async Task<DataTablesResult<ArticleViewModel>> GetArticles(DataTablesParam dataTableParam)
         {
             var articles = await _mediator.Send(new GetAriclesQuery());
 
-            var articlesViewModel = articles.ProjectTo<ArticleViewModel>().ToList();
+            var userViews = articles.Select(a => new ArticleViewModel
+            {
+                ArticleId = a.ArticleId,
+                ArticleDateModified = a.ArticleDateModified,
+                ArticleDateCreated = a.ArticleDateCreated,
+                ArticleStatus = a.ArticleStatus,
+                ArticleTitle = a.ArticleTitle
+            });
 
-            return View(articlesViewModel);
+            return DataTablesResult.Create(userViews, dataTableParam);
         }
 
         [HttpGet]
@@ -208,7 +219,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             var article = _mapper.Map<ArticleViewModel, Article>(viewModel);
 
-            List<ArticleStatus> result = await _mediator.Send(new EditArticleCommand {Article = article, ArticleTags = viewModel.ArticleTags});
+            List<ArticleStatus> result = await _mediator.Send(new EditArticleCommand { Article = article, ArticleTags = viewModel.ArticleTags });
 
             if (result.All(r => r != ArticleStatus.ArticleEditSucess))
             {
