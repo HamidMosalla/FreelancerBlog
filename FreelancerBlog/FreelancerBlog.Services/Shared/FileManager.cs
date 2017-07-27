@@ -16,7 +16,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace FreelancerBlog.Services.Shared
 {
-    public class FileManager : IFileManager, ICkEditorFileUploder
+    public class FileManager : IFileManager
     {
         public IHostingEnvironment Environment { get; }
         public IFileSystemWrapper FileSystem { get; }
@@ -179,6 +179,7 @@ namespace FreelancerBlog.Services.Shared
             return false;
         }
 
+        //TODO: maybe you should remove the interface for it
         public async Task<string> UploadFromCkEditorAsync(IFormFile file, List<string> path, string ckEditorFuncNum)
         {
             if (file == null)

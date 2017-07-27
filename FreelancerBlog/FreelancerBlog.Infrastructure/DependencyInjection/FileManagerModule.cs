@@ -9,7 +9,6 @@ namespace FreelancerBlog.Infrastructure.DependencyInjection
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<FileManager>().As<IFileManager>();
-            builder.RegisterType<FileManager>().As<ICkEditorFileUploder>();
         }
     }
 }

@@ -16,5 +16,6 @@ namespace FreelancerBlog.Core.Services.Shared
         FileStatus DeleteFile(string fileName, List<string> path);
         void DeleteEditorImages(string bodyText, List<string> path);
         bool ValidateUploadedFile(IFormFile file, UploadFileType fileType, double maxFileSize, ModelStateDictionary modelState);
+        Task<string> UploadFromCkEditorAsync(IFormFile file, List<string> path, string ckEditorFuncNum);
     }
 }

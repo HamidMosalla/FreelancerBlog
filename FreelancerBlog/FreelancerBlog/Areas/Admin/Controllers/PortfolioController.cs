@@ -21,13 +21,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     {
         private readonly IMapper _mapper;
         private IMediator _mediator;
-        private ICkEditorFileUploder _ckEditorFileUploader;
         private IFileManager _fileManager;
 
-        public PortfolioController(IFileManager fileManager, ICkEditorFileUploder ckEditorFileUploader, IMapper mapper, IMediator mediator)
+        public PortfolioController(IFileManager fileManager, IMapper mapper, IMediator mediator)
         {
             _fileManager = fileManager;
-            _ckEditorFileUploader = ckEditorFileUploader;
             _mapper = mapper;
             _mediator = mediator;
         }
@@ -163,7 +161,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CkEditorFileUploder(IFormFile file, string ckEditorFuncNum)
         {
-            string htmlResult = await _ckEditorFileUploader.UploadFromCkEditorAsync(file, new List<string> { "images", "portfolio", "full" }, ckEditorFuncNum);
+            string htmlResult = await _fileManager.UploadFromCkEditorAsync(file, new List<string> { "images", "portfolio", "full" }, ckEditorFuncNum);
 
             return Content(htmlResult, "text/html");
         }

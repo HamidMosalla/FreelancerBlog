@@ -11,7 +11,7 @@ namespace FreelancerBlog.Data.Commands.Articles
 {
     public class UpdateArticleCommandHandler : IAsyncRequestHandler<UpdateArticleCommand>
     {
-        private FreelancerBlogContext _context;
+        private readonly FreelancerBlogContext _context;
 
         public UpdateArticleCommandHandler(FreelancerBlogContext context)
         {
@@ -21,6 +21,8 @@ namespace FreelancerBlog.Data.Commands.Articles
         public Task Handle(UpdateArticleCommand message)
         {
             _context.Articles.Attach(message.Article);
+
+            message.Article.ArticleDateModified = DateTime.Now;
 
             var entity = _context.Entry(message.Article);
             entity.State = EntityState.Modified;

@@ -29,18 +29,14 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class ArticleController : Controller
     {
-        private readonly ICkEditorFileUploder _ckEditorFileUploader;
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private IMediator _mediator;
         private readonly IFileManager _fileManager;
 
-        public ArticleController(ICkEditorFileUploder ckEditorFileUploader, IFileManager fileManager, IMapper mapper, UserManager<ApplicationUser> userManager, IMediator mediator)
+        public ArticleController(IFileManager fileManager, IMapper mapper, IMediator mediator)
         {
-            _ckEditorFileUploader = ckEditorFileUploader;
             _fileManager = fileManager;
             _mapper = mapper;
-            _userManager = userManager;
             _mediator = mediator;
         }
 
@@ -175,23 +171,15 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            if (id == 0)
-            {
-                return BadRequest();
-            }
+            if (id == default(int)) return BadRequest();
 
             var article = await _mediator.Send(new ArticleByArticleIdQuery { ArticleId = id });
 
-            if (article == null)
-            {
-                return NotFound();
-            }
+            if (article == null) return NotFound();
 
             var articleViewModel = _mapper.Map<Article, ArticleViewModel>(article);
-            articleViewModel.ArticleTags = await _mediator.Send(new TagsByArticleIdQuery { ArticleId = article.ArticleId });
+
             articleViewModel.ArticleTagsList = await _mediator.Send(new GetCurrentArticleTagsQuery { ArticleId = article.ArticleId });
-            articleViewModel.SumOfRating = articleViewModel.ArticleRatings.Sum(a => a.ArticleRatingScore) / articleViewModel.ArticleRatings.Count;
-            articleViewModel.CurrentUserRating = articleViewModel.ArticleRatings.SingleOrDefault(a => a.UserIDfk == _userManager.GetUserId(User));
 
             return View(articleViewModel);
         }
@@ -204,31 +192,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             var article = _mapper.Map<ArticleViewModel, Article>(viewModel);
 
-            List<ArticleStatus> result = await _mediator.Send(new EditArticleCommand { Article = article, ArticleTags = viewModel.ArticleTags });
-
-            if (result.All(r => r != ArticleStatus.ArticleEditSucess))
-            {
-                TempData["ViewMessage"] = "مشکلی در ویرایش مقاله پیش آمده، مقاله با موفقیت ثبت نشد.";
-
-                return RedirectToAction("ManageArticle", "Article");
-            }
-
+            await _mediator.Send(new UpdateArticleCommand {Article = article});
             TempData["ViewMessage"] = "مقاله با موفقیت ویرایش شد.";
 
-            if (result.Any(r => r == ArticleStatus.ArticleTagCreateSucess))
-            {
-                TempData["ArticleTagCreateMessage"] = "تگ های جدید با موفقیت ثبت شدند.";
-            }
-
-            if (result.Any(r => r == ArticleStatus.ArticleArticleTagsCreateSucess))
-            {
-                TempData["ArticleArticleTagCreateMessage"] = "تگ ها با موفقیت به این مقاله اضافه شدند.";
-            }
-
-            if (result.Any(r => r == ArticleStatus.ArticleRemoveTagsFromArticleSucess))
-            {
-                TempData["ArticleArticleTagRemoveFromArticle"] = "تگ ها با موفقیت از این مقاله حذف شدند.";
-            }
+             await _mediator.Send(new UpdateArticleTagsCommand { Article = article, ArticleTags = viewModel.ArticleTags });
+            TempData["ArticleTagCreateMessage"] = "تگ های مقاله با موفقیت به روز رسانی شدند.";
 
             return RedirectToAction("ManageArticle", "Article");
         }
@@ -307,7 +275,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CkEditorFileUploder(IFormFile file, string ckEditorFuncNum)
         {
-            string htmlResult = await _ckEditorFileUploader.UploadFromCkEditorAsync(file, new List<string> { "images", "blog" }, ckEditorFuncNum);
+            string htmlResult = await _fileManager.UploadFromCkEditorAsync(file, new List<string> { "images", "blog" }, ckEditorFuncNum);
 
             return Content(htmlResult, "text/html");
         }
