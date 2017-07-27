@@ -163,26 +163,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             var model = _mapper.Map<ArticleViewModel, Article>(viewModel);
 
-            var result = await _mediator.Send(new CreateNewArticleCommand { Article = model, ArticleTags = viewModel.ArticleTags });
-
-            if (result.All(r => r != ArticleStatus.ArticleCreateSucess))
-            {
-                TempData["ViewMessage"] = "مشکلی در ثبت مقاله پیش آمده، مقاله با موفقیت ثبت نشد.";
-
-                return RedirectToAction("ManageArticle", "Article");
-            }
-
+            await _mediator.Send(new CreateArticleCommand { Article = model });
             TempData["ViewMessage"] = "مقاله با موفقیت ثبت شد.";
 
-            if (result.Any(r => r == ArticleStatus.ArticleTagCreateSucess))
-            {
-                TempData["ArticleTagCreateMessage"] = "تگ های جدید با موفقیت ثبت شدند.";
-            }
-
-            if (result.Any(r => r == ArticleStatus.ArticleArticleTagsCreateSucess))
-            {
-                TempData["ArticleArticleTagCreateMessage"] = "تگ ها با موفقیت به این مقاله اضافه شدند.";
-            }
+            await _mediator.Send(new CreateArticleTagsCommand { Article = model, ArticleTags = viewModel.ArticleTags });
+            TempData["ArticleTagCreateMessage"] = "تگ های جدید با موفقیت ثبت شدند.";
 
             return RedirectToAction("ManageArticle", "Article");
         }
