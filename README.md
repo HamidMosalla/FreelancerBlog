@@ -9,6 +9,7 @@ FreelancerBlog is a multi-language blogging solution for freelancers built with 
 - Entity Framework Core 1.1.2
 - .NET Core 1.1  
 - AutoMapper 6.1.0  
+- MediatR 3.0.1
 - Autofac 4.6.0 
 - x-Unit 2.2.0
 - Moq 4.7.25
@@ -32,12 +33,10 @@ FreelancerBlog is a multi-language blogging solution for freelancers built with 
 - Ports and Adapters Architecture    
 - DDD  
 - Dependency Inversion Principle  
-- Repository Pattern  
-- Unit Of Work Pattern  
+- CQRS
 - Adapter Pattern  
 - Strategy Pattern  
-- JavaScript Module Pattern  
-- Unit Test  
+- JavaScript Module Pattern
 
 # What do you need to run it?
 - Visual Studio 2017
