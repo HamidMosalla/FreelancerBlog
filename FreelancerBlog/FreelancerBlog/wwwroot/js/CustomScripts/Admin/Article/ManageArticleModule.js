@@ -44,20 +44,11 @@
 
     }
 
-    /*
-     ArticleId = a.ArticleId,
-     ArticleDateModified = a.ArticleDateModified,
-     ArticleDateCreated = a.ArticleDateCreated,
-     ArticleStatus = a.ArticleStatus,
-     ArticleTitle = a.ArticleTitle
-    */
-
-    var Run = function () {
-        $(".DeleteArticleButton").on("click", deleteArticleHandler);
+    function setUpDataTable() {
 
         $("#article-table").DataTable({
             "bServerSide": true,
-            "sAjaxSource": "/Admin/Article/GetArticles",
+            "sAjaxSource": "/Admin/Article/GetArticleTableData",
             "bProcessing": true,
             "columnDefs": [
                 {
@@ -99,6 +90,11 @@
                 }
             ]
         });
+    }
+
+    var Run = function () {
+        $(".DeleteArticleButton").on("click", deleteArticleHandler);
+        setUpDataTable();
     };
 
     return {

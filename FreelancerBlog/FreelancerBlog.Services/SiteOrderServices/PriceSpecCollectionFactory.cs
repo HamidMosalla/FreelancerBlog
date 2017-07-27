@@ -90,7 +90,6 @@ namespace FreelancerBlog.Services.SiteOrderServices
             var types = viewModel.GetType()
                 .GetProperties()
                 .Select(v => new { Name = v.Name.ToString(), Value = v.GetValue(viewModel) })
-                // .Where(v => { if (v.Value == null || v.Value.ToString() == "0" || v.Value.ToString() == "False") return false;  return true; }
                 .Where(v => v.Value != null && v.Value.ToString() != "0" && v.Value.ToString() != "False")
                 .ToDictionary(v => v.Name, v => v.Value);
 

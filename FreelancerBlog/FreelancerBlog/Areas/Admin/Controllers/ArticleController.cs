@@ -48,11 +48,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         public IActionResult ManageArticle() => View();
 
         [HttpGet]
-        public async Task<DataTablesResult<ArticleViewModel>> GetArticles(DataTablesParam dataTableParam)
+        public async Task<DataTablesResult<ArticleViewModel>> GetArticleTableData(DataTablesParam dataTableParam)
         {
             var articles = await _mediator.Send(new GetAriclesQuery());
 
-            var userViews = articles.Select(a => new ArticleViewModel
+            var articleViewModels = articles.Select(a => new ArticleViewModel
             {
                 ArticleId = a.ArticleId,
                 ArticleDateModified = a.ArticleDateModified,
@@ -61,7 +61,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
                 ArticleTitle = a.ArticleTitle
             });
 
-            return DataTablesResult.Create(userViews, dataTableParam);
+            return DataTablesResult.Create(articleViewModels, dataTableParam);
         }
 
         [HttpGet]
