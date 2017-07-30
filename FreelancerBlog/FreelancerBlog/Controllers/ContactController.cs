@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.AutoMapper;
-using FreelancerBlog.Core.Commands.Contacts;
+using FreelancerBlog.Core.Commands.Data.Contacts;
 using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.Core.Wrappers;
@@ -16,13 +17,9 @@ namespace FreelancerBlog.Controllers
     {
         private readonly IMapper _mapper;
         private IMediator _mediator;
-        private ICaptchaValidator _captchaValidator;
-        private IConfigurationBinderWrapper _configurationWrapper;
 
-        public ContactController(ICaptchaValidator captchaValidator, IConfigurationBinderWrapper configurationWrapper, IMapper mapper, IMediator mediator)
+        public ContactController(IMapper mapper, IMediator mediator)
         {
-            _captchaValidator = captchaValidator;
-            _configurationWrapper = configurationWrapper;
             _mapper = mapper;
             _mediator = mediator;
         }
@@ -37,7 +34,7 @@ namespace FreelancerBlog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ContactViewModel contactViewModel, bool isJavascriptEnabled)
         {
-            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configurationWrapper.GetValue<string>("reChaptchaSecret:server-secret"));
+            CaptchaResponse captchaResult = await _mediator.Send(new ValidateCaptchaQuery());
 
             if (captchaResult.Success != "true")
             {

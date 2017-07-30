@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.Core.Queries.Contacts;
+using FreelancerBlog.Core.Queries.Data.Contacts;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
 

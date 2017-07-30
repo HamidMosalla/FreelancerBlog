@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using FreelancerBlog.Core.Commands.ArticleTags;
+using FreelancerBlog.Core.Commands.Data.ArticleTags;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
 

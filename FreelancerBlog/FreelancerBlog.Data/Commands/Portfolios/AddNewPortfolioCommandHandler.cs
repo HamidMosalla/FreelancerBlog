@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using FreelancerBlog.Core.Commands.Portfolios;
+using FreelancerBlog.Core.Commands.Data.Portfolios;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
 

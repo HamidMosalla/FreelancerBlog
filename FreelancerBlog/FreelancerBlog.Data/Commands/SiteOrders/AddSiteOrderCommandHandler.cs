@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using FreelancerBlog.Core.Commands.SiteOrders;
+using FreelancerBlog.Core.Commands.Data.SiteOrders;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
 

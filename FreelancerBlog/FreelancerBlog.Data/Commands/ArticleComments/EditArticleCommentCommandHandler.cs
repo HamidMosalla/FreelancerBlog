@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using FreelancerBlog.Core.Commands.ArticleComments;
+using FreelancerBlog.Core.Commands.Data.ArticleComments;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
 

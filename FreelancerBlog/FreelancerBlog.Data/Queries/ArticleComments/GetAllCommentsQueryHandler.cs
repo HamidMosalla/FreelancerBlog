@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.Core.Queries.ArticleComments;
+using FreelancerBlog.Core.Queries.Data.ArticleComments;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
 

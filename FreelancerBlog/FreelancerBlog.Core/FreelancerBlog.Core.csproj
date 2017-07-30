@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="1.1.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\Services\" />
+  </ItemGroup>
+
 </Project>

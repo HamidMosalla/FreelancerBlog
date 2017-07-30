@@ -132,7 +132,6 @@ namespace FreelancerBlog
             builder.RegisterModule<FileManagerModule>();
             builder.RegisterModule<PriceSpecCollectionFactoryModule>();
             builder.RegisterModule<FinalPriceCalculatorModule>();
-            builder.RegisterModule<CaptchaValidatorModule>();
             builder.RegisterModule<FileSystemWrapperModule>();
 
             builder.Populate(services);

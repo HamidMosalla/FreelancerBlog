@@ -2,11 +2,13 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.Core.Wrappers;
 using FreelancerBlog.ViewModels.Account;
 using FreelancerBlog.ViewModels.Email;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,9 +26,7 @@ namespace FreelancerBlog.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
-        private ICaptchaValidator _captchaValidator;
-        private IConfigurationBinderWrapper _configurationWrapper;
-        private IConfiguration _configuration;
+        private readonly IMediator _mediator;
         private IRazorViewToString _razorViewToString;
 
         public AccountController(
@@ -35,20 +35,16 @@ namespace FreelancerBlog.Controllers
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactoryWrapper loggerFactoryWrapper,
-            ICaptchaValidator captchaValidator,
-            IConfiguration configuration,
             IRazorViewToString render,
-            IConfigurationBinderWrapper configurationWrapper)
+            IMediator mediator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
-            _captchaValidator = captchaValidator;
-            _configuration = configuration;
             _logger = loggerFactoryWrapper.CreateLogger<AccountController>();
             _razorViewToString = render;
-            _configurationWrapper = configurationWrapper;
+            _mediator = mediator;
         }
 
         [HttpGet]
@@ -118,7 +114,7 @@ namespace FreelancerBlog.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
 
-            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configurationWrapper.GetValue<string>("reChaptchaSecret:server-secret"));
+            CaptchaResponse captchaResult = await _mediator.Send(new ValidateCaptchaQuery());
 
             if (captchaResult.Success != "true")
             {

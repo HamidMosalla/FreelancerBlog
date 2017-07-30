@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.AutoMapper;
-using FreelancerBlog.Core.Commands.ArticleComments;
-using FreelancerBlog.Core.Commands.Articles;
+using FreelancerBlog.Core.Commands.Data.ArticleComments;
+using FreelancerBlog.Core.Commands.Data.Articles;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.Core.Queries.Article;
-using FreelancerBlog.Core.Queries.Articles;
-using FreelancerBlog.Core.Queries.ArticleTags;
+using FreelancerBlog.Core.Queries.Data.Articles;
+using FreelancerBlog.Core.Queries.Data.ArticleTags;
+using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.ViewModels.Article;
@@ -25,16 +25,12 @@ namespace FreelancerBlog.Controllers
         private readonly IMapper _mapper;
         private IMediator _mediator;
         private readonly UserManager<ApplicationUser> _userManager;
-        private ICaptchaValidator _captchaValidator;
-        private IConfiguration _configuration;
 
-        public ArticleController(UserManager<ApplicationUser> userManager, ICaptchaValidator captchaValidator, IConfiguration configuration, IMapper mapper, IMediator mediator)
+        public ArticleController(UserManager<ApplicationUser> userManager, IMapper mapper, IMediator mediator)
         {
             _mapper = mapper;
             _mediator = mediator;
             _userManager = userManager;
-            _captchaValidator = captchaValidator;
-            _configuration = configuration;
         }
 
         [HttpGet]
@@ -113,7 +109,7 @@ namespace FreelancerBlog.Controllers
         [HttpPost]
         public async Task<JsonResult> SubmitComment(ArticleCommentViewModel viewModel)
         {
-            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configuration.GetValue<string>("reChaptchaSecret:server-secret"));
+            CaptchaResponse captchaResult = await _mediator.Send(new ValidateCaptchaQuery());
 
             if (captchaResult.Success != "true")
             {

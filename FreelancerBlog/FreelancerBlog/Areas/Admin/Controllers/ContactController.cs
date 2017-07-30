@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.AutoMapper;
-using FreelancerBlog.Core.Commands.Contacts;
+using FreelancerBlog.Core.Commands.Data.Contacts;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.Core.Queries.Contacts;
+using FreelancerBlog.Core.Queries.Data.Contacts;
 using FreelancerBlog.ViewModels.Contact;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -18,12 +18,13 @@ namespace FreelancerBlog.Areas.Admin.Controllers
     [Authorize(Roles = "admin")]
     public class ContactController : Controller
     {
-        private readonly IMapper _mapper;
-        private IMediator _mediator;
+        public readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-        public ContactController(IMediator mediator)
+        public ContactController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]

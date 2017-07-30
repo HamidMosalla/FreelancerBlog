@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.SlideShow;
-using FreelancerBlog.Core.Commands.SlideShows;
+using FreelancerBlog.Core.Commands.Data.SlideShows;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Enums;
-using FreelancerBlog.Core.Queries.SlideShows;
+using FreelancerBlog.Core.Queries.Data.SlideShows;
 using FreelancerBlog.Core.Services.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -22,11 +22,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         private IMediator _mediator;
         private IFileManager _fileManager;
 
-
-        public SlideShowController(IFileManager fileManager, IMediator mediator)
+        public SlideShowController(IFileManager fileManager, IMediator mediator, IMapper mapper)
         {
             _fileManager = fileManager;
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]

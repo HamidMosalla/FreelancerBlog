@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.AutoMapper;
-using FreelancerBlog.Core.Commands.SiteOrders;
+using FreelancerBlog.Core.Commands.Data.SiteOrders;
 using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Services.SiteOrderServices;
 using FreelancerBlog.Core.Types;
@@ -20,15 +21,11 @@ namespace FreelancerBlog.Controllers
         private IMediator _mediator;
         private IPriceSpecCollectionFactory<PriceSpec, object> _priceSpecCollectionFactory;
         private IFinalPriceCalculator<PriceSpec> _finalPriceCalculator;
-        private ICaptchaValidator _captchaValidator;
-        private IConfiguration _configuration;
 
-        public SiteOrderController(IPriceSpecCollectionFactory<PriceSpec, object> priceSpecCollectionFactory, IFinalPriceCalculator<PriceSpec> finalPriceCalculator, ICaptchaValidator captchaValidator, IConfiguration configuration, IMediator mediator)
+        public SiteOrderController(IPriceSpecCollectionFactory<PriceSpec, object> priceSpecCollectionFactory, IFinalPriceCalculator<PriceSpec> finalPriceCalculator, IMediator mediator)
         {
             _priceSpecCollectionFactory = priceSpecCollectionFactory;
             _finalPriceCalculator = finalPriceCalculator;
-            _captchaValidator = captchaValidator;
-            _configuration = configuration;
             _mediator = mediator;
         }
 
@@ -42,7 +39,7 @@ namespace FreelancerBlog.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> Index(SiteOrderViewModel viewModel)
         {
-            CaptchaResponse captchaResult = await _captchaValidator.ValidateCaptchaAsync(_configuration.GetValue<string>("reChaptchaSecret:server-secret"));
+            CaptchaResponse captchaResult = await _mediator.Send(new ValidateCaptchaQuery());
 
             if (captchaResult.Success != "true")
             {

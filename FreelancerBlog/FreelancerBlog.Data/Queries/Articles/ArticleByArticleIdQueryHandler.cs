@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.Core.Queries.Article;
+using FreelancerBlog.Core.Queries.Data.Articles;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

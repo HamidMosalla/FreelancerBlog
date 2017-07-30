@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using FreelancerBlog.Core.Queries.ArticleTags;
+using FreelancerBlog.Core.Queries.Data.ArticleTags;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

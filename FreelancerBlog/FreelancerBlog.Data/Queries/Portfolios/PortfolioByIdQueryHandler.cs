@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.Core.Queries.Portfolios;
+using FreelancerBlog.Core.Queries.Data.Portfolios;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
