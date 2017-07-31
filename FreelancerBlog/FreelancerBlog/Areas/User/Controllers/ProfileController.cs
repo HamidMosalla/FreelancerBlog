@@ -9,7 +9,6 @@ using FreelancerBlog.Core.Queries.Data.ApplicationUsers;
 using FreelancerBlog.Core.Services.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreelancerBlog.Areas.User.Controllers
@@ -21,13 +20,10 @@ namespace FreelancerBlog.Areas.User.Controllers
         private readonly IMapper _mapper;
         private IMediator _mediator;
         private IFileManager _fileManager;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-
-        public ProfileController(IFileManager fileManager, UserManager<ApplicationUser> userManager, IMapper mapper, IMediator mediator)
+        public ProfileController(IFileManager fileManager, IMapper mapper, IMediator mediator)
         {
             _fileManager = fileManager;
-            _userManager = userManager;
             _mapper = mapper;
             _mediator = mediator;
         }
@@ -35,7 +31,7 @@ namespace FreelancerBlog.Areas.User.Controllers
         [HttpGet]
         public async Task<IActionResult> EditProfile()
         {
-            var user = await _mediator.Send(new UserByIdQuery { ApplicationUserId = _userManager.GetUserId(User) });
+            var user = await _mediator.Send(new UserByIdQuery { User = User });
 
             var userProfileViewModel = _mapper.Map<ApplicationUser, UserProfileViewModel>(user);
 
@@ -61,7 +57,7 @@ namespace FreelancerBlog.Areas.User.Controllers
                     return View(viewModel);
                 }
 
-                var model = await _mediator.Send(new UserByIdQuery { ApplicationUserId = viewModel.Id });
+                var model = await _mediator.Send(new UserByIdQuery { User = User });
 
                 //_uw.UserRepository.Detach(model);
 

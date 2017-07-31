@@ -16,7 +16,7 @@ namespace FreelancerBlog.Controllers
     public class ContactController : Controller
     {
         private readonly IMapper _mapper;
-        private IMediator _mediator;
+        private readonly IMediator _mediator;
 
         public ContactController(IMapper mapper, IMediator mediator)
         {

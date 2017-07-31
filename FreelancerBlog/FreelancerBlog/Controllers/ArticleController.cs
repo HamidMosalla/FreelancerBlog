@@ -3,34 +3,28 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Commands.Data.ArticleComments;
 using FreelancerBlog.Core.Commands.Data.Articles;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Queries.Data.Articles;
-using FreelancerBlog.Core.Queries.Data.ArticleTags;
 using FreelancerBlog.Core.Queries.Services.Shared;
-using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
+using FreelancerBlog.Features.Queries;
 using FreelancerBlog.ViewModels.Article;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace FreelancerBlog.Controllers
 {
     public class ArticleController : Controller
     {
         private readonly IMapper _mapper;
-        private IMediator _mediator;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMediator _mediator;
 
-        public ArticleController(UserManager<ApplicationUser> userManager, IMapper mapper, IMediator mediator)
+        public ArticleController(IMapper mapper, IMediator mediator)
         {
             _mapper = mapper;
             _mediator = mediator;
-            _userManager = userManager;
         }
 
         [HttpGet]
@@ -75,11 +69,7 @@ namespace FreelancerBlog.Controllers
 
             await _mediator.Send(new IncreaseArticleViewCountCommand { ArticleId = id });
 
-            var articleViewModel = _mapper.Map<Article, ArticleViewModel>(article);
-            articleViewModel.ArticleTags = await _mediator.Send(new TagsByArticleIdQuery { ArticleId = article.ArticleId }); ;
-            articleViewModel.ArticleTagsList = await _mediator.Send(new GetCurrentArticleTagsQuery { ArticleId = article.ArticleId });
-            articleViewModel.SumOfRating = articleViewModel.ArticleRatings.Sum(a => a.ArticleRatingScore) / articleViewModel.ArticleRatings.Count;
-            articleViewModel.CurrentUserRating = articleViewModel.ArticleRatings.SingleOrDefault(a => a.UserIDfk == _userManager.GetUserId(User));
+            var articleViewModel = await _mediator.Send(new ArticleViewModelQuery { Article = article, User = User });
 
             return View(articleViewModel);
         }
@@ -91,17 +81,16 @@ namespace FreelancerBlog.Controllers
                 return Json(new { Status = "YouMustLogin" });
             }
 
-            var userId = _userManager.GetUserId(User);
-            var rateBefore = await _mediator.Send(new ArticleRatedBeforeQuery { ArticleId = id, UserId = userId });
+            var rateBefore = await _mediator.Send(new ArticleRatedBeforeQuery { ArticleId = id, User = User });
 
             if (rateBefore)
             {
-                await _mediator.Send(new UpdateArticleRatingCommand { ArticleId = id, ArticleRating = rating, UserId = userId });
+                await _mediator.Send(new UpdateArticleRatingCommand { ArticleId = id, ArticleRating = rating, User = User });
 
                 return Json(new { Status = "UpdatedSuccessfully" });
             }
 
-            await _mediator.Send(new AddRatingToArticleCommand { ArticleId = id, ArticleRating = rating, UserId = userId });
+            await _mediator.Send(new AddRatingToArticleCommand { ArticleId = id, ArticleRating = rating, User = User });
 
             return Json(new { Status = "Success" });
         }

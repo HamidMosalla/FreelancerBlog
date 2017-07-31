@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Queries.Data.Articles;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 
 namespace FreelancerBlog.Data.Queries.Articles
 {
     class ArticleRatedBeforeQueryHandler : IRequestHandler<ArticleRatedBeforeQuery, bool>
     {
         private FreelancerBlogContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ArticleRatedBeforeQueryHandler(FreelancerBlogContext context)
+        public ArticleRatedBeforeQueryHandler(FreelancerBlogContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public bool Handle(ArticleRatedBeforeQuery message)
@@ -24,7 +24,9 @@ namespace FreelancerBlog.Data.Queries.Articles
 
             if (ratings.Count != 0)
             {
-                bool eligibility = ratings.Any(r => r.UserIDfk == message.UserId);
+                var userId = _userManager.GetUserId(message.User);
+
+                bool eligibility = ratings.Any(r => r.UserIDfk == userId);
 
                 if (eligibility)
                 {

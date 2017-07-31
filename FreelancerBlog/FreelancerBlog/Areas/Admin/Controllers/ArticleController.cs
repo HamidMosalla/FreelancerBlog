@@ -2,14 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Commands.Data.ArticleComments;
 using FreelancerBlog.Core.Commands.Data.Articles;
 using FreelancerBlog.Core.Commands.Data.ArticleTags;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.Core.Enums;
 using FreelancerBlog.Core.Queries.Data.ArticleComments;
 using FreelancerBlog.Core.Queries.Data.Articles;
 using FreelancerBlog.Core.Queries.Data.ArticleTags;
@@ -18,7 +15,6 @@ using FreelancerBlog.ViewModels.Article;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Mvc.JQuery.DataTables;
 
