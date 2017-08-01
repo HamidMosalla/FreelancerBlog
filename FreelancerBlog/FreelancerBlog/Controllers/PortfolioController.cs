@@ -24,17 +24,11 @@ namespace FreelancerBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
-            if (id.Equals(default(int)))
-            {
-                return BadRequest();
-            }
+            if (id == default(int)) return BadRequest();
 
             var model = await _mediator.Send(new PortfolioByIdQuery {PortfolioId = id});
 
-            if (model == null)
-            {
-                return NotFound();
-            }
+            if (model == null) return NotFound();
 
             var viewModel = _mapper.Map<Portfolio, PortfolioViewModel>(model);
 

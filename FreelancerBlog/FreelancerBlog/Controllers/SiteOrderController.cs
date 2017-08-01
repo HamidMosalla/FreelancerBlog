@@ -1,17 +1,14 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Commands.Data.SiteOrders;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Queries.Services.Shared;
-using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Services.SiteOrderServices;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.Services.SiteOrderServices;
 using FreelancerBlog.ViewModels.SiteOrder;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace FreelancerBlog.Controllers
 {
@@ -30,10 +27,7 @@ namespace FreelancerBlog.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -41,15 +35,9 @@ namespace FreelancerBlog.Controllers
         {
             CaptchaResponse captchaResult = await _mediator.Send(new ValidateCaptchaQuery());
 
-            if (captchaResult.Success != "true")
-            {
-                return Json(new { status = "FailedTheCaptchaValidation" });
-            }
+            if (captchaResult.Success != "true") return Json(new { status = "FailedTheCaptchaValidation" });
 
-            if (!ModelState.IsValid)
-            {
-                return Json(new { Status = "FormWasNotValid" });
-            }
+            if (!ModelState.IsValid) return Json(new { Status = "FormWasNotValid" });
 
             var priceSpecCollection = _priceSpecCollectionFactory.BuildPriceSpecCollection(viewModel);
 

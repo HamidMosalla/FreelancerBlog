@@ -36,10 +36,7 @@ namespace FreelancerBlog.Controllers
         {
             CaptchaResponse captchaResult = await _mediator.Send(new ValidateCaptchaQuery());
 
-            if (captchaResult.Success != "true")
-            {
-                return Json(new { status = "FailedTheCaptchaValidation" });
-            }
+            if (captchaResult.Success != "true") return Json(new { status = "FailedTheCaptchaValidation" });
 
             if (!ModelState.IsValid) return View(contactViewModel);
 
@@ -57,10 +54,6 @@ namespace FreelancerBlog.Controllers
             await _mediator.Send(new AddNewContactCommand { Contact = contactWioutJavascript });
 
             return View("Success");
-
-            //ViewData["CreateContactMessage"] = "NothingToSaveOrThereWasAProblem";
-
-            //return View("Create", contactViewModel);
         }
     }
 }

@@ -50,15 +50,9 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
         public async Task<IActionResult> Create(PortfolioViewModel viewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            if (!ModelState.IsValid) return View(viewModel);
 
-            if (!_fileManager.ValidateUploadedFile(viewModel.PortfolioThumbnailFile, UploadFileType.Image, 4, ModelState))
-            {
-                return View(viewModel);
-            }
+            if (!_fileManager.ValidateUploadedFile(viewModel.PortfolioThumbnailFile, UploadFileType.Image, 4, ModelState)) return View(viewModel);
 
             string fileName = await _fileManager.UploadFileAsync(viewModel.PortfolioThumbnailFile, new List<string> { "images", "portfolio", "thumb" });
 
@@ -75,17 +69,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            if (id.Equals(default(int)))
-            {
-                return BadRequest();
-            }
+            if (id.Equals(default(int))) return BadRequest();
 
             var model = await _mediator.Send(new PortfolioByIdQuery { PortfolioId = id });
 
-            if (model == null)
-            {
-                return NotFound();
-            }
+            if (model == null) return NotFound();
 
             var viewModel = _mapper.Map<Portfolio, PortfolioViewModelEdit>(model);
 
@@ -99,10 +87,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(PortfolioViewModelEdit viewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            if (!ModelState.IsValid) return View(viewModel);
 
             var portfolio = _mapper.Map<PortfolioViewModelEdit, Portfolio>(viewModel);
 
@@ -137,17 +122,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> Delete(int id)
         {
-            if (id == default(int))
-            {
-                return Json(new { Status = "IdCannotBeNull" });
-            }
+            if (id == default(int)) return Json(new { Status = "IdCannotBeNull" });
 
             var model = await _mediator.Send(new PortfolioByIdQuery { PortfolioId = id });
 
-            if (model == null)
-            {
-                return Json(new { Status = "PortfolioNotFound" });
-            }
+            if (model == null) return Json(new { Status = "PortfolioNotFound" });
 
             FileStatus fileDeleteResult = _fileManager.DeleteFile(model.PortfolioThumbnail, new List<string> { "images", "portfolio", "thumb" });
 

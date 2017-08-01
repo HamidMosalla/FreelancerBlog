@@ -49,10 +49,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SlideShowViewModel slideShowViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(slideShowViewModel);
-            }
+            if (!ModelState.IsValid) return View(slideShowViewModel);
 
             if (!_fileManager.ValidateUploadedFile(slideShowViewModel.SlideShowPictrureFile, UploadFileType.Image, 4, ModelState))
             {
@@ -73,17 +70,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            if (id.Equals(default(int)))
-            {
-                return BadRequest();
-            }
+            if (id.Equals(default(int))) return BadRequest();
 
             var model = await _mediator.Send(new SlideShowByIdQuery { SlideShowId = id });
 
-            if (model == null)
-            {
-                return NotFound();
-            }
+            if (model == null) return NotFound();
 
             var viewModel = _mapper.Map<SlideShow, SlideShowViewModelEdit>(model);
 
@@ -94,54 +85,51 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(SlideShowViewModelEdit viewModel)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) return View(viewModel);
+
+            var slideshow = _mapper.Map<SlideShowViewModelEdit, SlideShow>(viewModel);
+
+            if (viewModel.SlideShowPictrureFile == null)
+            {
+                await _mediator.Send(new UpdateSlideShowCommand { SlideShow = slideshow });
+
+                return RedirectToAction("ManageSlideShow");
+            }
+
+            if (!_fileManager.ValidateUploadedFile(viewModel.SlideShowPictrureFile, UploadFileType.Image, 4, ModelState))
             {
                 return View(viewModel);
             }
 
-            var slideshow = _mapper.Map<SlideShowViewModelEdit, SlideShow>(viewModel);
+            var model = await _mediator.Send(new SlideShowByIdQuery { SlideShowId = viewModel.SlideShowId });
 
-            if (viewModel.SlideShowPictrureFile != null)
-            {
+            //_uw.SlideShowRepository.Detach(model);
 
-                if (!_fileManager.ValidateUploadedFile(viewModel.SlideShowPictrureFile, UploadFileType.Image, 4, ModelState))
-                {
-                    return View(viewModel);
-                }
+            FileStatus fileDeleteResult = _fileManager.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
 
-                var model = await _mediator.Send(new SlideShowByIdQuery { SlideShowId = viewModel.SlideShowId });
+            TempData["FileDeleteStatus"] = fileDeleteResult == FileStatus.DeleteSuccess ? "Success" : "Failure";
 
-                //_uw.SlideShowRepository.Detach(model);
+            string newPictureName = await _fileManager.UploadFileAsync(viewModel.SlideShowPictrureFile, new List<string> { "images", "slider" });
 
-                FileStatus fileDeleteResult = _fileManager.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
-
-                TempData["FileDeleteStatus"] = fileDeleteResult == FileStatus.DeleteSuccess ? "Success" : "Failure";
-
-                string newPictureName = await _fileManager.UploadFileAsync(viewModel.SlideShowPictrureFile, new List<string> { "images", "slider" });
-
-                slideshow.SlideShowPictrure = newPictureName;
-            }
+            slideshow.SlideShowPictrure = newPictureName;
 
             await _mediator.Send(new UpdateSlideShowCommand { SlideShow = slideshow });
 
             return RedirectToAction("ManageSlideShow");
+
+
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == default(int))
-            {
-                return Json(new { Status = "IdCannotBeNull" });
-            }
+            if (id == default(int)) return Json(new { Status = "IdCannotBeNull" });
 
             var model = await _mediator.Send(new SlideShowByIdQuery { SlideShowId = id });
 
-            if (model == null)
-            {
-                return Json(new { Status = "SlideShowNotFound" });
-            }
+            if (model == null) return Json(new { Status = "SlideShowNotFound" });
 
             FileStatus fileDeleteResult = _fileManager.DeleteFile(model.SlideShowPictrure, new List<string> { "images", "slider" });
 

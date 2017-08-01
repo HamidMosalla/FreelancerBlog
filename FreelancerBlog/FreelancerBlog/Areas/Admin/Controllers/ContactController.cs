@@ -41,17 +41,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> DeleteContact(int id)
         {
-            if (id == default(int))
-            {
-                return Json(new { Status = "IdCannotBeNull" });
-            }
+            if (id == default(int)) return Json(new { Status = "IdCannotBeNull" });
 
             var model = await _mediator.Send(new ContactByIdQuery { ContactId = id });
 
-            if (model == null)
-            {
-                return Json(new { Status = "ContactNotFound" });
-            }
+            if (model == null) return Json(new { Status = "ContactNotFound" });
 
             await _mediator.Send(new DeleteContactCommand { Contact = model });
 

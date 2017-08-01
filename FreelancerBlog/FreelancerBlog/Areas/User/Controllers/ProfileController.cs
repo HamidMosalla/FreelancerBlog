@@ -42,36 +42,37 @@ namespace FreelancerBlog.Areas.User.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfile(UserProfileViewModel viewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(viewModel);
-            }
+            if (!ModelState.IsValid) return View(viewModel);
 
             var user = _mapper.Map<UserProfileViewModel, ApplicationUser>(viewModel);
 
             if (viewModel.UserAvatarFile != null)
             {
+                await _mediator.Send(new UpdateUserProfileCommand { ApplicationUser = user });
 
-                if (!_fileManager.ValidateUploadedFile(viewModel.UserAvatarFile, UploadFileType.Image, .03, ModelState))
-                {
-                    return View(viewModel);
-                }
-
-                var model = await _mediator.Send(new UserByIdQuery { User = User });
-
-                //_uw.UserRepository.Detach(model);
-
-                if (model.UserAvatar != null)
-                {
-                    FileStatus fileDeleteResult = _fileManager.DeleteFile(model.UserAvatar, new List<string> { "images", "user-avatar" });
-
-                    TempData["FileDeleteStatus"] = fileDeleteResult == FileStatus.DeleteSuccess ? "Success" : "Failure";
-                }
-
-                string newAvatarName = await _fileManager.UploadFileAsync(viewModel.UserAvatarFile, new List<string> { "images", "user-avatar" });
-
-                user.UserAvatar = newAvatarName;
+                TempData["EditProfileMessage"] = "EditProfileSuccess";
+                return RedirectToAction("Index", "Manage", new { Area = "" });
             }
+
+            if (!_fileManager.ValidateUploadedFile(viewModel.UserAvatarFile, UploadFileType.Image, .03, ModelState))
+            {
+                return View(viewModel);
+            }
+
+            var model = await _mediator.Send(new UserByIdQuery { User = User });
+
+            //_uw.UserRepository.Detach(model);
+
+            if (model.UserAvatar != null)
+            {
+                FileStatus fileDeleteResult = _fileManager.DeleteFile(model.UserAvatar, new List<string> { "images", "user-avatar" });
+
+                TempData["FileDeleteStatus"] = fileDeleteResult == FileStatus.DeleteSuccess ? "Success" : "Failure";
+            }
+
+            string newAvatarName = await _fileManager.UploadFileAsync(viewModel.UserAvatarFile, new List<string> { "images", "user-avatar" });
+
+            user.UserAvatar = newAvatarName;
 
             await _mediator.Send(new UpdateUserProfileCommand { ApplicationUser = user });
 
@@ -83,17 +84,11 @@ namespace FreelancerBlog.Areas.User.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ProfileDetail(string userName)
         {
-            if (userName == null)
-            {
-                return BadRequest();
-            }
+            if (userName == null) return BadRequest();
 
             var user = await _mediator.Send(new UserByUserNameQuery { UserName = userName });
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+            if (user == null) return NotFound();
 
             var userProfileViewModel = _mapper.Map<ApplicationUser, UserProfileViewModel>(user);
 

@@ -79,17 +79,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> DeleteArticleComment(int id)
         {
-            if (id == default(int))
-            {
-                return Json(new { Status = "IdCannotBeNull" });
-            }
+            if (id == default(int)) return Json(new { Status = "IdCannotBeNull" });
 
             var model = await _mediator.Send(new ArticleCommentByIdQuery { ArticleCommentId = id });
 
-            if (model == null)
-            {
-                return Json(new { Status = "ArticleCommentNotFound" });
-            }
+            if (model == null) return Json(new { Status = "ArticleCommentNotFound" });
 
             await _mediator.Send(new DeleteArticleCommentCommand { ArticleComment = model });
 
@@ -101,17 +95,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> DeleteArticleTag(int id)
         {
-            if (id == default(int))
-            {
-                return Json(new { Status = "IdCannotBeNull" });
-            }
+            if (id == default(int)) return Json(new { Status = "IdCannotBeNull" });
 
             var model = await _mediator.Send(new FindArticleTagByIdQuery { ArticleTagId = id });
 
-            if (model == null)
-            {
-                return Json(new { Status = "ArticleCommentNotFound" });
-            }
+            if (model == null) return Json(new { Status = "ArticleCommentNotFound" });
 
             await _mediator.Send(new DeleteArticleTagCommand { ArticleTag = model });
 
@@ -123,17 +111,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> ChangeArticleCommentApprovalStatus(int commentId)
         {
-            if (commentId == default(int))
-            {
-                return Json(new { Status = "IdCannotBeNull" });
-            }
+            if (commentId == default(int)) return Json(new { Status = "IdCannotBeNull" });
 
             var model = await _mediator.Send(new ArticleCommentByIdQuery { ArticleCommentId = commentId });
 
-            if (model == null)
-            {
-                return Json(new { Status = "ArticleCommentNotFound" });
-            }
+            if (model == null) return Json(new { Status = "ArticleCommentNotFound" });
 
             await _mediator.Send(new ToggleArticleCommentApprovalCommand { ArticleComment = model });
 
@@ -200,17 +182,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> EditArticleComment(int commentId, string newCommentBody)
         {
-            if (commentId == default(int))
-            {
-                return Json(new { Status = "IdCannotBeNull" });
-            }
+            if (commentId == default(int)) return Json(new { Status = "IdCannotBeNull" });
 
             var model = await _mediator.Send(new ArticleCommentByIdQuery { ArticleCommentId = commentId });
 
-            if (model == null)
-            {
-                return Json(new { Status = "ArticleCommentNotFound" });
-            }
+            if (model == null) return Json(new { Status = "ArticleCommentNotFound" });
 
             await _mediator.Send(new EditArticleCommentCommand { ArticleComment = model, NewCommentBody = newCommentBody });
 
@@ -221,17 +197,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> EditArticleTag(int tagId, string newTagName)
         {
-            if (tagId == default(int))
-            {
-                return Json(new { Status = "IdCannotBeNull" });
-            }
+            if (tagId == default(int)) return Json(new { Status = "IdCannotBeNull" });
 
             var model = await _mediator.Send(new FindArticleTagByIdQuery { ArticleTagId = tagId });
 
-            if (model == null)
-            {
-                return Json(new { Status = "ArticleTagNotFound" });
-            }
+            if (model == null) return Json(new { Status = "ArticleTagNotFound" });
 
             await _mediator.Send(new EditArticleTagCommand { ArticleTag = model, NewTagName = newTagName });
 
@@ -242,16 +212,11 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<JsonResult> Delete(int id)
         {
-            if (id == default(int))
-            {
-                return Json(new { Status = "IdCannotBeNull" });
-            }
+            if (id == default(int)) return Json(new { Status = "IdCannotBeNull" });
+
             var model = await _mediator.Send(new ArticleByArticleIdQuery { ArticleId = id });
 
-            if (model == null)
-            {
-                return Json(new { Status = "ArticleNotFound" });
-            }
+            if (model == null) return Json(new { Status = "ArticleNotFound" });
 
             _fileManager.DeleteEditorImages(model.ArticleBody, new List<string> { "Files", "ArticleUploads" });
 

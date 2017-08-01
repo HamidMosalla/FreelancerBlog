@@ -40,10 +40,7 @@ namespace FreelancerBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> Tag(int id)
         {
-            if (id == 0)
-            {
-                return BadRequest();
-            }
+            if (id == default(int)) return BadRequest();
 
             var articles = await _mediator.Send(new ArticlesByTagQuery { TagId = id });
 
@@ -55,17 +52,11 @@ namespace FreelancerBlog.Controllers
         [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
-            if (id == 0)
-            {
-                return BadRequest();
-            }
+            if (id == default(int)) return BadRequest();
 
             var article = await _mediator.Send(new ArticleByArticleIdQuery { ArticleId = 4 });
 
-            if (article == null)
-            {
-                return NotFound();
-            }
+            if (article == null) return NotFound();
 
             await _mediator.Send(new IncreaseArticleViewCountCommand { ArticleId = id });
 
@@ -76,10 +67,7 @@ namespace FreelancerBlog.Controllers
 
         public async Task<JsonResult> RateArticle(int id, double rating)
         {
-            if (!User.Identity.IsAuthenticated)
-            {
-                return Json(new { Status = "YouMustLogin" });
-            }
+            if (!User.Identity.IsAuthenticated) return Json(new { Status = "YouMustLogin" });
 
             var rateBefore = await _mediator.Send(new ArticleRatedBeforeQuery { ArticleId = id, User = User });
 
@@ -100,15 +88,9 @@ namespace FreelancerBlog.Controllers
         {
             CaptchaResponse captchaResult = await _mediator.Send(new ValidateCaptchaQuery());
 
-            if (captchaResult.Success != "true")
-            {
-                return Json(new { status = "FailedTheCaptchaValidation" });
-            }
+            if (captchaResult.Success != "true") return Json(new { status = "FailedTheCaptchaValidation" });
 
-            if (!ModelState.IsValid)
-            {
-                return Json(new { Status = "CannotHaveEmptyArgument" });
-            }
+            if (!ModelState.IsValid) return Json(new { Status = "CannotHaveEmptyArgument" });
 
             var articleComment = _mapper.Map<ArticleCommentViewModel, ArticleComment>(viewModel);
 
