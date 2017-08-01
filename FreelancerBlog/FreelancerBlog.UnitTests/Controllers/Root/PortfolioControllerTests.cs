@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using FluentAssertions;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Controllers;
 using FreelancerBlog.Core.Domain;
-using FreelancerBlog.Core.Repository;
+using FreelancerBlog.Core.Queries.Data.Portfolios;
 using GenFu;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
@@ -15,29 +18,20 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
 {
     public class PortfolioControllerTests
     {
-        private Mock<IUnitOfWork> _uw;
-        private Mock<IFreelancerBlogMapper> _freelancerBlogMapper;
-        private Mock<IPortfolioRepository> _portfolioRepository;
+        private Mock<IMediator> _mediator;
+        private Mock<IMapper> _mapper;
 
         public PortfolioControllerTests()
         {
-            _uw = new Mock<IUnitOfWork>();
-            _freelancerBlogMapper = new Mock<IFreelancerBlogMapper>();
-            _portfolioRepository = new Mock<IPortfolioRepository>();
-
-            _uw.SetupGet<IPortfolioRepository>(u => u.PortfolioRepository).Returns(_portfolioRepository.Object);
-
-            _freelancerBlogMapper.Setup(w => w.PortfolioToPorfolioViewModel(It.IsAny<Portfolio>())).Returns(A.New<PortfolioViewModel>());
-
-            _freelancerBlogMapper.Setup(w => w.PortfolioCollectionToPortfolioViewModelCollection(It.IsAny<List<Portfolio>>()))
-                .Returns(A.ListOf<PortfolioViewModel>(10));
+            _mediator = new Mock<IMediator>();
+            _mapper = new Mock<IMapper>();
         }
 
         [Fact]
         public async Task Detail_ShoudReturnBadRequest_IfIdIsNotSupplied()
         {
             //Arrange
-            var sut = new PortfolioController(_uw.Object, _freelancerBlogMapper.Object);
+            var sut = new PortfolioController(_mapper.Object, _mediator.Object);
 
             //Act
             var result = (BadRequestResult)await sut.Detail(default(int));
@@ -48,13 +42,13 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             result.StatusCode.Should().Be(400);
         }
 
-        [Fact(Skip ="Temp")]
+        [Fact]
         public async Task Detail_ShoudReturnNotFound_IfPorfolioDetailNotFound()
         {
             //Arrange
-            var sut = new PortfolioController(_uw.Object, _freelancerBlogMapper.Object);
+            var sut = new PortfolioController(_mapper.Object, _mediator.Object);
 
-            //_portfolioRepository.Setup(p => p.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(null);
+            _mediator.Setup(m => m.Send(It.IsAny<PortfolioByIdQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync((Portfolio)null);
 
             //Act
             var result = (NotFoundResult)await sut.Detail(1);
@@ -69,9 +63,9 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         public async Task Detail_ShoudReturnRequestedDetailView_IfPorfolioDetailExist()
         {
             //Arrange
-            var sut = new PortfolioController(_uw.Object, _freelancerBlogMapper.Object);
+            var sut = new PortfolioController(_mapper.Object, _mediator.Object);
 
-            _portfolioRepository.Setup(p => p.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(A.New<Portfolio>());
+            //_portfolioRepository.Setup(p => p.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(A.New<Portfolio>());
 
             //Act
             var result = (ViewResult)await sut.Detail(1);
@@ -87,9 +81,9 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         public async Task Detail_ShoudReturnPortfolioDetailViewModel_IfPorfolioDetailExist()
         {
             //Arrange
-            var sut = new PortfolioController(_uw.Object, _freelancerBlogMapper.Object);
+            var sut = new PortfolioController(_mapper.Object, _mediator.Object);
 
-            _portfolioRepository.Setup(p => p.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(A.New<Portfolio>());
+            // _portfolioRepository.Setup(p => p.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(A.New<Portfolio>());
 
             //Act
             var result = (ViewResult)await sut.Detail(1);
@@ -107,9 +101,9 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         public async Task Index_ShoudReturnIndexView_Always()
         {
             //Arrange
-            var sut = new PortfolioController(_uw.Object, _freelancerBlogMapper.Object);
+            var sut = new PortfolioController(_mapper.Object, _mediator.Object);
 
-            _portfolioRepository.Setup(p => p.GetAllAsync()).ReturnsAsync(A.ListOf<Portfolio>(10));
+            //_portfolioRepository.Setup(p => p.GetAllAsync()).ReturnsAsync(A.ListOf<Portfolio>(10));
 
             //Act
             var result = (ViewResult)await sut.Index();
@@ -124,9 +118,9 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         public async Task Index_ShoudReturnIndexWithPortfolioViewModel_Always()
         {
             //Arrange
-            var sut = new PortfolioController(_uw.Object, _freelancerBlogMapper.Object);
+            var sut = new PortfolioController(_mapper.Object, _mediator.Object);
 
-            _portfolioRepository.Setup(p => p.GetAllAsync()).ReturnsAsync(A.ListOf<Portfolio>(10));
+            //_portfolioRepository.Setup(p => p.GetAllAsync()).ReturnsAsync(A.ListOf<Portfolio>(10));
 
             //Act
             var result = (ViewResult)await sut.Index();
