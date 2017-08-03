@@ -273,9 +273,5 @@
       <LastGenOutput>DataAnnotations.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Features\Commands\" />
-  </ItemGroup>
 
 </Project>

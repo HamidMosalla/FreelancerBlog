@@ -5,6 +5,7 @@ using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Queries.Data.Portfolios;
+using FreelancerBlog.Features.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,7 @@ namespace FreelancerBlog.Controllers
         {
             if (id == default(int)) return BadRequest();
 
-            var model = await _mediator.Send(new PortfolioByIdQuery {PortfolioId = id});
+            var model = await _mediator.Send(new PortfolioByIdQuery { PortfolioId = id });
 
             if (model == null) return NotFound();
 
@@ -42,7 +43,7 @@ namespace FreelancerBlog.Controllers
 
             var viewModel = _mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios.ToList());
 
-            viewModel.ForEach(v => v.PortfolioCategoryList = portfolios.Single(p => p.PortfolioId.Equals(v.PortfolioId)).PortfolioCategory.Split(',').ToList());
+            await _mediator.Send(new PopulatePortfolioCategoryListCommand { Portfolios = portfolios, ViewModel = viewModel });
 
             return View(viewModel);
         }
