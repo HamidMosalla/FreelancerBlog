@@ -32,7 +32,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var contacts = await _mediator.Send(new GetAllContactQuery());
 
-            var contactsViewModel = _mapper.Map<List<Contact>, List<ContactViewModel>>(contacts.ToList());
+            var contactsViewModel = _mapper.Map<IQueryable<Contact>, List<ContactViewModel>>(contacts);
 
             return View(contactsViewModel);
         }

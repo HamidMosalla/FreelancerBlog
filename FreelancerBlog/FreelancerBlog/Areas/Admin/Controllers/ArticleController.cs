@@ -60,7 +60,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var comments = await _mediator.Send(new GetAllCommentsQuery { });
 
-            var commentsViewModel = _mapper.Map<List<ArticleComment>, List<ArticleCommentViewModel>>(comments.ToList());
+            var commentsViewModel = _mapper.Map<IQueryable<ArticleComment>, List<ArticleCommentViewModel>>(comments);
 
             return View(commentsViewModel);
         }
@@ -70,7 +70,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var tags = await _mediator.Send(new GetAllArticleTagsQuery { });
 
-            var tagsViewModel = _mapper.Map<List<ArticleTag>, List<ArticleTagViewModel>>(tags.ToList());
+            var tagsViewModel = _mapper.Map<IQueryable<ArticleTag>, List<ArticleTagViewModel>>(tags);
 
             return View(tagsViewModel);
         }

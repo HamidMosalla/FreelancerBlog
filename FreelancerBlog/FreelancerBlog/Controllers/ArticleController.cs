@@ -32,7 +32,7 @@ namespace FreelancerBlog.Controllers
         {
             var articles = await _mediator.Send(new GetAriclesQuery());
 
-            var articlesViewModel = _mapper.Map<List<Article>, List<ArticleViewModel>>(articles.ToList());
+            var articlesViewModel = _mapper.Map<IQueryable<Article>, List<ArticleViewModel>>(articles);
 
             return View(articlesViewModel);
         }
@@ -44,7 +44,7 @@ namespace FreelancerBlog.Controllers
 
             var articles = await _mediator.Send(new ArticlesByTagQuery { TagId = id });
 
-            var articlesViewModel = _mapper.Map<List<Article>, List<ArticleViewModel>>(articles.ToList());
+            var articlesViewModel = _mapper.Map<IQueryable<Article>, List<ArticleViewModel>>(articles);
 
             return View(articlesViewModel);
         }

@@ -19,7 +19,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
     public class PortfolioControllerTests
     {
         private readonly Mock<IMediator> _mediatorMock;
-        private Mock<IMapper> _mapperMock;
+        private readonly Mock<IMapper> _mapperMock;
 
         public PortfolioControllerTests()
         {
@@ -163,13 +163,12 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             }.AsQueryable();
 
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetAllPortfoliosQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(portfolios);
-            _mapperMock.Setup(m => m.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios.ToList())).Returns(It.IsAny<List<PortfolioViewModel>>); ;
 
             //Act
-            var result = (ViewResult)await sut.Index();
+            await sut.Index();
 
             //Assert
-            _mapperMock.Verify(m => m.Map<List<Portfolio>, List<PortfolioViewModel>>(It.Is<List<Portfolio>>(p => p == portfolios)));
+            _mapperMock.Verify(m => m.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(It.Is<IQueryable<Portfolio>>(p => p == portfolios)));
         }
 
         [Fact]
@@ -191,7 +190,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             };
 
             _mediatorMock.Setup(m => m.Send(It.IsAny<GetAllPortfoliosQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(portfolios);
-            _mapperMock.Setup(m => m.Map<List<Portfolio>, List<PortfolioViewModel>>(It.IsAny<List<Portfolio>>())).Returns(viewModel);
+            _mapperMock.Setup(m => m.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(It.IsAny<IQueryable<Portfolio>>())).Returns(viewModel);
 
             //Act
             var result = (ViewResult)await sut.Index();
@@ -215,7 +214,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
                 new PortfolioViewModel {PortfolioId = 2, PortfolioCategory = "MVC, BS"}
             };
 
-            _mapperMock.Setup(m => m.Map<List<Portfolio>, List<PortfolioViewModel>>(It.IsAny<List<Portfolio>>())).Returns(viewModel);
+            _mapperMock.Setup(m => m.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(It.IsAny<IQueryable<Portfolio>>())).Returns(viewModel);
 
             //Act
             var result = (ViewResult)await sut.Index();

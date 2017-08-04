@@ -41,7 +41,7 @@ namespace FreelancerBlog.Controllers
         {
             var portfolios = await _mediator.Send(new GetAllPortfoliosQuery());
 
-            var viewModel = _mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios.ToList());
+            var viewModel = _mapper.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(portfolios);
 
             await _mediator.Send(new PopulatePortfolioCategoryListCommand { Portfolios = portfolios, ViewModel = viewModel });
 

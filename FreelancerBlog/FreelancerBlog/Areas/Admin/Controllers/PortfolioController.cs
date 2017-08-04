@@ -35,7 +35,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var portfolios = await _mediator.Send(new GetAllPortfoliosQuery());
 
-            var portfoliosViewModel = _mapper.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios.ToList());
+            var portfoliosViewModel = _mapper.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(portfolios);
 
             portfoliosViewModel.ForEach(v => v.PortfolioCategoryList = portfolios.Single(p => p.PortfolioId.Equals(v.PortfolioId)).PortfolioCategory.Split(',').ToList());
 

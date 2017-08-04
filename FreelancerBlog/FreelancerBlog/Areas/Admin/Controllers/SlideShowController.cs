@@ -34,7 +34,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
         {
             var slideShows = await _mediator.Send(new AllSlideShowsQuery());
 
-            var slideShowsViewModel = _mapper.Map<List<SlideShow>, List<SlideShowViewModel>>(slideShows.ToList());
+            var slideShowsViewModel = _mapper.Map<IQueryable<SlideShow>, List<SlideShowViewModel>>(slideShows);
 
             return View(slideShowsViewModel);
         }
