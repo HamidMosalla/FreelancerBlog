@@ -1,12 +1,9 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Commands.Data.Contacts;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Queries.Services.Shared;
-using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
-using FreelancerBlog.Core.Wrappers;
 using FreelancerBlog.ViewModels.Contact;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,10 +22,7 @@ namespace FreelancerBlog.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
-        {
-            return View("Create");
-        }
+        public IActionResult Create() => View("Create");
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -40,18 +34,11 @@ namespace FreelancerBlog.Controllers
 
             if (!ModelState.IsValid) return View(contactViewModel);
 
-            if (isJavascriptEnabled)
-            {
-                var contact = _mapper.Map<ContactViewModel, Contact>(contactViewModel);
-
-                await _mediator.Send(new AddNewContactCommand { Contact = contact });
-
-                return Json(new { Status = "Success" });
-            }
-
             var contactWioutJavascript = _mapper.Map<ContactViewModel, Contact>(contactViewModel);
 
             await _mediator.Send(new AddNewContactCommand { Contact = contactWioutJavascript });
+
+            if (isJavascriptEnabled) return Json(new { Status = "Success" });
 
             return View("Success");
         }
