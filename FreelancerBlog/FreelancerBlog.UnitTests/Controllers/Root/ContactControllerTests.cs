@@ -32,7 +32,6 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
 
         private Mock<TempDataDictionary> _tempData;
 
-
         public ContactControllerTests()
         {
             _mediatorMock = new Mock<IMediator>();

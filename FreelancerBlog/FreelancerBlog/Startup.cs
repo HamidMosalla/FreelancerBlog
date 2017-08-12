@@ -117,6 +117,7 @@ namespace FreelancerBlog
                         return c.TryResolve(t, out o) ? o : null;
                     };
                 }).InstancePerLifetimeScope();
+
             builder.Register<MultiInstanceFactory>(ctx =>
                 {
                     var c = ctx.Resolve<IComponentContext>();
