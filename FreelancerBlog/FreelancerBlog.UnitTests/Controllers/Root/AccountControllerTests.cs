@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
 using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Controllers;
+using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.Core.Wrappers;
@@ -248,30 +250,6 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             result.ActionName.Should().Be("Index");
         }
 
-
-        [Fact(Skip ="Needs Update")]
-        public async Task LoginPost_ShouldRedirectToSendCodeAction_IfSignInResultIsRequiresTwoFactor()
-        {
-            var userManager = new UserManagerFake(isUserConfirmed: true);
-            var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.TwoFactorRequired);
-
-            //Arrange
-            var sut = new AccountController(userManager, signInManager, _emailSender.Object, _loggerFactoryWrapper.Object, _razorViewToString.Object, _mediatorMock.Object);
-
-            _urlHelper.Setup(u => u.IsLocalUrl(It.IsAny<string>())).Returns(false);
-
-            sut.Url = _urlHelper.Object;
-
-            //Act
-            var result = (RedirectToActionResult)await sut.Login(A.New<LoginViewModel>(), returnUrl: "http://google.com");
-
-            //Assert
-            result.Should().NotBeNull();
-            result.Should().BeOfType<RedirectToActionResult>();
-            result.ActionName.Should().NotBeNull();
-            result.ActionName.Should().Be("SendCode");
-        }
-
         [Fact]
         public async Task LoginPost_ShouldReturnLockOutView_IfSignInResultIsLockedOut()
         {
@@ -363,19 +341,15 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             result.ViewName.Should().BeNull();
         }
 
-        [Fact(Skip = "Needs Update")]
+        [Fact]
         public async Task Register_ShouldReturnRegisterView_IfCapthchaFailed()
         {
             //Arrange
             var userManager = new UserManagerFake(isUserConfirmed: true);
             var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
 
-            //_captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
-            //    .ReturnsAsync(
-            //        new CaptchaResponse
-            //        {
-            //            Success = "false"
-            //        });
+            var captchaResponse = new CaptchaResponse { Success = "false" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
 
 
             var sut = new AccountController(userManager, signInManager, _emailSender.Object, _loggerFactoryWrapper.Object, _razorViewToString.Object, _mediatorMock.Object);
@@ -389,19 +363,15 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
 
-        [Fact(Skip = "Needs Update")]
+        [Fact]
         public async Task Register_ShouldReturnRegisterViewWithModel_IfCapthchaFailed()
         {
             //Arrange
             var userManager = new UserManagerFake(isUserConfirmed: true);
             var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
 
-            //_captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
-            //    .ReturnsAsync(
-            //        new CaptchaResponse
-            //        {
-            //            Success = "false"
-            //        });
+            var captchaResponse = new CaptchaResponse { Success = "false" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
 
 
             var sut = new AccountController(userManager, signInManager, _emailSender.Object, _loggerFactoryWrapper.Object, _razorViewToString.Object, _mediatorMock.Object);
@@ -416,19 +386,15 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
 
-        [Fact(Skip = "Needs Update")]
+        [Fact]
         public async Task Register_ShouldReturnRegisterViewWithViewData_IfCapthchaFailed()
         {
             //Arrange
             var userManager = new UserManagerFake(isUserConfirmed: true);
             var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
 
-            //_captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
-            //    .ReturnsAsync(
-            //        new CaptchaResponse
-            //        {
-            //            Success = "false"
-            //        });
+            var captchaResponse = new CaptchaResponse { Success = "false" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
 
 
             var sut = new AccountController(userManager, signInManager, _emailSender.Object, _loggerFactoryWrapper.Object, _razorViewToString.Object, _mediatorMock.Object);
@@ -444,19 +410,15 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
 
-        [Fact(Skip = "Needs Update")]
+        [Fact]
         public async Task Register_ShouldReturnRegisterView_IfModelValidationFailed()
         {
             //Arrange
             var userManager = new UserManagerFake(isUserConfirmed: true);
             var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
 
-            //_captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
-            //    .ReturnsAsync(
-            //        new CaptchaResponse
-            //        {
-            //            Success = "true"
-            //        });
+            var captchaResponse = new CaptchaResponse { Success = "true" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
 
 
             var sut = new AccountController(userManager, signInManager, _emailSender.Object, _loggerFactoryWrapper.Object, _razorViewToString.Object, _mediatorMock.Object);
@@ -473,20 +435,15 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
 
 
 
-        [Fact(Skip = "Needs Update")]
+        [Fact]
         public async Task Register_ShouldReturnRegisterViewWithModel_IfModelValidationFailed()
         {
             //Arrange
             var userManager = new UserManagerFake(isUserConfirmed: true);
             var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
 
-            //_captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
-            //    .ReturnsAsync(
-            //        new CaptchaResponse
-            //        {
-            //            Success = "true"
-            //        });
-
+            var captchaResponse = new CaptchaResponse { Success = "true" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
 
             var sut = new AccountController(userManager, signInManager, _emailSender.Object, _loggerFactoryWrapper.Object, _razorViewToString.Object, _mediatorMock.Object);
 
@@ -503,19 +460,15 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
 
 
 
-        [Fact(Skip = "Needs Update")]
+        [Fact]
         public async Task Register_ShouldReturnRegisterView_IfCreateAsyncIdentityResultReturnFailed()
         {
             //Arrange
             var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Failed());
             var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
 
-            //_captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
-            //    .ReturnsAsync(
-            //        new CaptchaResponse
-            //        {
-            //            Success = "true"
-            //        });
+            var captchaResponse = new CaptchaResponse { Success = "true" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
 
 
             var sut = new AccountController(userManager, signInManager, _emailSender.Object, _loggerFactoryWrapper.Object, _razorViewToString.Object, _mediatorMock.Object);
@@ -529,19 +482,15 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
 
-        [Fact(Skip = "Needs Update")]
+        [Fact]
         public async Task Register_ShouldReturnRegisterViewWithModel_IfCreateAsyncIdentityResultReturnFailed()
         {
             //Arrange
             var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Failed());
             var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
 
-            //_captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
-            //    .ReturnsAsync(
-            //        new CaptchaResponse
-            //        {
-            //            Success = "true"
-            //        });
+            var captchaResponse = new CaptchaResponse { Success = "true" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
 
 
             var sut = new AccountController(userManager, signInManager, _emailSender.Object, _loggerFactoryWrapper.Object, _razorViewToString.Object, _mediatorMock.Object);
@@ -556,19 +505,15 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
 
-        [Fact(Skip = "Needs Update")]
+        [Fact]
         public async Task Register_ShouldReturnInfoMessageView_IfCreateAsyncIdentityResultReturnSuccess()
         {
             //Arrange
             var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
             var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
 
-            //_captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
-            //    .ReturnsAsync(
-            //        new CaptchaResponse
-            //        {
-            //            Success = "true"
-            //        });
+            var captchaResponse = new CaptchaResponse { Success = "true" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
 
 
             var sut = new AccountController(userManager, signInManager, _emailSender.Object, _loggerFactoryWrapper.Object, _razorViewToString.Object, _mediatorMock.Object);
@@ -587,19 +532,15 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             result.ViewName.Should().Be("InfoMessage");
         }
 
-        [Fact(Skip = "Needs Update")]
+        [Fact]
         public async Task Register_ShouldReturnInfoMessageViewWithFilledViewBag_IfCreateAsyncIdentityResultReturnSuccess()
         {
             //Arrange
             var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
             var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
 
-            //_captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
-            //    .ReturnsAsync(
-            //        new CaptchaResponse
-            //        {
-            //            Success = "true"
-            //        });
+            var captchaResponse = new CaptchaResponse { Success = "true" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
 
 
             var sut = new AccountController(userManager, signInManager, _emailSender.Object, _loggerFactoryWrapper.Object, _razorViewToString.Object, _mediatorMock.Object);
@@ -621,20 +562,14 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             result.ViewData["InfoMessage"].Should().Be("RegistrationConfirmEmail");
         }
 
-        [Fact(Skip = "Needs Update")]
+        [Fact]
         public async Task Register_ShouldCallRazorViewToString_ExactlyOnce()
         {
             //Arrange
             var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
             var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
-
-            //_captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
-            //    .ReturnsAsync(
-            //        new CaptchaResponse
-            //        {
-            //            Success = "true"
-            //        });
-
+            var captchaResponse = new CaptchaResponse {Success = "true"};
+            _mediatorMock.Setup(m=>m.Send(It.IsAny< ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
 
             var sut = new AccountController(userManager, signInManager, _emailSender.Object, _loggerFactoryWrapper.Object, _razorViewToString.Object, _mediatorMock.Object);
 
@@ -652,20 +587,15 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             _razorViewToString.Verify(r => r.Render(It.IsAny<string>(), It.IsAny<IdentityTemplateViewModel>()), Times.Once);
         }
 
-        [Fact(Skip = "Needs Update")]
+        [Fact]
         public async Task Register_ShouldCallSendEmailAsync_ExactlyOnce()
         {
             //Arrange
             var userManager = new UserManagerFake(isUserConfirmed: true, identityResult: IdentityResult.Success);
             var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Failed);
 
-            //_captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secret")))
-            //    .ReturnsAsync(
-            //        new CaptchaResponse
-            //        {
-            //            Success = "true"
-            //        });
-
+            var captchaResponse = new CaptchaResponse { Success = "true" };
+            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
 
             var sut = new AccountController(userManager, signInManager, _emailSender.Object, _loggerFactoryWrapper.Object, _razorViewToString.Object, _mediatorMock.Object);
 
