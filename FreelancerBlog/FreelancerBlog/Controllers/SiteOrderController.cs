@@ -19,11 +19,12 @@ namespace FreelancerBlog.Controllers
         private IPriceSpecCollectionFactory<PriceSpec, object> _priceSpecCollectionFactory;
         private IFinalPriceCalculator<PriceSpec> _finalPriceCalculator;
 
-        public SiteOrderController(IPriceSpecCollectionFactory<PriceSpec, object> priceSpecCollectionFactory, IFinalPriceCalculator<PriceSpec> finalPriceCalculator, IMediator mediator)
+        public SiteOrderController(IPriceSpecCollectionFactory<PriceSpec, object> priceSpecCollectionFactory, IFinalPriceCalculator<PriceSpec> finalPriceCalculator, IMediator mediator, IMapper mapper)
         {
             _priceSpecCollectionFactory = priceSpecCollectionFactory;
             _finalPriceCalculator = finalPriceCalculator;
             _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]
