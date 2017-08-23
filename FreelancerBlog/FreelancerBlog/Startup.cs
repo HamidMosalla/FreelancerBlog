@@ -126,7 +126,7 @@ namespace FreelancerBlog
 
             var dataAssembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("FreelancerBlog.Data"));
             var servicesAssembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("FreelancerBlog.Services"));
-            builder.RegisterAssemblyTypes(dataAssembly, servicesAssembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(dataAssembly, servicesAssembly, Assembly.GetEntryAssembly()).AsImplementedInterfaces();
 
             builder.RegisterModule<AuthMessageSenderModule>();
             builder.RegisterModule<FreelancerBlogDbContextSeedDataModule>();

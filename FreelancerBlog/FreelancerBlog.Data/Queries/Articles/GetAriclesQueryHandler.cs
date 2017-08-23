@@ -22,7 +22,7 @@ namespace FreelancerBlog.Data.Queries.Articles
 
         public IQueryable<Article> Handle(GetAriclesQuery message)
         {
-            return _context.Articles;
+            return _context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleRatings).Include(a => a.ArticleComments);
         }
     }
 }

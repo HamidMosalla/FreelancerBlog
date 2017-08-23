@@ -29,8 +29,8 @@ namespace FreelancerBlog.Features.Queries
             var articleViewModel = _mapper.Map<Article, ArticleViewModel>(message.Article);
             articleViewModel.ArticleTags = await _mediator.Send(new TagsByArticleIdQuery { ArticleId = message.Article.ArticleId }); ;
             articleViewModel.ArticleTagsList = await _mediator.Send(new GetCurrentArticleTagsQuery { ArticleId = message.Article.ArticleId });
-            articleViewModel.SumOfRating = articleViewModel.ArticleRatings.Sum(a => a.ArticleRatingScore) / articleViewModel.ArticleRatings.Count;
-            articleViewModel.CurrentUserRating = articleViewModel.ArticleRatings.SingleOrDefault(a => a.UserIDfk == _userManager.GetUserId(message.User));
+            articleViewModel.SumOfRating = articleViewModel.ArticleRatings?.Sum(a => a.ArticleRatingScore) / articleViewModel.ArticleRatings.Count ?? 0;
+            articleViewModel.CurrentUserRating = articleViewModel.ArticleRatings?.SingleOrDefault(a => a.UserIDfk == _userManager.GetUserId(message.User));
 
             return articleViewModel;
         }

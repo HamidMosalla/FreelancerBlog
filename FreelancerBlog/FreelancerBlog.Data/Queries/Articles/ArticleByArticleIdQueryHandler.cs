@@ -18,7 +18,7 @@ namespace FreelancerBlog.Data.Queries.Articles
 
         public async Task<Article> Handle(ArticleByArticleIdQuery message)
         {
-            return await _context.Articles.SingleAsync(a => a.ArticleId == message.ArticleId);
+            return await _context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleRatings).Include(a => a.ArticleComments).SingleAsync(a => a.ArticleId == message.ArticleId);
         }
     }
 }
