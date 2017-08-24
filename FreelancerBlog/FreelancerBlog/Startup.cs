@@ -34,6 +34,12 @@ using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Runtime.Loader;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Facebook;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
+using Microsoft.AspNetCore.Authentication.Twitter;
+using Microsoft.AspNetCore.Identity;
 
 namespace FreelancerBlog
 {
@@ -65,14 +71,17 @@ namespace FreelancerBlog
             services.AddDbContext<FreelancerBlogContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(o =>
-            {
-                o.Password.RequireDigit = false;
-                o.Password.RequireLowercase = false;
-                o.Password.RequireNonAlphanumeric = false;
-                o.Password.RequireUppercase = false;
-                o.Password.RequiredLength = 6;
-            }).AddEntityFrameworkStores<FreelancerBlogContext>()
-              .AddDefaultTokenProviders();
+                {
+                    o.Password.RequireDigit = false;
+                    o.Password.RequireLowercase = false;
+                    o.Password.RequireNonAlphanumeric = false;
+                    o.Password.RequireUppercase = false;
+                    o.Password.RequiredLength = 6;
+                })
+                .AddEntityFrameworkStores<FreelancerBlogContext>()
+                .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/LogIn");
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
@@ -89,8 +98,61 @@ namespace FreelancerBlog
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
-                options.CookieName = ".FreelancerBlog";
+                options.Cookie.Name = ".FreelancerBlog";
             });
+
+            var twitterOption = new TwitterOptions
+            {
+
+            };
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(o =>
+                    {
+                        o.LoginPath = new PathString("/Account/Login/");
+                        o.AccessDeniedPath = new PathString("/Account/Forbidden/");
+                    }).AddFacebook(o =>
+                    {
+                        o.AppId = Configuration["OAuth:Facebook:AppId"];
+                        o.AppSecret = Configuration["OAuth:Facebook:AppSecret"];
+                        //Scope.Add("email"),
+                        //Scope = new List<string> { "slkjdf"},
+                        //Scope.Add("email"),
+                        o.BackchannelHttpHandler = new FacebookBackChannelHandler();
+                        o.UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,name,email,first_name,last_name,location";
+                    }).AddGoogle(o =>
+                    {
+                        o.ClientId = Configuration["OAuth:Google:ClientId"];
+                        o.ClientSecret = Configuration["OAuth:Google:ClientSecret"];
+                        o.Events = new OAuthEvents()
+                        {
+                            OnRemoteFailure = ctx =>
+                            {
+                                ctx.Response.Redirect("/error?ErrorMessage=" +
+                                                      UrlEncoder.Default.Encode(ctx.Failure.Message));
+                                ctx.HandleResponse();
+                                return Task.FromResult(0);
+                            }
+                        };
+                    }).AddMicrosoftAccount(MicrosoftAccountDefaults.AuthenticationScheme, "FreelancerBlog Microsoft OAuth", o =>
+                    {
+                        o.ClientId = Configuration["OAuth:Microsoft:ClientId"];
+                        o.ClientSecret = Configuration["OAuth:Microsoft:ClientSecret"];
+                        //Scope.Add("wl.emails, wl.basic"),
+                    }).AddTwitter(TwitterDefaults.AuthenticationScheme, "FreelancerBlog Twitter Auth", o =>
+                    {
+                        o.ConsumerKey = Configuration["OAuth:Twitter:ConsumerKey"];
+                        o.ConsumerSecret = Configuration["OAuth:Twitter:ConsumerSecret"];
+                    });
+
+            //new CookieAuthenticationOptions()
+            //{
+            //    AuthenticationScheme = "FreelancerBlogCookieMiddlewareInstance",
+            //    LoginPath = new PathString("/Account/Login/"),
+            //    AccessDeniedPath = new PathString("/Account/Forbidden/"),
+            //    AutomaticAuthenticate = true,
+            //    AutomaticChallenge = true
+            //}
 
             services.Configure<AuthMessageSenderSecrets>(Configuration.GetSection("AuthMessageSenderSecrets"));
 
@@ -162,66 +224,9 @@ namespace FreelancerBlog
 
             app.UseStaticFiles();
 
-            app.UseIdentity();
+            app.UseAuthentication();
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions()
-            {
-                AuthenticationScheme = "FreelancerBlogCookieMiddlewareInstance",
-                LoginPath = new PathString("/Account/Login/"),
-                AccessDeniedPath = new PathString("/Account/Forbidden/"),
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true
-            });
 
-            #region External Logins Setup
-
-            var googleOption = new GoogleOptions
-            {
-                ClientId = Configuration["OAuth:Google:ClientId"],
-                ClientSecret = Configuration["OAuth:Google:ClientSecret"],
-                Events = new OAuthEvents()
-                {
-                    OnRemoteFailure = ctx =>
-                    {
-                        ctx.Response.Redirect("/error?ErrorMessage=" + UrlEncoder.Default.Encode(ctx.Failure.Message));
-                        ctx.HandleResponse();
-                        return Task.FromResult(0);
-                    }
-                }
-            };
-
-            var faceBookOption = new FacebookOptions
-            {
-                AppId = Configuration["OAuth:Facebook:AppId"],
-                AppSecret = Configuration["OAuth:Facebook:AppSecret"],
-                //Scope.Add("email"),
-                //Scope = new List<string> { "slkjdf"},
-                //Scope.Add("email"),
-                BackchannelHttpHandler = new FacebookBackChannelHandler(),
-                UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,name,email,first_name,last_name,location"
-            };
-
-            var twitterOption = new TwitterOptions
-            {
-                ConsumerKey = Configuration["OAuth:Twitter:ConsumerKey"],
-                ConsumerSecret = Configuration["OAuth:Twitter:ConsumerSecret"],
-                DisplayName = "FreelancerBlog Twitter Auth"
-            };
-
-            var microsoftAccountOptions = new MicrosoftAccountOptions
-            {
-                ClientId = Configuration["OAuth:Microsoft:ClientId"],
-                ClientSecret = Configuration["OAuth:Microsoft:ClientSecret"],
-                //Scope.Add("wl.emails, wl.basic"),
-                DisplayName = "FreelancerBlog Microsoft OAuth"
-            };
-
-            app.UseGoogleAuthentication(googleOption);
-            app.UseFacebookAuthentication(faceBookOption);
-            app.UseTwitterAuthentication(twitterOption);
-            app.UseMicrosoftAccountAuthentication(microsoftAccountOptions);
-
-            #endregion
 
             app.UseSession();
 

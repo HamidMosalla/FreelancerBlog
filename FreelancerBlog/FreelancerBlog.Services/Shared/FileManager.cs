@@ -49,9 +49,9 @@ namespace FreelancerBlog.Services.Shared
 
             if (file.Length <= 0) return null;
 
-            var fileName = FileSystem.Path.GetFileNameWithoutExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+            var fileName = FileSystem.Path.GetFileNameWithoutExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Value.Trim('"'));
 
-            var extension = FileSystem.Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+            var extension = FileSystem.Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Value.Trim('"'));
 
             var fullFileName = fileName.Replace(" ", "-") + "-" + DateTime.Now.ToString("yyyyMMdd-HHMMssff") + extension;
 
@@ -135,7 +135,7 @@ namespace FreelancerBlog.Services.Shared
         public bool ValidateUploadedFile(IFormFile file, UploadFileType fileType, double maxFileSize, ModelStateDictionary modelState)
         {
 
-            var extension = FileSystem.Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+            var extension = FileSystem.Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Value.Trim('"'));
 
             if (file.Length > (maxFileSize * (1024 * 1024)))
             {
@@ -197,9 +197,9 @@ namespace FreelancerBlog.Services.Shared
                 throw new InvalidOperationException("The file length cannot be null");
             }
 
-            var fileName = FileSystem.Path.GetFileNameWithoutExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+            var fileName = FileSystem.Path.GetFileNameWithoutExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Value.Trim('"'));
 
-            var extension = FileSystem.Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+            var extension = FileSystem.Path.GetExtension(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Value.Trim('"'));
 
             var fullFileName = fileName + "-" + DateTime.Now.ToString("yyyyMMdd-HHMMssff") + extension;
 

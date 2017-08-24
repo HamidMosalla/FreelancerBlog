@@ -89,7 +89,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         {
             var sut = new ArticleController(_mapperMock.Object, _mediatorMock.Object);
 
-            var tagId = 1;
+            var tagId = 1; 
             var result = (ViewResult)await sut.Tag(tagId);
 
             _mediatorMock.Verify(m => m.Send(It.Is<ArticlesByTagQuery>(a => a.TagId == tagId), It.IsAny<CancellationToken>()));

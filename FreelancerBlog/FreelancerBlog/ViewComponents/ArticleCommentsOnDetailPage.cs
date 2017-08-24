@@ -10,7 +10,7 @@ namespace FreelancerBlog.ViewComponents
         {
             var articleCommentTree = new ArticleCommentTreeViewModel { CommentSeed = commentTree.CommentSeed, Comments = commentTree.Comments };
 
-            return View(articleCommentTree);
+            return await Task.FromResult(View(articleCommentTree));
         }
     }
 }

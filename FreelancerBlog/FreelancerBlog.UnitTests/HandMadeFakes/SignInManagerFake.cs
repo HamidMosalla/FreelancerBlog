@@ -1,6 +1,8 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Domain;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -20,7 +22,9 @@ namespace FreelancerBlog.UnitTests.HandMadeFakes
               contextAccessor,
               new Mock<IUserClaimsPrincipalFactory<ApplicationUser>>().Object,
               new Mock<IOptions<IdentityOptions>>().Object,
-              new Mock<ILogger<SignInManager<ApplicationUser>>>().Object)
+              new Mock<ILogger<SignInManager<ApplicationUser>>>().Object,
+              new Mock<IAuthenticationSchemeProvider>().Object
+            )
         {
             _signInResult = signInResult;
         }
@@ -30,7 +34,8 @@ namespace FreelancerBlog.UnitTests.HandMadeFakes
               contextAccessor,
               new Mock<IUserClaimsPrincipalFactory<ApplicationUser>>().Object,
               new Mock<IOptions<IdentityOptions>>().Object,
-              new Mock<ILogger<SignInManager<ApplicationUser>>>().Object)
+              new Mock<ILogger<SignInManager<ApplicationUser>>>().Object,
+            new Mock<IAuthenticationSchemeProvider>().Object)
         {
             _signInResult = signInResult;
             _externalLoginInfo = externalLoginInfo;
