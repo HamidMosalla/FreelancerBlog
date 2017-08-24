@@ -7,3 +7,4 @@ It also uses paradigms such as **SOLID**, **Ports and Adapters Architecture**, *
 
 # What do you need to run it?
 - Visual Studio 2017 Update 3
+- NET Core 2.0 SDK
