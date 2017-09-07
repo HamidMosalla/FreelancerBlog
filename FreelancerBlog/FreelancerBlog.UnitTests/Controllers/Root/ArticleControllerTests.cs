@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using FakeItEasy;
 using FluentAssertions;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.Controllers;
@@ -19,19 +20,19 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
 {
     public class ArticleControllerTests
     {
-        private readonly Mock<IMediator> _mediatorMock;
-        private readonly Mock<IMapper> _mapperMock;
+        private readonly IMediator _mediatorFake;
+        private readonly IMapper _mapperFake;
 
         public ArticleControllerTests()
         {
-            _mediatorMock = new Mock<IMediator>();
-            _mapperMock = new Mock<IMapper>();
+            _mediatorFake = A.Fake<IMediator>();
+            _mapperFake = A.Fake<IMapper>();
         }
 
         [Fact]
-        public async Task IndexReturnsTheCorrectView()
+        public async Task Index_Always_ReturnsTheCorrectView()
         {
-            var sut = new ArticleController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new ArticleController(_mapperFake, _mediatorFake);
 
             var result = (ViewResult)await sut.Index();
 
@@ -40,21 +41,22 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
         [Fact]
-        public async Task IndexPassesTheCorrectArticlesToMapMethod()
+        public async Task Index_Always_PassesTheCorrectArticlesToMapMethod()
         {
-            var sut = new ArticleController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new ArticleController(_mapperFake, _mediatorFake);
             var articles = new[] { new Article { ArticleId = 1 } }.AsQueryable();
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetAriclesQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(articles);
+
+            A.CallTo(() => _mediatorFake.Send(A<GetAriclesQuery>.Ignored, A<CancellationToken>.Ignored)).Returns(articles);
 
             await sut.Index();
 
-            _mapperMock.Verify(m => m.Map<IQueryable<Article>, List<ArticleViewModel>>(It.Is<IQueryable<Article>>(a => a == articles)));
+            A.CallTo(() => _mapperFake.Map<IQueryable<Article>, List<ArticleViewModel>>(articles)).MustHaveHappened(Repeated.Exactly.Once);
         }
 
         [Fact]
-        public async Task TagReturnsBadRequestWhenIdIsEmpty()
+        public async Task Tag_IdIsEmpty_ReturnsBadRequest()
         {
-            var sut = new ArticleController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new ArticleController(_mapperFake, _mediatorFake);
 
             var result = (BadRequestResult)await sut.Tag(0);
 
@@ -62,9 +64,9 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
         [Fact]
-        public async Task TagReturnsTheCorrectView()
+        public async Task Tag_IdNotEmpty_ReturnsTheCorrectView()
         {
-            var sut = new ArticleController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new ArticleController(_mapperFake, _mediatorFake);
 
             var result = (ViewResult)await sut.Tag(1);
 
@@ -72,11 +74,11 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
         [Fact]
-        public async Task TagReturnsTheCorrectViewModel()
+        public async Task Tag_IdNotEmpty_ReturnsTheCorrectViewModel()
         {
-            var sut = new ArticleController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new ArticleController(_mapperFake, _mediatorFake);
             var viewModels = new[] { new ArticleViewModel { ArticleId = 1 } }.ToList();
-            _mapperMock.Setup(m => m.Map<IQueryable<Article>, List<ArticleViewModel>>(It.IsAny<IQueryable<Article>>())).Returns(viewModels);
+            A.CallTo(() => _mapperFake.Map<IQueryable<Article>, List<ArticleViewModel>>(A<IQueryable<Article>>.Ignored)).Returns(viewModels);
 
             var result = (ViewResult)await sut.Tag(1);
 
@@ -85,15 +87,13 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
         [Fact]
-        public async Task TagPassesTheCorrectIdToArticlesByTagQuery()
+        public async Task Tag_IdNotEmpty_PassesTheCorrectIdToArticlesByTagQuery()
         {
-            var sut = new ArticleController(_mapperMock.Object, _mediatorMock.Object);
-
-            var tagId = 1; 
+            var sut = new ArticleController(_mapperFake, _mediatorFake);
+            var tagId = 1;
             var result = (ViewResult)await sut.Tag(tagId);
 
-            _mediatorMock.Verify(m => m.Send(It.Is<ArticlesByTagQuery>(a => a.TagId == tagId), It.IsAny<CancellationToken>()));
+            A.CallTo(() => _mediatorFake.Send(A<ArticlesByTagQuery>.That.Matches(a => a.TagId == tagId), A<CancellationToken>._)).MustHaveHappened();
         }
-
     }
 }
