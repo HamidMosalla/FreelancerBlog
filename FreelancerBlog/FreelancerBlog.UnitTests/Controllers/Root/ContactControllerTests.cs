@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using FakeItEasy;
 using FluentAssertions;
 using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Controllers;
@@ -15,7 +16,7 @@ using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.Core.Wrappers;
 using FreelancerBlog.ViewModels.Contact;
-using GenFu;
+
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -27,27 +28,26 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
 {
     public class ContactControllerTests
     {
-        private Mock<IMediator> _mediatorMock;
-        private Mock<IMapper> _mapperMock;
+        private IMediator _mediatorFake;
+        private IMapper _mapperFake;
 
-        private Mock<TempDataDictionary> _tempData;
+        private TempDataDictionary _tempDataFake;
 
         public ContactControllerTests()
         {
-            _mediatorMock = new Mock<IMediator>();
-            _mapperMock = new Mock<IMapper>();
-            var httpContext = new Mock<HttpContext>();
-            var tempDataProvider = new Mock<ITempDataProvider>();
-            _tempData = new Mock<TempDataDictionary>(httpContext.Object, tempDataProvider.Object);
-
+            _mediatorFake = A.Fake<IMediator>();
+            _mapperFake = A.Fake<IMapper>();
+            var httpContext = A.Fake<HttpContext>();
+            var tempDataProvider = A.Fake<ITempDataProvider>();
+            _tempDataFake = A.Fake<TempDataDictionary>(t => t.WithArgumentsForConstructor(new object[] { httpContext, tempDataProvider }));
         }
 
         [Fact]
         [Trait("Category", "DefaultView")]
-        void CreateGetReturnsCorrectView()
+        void CreateGet_Always_ReturnsCorrectView()
         {
             //arrange
-            var sut = new ContactController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new ContactController(_mapperFake, _mediatorFake);
 
             //act
             var result = (ViewResult)sut.Create();
@@ -59,13 +59,14 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
         [Fact]
-        public async Task CreatePostReturnsContactViewWhenJavaScriptIsDisabled()
+        public async Task CreatePost_JavaScriptDisabled_ReturnsContactView()
         {
             var captchaResponse = new CaptchaResponse { Success = "true" };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
-            _mediatorMock.Setup(m => m.Send(It.IsAny<AddNewContactCommand>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            A.CallTo(() => _mediatorFake.Send(A<ValidateCaptchaQuery>._, A<CancellationToken>._)).Returns(captchaResponse);
+            A.CallTo(() => _mediatorFake.Send(A<AddNewContactCommand>._, A<CancellationToken>._)).Returns(Task.CompletedTask);
             var viewModel = new ContactViewModel { ContactId = 1 };
-            var sut = new ContactController(_mapperMock.Object, _mediatorMock.Object);
+
+            var sut = new ContactController(_mapperFake, _mediatorFake);
 
             var result = (ViewResult)await sut.Create(viewModel, false);
 
@@ -75,40 +76,41 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
         [Fact]
-        public async Task CreatePostMapReceivesTheCorrectViewModel()
+        public async Task CreatePost_ModelStateValid_PassesTheCorrectViewModelToMap()
         {
             var captchaResponse = new CaptchaResponse { Success = "true" };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
-            _mediatorMock.Setup(m => m.Send(It.IsAny<AddNewContactCommand>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+            A.CallTo(() => _mediatorFake.Send(A<ValidateCaptchaQuery>._, A<CancellationToken>._)).Returns(captchaResponse);
+            A.CallTo(() => _mediatorFake.Send(A<AddNewContactCommand>._, A<CancellationToken>._)).Returns(Task.CompletedTask);
             var viewModel = new ContactViewModel { ContactId = 1 };
-            var sut = new ContactController(_mapperMock.Object, _mediatorMock.Object);
+
+            var sut = new ContactController(_mapperFake, _mediatorFake);
 
             var result = (ViewResult)await sut.Create(viewModel, false);
 
-            _mapperMock.Verify(m => m.Map<ContactViewModel, Contact>(It.Is<ContactViewModel>(c => c == viewModel)));
+            A.CallTo(() => _mapperFake.Map<ContactViewModel, Contact>(A<ContactViewModel>.That.Matches(c => c == viewModel))).MustHaveHappened();
         }
 
         [Fact]
-        public async Task CreatePostAddNewContactCommandReceivesTheCorrectContact()
+        public async Task CreatePost_ModelStateValid_PassesTheCorrectContactToAddNewContactCommand()
         {
             var captchaResponse = new CaptchaResponse { Success = "true" };
             var contact = new Contact { ContactId = 1 };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
-            _mapperMock.Setup(m => m.Map<ContactViewModel, Contact>(It.IsAny<ContactViewModel>())).Returns(contact);
-            var sut = new ContactController(_mapperMock.Object, _mediatorMock.Object);
+            A.CallTo(() => _mediatorFake.Send(A<ValidateCaptchaQuery>._, A<CancellationToken>._)).Returns(captchaResponse);
+            A.CallTo(() => _mapperFake.Map<ContactViewModel, Contact>(A<ContactViewModel>._)).Returns(contact);
+            var sut = new ContactController(_mapperFake, _mediatorFake);
 
             var result = (ViewResult)await sut.Create(It.IsAny<ContactViewModel>(), false);
 
-            _mediatorMock.Verify(m => m.Send(It.Is<AddNewContactCommand>(c => c.Contact == contact), It.IsAny<CancellationToken>()));
+            A.CallTo(() => _mediatorFake.Send(A<AddNewContactCommand>.That.Matches(c => c.Contact == contact), A<CancellationToken>._)).MustHaveHappened();
         }
 
         [Fact]
-        public async Task CreatePostReturnsViewIdModelStateIsNotValid()
+        public async Task CreatePost_ModelStateIsNotValid_ReturnsView()
         {
             var captchaResponse = new CaptchaResponse { Success = "true" };
             var viewModel = new ContactViewModel { ContactId = 1 };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
-            var sut = new ContactController(_mapperMock.Object, _mediatorMock.Object);
+            A.CallTo(() => _mediatorFake.Send(A<ValidateCaptchaQuery>._, A<CancellationToken>._)).Returns(captchaResponse);
+            var sut = new ContactController(_mapperFake, _mediatorFake);
             sut.ViewData.ModelState.AddModelError("Key", "ErrorMessage");
 
             var result = (ViewResult)await sut.Create(viewModel, false);
@@ -120,14 +122,14 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
         [Fact]
-        public async Task CreatePostReturnsJsonSuccessIfJavaScriptEnabled()
+        public async Task CreatePost_JavaScriptEnabled_ReturnsJsonSuccess()
         {
             var captchaResponse = new CaptchaResponse { Success = "true" };
             var contact = new Contact { ContactId = 1 };
             var viewModel = new ContactViewModel { ContactId = 1 };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
-            _mapperMock.Setup(m => m.Map<ContactViewModel, Contact>(It.IsAny<ContactViewModel>())).Returns(contact);
-            var sut = new ContactController(_mapperMock.Object, _mediatorMock.Object);
+            A.CallTo(() => _mediatorFake.Send(A<ValidateCaptchaQuery>._, A<CancellationToken>._)).Returns(captchaResponse);
+            A.CallTo(() => _mapperFake.Map<ContactViewModel, Contact>(A<ContactViewModel>._)).Returns(contact);
+            var sut = new ContactController(_mapperFake, _mediatorFake);
 
             var result = (JsonResult)await sut.Create(viewModel, true);
 
@@ -138,11 +140,11 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
         [Fact]
-        public async Task CreatePostReturnsJsonFailureIfCaptchaValidationFailed()
+        public async Task CreatePost_CaptchaValidationFailed_ReturnsJsonFailure()
         {
             var captchaResponse = new CaptchaResponse { Success = "false" };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<ValidateCaptchaQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(captchaResponse);
-            var sut = new ContactController(_mapperMock.Object, _mediatorMock.Object);
+            A.CallTo(() => _mediatorFake.Send(A<ValidateCaptchaQuery>._, A<CancellationToken>._)).Returns(captchaResponse);
+            var sut = new ContactController(_mapperFake, _mediatorFake);
 
             var result = (JsonResult)await sut.Create(It.IsAny<ContactViewModel>(), true);
 
