@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using FakeItEasy;
 using FluentAssertions;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.Controllers;
@@ -18,20 +19,20 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
 {
     public class PortfolioControllerTests
     {
-        private readonly Mock<IMediator> _mediatorMock;
-        private readonly Mock<IMapper> _mapperMock;
+        private readonly IMediator _mediatorFake;
+        private readonly IMapper _mapperFake;
 
         public PortfolioControllerTests()
         {
-            _mediatorMock = new Mock<IMediator>();
-            _mapperMock = new Mock<IMapper>();
+            _mediatorFake = A.Fake<IMediator>();
+            _mapperFake = A.Fake<IMapper>();
         }
 
         [Fact]
-        public async Task DetailReturnBadRequestIfIdIsNotSupplied()
+        public async Task Detail_IdIsNotSupplied_ReturnsBadRequest()
         {
             //Arrange
-            var sut = new PortfolioController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new PortfolioController(_mapperFake, _mediatorFake);
 
             //Act
             var result = (BadRequestResult)await sut.Detail(default(int));
@@ -43,26 +44,26 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
         [Fact]
-        public async Task DetailPassTheCorrectIdIntoPortfolioByIdQuery()
+        public async Task Detail_IdSupplied_PassesTheCorrectIdIntoPortfolioByIdQuery()
         {
             //Arrange
-            var sut = new PortfolioController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new PortfolioController(_mapperFake, _mediatorFake);
 
             //Act
             var portfolioId = 2;
             await sut.Detail(portfolioId);
 
             //Assert
-            _mediatorMock.Verify(m => m.Send(It.Is<PortfolioByIdQuery>(s => s.PortfolioId == portfolioId), It.IsAny<CancellationToken>()));
+            A.CallTo(() => _mediatorFake.Send(A<PortfolioByIdQuery>.That.Matches(p => p.PortfolioId == portfolioId), A<CancellationToken>._)).MustHaveHappened();
         }
 
         [Fact]
-        public async Task DetailReturnNotFoundIfPorfolioDetailNotFound()
+        public async Task Detail_PorfolioDetailNotFound_ReturnNotFound()
         {
             //Arrange
-            var sut = new PortfolioController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new PortfolioController(_mapperFake, _mediatorFake);
 
-            _mediatorMock.Setup(m => m.Send(It.IsAny<PortfolioByIdQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync((Portfolio)null);
+            A.CallTo(() => _mediatorFake.Send(A<PortfolioByIdQuery>._, A<CancellationToken>._)).Returns((Portfolio)null);
 
             //Act
             var result = (NotFoundResult)await sut.Detail(1);
@@ -74,28 +75,25 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
         [Fact]
-        public async Task DetailPassCorrectPortfolioToMapMethod()
+        public async Task Detail_ModelNotNull_PassesTheCorrectPortfolioToMap()
         {
             //Arrange
-            var sut = new PortfolioController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new PortfolioController(_mapperFake, _mediatorFake);
             var portfolio = new Portfolio { PortfolioId = 1 };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<PortfolioByIdQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(portfolio);
+            A.CallTo(() => _mediatorFake.Send(A<PortfolioByIdQuery>._, A<CancellationToken>._)).Returns(portfolio);
 
             //Act
             await sut.Detail(1);
 
             //Assert
-            _mapperMock.Verify(m => m.Map<Portfolio, PortfolioViewModel>(It.Is<Portfolio>(p => p == portfolio)));
+            A.CallTo(() => _mapperFake.Map<Portfolio, PortfolioViewModel>(portfolio)).MustHaveHappened();
         }
 
         [Fact]
-        public async Task DetailReturnsCorrectView()
+        public async Task Detail_ModelNotNull_ReturnsCorrectView()
         {
             //Arrange
-            var sut = new PortfolioController(_mapperMock.Object, _mediatorMock.Object);
-            var portfolio = new Portfolio { PortfolioId = 1 };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<PortfolioByIdQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(portfolio);
-            _mapperMock.Setup(m => m.Map<Portfolio, PortfolioViewModel>(It.IsAny<Portfolio>())).Returns(It.IsAny<PortfolioViewModel>());
+            var sut = new PortfolioController(_mapperFake, _mediatorFake);
 
             //Act
             var result = (ViewResult)await sut.Detail(1);
@@ -107,14 +105,15 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
         [Fact]
-        public async Task DetailReturnsCorrectPortfolioViewModel()
+        public async Task Detail_ModelNotNull_ReturnsCorrectPortfolioViewModel()
         {
             //Arrange
-            var sut = new PortfolioController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new PortfolioController(_mapperFake, _mediatorFake);
             var portfolio = new Portfolio { PortfolioId = 1 };
-            _mediatorMock.Setup(m => m.Send(It.IsAny<PortfolioByIdQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(portfolio);
             var portfolioViewModel = new PortfolioViewModel { PortfolioId = 1 };
-            _mapperMock.Setup(m => m.Map<Portfolio, PortfolioViewModel>(It.IsAny<Portfolio>())).Returns(portfolioViewModel);
+
+            A.CallTo(() => _mediatorFake.Send(A<PortfolioByIdQuery>._, A<CancellationToken>._)).Returns(portfolio);
+            A.CallTo(() => _mapperFake.Map<Portfolio, PortfolioViewModel>(A<Portfolio>._)).Returns(portfolioViewModel);
 
             //Act
             var result = (ViewResult)await sut.Detail(1);
@@ -127,19 +126,16 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
         [Fact]
-        public async Task IndexReturnsCorrectView()
+        public async Task Index_Always_ReturnsTheCorrectView()
         {
             //Arrange
-            var sut = new PortfolioController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new PortfolioController(_mapperFake, _mediatorFake);
 
             var portfolios = new[]
             {
                 new Portfolio {PortfolioId = 1, PortfolioCategory = "MVC, BS"},
                 new Portfolio {PortfolioId = 2, PortfolioCategory = "MVC, BS"}
             }.AsQueryable();
-
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetAllPortfoliosQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(portfolios);
-            _mapperMock.Setup(m => m.Map<List<Portfolio>, List<PortfolioViewModel>>(portfolios.ToList())).Returns(It.IsAny<List<PortfolioViewModel>>);
 
             //Act
             var result = (ViewResult)await sut.Index();
@@ -151,10 +147,10 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         }
 
         [Fact]
-        public async Task IndexPassCorrectPortfoliosToMapMethod()
+        public async Task Index_WhenCalled_PassCorrectPortfoliosToMapMethod()
         {
             //Arrange
-            var sut = new PortfolioController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new PortfolioController(_mapperFake, _mediatorFake);
 
             var portfolios = new[]
             {
@@ -162,20 +158,20 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
                 new Portfolio {PortfolioId = 2, PortfolioCategory = "MVC, BS"}
             }.AsQueryable();
 
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetAllPortfoliosQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(portfolios);
+            A.CallTo(() => _mediatorFake.Send(A<GetAllPortfoliosQuery>._, A<CancellationToken>._)).Returns(portfolios);
 
             //Act
             await sut.Index();
 
             //Assert
-            _mapperMock.Verify(m => m.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(It.Is<IQueryable<Portfolio>>(p => p == portfolios)));
+            A.CallTo(()=> _mapperFake.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(A<IQueryable<Portfolio>>.That.Matches(p=> p== portfolios))).MustHaveHappened();
         }
 
         [Fact]
-        public async Task IndexPassCorrectPortfoliosAndViewModelToPopulatePortfolioCategoryListCommand()
+        public async Task Index_WhenCalled_PassCorrectArgumentsToPopulatePortfolioCategoryListCommand()
         {
             //Arrange
-            var sut = new PortfolioController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new PortfolioController(_mapperFake, _mediatorFake);
 
             var portfolios = new[]
             {
@@ -189,24 +185,24 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
                 new PortfolioViewModel {PortfolioId = 2, PortfolioCategory = "MVC, BS"}
             };
 
-            _mediatorMock.Setup(m => m.Send(It.IsAny<GetAllPortfoliosQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(portfolios);
-            _mapperMock.Setup(m => m.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(It.IsAny<IQueryable<Portfolio>>())).Returns(viewModel);
+            A.CallTo(() => _mediatorFake.Send(A<GetAllPortfoliosQuery>._, A<CancellationToken>._)).Returns(portfolios);
+            A.CallTo(() => _mapperFake.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(A<IQueryable<Portfolio>>._)).Returns(viewModel);
 
             //Act
             var result = (ViewResult)await sut.Index();
 
             //Assert
-            _mediatorMock.Verify(m => m.Send(It.Is<PopulatePortfolioCategoryListCommand>(
-                                                                p => p.Portfolios == portfolios &&
-                                                                p.ViewModel == viewModel),
-                                                            It.IsAny<CancellationToken>()));
+            A.CallTo(() => _mediatorFake.Send(
+                    A<PopulatePortfolioCategoryListCommand>.That
+                        .Matches(p => p.Portfolios == portfolios && p.ViewModel == viewModel), A<CancellationToken>._))
+                .MustHaveHappened();
         }
 
         [Fact]
-        public async Task IndexReturnsCorrectViewModel()
+        public async Task Index_WhenCalled_ReturnsCorrectViewModel()
         {
             //Arrange
-            var sut = new PortfolioController(_mapperMock.Object, _mediatorMock.Object);
+            var sut = new PortfolioController(_mapperFake, _mediatorFake);
 
             var viewModel = new List<PortfolioViewModel>
             {
@@ -214,7 +210,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
                 new PortfolioViewModel {PortfolioId = 2, PortfolioCategory = "MVC, BS"}
             };
 
-            _mapperMock.Setup(m => m.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(It.IsAny<IQueryable<Portfolio>>())).Returns(viewModel);
+            A.CallTo(() => _mapperFake.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(A<IQueryable<Portfolio>>._)).Returns(viewModel);
 
             //Act
             var result = (ViewResult)await sut.Index();
