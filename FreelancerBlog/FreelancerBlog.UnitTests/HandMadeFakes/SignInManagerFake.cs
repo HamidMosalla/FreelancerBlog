@@ -1,14 +1,12 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
+using FakeItEasy;
 using FreelancerBlog.Core.Domain;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Moq;
 
 namespace FreelancerBlog.UnitTests.HandMadeFakes
 {
@@ -20,10 +18,10 @@ namespace FreelancerBlog.UnitTests.HandMadeFakes
         public SignInManagerFake(IHttpContextAccessor contextAccessor, SignInResult signInResult)
         : base(new UserManagerFake(isUserConfirmed: false),
               contextAccessor,
-              new Mock<IUserClaimsPrincipalFactory<ApplicationUser>>().Object,
-              new Mock<IOptions<IdentityOptions>>().Object,
-              new Mock<ILogger<SignInManager<ApplicationUser>>>().Object,
-              new Mock<IAuthenticationSchemeProvider>().Object
+              A.Fake< IUserClaimsPrincipalFactory<ApplicationUser>>(),
+              A.Fake<IOptions<IdentityOptions>>(),
+              A.Fake<ILogger<SignInManager<ApplicationUser>>>(),
+              A.Fake<IAuthenticationSchemeProvider>()
             )
         {
             _signInResult = signInResult;
@@ -32,10 +30,11 @@ namespace FreelancerBlog.UnitTests.HandMadeFakes
         public SignInManagerFake(IHttpContextAccessor contextAccessor, SignInResult signInResult, ExternalLoginInfo externalLoginInfo, bool isSignIn = false)
         : base(new UserManagerFake(isUserConfirmed: false),
               contextAccessor,
-              new Mock<IUserClaimsPrincipalFactory<ApplicationUser>>().Object,
-              new Mock<IOptions<IdentityOptions>>().Object,
-              new Mock<ILogger<SignInManager<ApplicationUser>>>().Object,
-            new Mock<IAuthenticationSchemeProvider>().Object)
+            A.Fake<IUserClaimsPrincipalFactory<ApplicationUser>>(),
+            A.Fake<IOptions<IdentityOptions>>(),
+            A.Fake<ILogger<SignInManager<ApplicationUser>>>(),
+            A.Fake<IAuthenticationSchemeProvider>()
+              )
         {
             _signInResult = signInResult;
             _externalLoginInfo = externalLoginInfo;

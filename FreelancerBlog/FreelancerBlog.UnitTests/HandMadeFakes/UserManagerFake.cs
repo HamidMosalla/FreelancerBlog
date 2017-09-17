@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using FakeItEasy;
 using FreelancerBlog.Core.Domain;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Moq;
 
 namespace FreelancerBlog.UnitTests.HandMadeFakes
 {
@@ -15,30 +14,32 @@ namespace FreelancerBlog.UnitTests.HandMadeFakes
         private readonly IdentityResult _identityResult;
 
         public UserManagerFake(bool isUserConfirmed)
-            : base(new Mock<IUserStore<ApplicationUser>>().Object,
-                new Mock<IOptions<IdentityOptions>>().Object,
-                new Mock<IPasswordHasher<ApplicationUser>>().Object,
+            : base(A.Fake<IUserStore<ApplicationUser>>(),
+                A.Fake<IOptions<IdentityOptions>>(),
+                A.Fake<IPasswordHasher<ApplicationUser>>(),
                 new IUserValidator<ApplicationUser>[0],
                 new IPasswordValidator<ApplicationUser>[0],
-                new Mock<ILookupNormalizer>().Object,
-                new Mock<IdentityErrorDescriber>().Object,
-                new Mock<IServiceProvider>().Object,
-                new Mock<ILogger<UserManager<ApplicationUser>>>().Object)
+                A.Fake<ILookupNormalizer>(),
+                A.Fake<IdentityErrorDescriber>(),
+                A.Fake<IServiceProvider>(),
+                A.Fake<ILogger<UserManager<ApplicationUser>>>()
+                  )
         {
             this._isUserConfirmed = isUserConfirmed;
         }
 
 
         public UserManagerFake(bool isUserConfirmed, IdentityResult identityResult)
-            : base(new Mock<IUserStore<ApplicationUser>>().Object,
-                new Mock<IOptions<IdentityOptions>>().Object,
-                new Mock<IPasswordHasher<ApplicationUser>>().Object,
+            : base(A.Fake<IUserStore<ApplicationUser>>(),
+                A.Fake<IOptions<IdentityOptions>>(),
+                A.Fake<IPasswordHasher<ApplicationUser>>(),
                 new IUserValidator<ApplicationUser>[0],
                 new IPasswordValidator<ApplicationUser>[0],
-                new Mock<ILookupNormalizer>().Object,
-                new Mock<IdentityErrorDescriber>().Object,
-                new Mock<IServiceProvider>().Object,
-                new Mock<ILogger<UserManager<ApplicationUser>>>().Object)
+                A.Fake<ILookupNormalizer>(),
+                A.Fake<IdentityErrorDescriber>(),
+                A.Fake<IServiceProvider>(),
+                A.Fake<ILogger<UserManager<ApplicationUser>>>()
+                  )
         {
             this._isUserConfirmed = isUserConfirmed;
             this._identityResult = identityResult;
