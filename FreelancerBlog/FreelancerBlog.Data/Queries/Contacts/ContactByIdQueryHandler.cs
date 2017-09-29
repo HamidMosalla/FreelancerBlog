@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.Contacts
 {
-    class ContactByIdQueryHandler : IAsyncRequestHandler<ContactByIdQuery, Contact>
+    public class ContactByIdQueryHandler : IAsyncRequestHandler<ContactByIdQuery, Contact>
     {
         private FreelancerBlogContext _context;
 
