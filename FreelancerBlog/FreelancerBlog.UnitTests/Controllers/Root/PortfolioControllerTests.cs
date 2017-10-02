@@ -21,21 +21,20 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
     {
         private readonly IMediator _mediatorFake;
         private readonly IMapper _mapperFake;
+        private readonly PortfolioController _sut;
 
         public PortfolioControllerTests()
         {
             _mediatorFake = A.Fake<IMediator>();
             _mapperFake = A.Fake<IMapper>();
+            _sut = new PortfolioController(_mapperFake, _mediatorFake);
         }
 
         [Fact]
         public async Task Detail_IdIsNotSupplied_ReturnsBadRequest()
         {
-            //Arrange
-            var sut = new PortfolioController(_mapperFake, _mediatorFake);
-
             //Act
-            var result = (BadRequestResult)await sut.Detail(default(int));
+            var result = (BadRequestResult)await _sut.Detail(default(int));
 
             //Assert
             result.Should().NotBeNull();
@@ -46,12 +45,9 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         [Fact]
         public async Task Detail_IdSupplied_PassesTheCorrectIdIntoPortfolioByIdQuery()
         {
-            //Arrange
-            var sut = new PortfolioController(_mapperFake, _mediatorFake);
-
             //Act
             var portfolioId = 2;
-            await sut.Detail(portfolioId);
+            await _sut.Detail(portfolioId);
 
             //Assert
             A.CallTo(() => _mediatorFake.Send(A<PortfolioByIdQuery>.That.Matches(p => p.PortfolioId == portfolioId), A<CancellationToken>._)).MustHaveHappened();
@@ -60,13 +56,10 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         [Fact]
         public async Task Detail_PorfolioDetailNotFound_ReturnNotFound()
         {
-            //Arrange
-            var sut = new PortfolioController(_mapperFake, _mediatorFake);
-
             A.CallTo(() => _mediatorFake.Send(A<PortfolioByIdQuery>._, A<CancellationToken>._)).Returns((Portfolio)null);
 
             //Act
-            var result = (NotFoundResult)await sut.Detail(1);
+            var result = (NotFoundResult)await _sut.Detail(1);
 
             //Assert
             result.Should().NotBeNull();
@@ -78,12 +71,11 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         public async Task Detail_ModelNotNull_PassesTheCorrectPortfolioToMap()
         {
             //Arrange
-            var sut = new PortfolioController(_mapperFake, _mediatorFake);
             var portfolio = new Portfolio { PortfolioId = 1 };
             A.CallTo(() => _mediatorFake.Send(A<PortfolioByIdQuery>._, A<CancellationToken>._)).Returns(portfolio);
 
             //Act
-            await sut.Detail(1);
+            await _sut.Detail(1);
 
             //Assert
             A.CallTo(() => _mapperFake.Map<Portfolio, PortfolioViewModel>(portfolio)).MustHaveHappened();
@@ -92,11 +84,8 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         [Fact]
         public async Task Detail_ModelNotNull_ReturnsCorrectView()
         {
-            //Arrange
-            var sut = new PortfolioController(_mapperFake, _mediatorFake);
-
             //Act
-            var result = (ViewResult)await sut.Detail(1);
+            var result = (ViewResult)await _sut.Detail(1);
 
             //Assert
             result.Should().NotBeNull();
@@ -108,7 +97,6 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         public async Task Detail_ModelNotNull_ReturnsCorrectPortfolioViewModel()
         {
             //Arrange
-            var sut = new PortfolioController(_mapperFake, _mediatorFake);
             var portfolio = new Portfolio { PortfolioId = 1 };
             var portfolioViewModel = new PortfolioViewModel { PortfolioId = 1 };
 
@@ -116,7 +104,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             A.CallTo(() => _mapperFake.Map<Portfolio, PortfolioViewModel>(A<Portfolio>._)).Returns(portfolioViewModel);
 
             //Act
-            var result = (ViewResult)await sut.Detail(1);
+            var result = (ViewResult)await _sut.Detail(1);
 
             //Assert
 
@@ -128,9 +116,6 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         [Fact]
         public async Task Index_Always_ReturnsTheCorrectView()
         {
-            //Arrange
-            var sut = new PortfolioController(_mapperFake, _mediatorFake);
-
             var portfolios = new[]
             {
                 new Portfolio {PortfolioId = 1, PortfolioCategory = "MVC, BS"},
@@ -138,7 +123,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             }.AsQueryable();
 
             //Act
-            var result = (ViewResult)await sut.Index();
+            var result = (ViewResult)await _sut.Index();
 
             //Assert
             result.Should().NotBeNull();
@@ -149,9 +134,6 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         [Fact]
         public async Task Index_WhenCalled_PassCorrectPortfoliosToMapMethod()
         {
-            //Arrange
-            var sut = new PortfolioController(_mapperFake, _mediatorFake);
-
             var portfolios = new[]
             {
                 new Portfolio {PortfolioId = 1, PortfolioCategory = "MVC, BS"},
@@ -161,7 +143,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             A.CallTo(() => _mediatorFake.Send(A<GetAllPortfoliosQuery>._, A<CancellationToken>._)).Returns(portfolios);
 
             //Act
-            await sut.Index();
+            await _sut.Index();
 
             //Assert
             A.CallTo(()=> _mapperFake.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(A<IQueryable<Portfolio>>.That.Matches(p=> p== portfolios))).MustHaveHappened();
@@ -170,9 +152,6 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         [Fact]
         public async Task Index_WhenCalled_PassCorrectArgumentsToPopulatePortfolioCategoryListCommand()
         {
-            //Arrange
-            var sut = new PortfolioController(_mapperFake, _mediatorFake);
-
             var portfolios = new[]
             {
                 new Portfolio {PortfolioId = 1, PortfolioCategory = "MVC, BS"},
@@ -189,7 +168,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             A.CallTo(() => _mapperFake.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(A<IQueryable<Portfolio>>._)).Returns(viewModel);
 
             //Act
-            var result = (ViewResult)await sut.Index();
+            var result = (ViewResult)await _sut.Index();
 
             //Assert
             A.CallTo(() => _mediatorFake.Send(
@@ -201,9 +180,6 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         [Fact]
         public async Task Index_WhenCalled_ReturnsCorrectViewModel()
         {
-            //Arrange
-            var sut = new PortfolioController(_mapperFake, _mediatorFake);
-
             var viewModel = new List<PortfolioViewModel>
             {
                 new PortfolioViewModel {PortfolioId = 1, PortfolioCategory = "MVC, BS"},
@@ -213,7 +189,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             A.CallTo(() => _mapperFake.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(A<IQueryable<Portfolio>>._)).Returns(viewModel);
 
             //Act
-            var result = (ViewResult)await sut.Index();
+            var result = (ViewResult)await _sut.Index();
 
             //Assert
             result.Model.Should().Be(viewModel);

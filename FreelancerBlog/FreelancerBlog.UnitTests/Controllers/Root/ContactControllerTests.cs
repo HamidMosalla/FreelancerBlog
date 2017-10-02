@@ -28,8 +28,9 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
 {
     public class ContactControllerTests
     {
-        private IMediator _mediatorFake;
-        private IMapper _mapperFake;
+        private readonly IMediator _mediatorFake;
+        private readonly IMapper _mapperFake;
+        private readonly ContactController _sut;
 
         private TempDataDictionary _tempDataFake;
 
@@ -40,17 +41,16 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             var httpContext = A.Fake<HttpContext>();
             var tempDataProvider = A.Fake<ITempDataProvider>();
             _tempDataFake = A.Fake<TempDataDictionary>(t => t.WithArgumentsForConstructor(new object[] { httpContext, tempDataProvider }));
+
+            _sut = new ContactController(_mapperFake, _mediatorFake);
         }
 
         [Fact]
         [Trait("Category", "DefaultView")]
         void CreateGet_Always_ReturnsCorrectView()
         {
-            //arrange
-            var sut = new ContactController(_mapperFake, _mediatorFake);
-
             //act
-            var result = (ViewResult)sut.Create();
+            var result = (ViewResult)_sut.Create();
 
             //assert
             Assert.NotNull(result);
@@ -66,9 +66,9 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             A.CallTo(() => _mediatorFake.Send(A<AddNewContactCommand>._, A<CancellationToken>._)).Returns(Task.CompletedTask);
             var viewModel = new ContactViewModel { ContactId = 1 };
 
-            var sut = new ContactController(_mapperFake, _mediatorFake);
 
-            var result = (ViewResult)await sut.Create(viewModel, false);
+            var result = (ViewResult)await _sut.Create(viewModel, false);
+
 
             result.Should().NotBeNull();
             result.Should().BeOfType<ViewResult>();
@@ -83,9 +83,8 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             A.CallTo(() => _mediatorFake.Send(A<AddNewContactCommand>._, A<CancellationToken>._)).Returns(Task.CompletedTask);
             var viewModel = new ContactViewModel { ContactId = 1 };
 
-            var sut = new ContactController(_mapperFake, _mediatorFake);
 
-            var result = (ViewResult)await sut.Create(viewModel, false);
+            var result = (ViewResult)await _sut.Create(viewModel, false);
 
             A.CallTo(() => _mapperFake.Map<ContactViewModel, Contact>(A<ContactViewModel>.That.Matches(c => c == viewModel))).MustHaveHappened();
         }
@@ -97,9 +96,8 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             var contact = new Contact { ContactId = 1 };
             A.CallTo(() => _mediatorFake.Send(A<ValidateCaptchaQuery>._, A<CancellationToken>._)).Returns(captchaResponse);
             A.CallTo(() => _mapperFake.Map<ContactViewModel, Contact>(A<ContactViewModel>._)).Returns(contact);
-            var sut = new ContactController(_mapperFake, _mediatorFake);
 
-            var result = (ViewResult)await sut.Create(It.IsAny<ContactViewModel>(), false);
+            var result = (ViewResult)await _sut.Create(It.IsAny<ContactViewModel>(), false);
 
             A.CallTo(() => _mediatorFake.Send(A<AddNewContactCommand>.That.Matches(c => c.Contact == contact), A<CancellationToken>._)).MustHaveHappened();
         }
@@ -110,10 +108,11 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             var captchaResponse = new CaptchaResponse { Success = "true" };
             var viewModel = new ContactViewModel { ContactId = 1 };
             A.CallTo(() => _mediatorFake.Send(A<ValidateCaptchaQuery>._, A<CancellationToken>._)).Returns(captchaResponse);
-            var sut = new ContactController(_mapperFake, _mediatorFake);
-            sut.ViewData.ModelState.AddModelError("Key", "ErrorMessage");
 
-            var result = (ViewResult)await sut.Create(viewModel, false);
+
+            _sut.ViewData.ModelState.AddModelError("Key", "ErrorMessage");
+
+            var result = (ViewResult)await _sut.Create(viewModel, false);
 
             result.ViewName.Should().BeNull();
             result.ViewData.Model.Should().BeOfType<ContactViewModel>();
@@ -129,9 +128,8 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             var viewModel = new ContactViewModel { ContactId = 1 };
             A.CallTo(() => _mediatorFake.Send(A<ValidateCaptchaQuery>._, A<CancellationToken>._)).Returns(captchaResponse);
             A.CallTo(() => _mapperFake.Map<ContactViewModel, Contact>(A<ContactViewModel>._)).Returns(contact);
-            var sut = new ContactController(_mapperFake, _mediatorFake);
 
-            var result = (JsonResult)await sut.Create(viewModel, true);
+            var result = (JsonResult)await _sut.Create(viewModel, true);
 
             result.Should().NotBeNull();
             result.Should().BeOfType<JsonResult>();
@@ -144,9 +142,8 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         {
             var captchaResponse = new CaptchaResponse { Success = "false" };
             A.CallTo(() => _mediatorFake.Send(A<ValidateCaptchaQuery>._, A<CancellationToken>._)).Returns(captchaResponse);
-            var sut = new ContactController(_mapperFake, _mediatorFake);
 
-            var result = (JsonResult)await sut.Create(It.IsAny<ContactViewModel>(), true);
+            var result = (JsonResult)await _sut.Create(It.IsAny<ContactViewModel>(), true);
 
             result.Should().NotBeNull();
             result.Should().BeOfType<JsonResult>();

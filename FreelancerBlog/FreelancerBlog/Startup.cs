@@ -101,11 +101,6 @@ namespace FreelancerBlog
                 options.Cookie.Name = ".FreelancerBlog";
             });
 
-            var twitterOption = new TwitterOptions
-            {
-
-            };
-
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie(o =>
                     {
