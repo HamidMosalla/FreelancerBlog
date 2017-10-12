@@ -37,15 +37,9 @@ namespace FreelancerBlog.Services.Shared
 
         public async Task<string> UploadFileAsync(IFormFile file, List<string> path)
         {
-            if (file == null)
-            {
-                throw new ArgumentNullException(nameof(file), "The file argument cannot be null.");
-            }
+            if (file == null) throw new ArgumentNullException(nameof(file), "The file argument cannot be null.");
 
-            if (path == null || path.Count == 0)
-            {
-                throw new ArgumentException("The path argument cannot be null or empty.", nameof(path));
-            }
+            if (path == null || path.Count == 0) throw new ArgumentException("The path argument cannot be null or empty.", nameof(path));
 
             if (file.Length <= 0) return null;
 
@@ -59,10 +53,7 @@ namespace FreelancerBlog.Services.Shared
 
             var folderPath = FileSystem.Path.Combine(path.ToArray());
 
-            if (!FileSystem.Directory.Exists(folderPath))
-            {
-                FileSystem.Directory.CreateDirectory(folderPath);
-            }
+            if (!FileSystem.Directory.Exists(folderPath)) FileSystem.Directory.CreateDirectory(folderPath);
 
             var fullPath = FileSystem.Path.Combine(folderPath, fullFileName);
 
