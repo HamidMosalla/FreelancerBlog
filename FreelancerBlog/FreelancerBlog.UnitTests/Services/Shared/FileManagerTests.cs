@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FakeItEasy;
@@ -56,6 +57,22 @@ namespace FreelancerBlog.UnitTests.Services.Shared
             memoryStream.Position = 0;
 
             return memoryStream;
+        }
+
+        private void StubUploadFileAsyncDependency()
+        {
+            var memoryStream = FakeMemoryStream();
+
+            A.CallTo(() => _formFile.OpenReadStream()).Returns(memoryStream);
+            A.CallTo(() => _formFile.Length).Returns(256);
+            A.CallTo(() => _formFile.ContentDisposition).Returns("form-data; name=\"UserAvatarFile\"; filename=\"TestFile.txt\"");
+
+            A.CallTo(() => _pathWrapper.GetFileNameWithoutExtension(A<string>._)).Returns("dummy-file-name");
+            A.CallTo(() => _pathWrapper.GetExtension(A<string>._)).Returns(".txt");
+            A.CallTo(() => _pathWrapper.Combine(A<string[]>._)).Returns("C:\\UnitTestFolder");
+            A.CallTo(() => _pathWrapper.Combine(A<string>._, A<string>._)).Returns("C:\\UnitTestFolder\\dummy-file-name.txt");
+
+            A.CallTo(() => _environment.WebRootPath).Returns("C:\\");
         }
 
         [Fact]
@@ -196,122 +213,43 @@ namespace FreelancerBlog.UnitTests.Services.Shared
             result.Should().BeNull();
         }
 
-
-
-        /*        
-                [Fact]
-        public async Task UploadFileAsync_ShouldCallPathMethods_SpecificNumberOfTimes()
+        [Fact]
+        public async Task UploadFileAsync_FileLengthIsNotZero_PassesTheCorrectPathToCombine()
         {
-            var memoryStream = FakeMemoryStream();
+            StubUploadFileAsyncDependency();
 
-            _formFile.Setup(m => m.OpenReadStream()).Returns(memoryStream);
+            var path = new List<string> {"UnitTestFolder", "InnerFolder"}.ToList();
 
-            _formFile.SetupGet(f => f.Length).Returns(256);
+            var result = await sut.UploadFileAsync(_formFile, path);
 
-            _pathWrapper.Setup(p => p.GetFileNameWithoutExtension(It.IsAny<string>())).Returns("dummy-file-name");
-
-            _pathWrapper.Setup(p => p.GetExtension(It.IsAny<string>())).Returns(".txt");
-
-            _pathWrapper.Setup(p => p.Combine(It.IsAny<string[]>())).Returns("C:\\UnitTestFolder");
-
-            _pathWrapper.Setup(p => p.Combine(It.IsAny<string>(), It.IsAny<string>())).Returns("C:\\UnitTestFolder\\dummy-file-name.txt");
-
-            _formFile.SetupGet(f => f.ContentDisposition).Returns("form-data; name=\"UserAvatarFile\"; filename=\"TestFile.txt\"");
-
-            _environment.SetupGet(e => e.WebRootPath).Returns("C:\\");
-
-            //Act
-            var result = await sut.UploadFileAsync(_formFile, new List<string> { "UnitTestFolder" });
-
-            //Assert
-            _pathWrapper.Verify(p => p.GetFileNameWithoutExtension(It.IsAny<string>()), Times.Once);
-            _pathWrapper.Verify(p => p.GetExtension(It.IsAny<string>()), Times.Once);
-            _pathWrapper.Verify(p => p.Combine(It.IsAny<string[]>()), Times.Exactly(2));
+            A.CallTo(() => _fileSystem.Path.Combine(A<string[]>.That.Matches(a=> string.Join(",", a) == string.Join(",", path)))).MustHaveHappened();
         }
 
-                [Fact]
-                public async Task UploadFile_ShouldCallDirectoryMethods_ExactlyOneTime()
-                {
-                    var memoryStream = FakeMemoryStream();
+        [Fact]
+        public async Task UploadFileAsync_DirectoryNotExist_CreateDirectoryCalled()
+        {
+            StubUploadFileAsyncDependency();
+            A.CallTo(() => _fileSystem.Directory.Exists(A<string>._)).Returns(false);
 
-                    _formFile.Setup(m => m.OpenReadStream()).Returns(memoryStream);
+            var path = new List<string> {"UnitTestFolder", "InnerFolder"}.ToList();
 
-                    _formFile.SetupGet(f => f.Length).Returns(256);
+            var result = await sut.UploadFileAsync(_formFile, path);
 
-                    _pathWrapper.Setup(p => p.GetFileNameWithoutExtension(It.IsAny<string>())).Returns("dummy-file-name");
+            A.CallTo(() => _fileSystem.Directory.CreateDirectory(A<string>._)).MustHaveHappened(Repeated.Exactly.Once);
+        }
 
-                    _pathWrapper.Setup(p => p.GetExtension(It.IsAny<string>())).Returns(".txt");
+        [Fact]
+        public async Task UploadFileAsync_Always_ReturnsCorrectFileName()
+        {
+            StubUploadFileAsyncDependency();
 
-                    _formFile.SetupGet(f => f.ContentDisposition).Returns("form-data; name=\"UserAvatarFile\"; filename=\"TestFile.txt\"");
+            var path = new List<string> {"UnitTestFolder", "InnerFolder"}.ToList();
+            A.CallTo(() => _pathWrapper.GetFileNameWithoutExtension(A<string>._)).Returns("super-duper-file-name");
 
-                    _environment.SetupGet(e => e.WebRootPath).Returns("C:\\");
+            var result = await sut.UploadFileAsync(_formFile, path);
 
-                    _directoryWrapper.Setup(d => d.Exists(It.IsAny<string>())).Returns(false);
-
-                    //Act
-                    var result = await sut.UploadFileAsync(_formFile.Object, new List<string> { "UnitTestFolder" });
-
-                    //Assert
-                    _directoryWrapper.Verify(d => d.Exists(It.IsAny<string>()), Times.Once);
-                    _directoryWrapper.Verify(d => d.CreateDirectory(It.IsAny<string>()), Times.Once);
-                }
-
-                [Fact]
-                public async Task UploadFile_ShouldCallSaveAsAsyncOnFile_Once()
-                {
-                    var memoryStream = FakeMemoryStream();
-
-                    _formFile.Setup(m => m.OpenReadStream()).Returns(memoryStream);
-
-                    _formFile.SetupGet(f => f.Length).Returns(256);
-
-                    _pathWrapper.Setup(p => p.GetFileNameWithoutExtension(It.IsAny<string>())).Returns("dummy-file-name");
-
-                    _pathWrapper.Setup(p => p.GetExtension(It.IsAny<string>())).Returns(".txt");
-
-                    _pathWrapper.Setup(p => p.Combine(It.IsAny<string[]>())).Returns("C:\\UnitTestFolder");
-
-                    _pathWrapper.Setup(p => p.Combine(It.IsAny<string>(), It.IsAny<string>())).Returns("C:\\UnitTestFolder\\dummy-file-name.txt");
-
-                    _formFile.SetupGet(f => f.ContentDisposition).Returns("form-data; name=\"UserAvatarFile\"; filename=\"TestFile.txt\"");
-
-                    _environment.SetupGet(e => e.WebRootPath).Returns("C:\\");
-
-                    //Act
-                    var result = await sut.UploadFileAsync(_formFile.Object, new List<string> { "UnitTestFolder" });
-
-                    //Assert
-                    _fileWrapper.Verify(f => f.SaveAsAsync(It.IsAny<IFormFile>(), It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
-                }
-
-                [Fact]
-                public async Task UploadFile_ShouldReturnResult_WithTheCorrectFileName()
-                {
-                    var memoryStream = FakeMemoryStream();
-
-                    _formFile.Setup(m => m.OpenReadStream()).Returns(memoryStream);
-
-                    _formFile.SetupGet(f => f.Length).Returns(256);
-
-                    _pathWrapper.Setup(p => p.GetFileNameWithoutExtension(It.IsAny<string>())).Returns("dummy-file-name");
-
-                    _pathWrapper.Setup(p => p.GetExtension(It.IsAny<string>())).Returns(".txt");
-
-                    _pathWrapper.Setup(p => p.Combine(It.IsAny<string[]>())).Returns("C:\\UnitTestFolder");
-
-                    _pathWrapper.Setup(p => p.Combine(It.IsAny<string>(), It.IsAny<string>())).Returns("C:\\UnitTestFolder\\dummy-file-name.txt");
-
-                    _formFile.SetupGet(f => f.ContentDisposition).Returns("form-data; name=\"UserAvatarFile\"; filename=\"TestFile.txt\"");
-
-                    _environment.SetupGet(e => e.WebRootPath).Returns("C:\\");
-
-                    //Act
-                    var result = await sut.UploadFileAsync(_formFile.Object, new List<string> { "UnitTestFolder" });
-
-                    //Assert
-                    result.Should().NotBeNull();
-                    result.Should().StartWith("dummy");
-                }*/
-
+            result.Should().NotBeNull();
+            result.Should().Contain("super-duper-file-name");
+        }
     }
 }
