@@ -9,7 +9,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Queries.Contacts
 {
-    class GetAllContactQueryHandler : IRequestHandler<GetAllContactQuery, IQueryable<Contact>>
+    public class GetAllContactQueryHandler : IRequestHandler<GetAllContactQuery, IQueryable<Contact>>
     {
         private FreelancerBlogContext _context;
 

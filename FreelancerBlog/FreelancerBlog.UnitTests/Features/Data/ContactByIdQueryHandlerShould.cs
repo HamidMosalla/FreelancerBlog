@@ -33,7 +33,7 @@ namespace FreelancerBlog.UnitTests.Features.Data
         }
 
         [Fact]
-        public async Task Handle_Always_ReturnsObjectOfTypeContact()
+        public async Task Always_ReturnsObjectOfTypeContact()
         {
             var result = await _sut.Handle(_message);
 
@@ -41,7 +41,7 @@ namespace FreelancerBlog.UnitTests.Features.Data
         }
 
         [Fact]
-        public async Task Handle_WhenCalled_ReturnsTheCorrectContact()
+        public async Task WhenCalled_ReturnsTheCorrectContact()
         {
             var result = await _sut.Handle(_message);
 

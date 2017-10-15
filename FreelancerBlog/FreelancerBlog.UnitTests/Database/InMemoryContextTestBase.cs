@@ -32,9 +32,7 @@ namespace FreelancerBlog.UnitTests.Database
         /// to any tests being executed in your
         /// test class.
         /// </summary>
-        protected virtual void LoadTestData()
-        {
-        }
+        protected virtual void LoadTestData() { }
 
         /// <summary>
         /// Override this method to load test data
