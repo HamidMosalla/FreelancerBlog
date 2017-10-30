@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Queries.Data.Contacts;
@@ -11,7 +8,7 @@ using FreelancerBlog.UnitTests.Database;
 using Microsoft.EntityFrameworkCore.Internal;
 using Xunit;
 
-namespace FreelancerBlog.UnitTests.Features.Data
+namespace FreelancerBlog.UnitTests.Features.Data.Contacts
 {
     public class GetAllContactQueryHandlerShould : InMemoryContextTest
     {

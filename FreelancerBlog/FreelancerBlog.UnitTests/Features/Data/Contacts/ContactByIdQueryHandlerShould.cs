@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FluentAssertions;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Queries.Data.Contacts;
@@ -9,7 +6,7 @@ using FreelancerBlog.Data.Queries.Contacts;
 using FreelancerBlog.UnitTests.Database;
 using Xunit;
 
-namespace FreelancerBlog.UnitTests.Features.Data
+namespace FreelancerBlog.UnitTests.Features.Data.Contacts
 {
     public class ContactByIdQueryHandlerShould : InMemoryContextTest
     {
