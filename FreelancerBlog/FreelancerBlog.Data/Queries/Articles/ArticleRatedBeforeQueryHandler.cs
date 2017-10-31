@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FreelancerBlog.Data.Queries.Articles
 {
-    class ArticleRatedBeforeQueryHandler : IRequestHandler<ArticleRatedBeforeQuery, bool>
+    public class ArticleRatedBeforeQueryHandler : IRequestHandler<ArticleRatedBeforeQuery, bool>
     {
         private FreelancerBlogContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -22,18 +22,15 @@ namespace FreelancerBlog.Data.Queries.Articles
         {
             var ratings = _context.ArticleRatings.Where(a => a.ArticleIDfk == message.ArticleId).ToList();
 
-            if (ratings.Count != 0)
+            if (ratings.Count == 0) return false;
+
+            var userId = _userManager.GetUserId(message.User);
+
+            bool userRatedBefore = ratings.Any(r => r.UserIDfk == userId);
+
+            if (userRatedBefore)
             {
-                var userId = _userManager.GetUserId(message.User);
-
-                bool eligibility = ratings.Any(r => r.UserIDfk == userId);
-
-                if (eligibility)
-                {
-                    return true;
-                }
-
-                return false;
+                return true;
             }
 
             return false;
