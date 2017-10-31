@@ -48,17 +48,15 @@ namespace FreelancerBlog.UnitTests.Features.Data.Articles
         {
             var query = new ArticleRatedBeforeQuery { ArticleId = 2, User = GetFakeClaimsPrincipal() };
             var result = _sut.Handle(query);
-            //result.Should().Be(false);
-            Assert.False(result == false);
+            result.Should().Be(false);
         }
 
-        [Fact(Skip ="")]
+        [Fact(Skip ="Sp")]
         public void UserRatedBefore_ReturnTrue()
         {
             var query = new ArticleRatedBeforeQuery { ArticleId = 1, User = GetFakeClaimsPrincipal()};
             var result = _sut.Handle(query);
-            //result.Should().Be(true);
-            Assert.False(result == true);
+            result.Should().Be(true);
         }
     }
 }
