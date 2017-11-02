@@ -4,9 +4,7 @@ using FreelancerBlog.Core.Commands.Data.SiteOrders;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Queries.Services.SiteOrder;
-using FreelancerBlog.Core.Services.SiteOrderServices;
 using FreelancerBlog.Core.Types;
-using FreelancerBlog.Services.SiteOrderServices;
 using FreelancerBlog.ViewModels.SiteOrder;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +15,9 @@ namespace FreelancerBlog.Controllers
     {
         private readonly IMapper _mapper;
         private IMediator _mediator;
-        private IFinalPriceCalculator<PriceSpec> _finalPriceCalculator;
 
-        public SiteOrderController(IFinalPriceCalculator<PriceSpec> finalPriceCalculator, IMediator mediator, IMapper mapper)
+        public SiteOrderController(IMediator mediator, IMapper mapper)
         {
-            _finalPriceCalculator = finalPriceCalculator;
             _mediator = mediator;
             _mapper = mapper;
         }
@@ -41,7 +37,7 @@ namespace FreelancerBlog.Controllers
 
             var priceSpecCollection = await _mediator.Send(new PriceSpecCollectionQuery {ViewModel = viewModel});
 
-            var finalPrice = _finalPriceCalculator.CalculateFinalPrice(priceSpecCollection);
+            var finalPrice = _mediator.Send(new FinalPriceQuery {PriceSpecs = priceSpecCollection});
 
             var siteOrder = _mapper.Map<SiteOrderViewModel, SiteOrder>(viewModel);
 

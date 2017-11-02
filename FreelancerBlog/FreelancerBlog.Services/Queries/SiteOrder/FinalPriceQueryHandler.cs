@@ -1,16 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using FreelancerBlog.Core.Services.SiteOrderServices;
+using System.Text;
+using FreelancerBlog.Core.Queries.Services.SiteOrder;
+using FreelancerBlog.Services.SiteOrderServices;
+using MediatR;
 
-namespace FreelancerBlog.Services.SiteOrderServices
+namespace FreelancerBlog.Services.Queries.SiteOrder
 {
-    public class FinalPriceCalculator : IFinalPriceCalculator<PriceSpec>
+    class FinalPriceQueryHandler : IRequestHandler<FinalPriceQuery, decimal>
     {
-        public decimal CalculateFinalPrice(List<PriceSpec> priceSpecCollection)
+        public decimal Handle(FinalPriceQuery message)
         {
-            var intTypes = priceSpecCollection.SingleOrDefault(n => n.Value.GetType().Name == "Int32");
-            var stringTypes = priceSpecCollection.Where(n => n.Value.GetType().Name == "String").ToList();
-            var boolTypes = priceSpecCollection.Where(n => n.Value.GetType().Name == "Boolean").ToList();
+            var intTypes = message.PriceSpecs.SingleOrDefault(n => n.Value.GetType().Name == "Int32");
+            var stringTypes = message.PriceSpecs.Where(n => n.Value.GetType().Name == "String").ToList();
+            var boolTypes = message.PriceSpecs.Where(n => n.Value.GetType().Name == "Boolean").ToList();
 
             decimal TotalPrice;
 
