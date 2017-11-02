@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FreelancerBlog.Core.Queries.Services.SiteOrder;
-using FreelancerBlog.Services.SiteOrderServices;
 using MediatR;
 
 namespace FreelancerBlog.Services.Queries.SiteOrder

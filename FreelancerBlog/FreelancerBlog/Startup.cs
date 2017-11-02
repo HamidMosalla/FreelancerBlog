@@ -9,12 +9,10 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Autofac.Features.Variance;
 using AutoMapper;
-using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Wrappers;
 using FreelancerBlog.Data.EntityFramework;
 using FreelancerBlog.Infrastructure.DependencyInjection;
-using FreelancerBlog.Infrastructure.DependencyInjection.SiteOrder;
 using FreelancerBlog.Services.Shared;
 using FreelancerBlog.Services.Wrappers;
 using MediatR;
@@ -34,6 +32,7 @@ using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Runtime.Loader;
+using FreelancerBlog.Core.DomainModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -188,7 +187,6 @@ namespace FreelancerBlog
             builder.RegisterModule<AuthMessageSenderModule>();
             builder.RegisterModule<FreelancerBlogDbContextSeedDataModule>();
             builder.RegisterModule<FileManagerModule>();
-            builder.RegisterModule<FinalPriceCalculatorModule>();
             builder.RegisterModule<FileSystemWrapperModule>();
 
             builder.Populate(services);

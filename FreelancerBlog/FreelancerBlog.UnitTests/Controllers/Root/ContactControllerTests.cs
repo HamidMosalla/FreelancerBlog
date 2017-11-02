@@ -10,7 +10,7 @@ using FluentAssertions;
 using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Controllers;
 using FreelancerBlog.Core.Commands.Data.Contacts;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;

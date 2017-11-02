@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Core.Commands.Data.SiteOrders;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Queries.Services.SiteOrder;
 using FreelancerBlog.Core.Types;

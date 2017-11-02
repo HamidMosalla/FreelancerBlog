@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.ViewModels.Contact;
 
 namespace FreelancerBlog.AutoMapper.Profiles

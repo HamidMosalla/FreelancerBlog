@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 

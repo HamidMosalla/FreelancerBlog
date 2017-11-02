@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 
 namespace FreelancerBlog.Areas.Admin.ViewModels.Article
 {

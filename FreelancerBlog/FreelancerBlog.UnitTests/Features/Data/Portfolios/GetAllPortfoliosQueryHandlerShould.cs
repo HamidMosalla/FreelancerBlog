@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Portfolios;
 using FreelancerBlog.Data.Queries.Portfolios;
 using FreelancerBlog.UnitTests.Database;

@@ -1,4 +1,4 @@
-﻿using FreelancerBlog.Core.Domain;
+﻿using FreelancerBlog.Core.DomainModels;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using FreelancerBlog.Data.Mappings;

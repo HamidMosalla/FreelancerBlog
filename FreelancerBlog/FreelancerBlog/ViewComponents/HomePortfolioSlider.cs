@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Portfolios;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

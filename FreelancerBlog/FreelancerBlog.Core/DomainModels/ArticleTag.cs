@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FreelancerBlog.Core.Domain
+namespace FreelancerBlog.Core.DomainModels
 {
     public class ArticleTag
     {

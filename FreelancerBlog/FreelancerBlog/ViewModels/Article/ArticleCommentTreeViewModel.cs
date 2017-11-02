@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 
 namespace FreelancerBlog.ViewModels.Article
 {

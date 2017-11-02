@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Org.BouncyCastle.Asn1.Ocsp;
 

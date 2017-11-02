@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.ArticleTags;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

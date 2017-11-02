@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Commands.Data.Contacts;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Contacts;
 using FreelancerBlog.ViewModels.Contact;
 using MediatR;

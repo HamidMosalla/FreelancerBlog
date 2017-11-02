@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using FreelancerBlog.Services.SiteOrderServices;
+using FreelancerBlog.Core.Types;
 using MediatR;
 
 namespace FreelancerBlog.Core.Queries.Services.SiteOrder

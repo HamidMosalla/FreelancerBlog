@@ -7,7 +7,7 @@ using FakeItEasy;
 using FluentAssertions;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.Controllers;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Articles;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

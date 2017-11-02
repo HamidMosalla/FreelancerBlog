@@ -1,4 +1,4 @@
-﻿using FreelancerBlog.Core.Domain;
+﻿using FreelancerBlog.Core.DomainModels;
 using MediatR;
 
 namespace FreelancerBlog.Core.Commands.Data.SiteOrders

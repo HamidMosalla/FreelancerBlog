@@ -1,4 +1,4 @@
-﻿using FreelancerBlog.Core.Domain;
+﻿using FreelancerBlog.Core.DomainModels;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using FakeItEasy;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

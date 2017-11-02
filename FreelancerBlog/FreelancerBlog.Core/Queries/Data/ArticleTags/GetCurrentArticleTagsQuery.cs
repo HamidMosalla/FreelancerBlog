@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using MediatR;
 
 namespace FreelancerBlog.Core.Queries.Data.ArticleTags

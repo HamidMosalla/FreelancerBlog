@@ -1,4 +1,4 @@
-﻿namespace FreelancerBlog.Services.SiteOrderServices
+﻿namespace FreelancerBlog.Core.Types
 {
     public class PriceSpec
     {

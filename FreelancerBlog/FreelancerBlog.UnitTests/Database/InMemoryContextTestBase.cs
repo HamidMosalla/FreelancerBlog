@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Data.EntityFramework;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;

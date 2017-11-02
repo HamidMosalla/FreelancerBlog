@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using FakeItEasy;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.User.ViewModels.Profile;
 using FreelancerBlog.Core.Commands.Data.ApplicationUsers;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Enums;
 using FreelancerBlog.Core.Queries.Data.ApplicationUsers;
 using FreelancerBlog.Core.Services.Shared;

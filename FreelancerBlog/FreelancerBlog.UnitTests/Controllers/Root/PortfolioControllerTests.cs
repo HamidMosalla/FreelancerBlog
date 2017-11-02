@@ -7,7 +7,7 @@ using FakeItEasy;
 using FluentAssertions;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.Controllers;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Portfolios;
 using FreelancerBlog.Features.Commands;
 using MediatR;

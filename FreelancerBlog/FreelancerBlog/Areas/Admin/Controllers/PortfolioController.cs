@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.Core.Commands.Data.Portfolios;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Enums;
 using FreelancerBlog.Core.Queries.Data.Portfolios;
 using FreelancerBlog.Core.Services.Shared;

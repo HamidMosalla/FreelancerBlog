@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using MediatR;
 
 namespace FreelancerBlog.Features.Queries

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FreelancerBlog.Core.Domain
+namespace FreelancerBlog.Core.DomainModels
 {
     public class Contact
     {

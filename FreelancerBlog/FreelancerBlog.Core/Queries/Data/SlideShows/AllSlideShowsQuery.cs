@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using MediatR;
 
 namespace FreelancerBlog.Core.Queries.Data.SlideShows

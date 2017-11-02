@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FreelancerBlog.Areas.User.ViewModels.Profile;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 
 namespace FreelancerBlog.AutoMapper.Profiles
 {

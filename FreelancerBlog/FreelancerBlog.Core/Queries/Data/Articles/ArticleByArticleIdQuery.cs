@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using FreelancerBlog.Core.DomainModels;
+using MediatR;
 
 namespace FreelancerBlog.Core.Queries.Data.Articles
 {
-    public class ArticleByArticleIdQuery : IRequest<Domain.Article>
+    public class ArticleByArticleIdQuery : IRequest<Article>
     {
         public int ArticleId { get; set; }
     }

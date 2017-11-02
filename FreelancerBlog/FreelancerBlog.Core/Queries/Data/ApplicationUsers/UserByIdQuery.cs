@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using MediatR;
 
 namespace FreelancerBlog.Core.Queries.Data.ApplicationUsers

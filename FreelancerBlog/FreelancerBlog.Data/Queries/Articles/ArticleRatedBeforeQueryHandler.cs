@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Linq;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Articles;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;

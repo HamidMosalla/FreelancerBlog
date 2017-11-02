@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using FluentAssertions;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Contacts;
 using FreelancerBlog.Data.Queries.Contacts;
 using FreelancerBlog.UnitTests.Database;

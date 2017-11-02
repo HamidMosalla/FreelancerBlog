@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.SlideShow;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 
 namespace FreelancerBlog.AutoMapper.Profiles
 {

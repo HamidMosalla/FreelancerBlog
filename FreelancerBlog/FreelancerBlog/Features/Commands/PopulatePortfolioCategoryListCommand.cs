@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using MediatR;
 
 namespace FreelancerBlog.Features.Commands

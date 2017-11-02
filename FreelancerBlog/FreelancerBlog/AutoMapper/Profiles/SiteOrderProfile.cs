@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.ViewModels.SiteOrder;
 
 namespace FreelancerBlog.AutoMapper.Profiles

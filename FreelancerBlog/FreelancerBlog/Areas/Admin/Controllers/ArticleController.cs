@@ -6,7 +6,7 @@ using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.Core.Commands.Data.ArticleComments;
 using FreelancerBlog.Core.Commands.Data.Articles;
 using FreelancerBlog.Core.Commands.Data.ArticleTags;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.ArticleComments;
 using FreelancerBlog.Core.Queries.Data.Articles;
 using FreelancerBlog.Core.Queries.Data.ArticleTags;

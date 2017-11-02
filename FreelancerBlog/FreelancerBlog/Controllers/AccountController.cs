@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using FreelancerBlog.Core.Domain;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;

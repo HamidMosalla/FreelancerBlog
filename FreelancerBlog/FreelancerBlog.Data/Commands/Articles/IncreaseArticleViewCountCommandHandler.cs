@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.Articles;
-using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

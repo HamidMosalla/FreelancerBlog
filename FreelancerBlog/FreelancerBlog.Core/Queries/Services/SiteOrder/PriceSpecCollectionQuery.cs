@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FreelancerBlog.Services.SiteOrderServices;
+using FreelancerBlog.Core.Types;
 using MediatR;
 
 namespace FreelancerBlog.Core.Queries.Services.SiteOrder
