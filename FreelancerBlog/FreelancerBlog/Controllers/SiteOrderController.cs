@@ -3,6 +3,7 @@ using AutoMapper;
 using FreelancerBlog.Core.Commands.Data.SiteOrders;
 using FreelancerBlog.Core.Domain;
 using FreelancerBlog.Core.Queries.Services.Shared;
+using FreelancerBlog.Core.Queries.Services.SiteOrder;
 using FreelancerBlog.Core.Services.SiteOrderServices;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.Services.SiteOrderServices;
@@ -16,12 +17,10 @@ namespace FreelancerBlog.Controllers
     {
         private readonly IMapper _mapper;
         private IMediator _mediator;
-        private IPriceSpecCollectionFactory<PriceSpec, object> _priceSpecCollectionFactory;
         private IFinalPriceCalculator<PriceSpec> _finalPriceCalculator;
 
-        public SiteOrderController(IPriceSpecCollectionFactory<PriceSpec, object> priceSpecCollectionFactory, IFinalPriceCalculator<PriceSpec> finalPriceCalculator, IMediator mediator, IMapper mapper)
+        public SiteOrderController(IFinalPriceCalculator<PriceSpec> finalPriceCalculator, IMediator mediator, IMapper mapper)
         {
-            _priceSpecCollectionFactory = priceSpecCollectionFactory;
             _finalPriceCalculator = finalPriceCalculator;
             _mediator = mediator;
             _mapper = mapper;
@@ -40,7 +39,7 @@ namespace FreelancerBlog.Controllers
 
             if (!ModelState.IsValid) return Json(new { Status = "FormWasNotValid" });
 
-            var priceSpecCollection = _priceSpecCollectionFactory.BuildPriceSpecCollection(viewModel);
+            var priceSpecCollection = await _mediator.Send(new PriceSpecCollectionQuery {ViewModel = viewModel});
 
             var finalPrice = _finalPriceCalculator.CalculateFinalPrice(priceSpecCollection);
 

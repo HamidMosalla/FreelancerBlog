@@ -188,7 +188,6 @@ namespace FreelancerBlog
             builder.RegisterModule<AuthMessageSenderModule>();
             builder.RegisterModule<FreelancerBlogDbContextSeedDataModule>();
             builder.RegisterModule<FileManagerModule>();
-            builder.RegisterModule<PriceSpecCollectionFactoryModule>();
             builder.RegisterModule<FinalPriceCalculatorModule>();
             builder.RegisterModule<FileSystemWrapperModule>();
 

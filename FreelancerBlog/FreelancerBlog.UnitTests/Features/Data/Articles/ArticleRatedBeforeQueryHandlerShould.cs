@@ -51,7 +51,7 @@ namespace FreelancerBlog.UnitTests.Features.Data.Articles
             result.Should().Be(false);
         }
 
-        [Fact(Skip ="Sp")]
+        [Fact(Skip ="Needs more thought")]
         public void UserRatedBefore_ReturnTrue()
         {
             var query = new ArticleRatedBeforeQuery { ArticleId = 1, User = GetFakeClaimsPrincipal()};

@@ -1,21 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using FreelancerBlog.Core.Services.SiteOrderServices;
+using FreelancerBlog.Core.Queries.Services.SiteOrder;
+using FreelancerBlog.Services.SiteOrderServices;
+using MediatR;
 
-namespace FreelancerBlog.Services.SiteOrderServices
+namespace FreelancerBlog.Services.Queries.SiteOrder
 {
-    public class PriceSpec
+    public class PriceSpecCollectionQueryHandler : IRequestHandler<PriceSpecCollectionQuery, List<PriceSpec>>
     {
-        public string EnName { get; set; }
-        public string FaName { get; set; }
-        public decimal Price { get; set; }
-        public object Value { get; set; }
-    }
-
-    public class PriceSpecCollectionFactory : IPriceSpecCollectionFactory<PriceSpec, object>
-    {
-        public List<PriceSpec> BuildPriceSpecCollection(object viewModel)
+        public List<PriceSpec> Handle(PriceSpecCollectionQuery message)
         {
             var listOfSiteOrder = new List<PriceSpec>
             {
@@ -87,14 +80,16 @@ namespace FreelancerBlog.Services.SiteOrderServices
             };
 
 
-            var types = viewModel.GetType()
+            var types = message.ViewModel.GetType()
                 .GetProperties()
-                .Select(v => new { Name = v.Name.ToString(), Value = v.GetValue(viewModel) })
+                .Select(v => new { Name = v.Name.ToString(), Value = v.GetValue(message.ViewModel) })
                 .Where(v => v.Value != null && v.Value.ToString() != "0" && v.Value.ToString() != "False")
                 .ToDictionary(v => v.Name, v => v.Value);
 
 
-            return listOfSiteOrder.Join(types, l => l.EnName, t => t.Key, (l, t) => new PriceSpec { EnName = l.EnName, FaName = l.FaName, Price = l.Price, Value = t.Value }).ToList();
+            return listOfSiteOrder.Join(types, l => l.EnName, t => t.Key,
+                    (l, t) => new PriceSpec {EnName = l.EnName, FaName = l.FaName, Price = l.Price, Value = t.Value})
+                .ToList();
         }
     }
 }
