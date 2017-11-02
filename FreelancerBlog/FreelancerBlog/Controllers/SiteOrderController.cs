@@ -37,7 +37,7 @@ namespace FreelancerBlog.Controllers
 
             var priceSpecCollection = await _mediator.Send(new PriceSpecCollectionQuery {ViewModel = viewModel});
 
-            var finalPrice = _mediator.Send(new FinalPriceQuery {PriceSpecs = priceSpecCollection});
+            var finalPrice = await _mediator.Send(new FinalPriceQuery {PriceSpecs = priceSpecCollection});
 
             var siteOrder = _mapper.Map<SiteOrderViewModel, SiteOrder>(viewModel);
 

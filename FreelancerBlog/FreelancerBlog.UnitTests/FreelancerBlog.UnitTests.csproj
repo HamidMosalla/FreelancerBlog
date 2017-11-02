@@ -16,6 +16,7 @@
     <Compile Include="Controllers\Root\ContactControllerTests.cs" />
     <Compile Include="Controllers\Root\HomeControllerTests.cs" />
     <Compile Include="Controllers\Root\PortfolioControllerTests.cs" />
+    <Compile Include="Controllers\Root\SiteOrderControllerTests.cs" />
   </ItemGroup>
 
   <ItemGroup>
