@@ -6,7 +6,7 @@ using FreelancerBlog.Data.Queries.Contacts;
 using FreelancerBlog.UnitTests.Database;
 using Xunit;
 
-namespace FreelancerBlog.UnitTests.Features.Data.Contacts
+namespace FreelancerBlog.UnitTests.Features.Data.Queries.Contacts
 {
     public class ContactByIdQueryHandlerShould : InMemoryContextTest
     {

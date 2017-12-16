@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
-using System.Text;
 using FluentAssertions;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Articles;
@@ -9,7 +7,7 @@ using FreelancerBlog.Data.Queries.Articles;
 using FreelancerBlog.UnitTests.Database;
 using Xunit;
 
-namespace FreelancerBlog.UnitTests.Features.Data.Articles
+namespace FreelancerBlog.UnitTests.Features.Data.Queries.Articles
 {
     public class ArticleRatedBeforeQueryHandlerShould : InMemoryContextTest
     {

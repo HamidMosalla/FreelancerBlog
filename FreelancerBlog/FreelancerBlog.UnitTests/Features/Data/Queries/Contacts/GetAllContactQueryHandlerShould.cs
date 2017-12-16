@@ -8,7 +8,7 @@ using FreelancerBlog.UnitTests.Database;
 using Microsoft.EntityFrameworkCore.Internal;
 using Xunit;
 
-namespace FreelancerBlog.UnitTests.Features.Data.Contacts
+namespace FreelancerBlog.UnitTests.Features.Data.Queries.Contacts
 {
     public class GetAllContactQueryHandlerShould : InMemoryContextTest
     {

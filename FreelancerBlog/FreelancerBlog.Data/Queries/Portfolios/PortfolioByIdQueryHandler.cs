@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.Portfolios
 {
-    class PortfolioByIdQueryHandler: IAsyncRequestHandler<PortfolioByIdQuery, Portfolio>
+    public class PortfolioByIdQueryHandler: IAsyncRequestHandler<PortfolioByIdQuery, Portfolio>
     {
         private FreelancerBlogContext _context;
 
