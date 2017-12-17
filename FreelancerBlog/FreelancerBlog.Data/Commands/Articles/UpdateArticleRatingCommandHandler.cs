@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FreelancerBlog.Data.Commands.Articles
 {
-    public class UpdateArticleRatingCommandHandler : IAsyncRequestHandler<UpdateArticleRatingCommand>
+    public class UpdateArticleRatingCommandHandler : AsyncRequestHandler<UpdateArticleRatingCommand>
     {
         private FreelancerBlogContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -22,7 +22,7 @@ namespace FreelancerBlog.Data.Commands.Articles
             _userManager = userManager;
         }
 
-        public Task Handle(UpdateArticleRatingCommand message)
+        protected override Task HandleCore(UpdateArticleRatingCommand message)
         {
             var articleRating = _context.ArticleRatings.Single(a => a.ArticleIDfk == message.ArticleId && a.UserIDfk == _userManager.GetUserId(message.User));
 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Commands.ApplicationUsers
 {
-    public class UpdateUserProfileCommandHandler : IAsyncRequestHandler<UpdateUserProfileCommand>
+    public class UpdateUserProfileCommandHandler : AsyncRequestHandler<UpdateUserProfileCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -19,7 +19,7 @@ namespace FreelancerBlog.Data.Commands.ApplicationUsers
             _context = context;
         }
 
-        public  Task Handle(UpdateUserProfileCommand message)
+        protected override Task HandleCore(UpdateUserProfileCommand message)
         {
             var model = _context.Users.Single(u => u.Id.Equals(message.ApplicationUser.Id));
 

@@ -8,7 +8,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.Portfolios
 {
-    class DeletePortfolioCommandHandler : IAsyncRequestHandler<DeletePortfolioCommand>
+    class DeletePortfolioCommandHandler : AsyncRequestHandler<DeletePortfolioCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -17,7 +17,7 @@ namespace FreelancerBlog.Data.Commands.Portfolios
             _context = context;
         }
 
-        public Task Handle(DeletePortfolioCommand message)
+        protected override Task HandleCore(DeletePortfolioCommand message)
         {
             _context.Portfolios.Remove(message.Portfolio);
             return _context.SaveChangesAsync();

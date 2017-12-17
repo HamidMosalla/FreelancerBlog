@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Contacts;
@@ -29,18 +31,18 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Contacts
         }
 
         [Fact]
-        public void Always_ReturnsObjectOfTypeIQueryableOfContact()
+        public async Task Always_ReturnsObjectOfTypeIQueryableOfContact()
         {
-            var result = _sut.Handle(_message);
+            var result = await _sut.Handle(_message, default(CancellationToken));
 
             result.Should().NotBeNull();
             result.Should().BeOfType<InternalDbSet<Contact>>();
         }
 
         [Fact]
-        public void WhenCalled_ReturnsTheCorrectNumberOfContact()
+        public async Task WhenCalled_ReturnsTheCorrectNumberOfContact()
         {
-            var result = _sut.Handle(_message);
+            var result = await _sut.Handle(_message, default(CancellationToken));
 
             result.Should().NotBeNull();
             result.Count().Should().Be(2);

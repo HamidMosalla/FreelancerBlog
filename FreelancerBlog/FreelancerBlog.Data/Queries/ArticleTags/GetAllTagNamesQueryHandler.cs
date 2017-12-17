@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.ArticleTags
 {
-    class GetAllTagNamesQueryHandler : IAsyncRequestHandler<GetAllTagNamesQuery, string[]>
+    class GetAllTagNamesQueryHandler : AsyncRequestHandler<GetAllTagNamesQuery, string[]>
     {
         private FreelancerBlogContext _context;
         public GetAllTagNamesQueryHandler(FreelancerBlogContext context)
@@ -15,7 +15,7 @@ namespace FreelancerBlog.Data.Queries.ArticleTags
             _context = context;
         }
 
-        public async Task<string[]> Handle(GetAllTagNamesQuery message)
+        protected override async Task<string[]> HandleCore(GetAllTagNamesQuery request)
         {
             return await _context.ArticleTags.Select(a => a.ArticleTagName).ToArrayAsync();
         }

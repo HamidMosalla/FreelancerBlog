@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.ApplicationUsers
 {
-    public class UserByUserNameQueryHandler : IAsyncRequestHandler<UserByUserNameQuery, ApplicationUser>
+    public class UserByUserNameQueryHandler : AsyncRequestHandler<UserByUserNameQuery, ApplicationUser>
     {
         private FreelancerBlogContext _context;
 
@@ -16,7 +16,7 @@ namespace FreelancerBlog.Data.Queries.ApplicationUsers
             _context = context;
         }
 
-        public Task<ApplicationUser> Handle(UserByUserNameQuery message)
+        protected override Task<ApplicationUser> HandleCore(UserByUserNameQuery message)
         {
             return _context.Users.Include(u => u.Articles)
                                  .ThenInclude(u => u.ArticleRatings)

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FreelancerBlog.Data.Commands.Articles
 {
-    class CreateArticleCommandHandler : IAsyncRequestHandler<CreateArticleCommand>
+    class CreateArticleCommandHandler : AsyncRequestHandler<CreateArticleCommand>
     {
         private FreelancerBlogContext _context;
         private readonly IHttpContextAccessor _contextAccessor;
@@ -24,7 +24,7 @@ namespace FreelancerBlog.Data.Commands.Articles
             _userManager = userManager;
         }
 
-        public Task Handle(CreateArticleCommand message)
+        protected override Task HandleCore(CreateArticleCommand message)
         {
             message.Article.ArticleDateCreated = DateTime.Now;
             message.Article.ArticleViewCount = 1;

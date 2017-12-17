@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.ArticleTags
 {
-    class GetAllArticleTagsQueryHandler : IRequestHandler<GetAllArticleTagsQuery, IQueryable<ArticleTag>>
+    class GetAllArticleTagsQueryHandler : RequestHandler<GetAllArticleTagsQuery, IQueryable<ArticleTag>>
     {
         private FreelancerBlogContext _context;
 
@@ -20,7 +20,7 @@ namespace FreelancerBlog.Data.Queries.ArticleTags
             _context = context;
         }
 
-        public IQueryable<ArticleTag> Handle(GetAllArticleTagsQuery message)
+        protected override IQueryable<ArticleTag> HandleCore(GetAllArticleTagsQuery message)
         {
             return _context.ArticleTags.AsQueryable();
         }

@@ -8,7 +8,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.ArticleTags
 {
-    public class DeleteArticleTagCommandHandler : IAsyncRequestHandler<DeleteArticleTagCommand>
+    public class DeleteArticleTagCommandHandler : AsyncRequestHandler<DeleteArticleTagCommand>
     {
         private readonly FreelancerBlogContext _context;
 
@@ -17,7 +17,7 @@ namespace FreelancerBlog.Data.Commands.ArticleTags
             _context = context;
         }
 
-        public Task Handle(DeleteArticleTagCommand message)
+        protected override Task HandleCore(DeleteArticleTagCommand message)
         {
             _context.ArticleTags.Remove(message.ArticleTag);
 

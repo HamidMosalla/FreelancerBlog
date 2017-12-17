@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Commands.Articles
 {
-    public class IncreaseArticleViewCountCommandHandler : IAsyncRequestHandler<IncreaseArticleViewCountCommand>
+    public class IncreaseArticleViewCountCommandHandler : AsyncRequestHandler<IncreaseArticleViewCountCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -18,7 +18,7 @@ namespace FreelancerBlog.Data.Commands.Articles
             _context = context;
         }
 
-        public async Task Handle(IncreaseArticleViewCountCommand message)
+        protected override async Task HandleCore(IncreaseArticleViewCountCommand message)
         {
             var article = await _context.Articles.SingleAsync(a => a.ArticleId == message.ArticleId);
 

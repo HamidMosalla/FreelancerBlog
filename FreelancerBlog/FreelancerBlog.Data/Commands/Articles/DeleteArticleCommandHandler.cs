@@ -5,7 +5,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.Articles
 {
-    public class DeleteArticleCommandHandler : IAsyncRequestHandler<DeleteArticleCommand>
+    public class DeleteArticleCommandHandler : AsyncRequestHandler<DeleteArticleCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -15,7 +15,7 @@ namespace FreelancerBlog.Data.Commands.Articles
         }
 
 
-        public async Task Handle(DeleteArticleCommand message)
+        protected override async Task HandleCore(DeleteArticleCommand message)
         {
             _context.Articles.Remove(message.Article);
             await _context.SaveChangesAsync();

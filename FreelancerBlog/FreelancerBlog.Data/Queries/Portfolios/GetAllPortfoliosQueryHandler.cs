@@ -9,7 +9,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Queries.Portfolios
 {
-    public class GetAllPortfoliosQueryHandler : IRequestHandler<GetAllPortfoliosQuery, IQueryable<Portfolio>>
+    public class GetAllPortfoliosQueryHandler : RequestHandler<GetAllPortfoliosQuery, IQueryable<Portfolio>>
     {
         private FreelancerBlogContext _context;
 
@@ -18,7 +18,7 @@ namespace FreelancerBlog.Data.Queries.Portfolios
             _context = context;
         }
 
-        public IQueryable<Portfolio> Handle(GetAllPortfoliosQuery message)
+        protected override IQueryable<Portfolio> HandleCore(GetAllPortfoliosQuery message)
         {
             return _context.Portfolios.AsQueryable();
         }

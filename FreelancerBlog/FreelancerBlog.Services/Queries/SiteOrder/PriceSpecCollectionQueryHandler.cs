@@ -6,9 +6,9 @@ using MediatR;
 
 namespace FreelancerBlog.Services.Queries.SiteOrder
 {
-    public class PriceSpecCollectionQueryHandler : IRequestHandler<PriceSpecCollectionQuery, List<PriceSpec>>
+    public class PriceSpecCollectionQueryHandler : RequestHandler<PriceSpecCollectionQuery, List<PriceSpec>>
     {
-        public List<PriceSpec> Handle(PriceSpecCollectionQuery message)
+        protected override List<PriceSpec> HandleCore(PriceSpecCollectionQuery message)
         {
             var listOfSiteOrder = new List<PriceSpec>
             {

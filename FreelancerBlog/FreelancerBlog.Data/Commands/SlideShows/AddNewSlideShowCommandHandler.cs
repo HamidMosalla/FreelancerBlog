@@ -8,7 +8,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.SlideShows
 {
-    public class AddNewSlideShowCommandHandler : IAsyncRequestHandler<AddNewSlideShowCommand>
+    public class AddNewSlideShowCommandHandler : AsyncRequestHandler<AddNewSlideShowCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -17,7 +17,7 @@ namespace FreelancerBlog.Data.Commands.SlideShows
             _context = context;
         }
 
-        public Task Handle(AddNewSlideShowCommand message)
+        protected override Task HandleCore(AddNewSlideShowCommand message)
         {
             _context.SlideShows.Add(message.SlideShow);
             return _context.SaveChangesAsync();

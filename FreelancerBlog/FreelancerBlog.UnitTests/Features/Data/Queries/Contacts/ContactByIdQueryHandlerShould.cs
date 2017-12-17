@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Contacts;
@@ -32,7 +33,7 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Contacts
         [Fact]
         public async Task Always_ReturnsObjectOfTypeContact()
         {
-            var result = await _sut.Handle(_message);
+            var result = await _sut.Handle(_message, default(CancellationToken));
 
             result.Should().BeOfType<Contact>();
         }
@@ -40,7 +41,7 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Contacts
         [Fact]
         public async Task WhenCalled_ReturnsTheCorrectContact()
         {
-            var result = await _sut.Handle(_message);
+            var result = await _sut.Handle(_message, default(CancellationToken));
 
             result.Should().NotBeNull();
             result.ContactId.Should().Be(ContactId);

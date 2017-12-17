@@ -8,7 +8,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.Contacts
 {
-    class DeleteContactCommandHandler : IAsyncRequestHandler<DeleteContactCommand>
+    class DeleteContactCommandHandler : AsyncRequestHandler<DeleteContactCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -17,7 +17,7 @@ namespace FreelancerBlog.Data.Commands.Contacts
             _context = context;
         }
 
-        public async Task Handle(DeleteContactCommand message)
+        protected override async Task HandleCore(DeleteContactCommand message)
         {
             _context.Contacts.Remove(message.Contact);
            await _context.SaveChangesAsync();

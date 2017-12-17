@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.Articles
 {
-    class ArticleByArticleIdQueryHandler : IAsyncRequestHandler<ArticleByArticleIdQuery, Article>
+    class ArticleByArticleIdQueryHandler : AsyncRequestHandler<ArticleByArticleIdQuery, Article>
     {
         private readonly FreelancerBlogContext _context;
 
@@ -16,7 +16,7 @@ namespace FreelancerBlog.Data.Queries.Articles
             _context = context;
         }
 
-        public async Task<Article> Handle(ArticleByArticleIdQuery message)
+        protected override async Task<Article> HandleCore(ArticleByArticleIdQuery message)
         {
             return await _context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleRatings).Include(a => a.ArticleComments).SingleAsync(a => a.ArticleId == message.ArticleId);
         }

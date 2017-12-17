@@ -7,9 +7,9 @@ using MediatR;
 
 namespace FreelancerBlog.Services.Queries.SiteOrder
 {
-    class FinalPriceQueryHandler : IRequestHandler<FinalPriceQuery, decimal>
+    class FinalPriceQueryHandler : RequestHandler<FinalPriceQuery, decimal>
     {
-        public decimal Handle(FinalPriceQuery message)
+        protected override decimal HandleCore(FinalPriceQuery message)
         {
             var intTypes = message.PriceSpecs.SingleOrDefault(n => n.Value.GetType().Name == "Int32");
             var stringTypes = message.PriceSpecs.Where(n => n.Value.GetType().Name == "String").ToList();

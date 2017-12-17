@@ -6,9 +6,9 @@ using MediatR;
 
 namespace FreelancerBlog.Features.Commands
 {
-    public class PopulatePortfolioCategoryListCommandHandler : IRequestHandler<PopulatePortfolioCategoryListCommand>
+    public class PopulatePortfolioCategoryListCommandHandler : RequestHandler<PopulatePortfolioCategoryListCommand>
     {
-        public void Handle(PopulatePortfolioCategoryListCommand message)
+        protected override void HandleCore(PopulatePortfolioCategoryListCommand message)
         {
             message.ViewModel.ForEach(v => v.PortfolioCategoryList = message.Portfolios.Single(p => p.PortfolioId == v.PortfolioId).PortfolioCategory.Split(',').ToList());
         }

@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Commands.ArticleTags
 {
-    class CreateArticleTagsCommandHandler : IAsyncRequestHandler<CreateArticleTagsCommand>
+    class CreateArticleTagsCommandHandler : AsyncRequestHandler<CreateArticleTagsCommand>
     {
         private readonly FreelancerBlogContext _context;
 
@@ -22,7 +22,7 @@ namespace FreelancerBlog.Data.Commands.ArticleTags
             _context = context;
         }
 
-        public Task Handle(CreateArticleTagsCommand message)
+        protected override Task HandleCore(CreateArticleTagsCommand message)
         {
             if (string.IsNullOrEmpty(message.ArticleTags)) return Task.FromResult(0);
 

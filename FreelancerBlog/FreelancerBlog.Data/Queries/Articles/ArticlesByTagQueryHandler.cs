@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.Articles
 {
-    public class ArticlesByTagQueryHandler : IRequestHandler<ArticlesByTagQuery, IQueryable<Article>>
+    public class ArticlesByTagQueryHandler : RequestHandler<ArticlesByTagQuery, IQueryable<Article>>
     {
         private FreelancerBlogContext _context;
 
@@ -19,7 +19,7 @@ namespace FreelancerBlog.Data.Queries.Articles
             _context = context;
         }
 
-        public IQueryable<Article> Handle(ArticlesByTagQuery message)
+        protected override IQueryable<Article> HandleCore(ArticlesByTagQuery message)
         {
             return _context.ArticleArticleTags.Where(a => a.ArticleTagId.Equals(message.TagId))
                     .Join(_context.Articles.Include(a => a.ApplicationUser)

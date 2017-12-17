@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using FreelancerBlog.Core.DomainModels;
@@ -26,7 +27,7 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Portfolios
             var sut = new PortfolioByIdQueryHandler(Context);
             var message = new PortfolioByIdQuery { PortfolioId = 1 };
 
-            var result = await sut.Handle(message);
+            var result = await sut.Handle(message, default(CancellationToken));
 
             result.Should().BeOfType<Portfolio>();
         }
@@ -37,7 +38,7 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Portfolios
             var sut = new PortfolioByIdQueryHandler(Context);
             var message = new PortfolioByIdQuery { PortfolioId = 1 };
 
-            var result = await sut.Handle(message);
+            var result = await sut.Handle(message, default(CancellationToken));
 
             result.PortfolioId.Should().Be(message.PortfolioId);
         }

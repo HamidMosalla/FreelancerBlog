@@ -6,7 +6,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Queries.SlideShows
 {
-    public class GetAllSlideShowForHomePageQueryHandler : IRequestHandler<GetAllSlideShowForHomePageQuery, IQueryable<SlideShow>>
+    public class GetAllSlideShowForHomePageQueryHandler : RequestHandler<GetAllSlideShowForHomePageQuery, IQueryable<SlideShow>>
     {
         private FreelancerBlogContext _context;
 
@@ -15,7 +15,7 @@ namespace FreelancerBlog.Data.Queries.SlideShows
             _context = context;
         }
 
-        public IQueryable<SlideShow> Handle(GetAllSlideShowForHomePageQuery message)
+        protected override IQueryable<SlideShow> HandleCore(GetAllSlideShowForHomePageQuery message)
         {
             return _context.SlideShows.OrderBy(s => s.SlideShowPriority)
                                       .ThenByDescending(s => s.SlideShowDateCreated)

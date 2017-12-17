@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.Portfolios
 {
-    public class PortfolioByIdQueryHandler: IAsyncRequestHandler<PortfolioByIdQuery, Portfolio>
+    public class PortfolioByIdQueryHandler: AsyncRequestHandler<PortfolioByIdQuery, Portfolio>
     {
         private FreelancerBlogContext _context;
 
@@ -19,7 +19,7 @@ namespace FreelancerBlog.Data.Queries.Portfolios
             _context = context;
         }
 
-        public Task<Portfolio> Handle(PortfolioByIdQuery message)
+        protected override Task<Portfolio> HandleCore(PortfolioByIdQuery message)
         {
             return _context.Portfolios.SingleAsync(p => p.PortfolioId == message.PortfolioId);
         }

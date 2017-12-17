@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.Contacts
 {
-    public class ContactByIdQueryHandler : IAsyncRequestHandler<ContactByIdQuery, Contact>
+    public class ContactByIdQueryHandler : AsyncRequestHandler<ContactByIdQuery, Contact>
     {
         private FreelancerBlogContext _context;
 
@@ -19,7 +19,7 @@ namespace FreelancerBlog.Data.Queries.Contacts
             _context = context;
         }
 
-        public Task<Contact> Handle(ContactByIdQuery message)
+        protected override Task<Contact> HandleCore(ContactByIdQuery message)
         {
             return _context.Contacts.SingleOrDefaultAsync(c => c.ContactId.Equals(message.ContactId));
         }

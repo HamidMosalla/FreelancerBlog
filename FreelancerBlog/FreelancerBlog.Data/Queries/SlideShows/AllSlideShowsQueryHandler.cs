@@ -9,7 +9,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Queries.SlideShows
 {
-    public class AllSlideShowsQueryHandler : IRequestHandler<AllSlideShowsQuery, IQueryable<SlideShow>>
+    public class AllSlideShowsQueryHandler : RequestHandler<AllSlideShowsQuery, IQueryable<SlideShow>>
     {
         private FreelancerBlogContext _context;
 
@@ -18,7 +18,7 @@ namespace FreelancerBlog.Data.Queries.SlideShows
             _context = context;
         }
 
-        public IQueryable<SlideShow> Handle(AllSlideShowsQuery message)
+        protected override IQueryable<SlideShow> HandleCore(AllSlideShowsQuery message)
         {
            return _context.SlideShows.AsQueryable();
         }

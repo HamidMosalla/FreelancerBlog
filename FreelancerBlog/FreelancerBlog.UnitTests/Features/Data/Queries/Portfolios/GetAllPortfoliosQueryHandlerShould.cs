@@ -1,49 +1,54 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Portfolios;
 using FreelancerBlog.Data.Queries.Portfolios;
 using FreelancerBlog.UnitTests.Database;
+using Microsoft.EntityFrameworkCore.Internal;
 using Xunit;
 
 namespace FreelancerBlog.UnitTests.Features.Data.Queries.Portfolios
 {
     public class GetAllPortfoliosQueryHandlerShould : InMemoryContextTest
     {
-        private GetAllPortfoliosQuery _message;
-        private const int PortfolioId = 1;
         private GetAllPortfoliosQueryHandler _sut;
 
         public GetAllPortfoliosQueryHandlerShould()
         {
-            _message = new GetAllPortfoliosQuery();
             _sut = new GetAllPortfoliosQueryHandler(Context);
         }
 
         protected override void LoadTestData()
         {
-            var portfolio = new Portfolio { PortfolioId = PortfolioId, PortfolioTitle = "First Portfolio" };
+            var portfolios = new List<Portfolio>
+            {
+                new Portfolio {PortfolioId = 1, PortfolioTitle = "First Portfolio"},
+                new Portfolio {PortfolioId = 2, PortfolioTitle = "Second Portfolio"}
+            };
 
-            Context.Add(portfolio);
+            Context.Portfolios.AddRange(portfolios);
             Context.SaveChanges();
         }
 
         [Fact]
-        public void WhenCalled_ReturnsObjectOfTypeIQueryablePortfolio()
+        public async Task WhenCalled_ReturnsObjectOfTypeIQueryablePortfolio()
         {
-            var result = _sut.Handle(_message).ToList();
+            var result = await _sut.Handle(new GetAllPortfoliosQuery(), default(CancellationToken));
 
             result.Should().NotBeNull();
-            result.Should().BeOfType<List<Portfolio>>();
+            //TODO: find a better way to pass this
+            result.Should().BeOfType<InternalDbSet<Portfolio>>();
         }
 
         [Fact]
-        public void WhenCalled_ReturnsTheCorrectNumberOfPortfolio()
+        public async Task WhenCalled_ReturnsTheCorrectNumberOfPortfolio()
         {
-            var result = _sut.Handle(_message).ToList();
+            var result = await _sut.Handle(new GetAllPortfoliosQuery(), default(CancellationToken));
 
-            result.Count.Should().Be(1);
+            result.ToList().Count.Should().Be(2);
         }
     }
 }

@@ -10,7 +10,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Queries.ArticleComments
 {
-    public class GetAllCommentsQueryHandler : IRequestHandler<GetAllCommentsQuery, IQueryable<ArticleComment>>
+    public class GetAllCommentsQueryHandler : RequestHandler<GetAllCommentsQuery, IQueryable<ArticleComment>>
     {
         private readonly FreelancerBlogContext _context;
 
@@ -19,9 +19,9 @@ namespace FreelancerBlog.Data.Queries.ArticleComments
             _context = context;
         }
 
-        public  IQueryable<ArticleComment> Handle(GetAllCommentsQuery message)
+        protected override IQueryable<ArticleComment> HandleCore(GetAllCommentsQuery message)
         {
-            return  _context.ArticleComments.AsQueryable();
+            return _context.ArticleComments.AsQueryable();
         }
     }
 }

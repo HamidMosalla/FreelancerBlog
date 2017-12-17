@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FreelancerBlog.Data.Commands.Articles
 {
-    public class AddRatingToArticleCommandHandler : IAsyncRequestHandler<AddRatingToArticleCommand>
+    public class AddRatingToArticleCommandHandler : AsyncRequestHandler<AddRatingToArticleCommand>
     {
         private FreelancerBlogContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -21,7 +21,7 @@ namespace FreelancerBlog.Data.Commands.Articles
             _userManager = userManager;
         }
 
-        public Task Handle(AddRatingToArticleCommand message)
+        protected override Task HandleCore(AddRatingToArticleCommand message)
         {
             var articleRating = new ArticleRating { ArticleIDfk = message.ArticleId, ArticleRatingScore = message.ArticleRating, UserIDfk = _userManager.GetUserId(message.User) };
 

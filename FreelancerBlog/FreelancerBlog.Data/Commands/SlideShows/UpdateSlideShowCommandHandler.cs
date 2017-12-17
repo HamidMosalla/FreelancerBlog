@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Commands.SlideShows
 {
-    public class UpdateSlideShowCommandHandler : IAsyncRequestHandler<UpdateSlideShowCommand>
+    public class UpdateSlideShowCommandHandler : AsyncRequestHandler<UpdateSlideShowCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -18,7 +18,7 @@ namespace FreelancerBlog.Data.Commands.SlideShows
             _context = context;
         }
 
-        public Task Handle(UpdateSlideShowCommand message)
+        protected override Task HandleCore(UpdateSlideShowCommand message)
         {
             _context.SlideShows.Attach(message.SlideShow);
 

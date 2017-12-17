@@ -8,7 +8,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.ArticleComments
 {
-    class AddCommentToArticleCommandHandler : IAsyncRequestHandler<AddCommentToArticleCommand>
+    class AddCommentToArticleCommandHandler : AsyncRequestHandler<AddCommentToArticleCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -17,7 +17,7 @@ namespace FreelancerBlog.Data.Commands.ArticleComments
             _context = context;
         }
 
-        public Task Handle(AddCommentToArticleCommand message)
+        protected override Task HandleCore(AddCommentToArticleCommand message)
         {
             _context.ArticleComments.Add(message.ArticleComment);
 

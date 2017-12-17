@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Commands.Portfolios
 {
-    public class UpdatePortfolioCommandHandler: IAsyncRequestHandler<UpdatePortfolioCommand>
+    public class UpdatePortfolioCommandHandler: AsyncRequestHandler<UpdatePortfolioCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -18,7 +18,7 @@ namespace FreelancerBlog.Data.Commands.Portfolios
             _context = context;
         }
 
-        public Task Handle(UpdatePortfolioCommand message)
+        protected override Task HandleCore(UpdatePortfolioCommand message)
         {
             _context.Portfolios.Attach(message.Portfolio);
 

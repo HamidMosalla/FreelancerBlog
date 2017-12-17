@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace FreelancerBlog.Services.Queries.Shared
 {
-    public class ValidateCaptchaQueryHandler : IAsyncRequestHandler<ValidateCaptchaQuery, CaptchaResponse>
+    public class ValidateCaptchaQueryHandler : AsyncRequestHandler<ValidateCaptchaQuery, CaptchaResponse>
     {
         private IConfiguration _configuration;
         private readonly IHttpContextAccessor _contextAccessor;
@@ -27,7 +27,7 @@ namespace FreelancerBlog.Services.Queries.Shared
             _httpClient = httpClient;
         }
 
-        public async Task<CaptchaResponse> Handle(ValidateCaptchaQuery message)
+        protected override async Task<CaptchaResponse> HandleCore(ValidateCaptchaQuery message)
         {
             var secret = _configuration.GetValue<string>("reChaptchaSecret:server-secret");
             var answer = _contextAccessor.HttpContext.Request.Form["g-recaptcha-response"];

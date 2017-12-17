@@ -8,7 +8,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.Contacts
 {
-    public class AddNewContactCommandHandler : IAsyncRequestHandler<AddNewContactCommand>
+    public class AddNewContactCommandHandler : AsyncRequestHandler<AddNewContactCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -17,7 +17,7 @@ namespace FreelancerBlog.Data.Commands.Contacts
             _context = context;
         }
 
-        public Task Handle(AddNewContactCommand message)
+        protected override Task HandleCore(AddNewContactCommand message)
         {
             _context.Contacts.Add(message.Contact);
             return _context.SaveChangesAsync();

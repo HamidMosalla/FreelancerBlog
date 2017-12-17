@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Articles;
@@ -42,10 +44,10 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Articles
         }
 
         [Fact]
-        public void ArticleRatingsEmpty_ReturnFalse()
+        public async Task ArticleRatingsEmpty_ReturnFalse()
         {
             var query = new ArticleRatedBeforeQuery { ArticleId = 2, User = GetFakeClaimsPrincipal() };
-            var result = _sut.Handle(query);
+            var result = await _sut.Handle(query, default(CancellationToken));
             result.Should().Be(false);
         }
 
@@ -53,7 +55,7 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Articles
         public void UserRatedBefore_ReturnTrue()
         {
             var query = new ArticleRatedBeforeQuery { ArticleId = 1, User = GetFakeClaimsPrincipal()};
-            var result = _sut.Handle(query);
+            var result = _sut.Handle(query, default(CancellationToken));
             result.Should().Be(true);
         }
     }

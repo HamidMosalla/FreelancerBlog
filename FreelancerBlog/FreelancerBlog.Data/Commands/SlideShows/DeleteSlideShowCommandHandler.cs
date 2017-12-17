@@ -8,7 +8,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.SlideShows
 {
-    public class DeleteSlideShowCommandHandler : IAsyncRequestHandler<DeleteSlideShowCommand>
+    public class DeleteSlideShowCommandHandler : AsyncRequestHandler<DeleteSlideShowCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -17,7 +17,7 @@ namespace FreelancerBlog.Data.Commands.SlideShows
             _context = context;
         }
 
-        public Task Handle(DeleteSlideShowCommand message)
+        protected override Task HandleCore(DeleteSlideShowCommand message)
         {
             _context.SlideShows.Remove(message.SlideShow);
 

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.ArticleComments
 {
-    class ToggleArticleCommentApprovalCommandHandler : IAsyncRequestHandler <ToggleArticleCommentApprovalCommand>
+    class ToggleArticleCommentApprovalCommandHandler : AsyncRequestHandler <ToggleArticleCommentApprovalCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -14,7 +14,7 @@ namespace FreelancerBlog.Data.Commands.ArticleComments
             _context = context;
         }
 
-        public Task Handle(ToggleArticleCommentApprovalCommand message)
+        protected override Task HandleCore(ToggleArticleCommentApprovalCommand message)
         {
             message.ArticleComment.IsCommentApproved = !message.ArticleComment.IsCommentApproved;
 

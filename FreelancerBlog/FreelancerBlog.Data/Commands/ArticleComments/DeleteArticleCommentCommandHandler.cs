@@ -8,7 +8,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.ArticleComments
 {
-    class DeleteArticleCommentCommandHandler : IAsyncRequestHandler<DeleteArticleCommentCommand>
+    class DeleteArticleCommentCommandHandler : AsyncRequestHandler<DeleteArticleCommentCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -17,7 +17,7 @@ namespace FreelancerBlog.Data.Commands.ArticleComments
             _context = context;
         }
 
-        public Task Handle(DeleteArticleCommentCommand message)
+        protected override Task HandleCore(DeleteArticleCommentCommand message)
         {
             _context.ArticleComments.Remove(message.ArticleComment);
             return _context.SaveChangesAsync();

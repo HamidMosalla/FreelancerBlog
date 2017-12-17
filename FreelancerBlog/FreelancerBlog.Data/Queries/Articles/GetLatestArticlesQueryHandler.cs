@@ -6,7 +6,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Queries.Articles
 {
-    public class GetLatestArticlesQueryHandler : IRequestHandler<GetLatestArticlesQuery, IQueryable<Article>>
+    public class GetLatestArticlesQueryHandler : RequestHandler<GetLatestArticlesQuery, IQueryable<Article>>
     {
         private FreelancerBlogContext _context;
 
@@ -15,7 +15,7 @@ namespace FreelancerBlog.Data.Queries.Articles
             _context = context;
         }
 
-        public IQueryable<Article> Handle(GetLatestArticlesQuery message)
+        protected override IQueryable<Article> HandleCore(GetLatestArticlesQuery message)
         {
             return _context.Articles.OrderByDescending(a => a.ArticleDateCreated).Take(message.NumberOfArticles).AsQueryable();
         }

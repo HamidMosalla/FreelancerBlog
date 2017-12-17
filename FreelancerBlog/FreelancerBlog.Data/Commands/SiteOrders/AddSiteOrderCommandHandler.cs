@@ -5,7 +5,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.SiteOrders
 {
-    public class AddSiteOrderCommandHandler : IAsyncRequestHandler<AddSiteOrderCommand>
+    public class AddSiteOrderCommandHandler : AsyncRequestHandler<AddSiteOrderCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -14,7 +14,7 @@ namespace FreelancerBlog.Data.Commands.SiteOrders
             _context = context;
         }
 
-        public Task Handle(AddSiteOrderCommand message)
+        protected override Task HandleCore(AddSiteOrderCommand message)
         {
             _context.SiteOrders.Add(message.SiteOrder);
 

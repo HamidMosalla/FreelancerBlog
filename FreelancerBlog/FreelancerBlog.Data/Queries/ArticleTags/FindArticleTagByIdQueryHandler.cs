@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.ArticleTags
 {
-    class FindArticleTagByIdQueryHandler: IAsyncRequestHandler<FindArticleTagByIdQuery, ArticleTag>
+    class FindArticleTagByIdQueryHandler: AsyncRequestHandler<FindArticleTagByIdQuery, ArticleTag>
     {
         private FreelancerBlogContext _context;
 
@@ -19,7 +19,7 @@ namespace FreelancerBlog.Data.Queries.ArticleTags
             _context = context;
         }
 
-        public Task<ArticleTag> Handle(FindArticleTagByIdQuery message)
+        protected override Task<ArticleTag> HandleCore(FindArticleTagByIdQuery message)
         {
             return _context.ArticleTags.SingleOrDefaultAsync(a => a.ArticleTagId == message.ArticleTagId);
         }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.ArticleComments
 {
-    class ArticleCommentByIdQueryHandler : IAsyncRequestHandler<ArticleCommentByIdQuery, ArticleComment>
+    class ArticleCommentByIdQueryHandler : AsyncRequestHandler<ArticleCommentByIdQuery, ArticleComment>
     {
         private FreelancerBlogContext _context;
 
@@ -19,7 +19,7 @@ namespace FreelancerBlog.Data.Queries.ArticleComments
             _context = context;
         }
 
-        public Task<ArticleComment> Handle(ArticleCommentByIdQuery message)
+        protected override Task<ArticleComment> HandleCore(ArticleCommentByIdQuery message)
         {
             return _context.ArticleComments.SingleOrDefaultAsync(a => a.ArticleCommentId == message.ArticleCommentId);
         }

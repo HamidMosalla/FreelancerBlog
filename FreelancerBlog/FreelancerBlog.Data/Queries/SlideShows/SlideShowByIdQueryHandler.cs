@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.SlideShows
 {
-    public class SlideShowByIdQueryHandler : IAsyncRequestHandler<SlideShowByIdQuery, SlideShow>
+    public class SlideShowByIdQueryHandler : AsyncRequestHandler<SlideShowByIdQuery, SlideShow>
     {
         private FreelancerBlogContext _context;
 
@@ -19,7 +19,7 @@ namespace FreelancerBlog.Data.Queries.SlideShows
             _context = context;
         }
 
-        public Task<SlideShow> Handle(SlideShowByIdQuery message)
+        protected override Task<SlideShow> HandleCore(SlideShowByIdQuery message)
         {
            return _context.SlideShows.SingleAsync(s => s.SlideShowId == message.SlideShowId);
         }

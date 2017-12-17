@@ -8,7 +8,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.ArticleComments
 {
-    class EditArticleCommentCommandHandler : IAsyncRequestHandler<EditArticleCommentCommand>
+    class EditArticleCommentCommandHandler : AsyncRequestHandler<EditArticleCommentCommand>
     {
         private FreelancerBlogContext _context;
 
@@ -17,7 +17,7 @@ namespace FreelancerBlog.Data.Commands.ArticleComments
             _context = context;
         }
 
-        public Task Handle(EditArticleCommentCommand message)
+        protected override Task HandleCore(EditArticleCommentCommand message)
         {
             message.ArticleComment.ArticleCommentBody = message.NewCommentBody;
             return _context.SaveChangesAsync();

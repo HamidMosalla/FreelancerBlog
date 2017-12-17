@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Commands.ArticleTags
 {
-    class UpdateArticleTagsCommandHandler : IAsyncRequestHandler<UpdateArticleTagsCommand>
+    class UpdateArticleTagsCommandHandler : AsyncRequestHandler<UpdateArticleTagsCommand>
     {
         private readonly FreelancerBlogContext _context;
 
@@ -20,7 +20,7 @@ namespace FreelancerBlog.Data.Commands.ArticleTags
             _context = context;
         }
 
-        public async Task Handle(UpdateArticleTagsCommand message)
+        protected override async Task HandleCore(UpdateArticleTagsCommand message)
         {
             var articleTags = GetCurrentArticle(message.Article.ArticleId);
            var currentArticleTags = articleTags.Select(t=> t.ArticleTagName.Trim()).ToList();

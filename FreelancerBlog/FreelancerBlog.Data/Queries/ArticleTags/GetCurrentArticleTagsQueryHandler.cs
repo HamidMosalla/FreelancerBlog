@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.ArticleTags
 {
-    class GetCurrentArticleTagsQueryHandler : IAsyncRequestHandler<GetCurrentArticleTagsQuery, List<ArticleTag>>
+    class GetCurrentArticleTagsQueryHandler : AsyncRequestHandler<GetCurrentArticleTagsQuery, List<ArticleTag>>
     {
         private FreelancerBlogContext _context;
 
@@ -20,7 +20,7 @@ namespace FreelancerBlog.Data.Queries.ArticleTags
             _context = context;
         }
 
-        public Task<List<ArticleTag>> Handle(GetCurrentArticleTagsQuery message)
+        protected override Task<List<ArticleTag>> HandleCore(GetCurrentArticleTagsQuery message)
         {
             return _context.ArticleArticleTags
                         .Where(a => a.ArticleId == message.ArticleId)

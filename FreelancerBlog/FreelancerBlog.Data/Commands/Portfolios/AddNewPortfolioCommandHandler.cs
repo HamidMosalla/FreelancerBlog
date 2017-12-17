@@ -8,7 +8,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.Portfolios
 {
-    public class AddNewPortfolioCommandHandler : IAsyncRequestHandler<AddNewPortfolioCommand>
+    public class AddNewPortfolioCommandHandler : AsyncRequestHandler<AddNewPortfolioCommand>
     {
         private readonly FreelancerBlogContext _context;
 
@@ -17,7 +17,7 @@ namespace FreelancerBlog.Data.Commands.Portfolios
             _context = context;
         }
 
-        public Task Handle(AddNewPortfolioCommand message)
+        protected override Task HandleCore(AddNewPortfolioCommand message)
         {
             _context.Portfolios.Add(message.Portfolio);
             return _context.SaveChangesAsync();

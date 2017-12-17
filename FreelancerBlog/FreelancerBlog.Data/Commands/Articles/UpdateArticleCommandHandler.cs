@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Commands.Articles
 {
-    public class UpdateArticleCommandHandler : IAsyncRequestHandler<UpdateArticleCommand>
+    public class UpdateArticleCommandHandler : AsyncRequestHandler<UpdateArticleCommand>
     {
         private readonly FreelancerBlogContext _context;
 
@@ -18,7 +18,7 @@ namespace FreelancerBlog.Data.Commands.Articles
             _context = context;
         }
 
-        public Task Handle(UpdateArticleCommand message)
+        protected override Task HandleCore(UpdateArticleCommand message)
         {
             _context.Articles.Attach(message.Article);
 

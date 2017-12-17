@@ -5,7 +5,7 @@ using MediatR;
 
 namespace FreelancerBlog.Data.Commands.ArticleTags
 {
-    class EditArticleTagCommandHandler : IAsyncRequestHandler<EditArticleTagCommand>
+    class EditArticleTagCommandHandler : AsyncRequestHandler<EditArticleTagCommand>
     {
         private readonly FreelancerBlogContext _context;
 
@@ -14,7 +14,7 @@ namespace FreelancerBlog.Data.Commands.ArticleTags
             _context = context;
         }
 
-        public Task Handle(EditArticleTagCommand message)
+        protected override Task HandleCore(EditArticleTagCommand message)
         {
             message.ArticleTag.ArticleTagName = message.NewTagName;
             return _context.SaveChangesAsync();
