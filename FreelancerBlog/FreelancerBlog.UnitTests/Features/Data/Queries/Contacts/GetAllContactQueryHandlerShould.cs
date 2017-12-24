@@ -36,7 +36,7 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Contacts
             var result = await _sut.Handle(_message, default(CancellationToken));
 
             result.Should().NotBeNull();
-            result.Should().BeOfType<InternalDbSet<Contact>>();
+            result.First().Should().BeOfType<Contact>();
         }
 
         [Fact]
