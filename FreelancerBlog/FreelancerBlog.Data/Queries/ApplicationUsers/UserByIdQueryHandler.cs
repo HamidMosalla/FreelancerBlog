@@ -22,7 +22,7 @@ namespace FreelancerBlog.Data.Queries.ApplicationUsers
 
         protected override Task<ApplicationUser> HandleCore(UserByIdQuery message)
         {
-            return _context.Users.SingleAsync(u => u.Id.Equals(_userManager.GetUserId(message.User)));
+            return _context.Users.SingleAsync(u => u.Id == _userManager.GetUserId(message.User));
         }
     }
 }

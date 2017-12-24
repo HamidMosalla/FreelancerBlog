@@ -37,7 +37,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
             var portfoliosViewModel = _mapper.Map<IQueryable<Portfolio>, List<PortfolioViewModel>>(portfolios);
 
-            portfoliosViewModel.ForEach(v => v.PortfolioCategoryList = portfolios.Single(p => p.PortfolioId.Equals(v.PortfolioId)).PortfolioCategory.Split(',').ToList());
+            portfoliosViewModel.ForEach(v => v.PortfolioCategoryList = portfolios.Single(p => p.PortfolioId == v.PortfolioId).PortfolioCategory.Split(',').ToList());
 
             return View(portfoliosViewModel);
         }
@@ -69,7 +69,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            if (id.Equals(default(int))) return BadRequest();
+            if (id == default(int)) return BadRequest();
 
             var model = await _mediator.Send(new PortfolioByIdQuery { PortfolioId = id });
 

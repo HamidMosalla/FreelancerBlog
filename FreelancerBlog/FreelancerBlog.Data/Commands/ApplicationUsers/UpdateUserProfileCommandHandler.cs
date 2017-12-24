@@ -21,7 +21,7 @@ namespace FreelancerBlog.Data.Commands.ApplicationUsers
 
         protected override Task HandleCore(UpdateUserProfileCommand message)
         {
-            var model = _context.Users.Single(u => u.Id.Equals(message.ApplicationUser.Id));
+            var model = _context.Users.Single(u => u.Id == message.ApplicationUser.Id);
 
             model.UserAddress = message.ApplicationUser.UserAddress;
             model.UserProfileEmail = message.ApplicationUser.UserProfileEmail;

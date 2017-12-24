@@ -21,7 +21,7 @@ namespace FreelancerBlog.Data.Queries.Contacts
 
         protected override Task<Contact> HandleCore(ContactByIdQuery message)
         {
-            return _context.Contacts.SingleOrDefaultAsync(c => c.ContactId.Equals(message.ContactId));
+            return _context.Contacts.SingleOrDefaultAsync(c => c.ContactId == message.ContactId);
         }
     }
 }

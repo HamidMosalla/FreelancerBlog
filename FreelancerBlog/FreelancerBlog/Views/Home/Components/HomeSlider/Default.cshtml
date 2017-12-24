@@ -14,7 +14,7 @@
     <div class="carousel-inner">
         @foreach (var slide in Model)
         {
-            <div class="item @(Model.ElementAt(0).Equals(slide) ? "active" : string.Empty)" style="background-image: url(/images/slider/@slide.SlideShowPictrure)">
+            <div class="item @(Model.ElementAt(0) == slide ? "active" : string.Empty)" style="background-image: url(/images/slider/@slide.SlideShowPictrure)">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-12">

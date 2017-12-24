@@ -70,7 +70,7 @@ namespace FreelancerBlog.Areas.Admin.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            if (id.Equals(default(int))) return BadRequest();
+            if (id == default(int)) return BadRequest();
 
             var model = await _mediator.Send(new SlideShowByIdQuery { SlideShowId = id });
 

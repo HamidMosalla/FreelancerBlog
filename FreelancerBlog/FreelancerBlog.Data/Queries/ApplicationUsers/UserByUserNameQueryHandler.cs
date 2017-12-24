@@ -21,7 +21,7 @@ namespace FreelancerBlog.Data.Queries.ApplicationUsers
             return _context.Users.Include(u => u.Articles)
                                  .ThenInclude(u => u.ArticleRatings)
                                  .Include(u => u.ArticleComments)
-                                 .SingleOrDefaultAsync(u => u.Email.Equals(message.UserName));
+                                 .SingleOrDefaultAsync(u => u.Email == message.UserName);
         }
     }
 }
