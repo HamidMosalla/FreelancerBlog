@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.ArticleTags
 {
-    class TagsByArticleIdQueryHandler : AsyncRequestHandler<TagsByArticleIdQuery, string>
+    public class TagsByArticleIdQueryHandler : AsyncRequestHandler<TagsByArticleIdQuery, string>
     {
         private FreelancerBlogContext _context;
 
