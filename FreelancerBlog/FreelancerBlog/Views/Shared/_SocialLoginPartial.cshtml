@@ -8,15 +8,23 @@
     <h4>@Localizer["SocialLoginMessage"]</h4>
     <hr />
     @{
-        var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
-
+        var loginProviders = await SignInManager.GetExternalAuthenticationSchemesAsync();
 
         <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
             <div>
                 <p>
                     @foreach (var provider in loginProviders)
                     {
-                        <button type="submit" class="btn btn-lg btn-block btn-social btn-@provider.AuthenticationScheme.ToLower()" style="direction: ltr;" id="@provider.AuthenticationScheme" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.AuthenticationScheme account"><span class="fa fa-@(provider.AuthenticationScheme.ToLower() == "microsoft" ? "windows" : provider.AuthenticationScheme.ToLower())"></span>@provider.AuthenticationScheme</button>
+                        <button type="submit"
+                                class="btn btn-lg btn-block btn-social btn-@provider.Name.ToLower()"
+                                style="direction: ltr;"
+                                id="@provider.Name"
+                                name="provider"
+                                value="@provider.Name"
+                                title="Log in using your @provider.Name account">
+                            <span class="fa fa-@(provider.Name.ToLower() == "microsoft" ? "windows" : provider.Name.ToLower())"></span>
+                            @provider.Name
+                        </button>
                     }
                 </p>
             </div>

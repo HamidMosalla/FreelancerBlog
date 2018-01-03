@@ -48,31 +48,29 @@ namespace FreelancerBlog.Areas.User.Controllers
 
             if (viewModel.UserAvatarFile != null)
             {
+                if (!_fileManager.ValidateUploadedFile(viewModel.UserAvatarFile, UploadFileType.Image, .03, ModelState))
+                {
+                    return View(viewModel);
+                }
+
+                var model = await _mediator.Send(new UserByIdQuery { User = User });
+
+                if (model.UserAvatar != null)
+                {
+                    FileStatus fileDeleteResult = _fileManager.DeleteFile(model.UserAvatar, new List<string> { "images", "user-avatar" });
+
+                    TempData["FileDeleteStatus"] = fileDeleteResult == FileStatus.DeleteSuccess ? "Success" : "Failure";
+                }
+
+                string newAvatarName = await _fileManager.UploadFileAsync(viewModel.UserAvatarFile, new List<string> { "images", "user-avatar" });
+
+                user.UserAvatar = newAvatarName;
+
                 await _mediator.Send(new UpdateUserProfileCommand { ApplicationUser = user });
 
                 TempData["EditProfileMessage"] = "EditProfileSuccess";
                 return RedirectToAction("Index", "Manage", new { Area = "" });
             }
-
-            if (!_fileManager.ValidateUploadedFile(viewModel.UserAvatarFile, UploadFileType.Image, .03, ModelState))
-            {
-                return View(viewModel);
-            }
-
-            var model = await _mediator.Send(new UserByIdQuery { User = User });
-
-            //_uw.UserRepository.Detach(model);
-
-            if (model.UserAvatar != null)
-            {
-                FileStatus fileDeleteResult = _fileManager.DeleteFile(model.UserAvatar, new List<string> { "images", "user-avatar" });
-
-                TempData["FileDeleteStatus"] = fileDeleteResult == FileStatus.DeleteSuccess ? "Success" : "Failure";
-            }
-
-            string newAvatarName = await _fileManager.UploadFileAsync(viewModel.UserAvatarFile, new List<string> { "images", "user-avatar" });
-
-            user.UserAvatar = newAvatarName;
 
             await _mediator.Send(new UpdateUserProfileCommand { ApplicationUser = user });
 
