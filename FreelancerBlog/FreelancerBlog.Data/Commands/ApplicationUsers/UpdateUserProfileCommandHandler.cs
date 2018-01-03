@@ -21,26 +21,9 @@ namespace FreelancerBlog.Data.Commands.ApplicationUsers
 
         protected override Task HandleCore(UpdateUserProfileCommand message)
         {
-            var model = _context.Users.Single(u => u.Id == message.ApplicationUser.Id);
-
-            model.UserAddress = message.ApplicationUser.UserAddress;
-            model.UserProfileEmail = message.ApplicationUser.UserProfileEmail;
-            model.UserPhoneNumber = message.ApplicationUser.UserPhoneNumber;
-            model.UserAvatar = message.ApplicationUser.UserAvatar ?? model.UserAvatar;
-            model.UserBio = message.ApplicationUser.UserBio;
-            model.UserDateOfBirth = message.ApplicationUser.UserDateOfBirth;
-            model.UserFacebookProfile = message.ApplicationUser.UserFacebookProfile;
-            model.UserFavourites = message.ApplicationUser.UserFavourites;
-            model.UserFullName = message.ApplicationUser.UserFullName;
-            model.UserGender = message.ApplicationUser.UserGender;
-            model.UserGoogleProfile = message.ApplicationUser.UserGoogleProfile;
-            model.UserHowFindUs = message.ApplicationUser.UserHowFindUs;
-            model.UserLinkedInProfile = message.ApplicationUser.UserLinkedInProfile;
-            model.UserOccupation = message.ApplicationUser.UserOccupation;
-            model.UserSpeciality = message.ApplicationUser.UserSpeciality;
-            model.UserTwitterProfile = message.ApplicationUser.UserTwitterProfile;
-            model.UserWebSite = message.ApplicationUser.UserWebSite;
-
+            var model = _context.Users.AsNoTracking().Single(u => u.Id == message.ApplicationUser.Id);
+            message.ApplicationUser.ConcurrencyStamp = model.ConcurrencyStamp;
+            _context.Entry(message.ApplicationUser).State = EntityState.Modified;
             return _context.SaveChangesAsync();
         }
     }
