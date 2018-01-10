@@ -24,23 +24,11 @@ utils.extend( a, b )
 utils.modulo( num, div )
 // num [modulo] div
 
-utils.isArray( obj )
-// check if object is Array
-
 utils.makeArray( obj )
 // make array from object
 
-utils.indexOf( ary, obj )
-// get index of object in array
-
 utils.removeFrom( ary, obj )
 // remove object from array
-
-utils.isElement( obj )
-// check if object is an element
-
-utils.setText( elem, text )
-// set text of an element
 
 utils.getParent( elem, selector )
 // get parent element of an element, given a selector string
@@ -57,6 +45,9 @@ utils.filterFindElements( elems, selector )
 utils.debounceMethod( Class, methodName, threhold )
 // debounce a class method
 
+utils.docReady( callback )
+// trigger callback on document ready
+
 utils.toDashed( str )
 // 'camelCaseString' -> 'camel-case-string'
 
@@ -68,6 +59,6 @@ utils.htmlInit( Class, namespace )
 
 ---
 
-MIT license. Have at it.
+[MIT license](http://desandro.mit-license.org/). Have at it.
 
 By [Metafizzy](http://metafizzy.co)

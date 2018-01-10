@@ -1,10 +1,8 @@
 {
   "name": "eventEmitter",
   "description": "Event based JavaScript for the browser",
-  "version": "4.3.0",
-  "main": [
-    "./EventEmitter.js"
-  ],
+  "version": "5.2.4",
+  "main": "EventEmitter.js",
   "author": {
     "name": "Oliver Caldwell",
     "web": "http://oli.me.uk/"
@@ -22,13 +20,14 @@
     "package.json"
   ],
   "homepage": "https://github.com/Olical/EventEmitter",
-  "_release": "4.3.0",
+  "_release": "5.2.4",
   "_resolution": {
     "type": "version",
-    "tag": "v4.3.0",
-    "commit": "34545d1b761fca48d7e4d9c71efc868a8d101419"
+    "tag": "v5.2.4",
+    "commit": "93b7f25586e4d1ddf4dda1bc801579940be75f9b"
   },
   "_source": "https://github.com/Olical/EventEmitter.git",
-  "_target": ">=4.2 <5",
-  "_originalSource": "eventEmitter"
+  "_target": "v5.2.4",
+  "_originalSource": "eventEmitter",
+  "_direct": true
 }

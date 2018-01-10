@@ -1,11 +1,9 @@
 {
   "name": "get-size",
-  "version": "1.2.2",
+  "version": "2.0.2",
   "main": "get-size.js",
   "description": "measures element size",
-  "dependencies": {
-    "get-style-property": "1.x"
-  },
+  "dependencies": {},
   "devDependencies": {
     "qunit": "~1.10"
   },
@@ -13,11 +11,11 @@
     "test/",
     "**/.*",
     "package.json",
-    "component.json",
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "sandbox.html"
   ],
   "homepage": "https://github.com/desandro/get-size",
   "authors": [
@@ -35,13 +33,13 @@
     "height"
   ],
   "license": "MIT",
-  "_release": "1.2.2",
+  "_release": "2.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "v1.2.2",
-    "commit": "059bbf3aa78997e4ca761e6d742b2e9efe674e08"
+    "tag": "v2.0.2",
+    "commit": "53ad18840e260d5eb89fd579362596dad5852c77"
   },
   "_source": "https://github.com/desandro/get-size.git",
-  "_target": "~1.2.2",
+  "_target": "^2.0.2",
   "_originalSource": "get-size"
 }

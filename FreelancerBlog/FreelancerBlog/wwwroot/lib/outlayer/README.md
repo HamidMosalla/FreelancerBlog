@@ -7,7 +7,7 @@ Outlayer is a base layout class for layout libraries like [Isotope](http://isoto
 Outlayer layouts work with a container element and children item elements.
 
 ``` html
-<div class="container">
+<div class="grid">
   <div class="item"></div>
   <div class="item"></div>
   <div class="item"></div>
@@ -39,7 +39,7 @@ Create a new layout class. `namespace` is used for jQuery plugin, and for declar
 The `Layout` inherits from [`Outlayer.prototype`](docs/outlayer.md).
 
 ```
-var elem = document.querySelector('#selector');
+var elem = document.querySelector('.selector');
 var msnry = new Masonry( elem, {
   // set options...
   columnWidth: 200
@@ -52,24 +52,23 @@ Layouts work with Items, accessible as `Layout.Item`. See [Item API](docs/item.m
 
 ## Declarative
 
-An Outlayer layout class can be initialized via HTML, by setting a class of `.js-namespace` on the element. Options can be set via a `data-namespace-options` attribution. For example:
+An Outlayer layout class can be initialized via HTML, by setting an attribute of `data-namespace` on the element. Options are set in JSON. For example:
 
 ``` html
 <!-- var Masonry = Outlayer.create('masonry') -->
-<div id="container" class="js-masonry"
-  data-masonry-options='{ "itemSelector": ".item", "columnWidth": 200 }'>
+<div class="grid" data-masonry='{ "itemSelector": ".item", "columnWidth": 200 }'>
   ...
 </div>
 ```
 
-The declarative attributes and class will be dashed. i.e. `Outlayer.create('myNiceLayout')` will use `js-my-nice-layout` the class and `data-my-nice-layout-options` as the options attribute.
+The declarative attributes and class will be dashed. i.e. `Outlayer.create('myNiceLayout')` will use `data-my-nice-layout` as the attribute.
 
 ## .data()
 
 Get a layout instance from an element.
 
 ```
-var myMasonry = Masonry.data( document.querySelector('#container') );
+var myMasonry = Masonry.data( document.querySelector('.grid') );
 ```
 
 ## jQuery plugin
@@ -82,11 +81,11 @@ var Masonry = Outlayer.create('masonry');
 // rock some jQuery
 $( function() {
   // .masonry() to initialize
-  var $container = $('#container').masonry({
+  var $grid = $('.grid').masonry({
     // options...
   });
   // methods are available by passing a string as first parameter
-  $container.masonry( 'reveal', elems );
+  $grid.masonry( 'reveal', elems );
 });
 ```
 
@@ -114,10 +113,7 @@ Or set a path config for all Outlayer dependencies.
 ``` js
 requirejs.config({
   paths: {
-    eventie: 'bower_components/eventie',
-    'doc-ready': 'bower_components/doc-ready',
-    eventEmitter: 'bower_components/eventEmitter',
-    'get-style-property': 'bower_components/get-style-property',
+    'ev-emitter': 'bower_components/ev-emitter',
     'get-size': 'bower_components/get-size',
     'matches-selector': 'bower_components/matches-selector'
   }

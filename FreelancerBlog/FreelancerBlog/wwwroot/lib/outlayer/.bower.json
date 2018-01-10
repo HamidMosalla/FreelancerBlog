@@ -1,26 +1,21 @@
 {
   "name": "outlayer",
-  "version": "1.4.2",
   "description": "the brains and guts of a layout library",
   "main": "outlayer.js",
   "dependencies": {
-    "doc-ready": "1.0.x",
-    "eventEmitter": ">=4.2 <5",
-    "eventie": "~1.0.3",
-    "get-size": "~1.2.2",
-    "get-style-property": "~1.0.4",
-    "matches-selector": "~1.0.2",
-    "fizzy-ui-utils": "~1.0.1"
+    "ev-emitter": "^1.0.0",
+    "get-size": "^2.0.2",
+    "fizzy-ui-utils": "^2.0.0"
   },
   "devDependencies": {
-    "jquery-bridget": "1.x",
-    "jquery": ">=1.4.3 <2",
-    "qunit": "^1.12.0"
+    "jquery-bridget": "2.x",
+    "jquery": ">=1.4.3 <4",
+    "qunit": "^1.17.0"
   },
   "ignore": [
     "test/",
     "docs/",
-    "examples",
+    "sandbox/",
     ".*",
     "notes.md",
     "**/.*",
@@ -45,13 +40,15 @@
     "isotope"
   ],
   "license": "MIT",
-  "_release": "1.4.2",
+  "version": "2.1.1",
+  "_release": "2.1.1",
   "_resolution": {
     "type": "version",
-    "tag": "v1.4.2",
-    "commit": "c2d5e67fa6b4e716591ac11fa2d27494bdfc1733"
+    "tag": "v2.1.1",
+    "commit": "07ca54fd55ff232aec814768716a5d245a450c41"
   },
   "_source": "https://github.com/metafizzy/outlayer.git",
-  "_target": "~1.4.1",
-  "_originalSource": "outlayer"
+  "_target": "v2.1.1",
+  "_originalSource": "outlayer",
+  "_direct": true
 }
