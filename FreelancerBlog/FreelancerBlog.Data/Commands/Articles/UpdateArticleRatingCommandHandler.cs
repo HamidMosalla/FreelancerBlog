@@ -24,7 +24,9 @@ namespace FreelancerBlog.Data.Commands.Articles
 
         protected override Task HandleCore(UpdateArticleRatingCommand message)
         {
-            var articleRating = _context.ArticleRatings.Single(a => a.ArticleIDfk == message.ArticleId && a.UserIDfk == _userManager.GetUserId(message.User));
+            var articleRating = _context.ArticleRatings.Single(a =>
+                                                               a.ArticleIDfk == message.ArticleId && 
+                                                               a.UserIDfk == _userManager.GetUserId(message.User));
 
             articleRating.ArticleRatingScore = message.ArticleRating;
 
