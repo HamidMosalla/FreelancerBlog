@@ -12,7 +12,7 @@ namespace FreelancerBlog.Experimental.TagHelpers
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.PreContent.SetHtmlContent("<b><i>");
-            output.PostContent.SetHtmlContent("</i></b>");
+            output.PostContent.SetHtmlContent("</i> </b>");
         }
     }
 }
