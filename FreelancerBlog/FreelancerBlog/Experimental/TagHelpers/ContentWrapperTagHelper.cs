@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace FreelancerBlog.Experimental
+namespace FreelancerBlog.Experimental.TagHelpers
 {
     public class ContentWrapperTagHelper : TagHelper
     {

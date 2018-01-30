@@ -11,9 +11,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.ArticleTags
 {
-    class GetCurrentArticleTagsQueryHandler : AsyncRequestHandler<GetCurrentArticleTagsQuery, List<ArticleTag>>
+    public class GetCurrentArticleTagsQueryHandler : AsyncRequestHandler<GetCurrentArticleTagsQuery, List<ArticleTag>>
     {
-        private FreelancerBlogContext _context;
+        private readonly FreelancerBlogContext _context;
 
         public GetCurrentArticleTagsQueryHandler(FreelancerBlogContext context)
         {

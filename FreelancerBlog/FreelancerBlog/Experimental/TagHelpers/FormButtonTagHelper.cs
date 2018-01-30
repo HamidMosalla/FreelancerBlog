@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace FreelancerBlog.Experimental
+namespace FreelancerBlog.Experimental.TagHelpers
 {
     [HtmlTargetElement("formbutton")]
     public class FormButtonTagHelper : TagHelper
