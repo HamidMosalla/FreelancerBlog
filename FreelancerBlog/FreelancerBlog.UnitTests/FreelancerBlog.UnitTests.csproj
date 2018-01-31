@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Controllers\Admin\ContactControllerTests.cs" />
     <Compile Include="Controllers\Root\AccountControllerTests.cs" />
     <Compile Include="Controllers\Root\ArticleControllerTests.cs" />
     <Compile Include="Controllers\Root\ContactControllerTests.cs" />
