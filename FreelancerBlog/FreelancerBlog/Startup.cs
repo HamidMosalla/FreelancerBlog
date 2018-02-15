@@ -202,14 +202,16 @@ namespace FreelancerBlog
 
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                //app.UseBrowserLink();
+                //app.UseDeveloperExceptionPage();
+                //app.UseDatabaseErrorPage();
+                app.UseAspNetCoreExceptionHandler();
             }
 
             else
             {
-                app.UseExceptionHandler("/Error/Status/{0}");
+                //app.UseExceptionHandler("/Error/Status/{0}");
+                app.UseAspNetCoreExceptionHandler();
             }
 
             app.UseStatusCodePagesWithRedirects("/Error/Status/{0}");

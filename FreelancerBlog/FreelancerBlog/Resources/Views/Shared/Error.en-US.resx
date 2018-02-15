@@ -123,6 +123,9 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="InternalServerErrorDesc" xml:space="preserve">
+    <value>Unexpected error has happened, try again later or contact the administrator.</value>
+  </data>
   <data name="NotFound&lt;H1&gt;" xml:space="preserve">
     <value>Not Found</value>
   </data>
