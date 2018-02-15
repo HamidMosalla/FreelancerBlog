@@ -12,6 +12,7 @@ namespace FreelancerBlog.Controllers
             this._logger = logger;
         }
 
+        [Route("/motherfuck/index")]
         public IActionResult Index()
         {
 

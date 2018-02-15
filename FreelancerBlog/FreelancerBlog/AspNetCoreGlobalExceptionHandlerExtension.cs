@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
 namespace FreelancerBlog
@@ -27,6 +28,15 @@ namespace FreelancerBlog
                         var logger = loggerFactory.CreateLogger("Serilog Global exception logger");
                         logger.LogError(500, exceptionHandlerFeature.Error, exceptionHandlerFeature.Error.Message);
                     }
+
+                    //var path = context.Response.HttpContext.Request.Path;
+
+                    //if (path.HasValue && path.Value.Contains("api"))
+                    //{
+                    //    context.Response.StatusCode = 500;
+                    //    await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
+                    //    return;
+                    //}
 
                     context.Response.Redirect($"/Error/Status/{context.Response.StatusCode}");
                 });
