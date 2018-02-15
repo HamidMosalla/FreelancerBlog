@@ -1,23 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace FreelancerBlog.Controllers
 {
     public class HomeController : Controller
     {
-        private ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            this._logger = logger;
-        }
-
-        [Route("/motherfuck/index")]
         public IActionResult Index()
         {
-
-            throw new System.Exception("This is my exception, don't touch it.");
-
             return View("Index");
         }
 
