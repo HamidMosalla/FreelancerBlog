@@ -21,11 +21,15 @@ namespace FreelancerBlog.Data.Queries.Articles
 
         protected override IQueryable<Article> HandleCore(ArticlesByTagQuery message)
         {
-            return _context.ArticleArticleTags.Where(a => a.ArticleTagId == message.TagId)
-                    .Join(_context.Articles.Include(a => a.ApplicationUser)
-                                           .Include(a => a.ArticleComments)
-                                           .Include(a => a.ArticleRatings), left => left.ArticleId, right => right.ArticleId, (aat, a) => a)
-                                           .AsQueryable();
+            var articles = _context.Articles
+                                   .Include(a => a.ApplicationUser)
+                                   .Include(a => a.ArticleComments)
+                                   .Include(a => a.ArticleRatings);
+
+            return _context.ArticleArticleTags
+                           .Where(a => a.ArticleTagId == message.TagId)
+                           .Join(articles, left => left.ArticleId, right => right.ArticleId, (aat, a) => a)
+                           .AsQueryable();
         }
     }
 }

@@ -18,7 +18,11 @@ namespace FreelancerBlog.Data.Queries.Articles
 
         protected override async Task<Article> HandleCore(ArticleByArticleIdQuery message)
         {
-            return await _context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleRatings).Include(a => a.ArticleComments).SingleAsync(a => a.ArticleId == message.ArticleId);
+            return await _context.Articles
+                                 .Include(a => a.ApplicationUser)
+                                 .Include(a => a.ArticleRatings)
+                                 .Include(a => a.ArticleComments)
+                                 .SingleAsync(a => a.ArticleId == message.ArticleId);
         }
     }
 }
