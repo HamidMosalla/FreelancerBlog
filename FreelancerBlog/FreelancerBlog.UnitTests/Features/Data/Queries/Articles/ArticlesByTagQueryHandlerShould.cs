@@ -24,11 +24,24 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Articles
 
         protected override void LoadTestData()
         {
+            var applicationUser = new ApplicationUser { Id = Guid.NewGuid().ToString() } ;
+            var articleComment = new List<ArticleComment>{ new ArticleComment { ArticleCommentId = 1 } };
+            var articleRating = new List<ArticleRating> {new ArticleRating {ArticleRatingId = 1}};
+
             var articles = new List<Article>
             {
-                new Article {ArticleId = 1, ArticleTitle = "A"},
+                new Article
+                {
+                    ArticleId = 1,
+                    ArticleTitle = "A",
+                    ApplicationUser = applicationUser,
+                    ArticleComments = articleComment,
+                    ArticleRatings = articleRating
+                },
                 new Article {ArticleId = 2, ArticleTitle = "B"}
             };
+
+            
 
             var articleTags = new List<ArticleTag> { new ArticleTag { ArticleTagId = 1, ArticleTagName = "H" } };
 
@@ -51,7 +64,7 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Articles
 
             var result = await _sut.Handle(message, default(CancellationToken));
 
-            result.First().Should().BeOfType<Article>();
+            result.Single().Should().BeOfType<Article>();
         }
     }
 }
