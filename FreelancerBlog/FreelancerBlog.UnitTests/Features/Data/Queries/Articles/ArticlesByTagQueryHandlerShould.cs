@@ -56,8 +56,6 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Articles
                 }
             };
 
-
-
             var articleTags = new List<ArticleTag> { new ArticleTag { ArticleTagId = 1, ArticleTagName = "H" } };
 
             var articleArticleTag = new List<ArticleArticleTag>
