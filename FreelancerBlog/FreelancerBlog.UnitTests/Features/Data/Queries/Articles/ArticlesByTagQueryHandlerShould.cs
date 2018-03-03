@@ -24,9 +24,9 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Articles
 
         protected override void LoadTestData()
         {
-            var applicationUser = new ApplicationUser { Id = Guid.NewGuid().ToString() } ;
-            var articleComment = new List<ArticleComment>{ new ArticleComment { ArticleCommentId = 1 } };
-            var articleRating = new List<ArticleRating> {new ArticleRating {ArticleRatingId = 1}};
+            var applicationUser = new ApplicationUser { Id = Guid.NewGuid().ToString() };
+            var articleComment = new List<ArticleComment> { new ArticleComment { ArticleCommentId = 1 } };
+            var articleRating = new List<ArticleRating> { new ArticleRating { ArticleRatingId = 1 } };
 
             var articles = new List<Article>
             {
@@ -38,17 +38,33 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Articles
                     ArticleComments = articleComment,
                     ArticleRatings = articleRating
                 },
-                new Article {ArticleId = 2, ArticleTitle = "B"}
+                new Article
+                {
+                    ArticleId = 2,
+                    ArticleTitle = "B",
+                    ApplicationUser = applicationUser,
+                    ArticleComments = articleComment,
+                    ArticleRatings = articleRating
+                },
+                new Article
+                {
+                    ArticleId = 3,
+                    ArticleTitle = "C",
+                    ApplicationUser = applicationUser,
+                    ArticleComments = articleComment,
+                    ArticleRatings = articleRating
+                }
             };
 
-            
+
 
             var articleTags = new List<ArticleTag> { new ArticleTag { ArticleTagId = 1, ArticleTagName = "H" } };
 
             var articleArticleTag = new List<ArticleArticleTag>
             {
                 new ArticleArticleTag {ArticleId = 1, ArticleTagId = 1},
-                new ArticleArticleTag {ArticleId = 2, ArticleTagId = 2}
+                new ArticleArticleTag {ArticleId = 2, ArticleTagId = 2},
+                new ArticleArticleTag{ ArticleId = 3, ArticleTagId = 1}
             };
 
             Context.Articles.AddRange(articles);
@@ -65,6 +81,18 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Articles
             var result = await _sut.Handle(message, default(CancellationToken));
 
             result.Single().Should().BeOfType<Article>();
+        }
+
+        [Fact]
+        public async Task Always_ReturnTheCorrectArticles()
+        {
+            var message = new ArticlesByTagQuery { TagId = 1 };
+
+            var result = await _sut.Handle(message, default(CancellationToken));
+
+            result.Count().Should().Be(2);
+            result.Any(r=> r.ArticleId == 1).Should().BeTrue();
+            result.Any(r=> r.ArticleId == 3).Should().BeTrue();
         }
     }
 }
