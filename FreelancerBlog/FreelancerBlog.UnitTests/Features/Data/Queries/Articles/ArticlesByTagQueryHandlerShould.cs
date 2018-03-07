@@ -78,7 +78,7 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Articles
 
             var result = await _sut.Handle(message, default(CancellationToken));
 
-            result.Single().Should().BeOfType<Article>();
+            result.First().Should().BeOfType<Article>();
         }
 
         [Fact]

@@ -39,7 +39,7 @@ namespace FreelancerBlog.UnitTests.Services.Shared
             _sut = new ValidateCaptchaQueryHandler(_configurationFake, _contextAccessorFake, _httpClient);
         }
 
-        [Fact(Skip = "DefaultHttpRequest is not recognized as a fake object.")]
+        [Fact]
         public async Task ValidateCaptchaAsync_Always_TheCorrectType()
         {
             //Arrange
