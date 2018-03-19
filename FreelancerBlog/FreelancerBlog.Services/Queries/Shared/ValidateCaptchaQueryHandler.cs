@@ -16,7 +16,7 @@ namespace FreelancerBlog.Services.Queries.Shared
 {
     public class ValidateCaptchaQueryHandler : AsyncRequestHandler<ValidateCaptchaQuery, CaptchaResponse>
     {
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _contextAccessor;
         private readonly HttpClient _httpClient;
 

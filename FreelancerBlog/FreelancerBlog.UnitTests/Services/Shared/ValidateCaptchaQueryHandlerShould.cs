@@ -23,31 +23,24 @@ namespace FreelancerBlog.UnitTests.Services.Shared
 {
     public class ValidateCaptchaQueryHandlerShould
     {
-        private readonly IHttpContextAccessor _contextAccessorFake;
+        private readonly ValidateCaptchaQuery _validateCaptchaQuery = new ValidateCaptchaQuery();
         private readonly FakeHttpMessageHandler _httpMessageHandlerFake;
-        private readonly HttpClient _httpClient;
-        private readonly IConfiguration _configurationFake;
         private readonly ValidateCaptchaQueryHandler _sut;
 
         public ValidateCaptchaQueryHandlerShould()
         {
-            _contextAccessorFake = A.Fake<IHttpContextAccessor>();
-            //new Mock<FakeHttpMessageHandler> { CallBase = true };
+            var contextAccessorFake = A.Fake<IHttpContextAccessor>();
             _httpMessageHandlerFake = A.Fake<FakeHttpMessageHandler>(a => a.CallsBaseMethods());
-            _httpClient = new HttpClient(_httpMessageHandlerFake);
-            _configurationFake = A.Fake<IConfiguration>();
-            _sut = new ValidateCaptchaQueryHandler(_configurationFake, _contextAccessorFake, _httpClient);
+            var httpClient = new HttpClient(_httpMessageHandlerFake);
+            var configurationFake = A.Fake<IConfiguration>();
+            _sut = new ValidateCaptchaQueryHandler(configurationFake, contextAccessorFake, httpClient);
         }
 
-        [Fact(Skip = "DefaultHttpRequest is not recognized as a fake object.")]
-        public async Task ValidateCaptchaAsync_Always_TheCorrectType()
+        [Fact]
+        public async Task ValidateCaptchaAsync_Always_ReturnsTheCorrectType()
         {
             //Arrange
-            var httpContext = new DefaultHttpContext();
             var captchaQuery = new ValidateCaptchaQuery();
-
-            A.CallTo(() => _contextAccessorFake.HttpContext).Returns(httpContext);
-            A.CallTo(() => _contextAccessorFake.HttpContext.Request.Form).Returns(new FormCollection(new Dictionary<string, StringValues>()));
 
             A.CallTo(() => _httpMessageHandlerFake.Send(A<HttpRequestMessage>._)).Returns(new HttpResponseMessage
             {
@@ -65,16 +58,10 @@ namespace FreelancerBlog.UnitTests.Services.Shared
             result.Should().BeOfType<CaptchaResponse>();
         }
 
-        [Fact(Skip = "DefaultHttpRequest is not recognized as a fake object.")]
-        public async Task ValidateCaptchaAsync_ShouldReturnSuccessFalse_IfResponseSuccessWasFalse()
+        [Fact]
+        public async Task ValidateCaptchaAsync_ResponseSuccessFalse_ReturnSuccessFalse()
         {
             //Arrange
-            var httpContext = new DefaultHttpContext();
-            var captchaQuery = new ValidateCaptchaQuery();
-
-            A.CallTo(() => _contextAccessorFake.HttpContext).Returns(httpContext);
-            A.CallTo(() => _contextAccessorFake.HttpContext.Request.Form).Returns(new FormCollection(new Dictionary<string, StringValues>()));
-
             A.CallTo(() => _httpMessageHandlerFake.Send(A<HttpRequestMessage>._)).Returns(new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
@@ -84,43 +71,32 @@ namespace FreelancerBlog.UnitTests.Services.Shared
             });
 
             //Act
-            var result = await _sut.Handle(captchaQuery, default(CancellationToken));
+            var result = await _sut.Handle(_validateCaptchaQuery, default(CancellationToken));
 
             //Assert
             result.Should().NotBeNull();
             result.Success.Should().Be("false");
         }
 
+        [Fact]
+        public async Task ValidateCaptchaAsync_ResponseSuccessTrue_ReturnSuccessTrue()
+        {
+            //Arrange
+            A.CallTo(() => _httpMessageHandlerFake.Send(A<HttpRequestMessage>._)).Returns(new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content =
+                    new StringContent(
+                        "{\"success\": true,\"error-codes\": [\"It's a fake error!\",\"It's a fake error\"]}")
+            });
 
-        //[Fact]
-        //public async Task ValidateCaptchaAsync_ShouldReturnSuccessTrue_IfResponseSuccessWasTrue()
-        //{
-        //    //Arrange
-        //    var httpContext = new DefaultHttpContext();
+            //Act
+            var result = await _sut.Handle(_validateCaptchaQuery, default(CancellationToken));
 
-        //    _contextAccessor.SetupGet(c => c.HttpContext).Returns(httpContext);
-        //    _contextAccessor.SetupGet(c => c.HttpContext.Request.Form)
-        //        .Returns(new FormCollection(new Dictionary<string, StringValues>()));
-
-        //    _fakeHttpMessageHandler.Setup(f => f.Send(It.IsAny<HttpRequestMessage>())).Returns(new HttpResponseMessage
-        //    {
-        //        StatusCode = HttpStatusCode.OK,
-        //        Content =
-        //            new StringContent(
-        //                "{\"success\": true,\"error-codes\": [\"It's a fake error!\",\"It's a fake error\"]}")
-        //    });
-
-        //    var sut = new CaptchaValidator(_contextAccessor.Object, _httpClient);
-
-        //    //Act
-        //    var result = await sut.ValidateCaptchaAsync("dummy-secret");
-
-        //    //Assert
-        //    result.Should().NotBeNull();
-        //    result.Success.Should().Be("true");
-        //}
-
-
+            //Assert
+            result.Should().NotBeNull();
+            result.Success.Should().Be("true");
+        }
     }
 }
 
@@ -134,11 +110,16 @@ namespace FreelancerBlog.UnitTests.Services.Shared
 //});
 
 
-////_captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
-////.ReturnsAsync(new CaptchaResponse
-////{
-////ChallengeTimeStamp = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
-////ErrorCodes = new List<string> { },
-////HostName = "localhost",
-////Success = "true"
-////});
+//_captchaValidator.Setup(c => c.ValidateCaptchaAsync(_configurationWrapper.Object.GetValue<string>("secrect")))
+//.ReturnsAsync(new CaptchaResponse
+//{
+//ChallengeTimeStamp = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture),
+//ErrorCodes = new List<string> { },
+//HostName = "localhost",
+//Success = "true"
+//});
+
+//var httpContext = new DefaultHttpContext();
+//A.CallTo(() => _contextAccessorFake.HttpContext).Returns(httpContext);
+//A.CallTo(() => _contextAccessorFake.HttpContext.Request.Form)
+//.Returns(new FormCollection(new Dictionary<string, StringValues>()));
