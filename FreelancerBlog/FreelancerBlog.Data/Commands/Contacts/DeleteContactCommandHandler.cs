@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.Contacts;
 using FreelancerBlog.Data.EntityFramework;
@@ -17,10 +18,11 @@ namespace FreelancerBlog.Data.Commands.Contacts
             _context = context;
         }
 
-        protected override async Task HandleCore(DeleteContactCommand message)
+        protected override async Task Handle(DeleteContactCommand message, CancellationToken cancellationToken)
         {
             _context.Contacts.Remove(message.Contact);
-           await _context.SaveChangesAsync();
+           await _context.SaveChangesAsync(cancellationToken);
         }
+       
     }
 }

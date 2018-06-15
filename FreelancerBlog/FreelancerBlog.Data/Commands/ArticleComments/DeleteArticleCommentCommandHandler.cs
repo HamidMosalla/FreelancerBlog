@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.ArticleComments;
 using FreelancerBlog.Data.EntityFramework;
@@ -17,10 +18,10 @@ namespace FreelancerBlog.Data.Commands.ArticleComments
             _context = context;
         }
 
-        protected override Task HandleCore(DeleteArticleCommentCommand message)
+        protected override Task Handle(DeleteArticleCommentCommand request, CancellationToken cancellationToken)
         {
-            _context.ArticleComments.Remove(message.ArticleComment);
-            return _context.SaveChangesAsync();
+            _context.ArticleComments.Remove(request.ArticleComment);
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

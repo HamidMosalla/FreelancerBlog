@@ -19,7 +19,7 @@ namespace FreelancerBlog.Data.Queries.ArticleComments
             _context = context;
         }
 
-        protected override IQueryable<ArticleComment> HandleCore(GetAllCommentsQuery message)
+        protected override IQueryable<ArticleComment> Handle(GetAllCommentsQuery message)
         {
             return _context.ArticleComments.AsQueryable();
         }

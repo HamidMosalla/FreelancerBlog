@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.SiteOrders;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
@@ -14,11 +15,11 @@ namespace FreelancerBlog.Data.Commands.SiteOrders
             _context = context;
         }
 
-        protected override Task HandleCore(AddSiteOrderCommand message)
+        protected override  Task Handle(AddSiteOrderCommand request, CancellationToken cancellationToken)
         {
-            _context.SiteOrders.Add(message.SiteOrder);
+            _context.SiteOrders.Add(request.SiteOrder);
 
-            return _context.SaveChangesAsync();
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

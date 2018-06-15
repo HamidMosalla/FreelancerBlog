@@ -20,7 +20,7 @@ namespace FreelancerBlog.Data.Queries.Articles
             _context = context;
         }
 
-        protected override IQueryable<Article> HandleCore(GetAriclesQuery message)
+        protected override IQueryable<Article> Handle(GetAriclesQuery message)
         {
             return _context.Articles.Include(a => a.ApplicationUser).Include(a => a.ArticleRatings).Include(a => a.ArticleComments);
         }

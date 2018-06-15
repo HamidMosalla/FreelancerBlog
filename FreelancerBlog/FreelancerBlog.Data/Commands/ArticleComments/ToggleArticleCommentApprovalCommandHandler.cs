@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.ArticleComments;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
@@ -14,11 +15,11 @@ namespace FreelancerBlog.Data.Commands.ArticleComments
             _context = context;
         }
 
-        protected override Task HandleCore(ToggleArticleCommentApprovalCommand message)
+        protected override  Task Handle(ToggleArticleCommentApprovalCommand request, CancellationToken cancellationToken)
         {
-            message.ArticleComment.IsCommentApproved = !message.ArticleComment.IsCommentApproved;
+            request.ArticleComment.IsCommentApproved = !request.ArticleComment.IsCommentApproved;
 
-            return _context.SaveChangesAsync();
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

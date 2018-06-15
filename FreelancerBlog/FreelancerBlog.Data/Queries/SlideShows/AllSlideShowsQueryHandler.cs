@@ -18,7 +18,7 @@ namespace FreelancerBlog.Data.Queries.SlideShows
             _context = context;
         }
 
-        protected override IQueryable<SlideShow> HandleCore(AllSlideShowsQuery message)
+        protected override IQueryable<SlideShow> Handle(AllSlideShowsQuery message)
         {
            return _context.SlideShows.AsQueryable();
         }

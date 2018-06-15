@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.SlideShows;
 using FreelancerBlog.Data.EntityFramework;
@@ -17,10 +18,10 @@ namespace FreelancerBlog.Data.Commands.SlideShows
             _context = context;
         }
 
-        protected override Task HandleCore(AddNewSlideShowCommand message)
+        protected override  Task Handle(AddNewSlideShowCommand request, CancellationToken cancellationToken)
         {
-            _context.SlideShows.Add(message.SlideShow);
-            return _context.SaveChangesAsync();
+            _context.SlideShows.Add(request.SlideShow);
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

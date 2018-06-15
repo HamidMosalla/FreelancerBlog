@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.SlideShows;
 using FreelancerBlog.Data.EntityFramework;
@@ -17,11 +18,11 @@ namespace FreelancerBlog.Data.Commands.SlideShows
             _context = context;
         }
 
-        protected override Task HandleCore(DeleteSlideShowCommand message)
+        protected override Task Handle(DeleteSlideShowCommand message, CancellationToken cancellationToken)
         {
             _context.SlideShows.Remove(message.SlideShow);
 
-            return _context.SaveChangesAsync();
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

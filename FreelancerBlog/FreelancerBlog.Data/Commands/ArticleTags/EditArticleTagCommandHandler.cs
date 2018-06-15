@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.ArticleTags;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
@@ -14,10 +15,10 @@ namespace FreelancerBlog.Data.Commands.ArticleTags
             _context = context;
         }
 
-        protected override Task HandleCore(EditArticleTagCommand message)
+        protected override Task Handle(EditArticleTagCommand message, CancellationToken cancellationToken)
         {
             message.ArticleTag.ArticleTagName = message.NewTagName;
-            return _context.SaveChangesAsync();
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace FreelancerBlog.Data.Queries.Portfolios
             _context = context;
         }
 
-        protected override IQueryable<Portfolio> HandleCore(GetAllPortfoliosQuery message)
+        protected override IQueryable<Portfolio> Handle(GetAllPortfoliosQuery message)
         {
             return _context.Portfolios.AsQueryable();
         }

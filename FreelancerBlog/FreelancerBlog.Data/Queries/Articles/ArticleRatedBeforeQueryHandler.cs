@@ -19,7 +19,7 @@ namespace FreelancerBlog.Data.Queries.Articles
             _userManager = userManager;
         }
 
-        protected override bool HandleCore(ArticleRatedBeforeQuery message)
+        protected override bool Handle(ArticleRatedBeforeQuery message)
         {
             var ratings = _context.ArticleRatings.Where(a => a.ArticleIDfk == message.ArticleId).ToList();
 
