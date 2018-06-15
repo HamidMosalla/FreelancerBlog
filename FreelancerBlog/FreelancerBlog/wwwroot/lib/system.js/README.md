@@ -3,7 +3,6 @@ SystemJS
 
 [![Build Status][travis-image]][travis-url]
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/systemjs/systemjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Support](https://supporterhq.com/api/b/33df4abbec4d39260f49015d2457eafe/SystemJS)](https://supporterhq.com/support/33df4abbec4d39260f49015d2457eafe/SystemJS)
 [![Sponsor](https://cdn.canopytax.com/images/canopy-sponsorship.svg)](https://canopytax.github.io/post/systemjs-sponsorship/?utm_source=systemjs)
 
 Configurable module loader enabling dynamic ES module workflows in browsers and NodeJS.
@@ -14,11 +13,9 @@ _SystemJS is [currently sponsored by Canopy Tax](https://canopytax.github.io/pos
 
 * [Loads any module format](docs/module-formats.md) when running the ~15KB development build.
 * Loads ES modules compiled into the `System.register` module format for production with [exact circular reference and binding support](https://github.com/ModuleLoader/es6-module-loader/blob/v0.17.0/docs/circular-references-bindings.md)
-* Supports RequireJS-style [map](docs/getting-started.md#map-config), [paths](https://github.com/ModuleLoader/es6-module-loader/blob/master/docs/loader-config.md#paths-implementation), and [bundles](docs/production-workflows.md#bundle-extension) configuration.
+* Supports RequireJS-style [map](docs/getting-started.md#map-config), [paths](https://github.com/systemjs/systemjs/blob/master/docs/config-api.md#paths), and [bundles](docs/production-workflows.md#bundle-extension) configuration.
 
 Built with the [ES Module Loader project](https://github.com/ModuleLoader/es-module-loader), which is based on principles and APIs from the WhatWG Loader specification, modules in HTML and NodeJS.
-
-Supports IE9+ provided a promises polyfill is available in the environment.
 
 For discussion, join the [Gitter Room](https://gitter.im/systemjs/systemjs).
 
@@ -56,7 +53,7 @@ The above will support loading all module formats.
 
 ### Browser Production
 
-When all modules are already transpiled into the `System.register` module format (which can be output via Babel or TypeScript through any build workflow), a production-only loader can be used:
+When all modules are available as either `system`, `amd` or global module formats, and no package configurations or plugins are needed, a production-only loader can be used:
 
 ```html
 <script src="systemjs/dist/system-production.js"></script>
@@ -65,7 +62,7 @@ When all modules are already transpiled into the `System.register` module format
 </script>
 ```
 
-Configuration support in the production loader includes baseURL, paths, map, contextual map, bundles and depCache.
+Configuration support in the production loader includes baseURL, paths, map, depCache and wasm.
 
 ### NodeJS
 

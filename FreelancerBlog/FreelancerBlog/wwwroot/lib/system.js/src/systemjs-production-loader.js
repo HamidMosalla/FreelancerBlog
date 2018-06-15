@@ -1,7 +1,8 @@
 import { ModuleNamespace } from 'es-module-loader/core/loader-polyfill.js';
 import RegisterLoader from 'es-module-loader/core/register-loader.js';
 import { global, baseURI, CONFIG, PLAIN_RESOLVE, PLAIN_RESOLVE_SYNC, resolveIfNotPlain, resolvedPromise,
-    extend, emptyModule, applyPaths, scriptLoad, protectedCreateNamespace, getMapMatch, noop, preloadScript, isModule, isNode, checkInstantiateWasm } from './common.js';
+    extend, emptyModule, applyPaths, scriptLoad, getMapMatch, noop, preloadScript, isModule, isNode, isBrowser } from './common.js';
+import { registerLastDefine, globalIterator, setAmdHelper } from './format-helpers.js';
 
 export { ModuleNamespace }
 
@@ -16,13 +17,12 @@ function SystemJSProductionLoader () {
     paths: {},
     map: {},
     submap: {},
-    bundles: {},
-    depCache: {},
-    wasm: false
+    depCache: {}
   };
 
-  // support the empty module, as a concept
-  this.registry.set('@empty', emptyModule);
+  setAmdHelper(this);
+  if (isBrowser)
+    global.define = this.amdDefine;
 }
 
 SystemJSProductionLoader.plainResolve = PLAIN_RESOLVE;
@@ -78,13 +78,6 @@ systemJSPrototype.resolveSync = function (key, parentKey) {
   return applyPaths(config.baseURL, config.paths, resolved);
 };
 
-systemJSPrototype.import = function () {
-  return RegisterLoader.prototype.import.apply(this, arguments)
-  .then(function (m) {
-    return '__useDefault' in m ? m.__useDefault : m;
-  });
-};
-
 systemJSPrototype[PLAIN_RESOLVE] = systemJSPrototype[PLAIN_RESOLVE_SYNC] = plainResolve;
 
 systemJSPrototype[SystemJSProductionLoader.instantiate = RegisterLoader.instantiate] = coreInstantiate;
@@ -122,6 +115,8 @@ systemJSPrototype.config = function (cfg) {
     }
   }
 
+  config.wasm = cfg.wasm === true;
+
   for (var p in cfg) {
     if (!Object.hasOwnProperty.call(cfg, p))
       continue;
@@ -132,16 +127,7 @@ systemJSPrototype.config = function (cfg) {
       case 'baseURL':
       case 'paths':
       case 'map':
-      break;
-
-      case 'bundles':
-        for (var p in val) {
-          if (!Object.hasOwnProperty.call(val, p))
-            continue;
-          var v = val[p];
-          for (var i = 0; i < v.length; i++)
-            config.bundles[this.resolveSync(v[i], undefined)] = p;
-        }
+      case 'wasm':
       break;
 
       case 'depCache':
@@ -151,10 +137,6 @@ systemJSPrototype.config = function (cfg) {
           var resolvedParent = this.resolveSync(p, undefined);
           config.depCache[resolvedParent] = (config.depCache[resolvedParent] || []).concat(val[p]);
         }
-      break;
-
-      case 'wasm':
-        config.wasm = typeof WebAssembly !== 'undefined' && !!val;
       break;
 
       default:
@@ -182,20 +164,12 @@ systemJSPrototype.getConfig = function (name) {
     depCache[p] = [].concat(config.depCache[p]);
   }
 
-  var bundles = {};
-  for (var p in config.bundles) {
-    if (!Object.hasOwnProperty.call(config.bundles, p))
-      continue;
-    bundles[p] = [].concat(config.bundles[p]);
-  }
-
   return {
     baseURL: config.baseURL,
     paths: extend({}, config.paths),
     depCache: depCache,
-    bundles: bundles,
     map: map,
-    wasm: config.wasm
+    wasm: config.wasm === true
   };
 };
 
@@ -237,66 +211,154 @@ function plainResolve (key, parentKey) {
   }
 }
 
-function doScriptLoad (url, processAnonRegister) {
+function instantiateWasm (loader, response, processAnonRegister) {
+  return WebAssembly.compileStreaming(response).then(function (module) {
+    var deps = [];
+    var setters = [];
+    var importObj = {};
+
+    // we can only set imports if supported (eg early Safari doesnt support)
+    if (WebAssembly.Module.imports)
+      WebAssembly.Module.imports(module).forEach(function (i) {
+        var key = i.module;
+        setters.push(function (m) {
+          importObj[key] = m;
+        });
+        if (deps.indexOf(key) === -1)
+          deps.push(key);
+      });
+
+    loader.register(deps, function (_export) {
+      return {
+        setters: setters,
+        execute: function () {
+          _export(new WebAssembly.Instance(module, importObj).exports);
+        }
+      };
+    });
+    processAnonRegister();
+  });
+}
+
+function doScriptLoad (loader, url, processAnonRegister) {
+  // store a global snapshot in case it turns out to be global
+  Object.keys(global).forEach(globalIterator, function (name, value) {
+    globalSnapshot[name] = value;
+  });
+
   return new Promise(function (resolve, reject) {
     return scriptLoad(url, 'anonymous', undefined, function () {
-      processAnonRegister();
+
+      // check for System.register call
+      var registered = processAnonRegister();
+      if (!registered) {
+        // no System.register -> support named AMD as anonymous
+        registerLastDefine(loader);
+        registered = processAnonRegister();
+
+        // still no registration -> attempt a global detection
+        if (!registered) {
+          var moduleValue = retrieveGlobal();
+          loader.register([], function () {
+            return {
+              exports: moduleValue
+            };
+          });
+          processAnonRegister();
+        }
+      }
       resolve();
     }, reject);
   });
 }
 
-var loadedBundles = {};
+function doEvalLoad (loader, url, source, processAnonRegister) {
+  // store a global snapshot in case it turns out to be global
+  Object.keys(global).forEach(globalIterator, function (name, value) {
+    globalSnapshot[name] = value;
+  });
+
+  (0, eval)(source + '\n//# sourceURL=' + url);
+
+  // check for System.register call
+  var registered = processAnonRegister();
+  if (!registered) {
+    // no System.register -> support named AMD as anonymous
+    registerLastDefine(loader);
+    registered = processAnonRegister();
+
+    // still no registration -> attempt a global detection
+    if (!registered) {
+      var moduleValue = retrieveGlobal();
+      loader.register([], function () {
+        return {
+          exports: moduleValue
+        };
+      });
+      processAnonRegister();
+    }
+  }
+}
+
+var globalSnapshot = {};
+function retrieveGlobal () {
+  var globalValue = { default: undefined };
+  var multipleGlobals = false;
+  var globalName = undefined;
+
+  Object.keys(global).forEach(globalIterator, function (name, value) {
+    if (globalSnapshot[name] === value)
+      return;
+    // update global snapshot as we go
+    globalSnapshot[name] = value;
+
+    if (value === undefined)
+      return;
+
+    if (multipleGlobals) {
+      globalValue[name] = value;
+    }
+    else if (globalName) {
+      if (globalValue.default !== value) {
+        multipleGlobals = true;
+        globalValue.__esModule = true;
+        globalValue[globalName] = globalValue.default;
+        globalValue[name] = value;
+      }
+    }
+    else {
+      globalValue.default = value;
+      globalName = name;
+    }
+  });
+
+  return globalValue;
+}
+
 function coreInstantiate (key, processAnonRegister) {
   var config = this[CONFIG];
 
-  var wasm = config.wasm;
-
-  var bundle = config.bundles[key];
-  if (bundle) {
-    var loader = this;
-    var bundleUrl = loader.resolveSync(bundle, undefined);
-    if (loader.registry.has(bundleUrl))
-      return;
-    return loadedBundles[bundleUrl] || (loadedBundles[bundleUrl] = doScriptLoad(bundleUrl, processAnonRegister).then(function () {
-      // bundle treated itself as an empty module
-      // this means we can reload bundles by deleting from the registry
-      if (!loader.registry.has(bundleUrl))
-        loader.registry.set(bundleUrl, loader.newModule({}));
-      delete loadedBundles[bundleUrl];
-    }));
-  }
-
   var depCache = config.depCache[key];
   if (depCache) {
-    var preloadFn = wasm ? fetch : preloadScript;
     for (var i = 0; i < depCache.length; i++)
-      this.resolve(depCache[i], key).then(preloadFn);
+      this.resolve(depCache[i], key).then(preloadScript);
   }
 
-  if (wasm) {
+  if (config.wasm) {
     var loader = this;
     return fetch(key)
-    .then(function(res) {
-      if (res.ok)
-        return res.arrayBuffer();
-      else
+    .then(function (res) {
+      if (!res.ok)
         throw new Error('Fetch error: ' + res.status + ' ' + res.statusText);
-    })
-    .then(function (fetched) {
-      return checkInstantiateWasm(loader, fetched, processAnonRegister)
-      .then(function (wasmInstantiated) {
-        if (wasmInstantiated)
-          return;
-        // not wasm -> convert buffer into utf-8 string to execute as a module
-        // TextDecoder compatibility matches WASM currently. Need to keep checking this.
-        // The TextDecoder interface is documented at http://encoding.spec.whatwg.org/#interface-textdecoder
-        var source = new TextDecoder('utf-8').decode(new Uint8Array(fetched));
-        (0, eval)(source + '\n//# sourceURL=' + key);
-        processAnonRegister();
-      });
+      if (res.headers.get('content-type').indexOf('application/wasm') === -1) {
+        return res.text()
+        .then(function (source) {
+          doEvalLoad(loader, key, source, processAnonRegister);
+        });
+      }
+      return instantiateWasm(loader, res, processAnonRegister);
     });
   }
 
-  return doScriptLoad(key, processAnonRegister);
+  return doScriptLoad(this, key, processAnonRegister);
 }

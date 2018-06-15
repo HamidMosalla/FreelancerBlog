@@ -8,7 +8,7 @@ namespace FreelancerBlog.Features.Commands
 {
     public class PopulatePortfolioCategoryListCommandHandler : RequestHandler<PopulatePortfolioCategoryListCommand>
     {
-        protected override void HandleCore(PopulatePortfolioCategoryListCommand message)
+        protected override void Handle(PopulatePortfolioCategoryListCommand message)
         {
             message.ViewModel.ForEach(v => v.PortfolioCategoryList = message.Portfolios.Single(p => p.PortfolioId == v.PortfolioId).PortfolioCategory.Split(',').ToList());
         }

@@ -9,7 +9,7 @@ namespace FreelancerBlog.Services.Queries.SiteOrder
 {
     class FinalPriceQueryHandler : RequestHandler<FinalPriceQuery, decimal>
     {
-        protected override decimal HandleCore(FinalPriceQuery message)
+        protected override decimal Handle(FinalPriceQuery message)
         {
             var intTypes = message.PriceSpecs.SingleOrDefault(n => n.Value.GetType().Name == "Int32");
             var stringTypes = message.PriceSpecs.Where(n => n.Value.GetType().Name == "String").ToList();

@@ -89,6 +89,7 @@ namespace FreelancerBlog.Controllers
             {
                 return View(model);
             }
+
             // Generate the token and send it
             var user = await GetCurrentUserAsync();
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, model.PhoneNumber);
@@ -128,6 +129,7 @@ namespace FreelancerBlog.Controllers
         public async Task<IActionResult> VerifyPhoneNumber(string phoneNumber)
         {
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(await GetCurrentUserAsync(), phoneNumber);
+
             // Send an SMS to verify the phone number
             return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }

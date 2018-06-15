@@ -1,7 +1,7 @@
 
 import { isWindows, global, readMemberExpression, cjsRequireRegEx, noop } from './common.js';
 
-export default function (loader) {
+export function setHelpers (loader) {
   loader.set('@@cjs-helpers', loader.newModule({
     requireResolve: requireResolve.bind(loader),
     getPathVars: getPathVars
@@ -10,6 +10,9 @@ export default function (loader) {
   loader.set('@@global-helpers', loader.newModule({
     prepareGlobal: prepareGlobal
   }));
+}
+
+export function setAmdHelper (loader) {
 
   /*
     AMD-compatible require
@@ -251,10 +254,10 @@ export function getCJSDeps (source) {
 // Global
 // bare minimum ignores
 var ignoredGlobalProps = ['_g', 'sessionStorage', 'localStorage', 'clipboardData', 'frames', 'frameElement', 'external',
-  'mozAnimationStartTime', 'webkitStorageInfo', 'webkitIndexedDB', 'mozInnerScreenY', 'mozInnerScreenX'];
+  'mozAnimationStartTime', 'mozPaintCount', 'webkitStorageInfo', 'webkitIndexedDB', 'mozInnerScreenY', 'mozInnerScreenX'];
 
 var globalSnapshot;
-function globalIterator (globalName) {
+export function globalIterator (globalName) {
   if (ignoredGlobalProps.indexOf(globalName) !== -1)
     return;
   try {

@@ -1,15 +1,15 @@
 {
   "name": "spin.js",
   "homepage": "https://github.com/fgnass/spin.js",
-  "version": "3.1.0",
-  "_release": "3.1.0",
+  "version": "4.0.0",
+  "_release": "4.0.0",
   "_resolution": {
     "type": "version",
-    "tag": "3.1.0",
-    "commit": "b26aaf064fdb21dab2f2fd2063134d9a37c7ee3c"
+    "tag": "4.0.0",
+    "commit": "93fdeebdf4cd27675cdd27a456140d32b6265d84"
   },
   "_source": "https://github.com/fgnass/spin.js.git",
-  "_target": "3.1.0",
+  "_target": "4.0.0",
   "_originalSource": "spin.js",
   "_direct": true
 }

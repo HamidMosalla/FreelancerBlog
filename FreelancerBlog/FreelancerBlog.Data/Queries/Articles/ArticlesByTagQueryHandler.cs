@@ -19,7 +19,7 @@ namespace FreelancerBlog.Data.Queries.Articles
             _context = context;
         }
 
-        protected override IQueryable<Article> HandleCore(ArticlesByTagQuery message)
+        protected override IQueryable<Article> Handle(ArticlesByTagQuery message)
         {
             var articles = _context.Articles
                                    .Include(a => a.ApplicationUser)

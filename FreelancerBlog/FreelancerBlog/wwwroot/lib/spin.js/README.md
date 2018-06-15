@@ -2,13 +2,14 @@
 
 An animated loading spinner
 
- * No images, no external CSS
+ * No images
  * No dependencies
  * Highly configurable
  * Resolution independent
- * Uses `requestAnimationFrame()`, falling back to `setTimeout()` in IE 9
+ * Uses CSS keyframe animations
  * Works in all major browsers
  * Includes TypeScript definitions
+ * Distributed as a native ES6 module
  * MIT License
 
 ## Usage
@@ -20,4 +21,4 @@ var target = document.getElementById('foo');
 new Spinner({color:'#fff', lines: 12}).spin(target);
 ```
 
-For an interactive demo and a list of all supported options please refer to the [project's homepage](http://spin.js.org).
+For an interactive demo and a list of all supported options please refer to the [project's homepage](https://spin.js.org).

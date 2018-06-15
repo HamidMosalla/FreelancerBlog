@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.Articles;
 using FreelancerBlog.Core.DomainModels;
@@ -24,7 +25,7 @@ namespace FreelancerBlog.Data.Commands.Articles
             _userManager = userManager;
         }
 
-        protected override Task HandleCore(CreateArticleCommand message)
+        protected override Task Handle(CreateArticleCommand message, CancellationToken cancellationToken)
         {
             message.Article.ArticleDateCreated = DateTime.Now;
             message.Article.ArticleViewCount = 1;
@@ -32,7 +33,7 @@ namespace FreelancerBlog.Data.Commands.Articles
 
             _context.Articles.Add(message.Article);
 
-           return _context.SaveChangesAsync();
+           return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

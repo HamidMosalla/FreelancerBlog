@@ -82,14 +82,14 @@ namespace FreelancerBlog.UnitTests.Services.Shared
             Action deleteFile = () => sut.DeleteFile(null, new List<string>());
 
             //Assert
-            deleteFile.ShouldThrow<ArgumentNullException>()
+            deleteFile.Should().Throw<ArgumentNullException>()
                 .WithMessage("*The fileName argument cannot be null, empty or whitespace.*")
                 .And.ParamName.Should()
                 .Be("fileName");
 
             //you could also write like this which is more readable in my opinion
             sut.Invoking(s => s.DeleteFile("", new List<string>()))
-                .ShouldThrow<ArgumentNullException>()
+                .Should().Throw<ArgumentNullException>()
                 .WithMessage("*The fileName argument cannot be null, empty or whitespace.*")
                 .And.ParamName.Should()
                 .Be("fileName");
@@ -102,14 +102,14 @@ namespace FreelancerBlog.UnitTests.Services.Shared
             Action deleteFile = () => sut.DeleteFile("dummy-file-name.jpg", null);
 
             //Assert
-            deleteFile.ShouldThrow<ArgumentException>()
+            deleteFile.Should().Throw<ArgumentException>()
                 .WithMessage("*The path argument cannot be null or empty.*")
                 .And.ParamName.Should()
                 .Be("path");
 
             //you could also write like this which is more readable in my opinion
             sut.Invoking(s => s.DeleteFile("dummy-file-name.jpg", new List<string>()))
-                .ShouldThrow<ArgumentException>()
+                .Should().Throw<ArgumentException>()
                 .WithMessage("*The path argument cannot be null or empty.*")
                 .And.ParamName.Should()
                 .Be("path");
@@ -182,7 +182,7 @@ namespace FreelancerBlog.UnitTests.Services.Shared
             Func<Task> uploadFile = () => sut.UploadFileAsync(null, new List<string>());
 
             //Assert
-            uploadFile.ShouldThrow<ArgumentNullException>()
+            uploadFile.Should().Throw<ArgumentNullException>()
                 .WithMessage("*The file argument cannot be null.*")
                 .And.ParamName.Should()
                 .Be("file");
@@ -195,7 +195,7 @@ namespace FreelancerBlog.UnitTests.Services.Shared
             Func<Task> uploadFile = () => sut.UploadFileAsync(_formFile, new List<string>());
 
             //Assert
-            uploadFile.ShouldThrow<ArgumentException>()
+            uploadFile.Should().Throw<ArgumentException>()
                 .WithMessage("*The path argument cannot be null or empty.*")
                 .And.ParamName.Should()
                 .Be("path");
