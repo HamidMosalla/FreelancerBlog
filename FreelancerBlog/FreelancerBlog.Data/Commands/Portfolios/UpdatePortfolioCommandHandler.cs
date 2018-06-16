@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.Portfolios;
 using FreelancerBlog.Data.EntityFramework;
@@ -18,17 +19,17 @@ namespace FreelancerBlog.Data.Commands.Portfolios
             _context = context;
         }
 
-        protected override Task HandleCore(UpdatePortfolioCommand message)
+        protected override  Task Handle(UpdatePortfolioCommand request, CancellationToken cancellationToken)
         {
-            _context.Portfolios.Attach(message.Portfolio);
+            _context.Portfolios.Attach(request.Portfolio);
 
-            var entity = _context.Entry(message.Portfolio);
+            var entity = _context.Entry(request.Portfolio);
             entity.State = EntityState.Modified;
 
             entity.Property(e => e.PortfolioDateCreated).IsModified = false;
-            entity.Property(e => e.PortfolioThumbnail).IsModified = message.Portfolio.PortfolioThumbnail != null;
+            entity.Property(e => e.PortfolioThumbnail).IsModified = request.Portfolio.PortfolioThumbnail != null;
 
-            return _context.SaveChangesAsync();
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

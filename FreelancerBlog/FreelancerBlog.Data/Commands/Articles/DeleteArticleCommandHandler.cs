@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.Articles;
 using FreelancerBlog.Data.EntityFramework;
 using MediatR;
@@ -14,11 +15,10 @@ namespace FreelancerBlog.Data.Commands.Articles
             _context = context;
         }
 
-
-        protected override async Task HandleCore(DeleteArticleCommand message)
+        protected override async Task Handle(DeleteArticleCommand request, CancellationToken cancellationToken)
         {
-            _context.Articles.Remove(message.Article);
-            await _context.SaveChangesAsync();
+            _context.Articles.Remove(request.Article);
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

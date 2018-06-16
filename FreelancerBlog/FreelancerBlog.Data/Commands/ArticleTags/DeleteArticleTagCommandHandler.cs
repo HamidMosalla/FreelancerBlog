@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.ArticleTags;
 using FreelancerBlog.Data.EntityFramework;
@@ -17,11 +18,11 @@ namespace FreelancerBlog.Data.Commands.ArticleTags
             _context = context;
         }
 
-        protected override Task HandleCore(DeleteArticleTagCommand message)
+        protected override  Task Handle(DeleteArticleTagCommand request, CancellationToken cancellationToken)
         {
-            _context.ArticleTags.Remove(message.ArticleTag);
+            _context.ArticleTags.Remove(request.ArticleTag);
 
-            return _context.SaveChangesAsync();
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

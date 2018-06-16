@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.Articles;
 using FreelancerBlog.Core.DomainModels;
@@ -22,15 +23,15 @@ namespace FreelancerBlog.Data.Commands.Articles
             _userManager = userManager;
         }
 
-        protected override Task HandleCore(UpdateArticleRatingCommand message)
+        protected override  Task Handle(UpdateArticleRatingCommand request, CancellationToken cancellationToken)
         {
             var articleRating = _context.ArticleRatings.Single(a =>
-                                                               a.ArticleIDfk == message.ArticleId && 
-                                                               a.UserIDfk == _userManager.GetUserId(message.User));
+                a.ArticleIDfk == request.ArticleId &&
+                a.UserIDfk == _userManager.GetUserId(request.User));
 
-            articleRating.ArticleRatingScore = message.ArticleRating;
+            articleRating.ArticleRatingScore = request.ArticleRating;
 
-            return _context.SaveChangesAsync();
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

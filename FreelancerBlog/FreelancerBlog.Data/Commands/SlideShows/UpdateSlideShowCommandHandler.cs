@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.SlideShows;
 using FreelancerBlog.Data.EntityFramework;
@@ -18,7 +19,7 @@ namespace FreelancerBlog.Data.Commands.SlideShows
             _context = context;
         }
 
-        protected override Task HandleCore(UpdateSlideShowCommand message)
+        protected override  Task Handle(UpdateSlideShowCommand message, CancellationToken cancellationToken)
         {
             _context.SlideShows.Attach(message.SlideShow);
 
@@ -28,7 +29,7 @@ namespace FreelancerBlog.Data.Commands.SlideShows
             entity.Property(e => e.SlideShowDateCreated).IsModified = false;
             entity.Property(e => e.SlideShowPictrure).IsModified = message.SlideShow.SlideShowPictrure != null;
 
-            return _context.SaveChangesAsync();
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

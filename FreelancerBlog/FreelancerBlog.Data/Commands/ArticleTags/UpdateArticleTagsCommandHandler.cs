@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.ArticleTags;
 using FreelancerBlog.Core.DomainModels;
@@ -20,10 +21,10 @@ namespace FreelancerBlog.Data.Commands.ArticleTags
             _context = context;
         }
 
-        protected override async Task HandleCore(UpdateArticleTagsCommand message)
+        protected override async Task Handle(UpdateArticleTagsCommand message, CancellationToken cancellationToken)
         {
             var articleTags = GetCurrentArticle(message.Article.ArticleId);
-           var currentArticleTags = articleTags.Select(t=> t.ArticleTagName.Trim()).ToList();
+            var currentArticleTags = articleTags.Select(t => t.ArticleTagName.Trim()).ToList();
 
             if (string.IsNullOrEmpty(message.ArticleTags))
             {

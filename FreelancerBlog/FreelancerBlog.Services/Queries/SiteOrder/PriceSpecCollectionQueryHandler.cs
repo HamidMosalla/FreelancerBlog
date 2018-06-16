@@ -8,7 +8,7 @@ namespace FreelancerBlog.Services.Queries.SiteOrder
 {
     public class PriceSpecCollectionQueryHandler : RequestHandler<PriceSpecCollectionQuery, List<PriceSpec>>
     {
-        protected override List<PriceSpec> HandleCore(PriceSpecCollectionQuery message)
+        protected override List<PriceSpec> Handle(PriceSpecCollectionQuery request)
         {
             var listOfSiteOrder = new List<PriceSpec>
             {
@@ -80,15 +80,15 @@ namespace FreelancerBlog.Services.Queries.SiteOrder
             };
 
 
-            var types = message.ViewModel.GetType()
+            var types = request.ViewModel.GetType()
                 .GetProperties()
-                .Select(v => new { Name = v.Name.ToString(), Value = v.GetValue(message.ViewModel) })
+                .Select(v => new { Name = v.Name.ToString(), Value = v.GetValue(request.ViewModel) })
                 .Where(v => v.Value != null && v.Value.ToString() != "0" && v.Value.ToString() != "False")
                 .ToDictionary(v => v.Name, v => v.Value);
 
 
             return listOfSiteOrder.Join(types, l => l.EnName, t => t.Key,
-                    (l, t) => new PriceSpec {EnName = l.EnName, FaName = l.FaName, Price = l.Price, Value = t.Value})
+                    (l, t) => new PriceSpec { EnName = l.EnName, FaName = l.FaName, Price = l.Price, Value = t.Value })
                 .ToList();
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.ApplicationUsers;
 using FreelancerBlog.Data.EntityFramework;
@@ -19,12 +20,12 @@ namespace FreelancerBlog.Data.Commands.ApplicationUsers
             _context = context;
         }
 
-        protected override Task HandleCore(UpdateUserProfileCommand message)
+        protected override  Task Handle(UpdateUserProfileCommand request, CancellationToken cancellationToken)
         {
-            var model = _context.Users.AsNoTracking().Single(u => u.Id == message.ApplicationUser.Id);
-            message.ApplicationUser.ConcurrencyStamp = model.ConcurrencyStamp;
-            _context.Entry(message.ApplicationUser).State = EntityState.Modified;
-            return _context.SaveChangesAsync();
+            var model = _context.Users.AsNoTracking().Single(u => u.Id == request.ApplicationUser.Id);
+            request.ApplicationUser.ConcurrencyStamp = model.ConcurrencyStamp;
+            _context.Entry(request.ApplicationUser).State = EntityState.Modified;
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

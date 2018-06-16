@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.Articles;
 using FreelancerBlog.Data.EntityFramework;
@@ -18,13 +19,13 @@ namespace FreelancerBlog.Data.Commands.Articles
             _context = context;
         }
 
-        protected override Task HandleCore(UpdateArticleCommand message)
+        protected override  Task Handle(UpdateArticleCommand request, CancellationToken cancellationToken)
         {
-            _context.Articles.Attach(message.Article);
+            _context.Articles.Attach(request.Article);
 
-            message.Article.ArticleDateModified = DateTime.Now;
+            request.Article.ArticleDateModified = DateTime.Now;
 
-            var entity = _context.Entry(message.Article);
+            var entity = _context.Entry(request.Article);
             entity.State = EntityState.Modified;
 
             entity.Property(e => e.ArticleDateCreated).IsModified = false;
@@ -32,7 +33,7 @@ namespace FreelancerBlog.Data.Commands.Articles
             entity.Property(e => e.ArticleViewCount).IsModified = false;
             entity.Property(e => e.UserIDfk).IsModified = false;
 
-            return _context.SaveChangesAsync();
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

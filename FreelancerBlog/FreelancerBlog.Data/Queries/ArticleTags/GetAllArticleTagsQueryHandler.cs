@@ -20,7 +20,7 @@ namespace FreelancerBlog.Data.Queries.ArticleTags
             _context = context;
         }
 
-        protected override IQueryable<ArticleTag> HandleCore(GetAllArticleTagsQuery message)
+        protected override IQueryable<ArticleTag> Handle(GetAllArticleTagsQuery request)
         {
             return _context.ArticleTags.AsQueryable();
         }

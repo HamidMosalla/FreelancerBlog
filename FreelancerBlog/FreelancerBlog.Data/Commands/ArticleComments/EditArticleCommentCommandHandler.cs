@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.ArticleComments;
 using FreelancerBlog.Data.EntityFramework;
@@ -17,10 +18,10 @@ namespace FreelancerBlog.Data.Commands.ArticleComments
             _context = context;
         }
 
-        protected override Task HandleCore(EditArticleCommentCommand message)
+        protected override  Task Handle(EditArticleCommentCommand request, CancellationToken cancellationToken)
         {
-            message.ArticleComment.ArticleCommentBody = message.NewCommentBody;
-            return _context.SaveChangesAsync();
+            request.ArticleComment.ArticleCommentBody = request.NewCommentBody;
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

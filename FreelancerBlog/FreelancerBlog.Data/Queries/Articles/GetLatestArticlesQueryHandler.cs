@@ -15,9 +15,9 @@ namespace FreelancerBlog.Data.Queries.Articles
             _context = context;
         }
 
-        protected override IQueryable<Article> HandleCore(GetLatestArticlesQuery message)
+        protected override IQueryable<Article> Handle(GetLatestArticlesQuery request)
         {
-            return _context.Articles.OrderByDescending(a => a.ArticleDateCreated).Take(message.NumberOfArticles).AsQueryable();
+            return _context.Articles.OrderByDescending(a => a.ArticleDateCreated).Take(request.NumberOfArticles).AsQueryable();
         }
     }
 }

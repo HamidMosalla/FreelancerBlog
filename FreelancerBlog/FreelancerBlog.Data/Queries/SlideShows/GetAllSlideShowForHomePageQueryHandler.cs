@@ -15,12 +15,12 @@ namespace FreelancerBlog.Data.Queries.SlideShows
             _context = context;
         }
 
-        protected override IQueryable<SlideShow> HandleCore(GetAllSlideShowForHomePageQuery message)
+        protected override IQueryable<SlideShow> Handle(GetAllSlideShowForHomePageQuery request)
         {
             return _context.SlideShows.OrderBy(s => s.SlideShowPriority)
-                                      .ThenByDescending(s => s.SlideShowDateCreated)
-                                      .Take(10)
-                                      .AsQueryable();
+                .ThenByDescending(s => s.SlideShowDateCreated)
+                .Take(10)
+                .AsQueryable();
         }
     }
 }

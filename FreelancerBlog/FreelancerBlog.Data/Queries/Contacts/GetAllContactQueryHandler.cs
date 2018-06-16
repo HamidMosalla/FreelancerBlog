@@ -18,7 +18,7 @@ namespace FreelancerBlog.Data.Queries.Contacts
             _context = context;
         }
 
-        protected override IQueryable<Contact> HandleCore(GetAllContactQuery message)
+        protected override IQueryable<Contact> Handle(GetAllContactQuery request)
         {
             return _context.Contacts.AsQueryable();
         }

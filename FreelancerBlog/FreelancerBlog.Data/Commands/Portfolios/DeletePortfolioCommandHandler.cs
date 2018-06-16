@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Commands.Data.Portfolios;
 using FreelancerBlog.Data.EntityFramework;
@@ -17,10 +18,10 @@ namespace FreelancerBlog.Data.Commands.Portfolios
             _context = context;
         }
 
-        protected override Task HandleCore(DeletePortfolioCommand message)
+        protected override  Task Handle(DeletePortfolioCommand request, CancellationToken cancellationToken)
         {
-            _context.Portfolios.Remove(message.Portfolio);
-            return _context.SaveChangesAsync();
+            _context.Portfolios.Remove(request.Portfolio);
+            return _context.SaveChangesAsync(cancellationToken);
         }
     }
 }
