@@ -10,7 +10,7 @@ namespace FreelancerBlog.Data.Queries.Articles
 {
     public class ArticleRatedBeforeQueryHandler : RequestHandler<ArticleRatedBeforeQuery, bool>
     {
-        private FreelancerBlogContext _context;
+        private readonly FreelancerBlogContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public ArticleRatedBeforeQueryHandler(FreelancerBlogContext context, UserManager<ApplicationUser> userManager)

@@ -7,19 +7,32 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Articles;
+using FreelancerBlog.Data.EntityFramework;
 using FreelancerBlog.Data.Queries.Articles;
 using FreelancerBlog.UnitTests.Database;
 using Xunit;
 
 namespace FreelancerBlog.UnitTests.Features.Data.Queries.Articles
 {
+    public class ArticlesByTagQueryHandlerWrapper : ArticlesByTagQueryHandler
+    {
+        public ArticlesByTagQueryHandlerWrapper(FreelancerBlogContext context) : base(context)
+        {
+        }
+
+        public IQueryable<Article> ExposedHandle(ArticlesByTagQuery message)
+        {
+            return base.Handle(message);
+        }
+    }
+
     public class ArticlesByTagQueryHandlerShould : InMemoryContextTest
     {
-        private ArticlesByTagQueryHandler _sut;
+        private ArticlesByTagQueryHandlerWrapper _sut;
 
         public ArticlesByTagQueryHandlerShould()
         {
-            _sut = new ArticlesByTagQueryHandler(Context);
+            _sut = new ArticlesByTagQueryHandlerWrapper(Context);
         }
 
         protected override void LoadTestData()
@@ -76,7 +89,7 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Articles
         {
             var message = new ArticlesByTagQuery { TagId = 1 };
 
-            var result = await _sut.Handle(message, default(CancellationToken));
+            var result = _sut.ExposedHandle(message);
 
             result.First().Should().BeOfType<Article>();
         }
@@ -86,11 +99,11 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Articles
         {
             var message = new ArticlesByTagQuery { TagId = 1 };
 
-            var result = await _sut.Handle(message, default(CancellationToken));
+            var result = _sut.ExposedHandle(message);
 
             result.Count().Should().Be(2);
-            result.Any(r=> r.ArticleId == 1).Should().BeTrue();
-            result.Any(r=> r.ArticleId == 3).Should().BeTrue();
+            result.Any(r => r.ArticleId == 1).Should().BeTrue();
+            result.Any(r => r.ArticleId == 3).Should().BeTrue();
         }
     }
 }

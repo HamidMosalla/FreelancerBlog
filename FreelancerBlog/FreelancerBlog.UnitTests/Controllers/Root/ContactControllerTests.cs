@@ -63,7 +63,6 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         {
             var captchaResponse = new CaptchaResponse { Success = "true" };
             A.CallTo(() => _mediatorFake.Send(A<ValidateCaptchaQuery>._, A<CancellationToken>._)).Returns(captchaResponse);
-            A.CallTo(() => _mediatorFake.Send(A<AddNewContactCommand>._, A<CancellationToken>._)).Returns(Task.CompletedTask);
             var viewModel = new ContactViewModel { ContactId = 1 };
 
 
@@ -80,7 +79,6 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
         {
             var captchaResponse = new CaptchaResponse { Success = "true" };
             A.CallTo(() => _mediatorFake.Send(A<ValidateCaptchaQuery>._, A<CancellationToken>._)).Returns(captchaResponse);
-            A.CallTo(() => _mediatorFake.Send(A<AddNewContactCommand>._, A<CancellationToken>._)).Returns(Task.CompletedTask);
             var viewModel = new ContactViewModel { ContactId = 1 };
 
 

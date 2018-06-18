@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Contacts;
+using FreelancerBlog.Data.EntityFramework;
 using FreelancerBlog.Data.Queries.Contacts;
 using FreelancerBlog.UnitTests.Database;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -12,15 +13,27 @@ using Xunit;
 
 namespace FreelancerBlog.UnitTests.Features.Data.Queries.Contacts
 {
+    public class GetAllContactQueryHandlerWrapper : GetAllContactQueryHandler
+    {
+        public GetAllContactQueryHandlerWrapper(FreelancerBlogContext context) : base(context)
+        {
+        }
+
+        public IQueryable<Contact> ExposedHandle(GetAllContactQuery request)
+        {
+            return base.Handle(request);
+        }
+    }
+
     public class GetAllContactQueryHandlerShould : InMemoryContextTest
     {
-        private GetAllContactQueryHandler _sut;
+        private GetAllContactQueryHandlerWrapper _sut;
         private GetAllContactQuery _message;
 
         public GetAllContactQueryHandlerShould()
         {
             _message = new GetAllContactQuery();
-            _sut = new GetAllContactQueryHandler(Context);
+            _sut = new GetAllContactQueryHandlerWrapper(Context);
         }
 
         protected override void LoadTestData()
@@ -33,7 +46,7 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Contacts
         [Fact]
         public async Task Always_ReturnsObjectOfTypeIQueryableOfContact()
         {
-            var result = await _sut.Handle(_message, default(CancellationToken));
+            var result = _sut.ExposedHandle(_message);
 
             result.Should().NotBeNull();
             result.First().Should().BeOfType<Contact>();
@@ -42,7 +55,7 @@ namespace FreelancerBlog.UnitTests.Features.Data.Queries.Contacts
         [Fact]
         public async Task WhenCalled_ReturnsTheCorrectNumberOfContact()
         {
-            var result = await _sut.Handle(_message, default(CancellationToken));
+            var result = _sut.ExposedHandle(_message);
 
             result.Should().NotBeNull();
             result.Count().Should().Be(2);
