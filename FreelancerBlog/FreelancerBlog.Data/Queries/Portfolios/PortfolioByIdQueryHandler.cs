@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Portfolios;
@@ -10,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.Portfolios
 {
-    public class PortfolioByIdQueryHandler: AsyncRequestHandler<PortfolioByIdQuery, Portfolio>
+    public class PortfolioByIdQueryHandler : IRequestHandler<PortfolioByIdQuery, Portfolio>
     {
         private FreelancerBlogContext _context;
 
@@ -19,9 +20,9 @@ namespace FreelancerBlog.Data.Queries.Portfolios
             _context = context;
         }
 
-        protected override Task<Portfolio> HandleCore(PortfolioByIdQuery message)
+        public Task<Portfolio> Handle(PortfolioByIdQuery message, CancellationToken cancellationToken)
         {
-            return _context.Portfolios.SingleAsync(p => p.PortfolioId == message.PortfolioId);
+            return _context.Portfolios.SingleAsync(p => p.PortfolioId == message.PortfolioId, cancellationToken: cancellationToken);
         }
     }
 }

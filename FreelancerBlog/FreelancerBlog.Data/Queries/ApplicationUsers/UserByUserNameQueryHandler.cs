@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.ApplicationUsers;
 using FreelancerBlog.Data.EntityFramework;
@@ -7,21 +8,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.ApplicationUsers
 {
-    public class UserByUserNameQueryHandler : AsyncRequestHandler<UserByUserNameQuery, ApplicationUser>
+    public class UserByUserNameQueryHandler : IRequestHandler<UserByUserNameQuery, ApplicationUser>
     {
-        private FreelancerBlogContext _context;
+        private readonly FreelancerBlogContext _context;
 
         public UserByUserNameQueryHandler(FreelancerBlogContext context)
         {
             _context = context;
         }
 
-        protected override Task<ApplicationUser> HandleCore(UserByUserNameQuery message)
+        public Task<ApplicationUser> Handle(UserByUserNameQuery request, CancellationToken cancellationToken)
         {
-            return _context.Users.Include(u => u.Articles)
-                                 .ThenInclude(u => u.ArticleRatings)
-                                 .Include(u => u.ArticleComments)
-                                 .SingleOrDefaultAsync(u => u.Email == message.UserName);
+            return _context.Users
+                           .Include(u => u.Articles)
+                           .ThenInclude(u => u.ArticleRatings)
+                           .Include(u => u.ArticleComments)
+                           .SingleOrDefaultAsync(u => u.Email == request.UserName, cancellationToken: cancellationToken);
         }
     }
 }

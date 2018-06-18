@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Queries.Data.ArticleTags;
 using FreelancerBlog.Data.EntityFramework;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.ArticleTags
 {
-    class GetAllTagNamesQueryHandler : AsyncRequestHandler<GetAllTagNamesQuery, string[]>
+    class GetAllTagNamesQueryHandler : IRequestHandler<GetAllTagNamesQuery, string[]>
     {
         private FreelancerBlogContext _context;
         public GetAllTagNamesQueryHandler(FreelancerBlogContext context)
@@ -15,9 +16,9 @@ namespace FreelancerBlog.Data.Queries.ArticleTags
             _context = context;
         }
 
-        protected override async Task<string[]> HandleCore(GetAllTagNamesQuery request)
+        public async Task<string[]> Handle(GetAllTagNamesQuery request, CancellationToken cancellationToken)
         {
-            return await _context.ArticleTags.Select(a => a.ArticleTagName).ToArrayAsync();
+            return await _context.ArticleTags.Select(a => a.ArticleTagName).ToArrayAsync(cancellationToken: cancellationToken);
         }
     }
 }

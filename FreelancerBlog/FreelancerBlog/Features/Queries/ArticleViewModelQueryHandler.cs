@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FreelancerBlog.Areas.Admin.ViewModels.Article;
@@ -11,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FreelancerBlog.Features.Queries
 {
-    public class ArticleViewModelQueryHandler : AsyncRequestHandler<ArticleViewModelQuery, ArticleViewModel>
+    public class ArticleViewModelQueryHandler : IRequestHandler<ArticleViewModelQuery, ArticleViewModel>
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
@@ -24,7 +25,7 @@ namespace FreelancerBlog.Features.Queries
             _mediator = mediator;
         }
 
-        protected override async Task<ArticleViewModel> HandleCore(ArticleViewModelQuery message)
+        public async Task<ArticleViewModel> Handle(ArticleViewModelQuery message, CancellationToken cancellationToken)
         {
             var articleViewModel = _mapper.Map<Article, ArticleViewModel>(message.Article);
             articleViewModel.ArticleTags = await _mediator.Send(new TagsByArticleIdQuery { ArticleId = message.Article.ArticleId }); ;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.ArticleTags;
@@ -10,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.Queries.ArticleTags
 {
-    class FindArticleTagByIdQueryHandler: AsyncRequestHandler<FindArticleTagByIdQuery, ArticleTag>
+    class FindArticleTagByIdQueryHandler : IRequestHandler<FindArticleTagByIdQuery, ArticleTag>
     {
         private FreelancerBlogContext _context;
 
@@ -19,9 +20,9 @@ namespace FreelancerBlog.Data.Queries.ArticleTags
             _context = context;
         }
 
-        protected override Task<ArticleTag> HandleCore(FindArticleTagByIdQuery message)
+        public Task<ArticleTag> Handle(FindArticleTagByIdQuery request, CancellationToken cancellationToken)
         {
-            return _context.ArticleTags.SingleOrDefaultAsync(a => a.ArticleTagId == message.ArticleTagId);
+            return _context.ArticleTags.SingleOrDefaultAsync(a => a.ArticleTagId == request.ArticleTagId, cancellationToken: cancellationToken);
         }
     }
 }

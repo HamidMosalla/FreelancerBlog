@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Types;
@@ -14,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace FreelancerBlog.Services.Queries.Shared
 {
-    public class ValidateCaptchaQueryHandler : AsyncRequestHandler<ValidateCaptchaQuery, CaptchaResponse>
+    public class ValidateCaptchaQueryHandler : IRequestHandler<ValidateCaptchaQuery, CaptchaResponse>
     {
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _contextAccessor;
@@ -27,7 +28,7 @@ namespace FreelancerBlog.Services.Queries.Shared
             _httpClient = httpClient;
         }
 
-        protected override async Task<CaptchaResponse> HandleCore(ValidateCaptchaQuery message)
+        public async Task<CaptchaResponse> Handle(ValidateCaptchaQuery request, CancellationToken cancellationToken)
         {
             var secret = _configuration.GetValue<string>("reChaptchaSecret:server-secret");
             var answer = _contextAccessor.HttpContext.Request.Form["g-recaptcha-response"];
