@@ -67,7 +67,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
             var userManager = new UserManagerFake(isUserConfirmed: false);
             var signInManager = new SignInManagerFake(_httpContextAccessor.Object, signInResult: Microsoft.AspNetCore.Identity.SignInResult.Success);
 
-            //Arrange
+            // Arrange
             var sut = new AccountController(userManager, signInManager, _emailSender.Object, _loggerFactoryWrapper.Object, _razorViewToString.Object, _mediatorMock.Object);
 
             //Act
