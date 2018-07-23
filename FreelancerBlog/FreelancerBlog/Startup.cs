@@ -65,7 +65,7 @@ namespace FreelancerBlog
         public IConfigurationRoot Configuration { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<FreelancerBlogContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
@@ -159,39 +159,6 @@ namespace FreelancerBlog
             services.AddSingleton<IConfigurationBinderWrapper, ConfigurationBinderWrapper>();
             services.AddSingleton<ILoggerFactoryWrapper, LoggerFactoryWrapper>();
             services.AddScoped<IRazorViewToString, RazorViewToString>();
-
-            // Autofac container configuration and modules
-            var builder = new ContainerBuilder();
-            builder.RegisterSource(new ContravariantRegistrationSource());
-            builder.RegisterType<Mediator>().As<IMediator>().InstancePerLifetimeScope();
-            //builder.Register<SingleInstanceFactory>(ctx =>
-            //    {
-            //        var c = ctx.Resolve<IComponentContext>();
-            //        return t =>
-            //        {
-            //            object o;
-            //            return c.TryResolve(t, out o) ? o : null;
-            //        };
-            //    }).InstancePerLifetimeScope();
-
-            //builder.Register<MultiInstanceFactory>(ctx =>
-            //    {
-            //        var c = ctx.Resolve<IComponentContext>();
-            //        return t => (IEnumerable<object>)c.Resolve(typeof(IEnumerable<>).MakeGenericType(t));
-            //    }).InstancePerLifetimeScope();
-
-            var dataAssembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("FreelancerBlog.Data"));
-            var servicesAssembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("FreelancerBlog.Services"));
-            builder.RegisterAssemblyTypes(dataAssembly, servicesAssembly, Assembly.GetEntryAssembly()).AsImplementedInterfaces();
-
-            builder.RegisterModule<AuthMessageSenderModule>();
-            builder.RegisterModule<FreelancerBlogDbContextSeedDataModule>();
-            builder.RegisterModule<FileManagerModule>();
-            builder.RegisterModule<FileSystemWrapperModule>();
-
-            builder.Populate(services);
-            var container = builder.Build();
-            return container.Resolve<IServiceProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -204,19 +171,15 @@ namespace FreelancerBlog
             {
                 app.UseAspNetCoreExceptionHandler();
             }
-
             else
             {
                 app.UseAspNetCoreExceptionHandler();
+                app.UseStatusCodePagesWithRedirects("/Error/Status/{0}");
             }
-
-            app.UseStatusCodePagesWithRedirects("/Error/Status/{0}");
 
             app.UseStaticFiles();
 
             app.UseAuthentication();
-
-
 
             app.UseSession();
 
@@ -247,10 +210,23 @@ namespace FreelancerBlog
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}/{title?}");
 
-
             });
 
             seeder.SeedAdminUser();
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            var dataAssembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("FreelancerBlog.Data"));
+            var servicesAssembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("FreelancerBlog.Services"));
+            builder.RegisterAssemblyTypes(dataAssembly, servicesAssembly, Assembly.GetEntryAssembly()).AsImplementedInterfaces();
+
+            builder.RegisterSource(new ContravariantRegistrationSource());
+            builder.RegisterType<Mediator>().As<IMediator>().InstancePerLifetimeScope();
+            builder.RegisterModule<AuthMessageSenderModule>();
+            builder.RegisterModule<FreelancerBlogDbContextSeedDataModule>();
+            builder.RegisterModule<FileManagerModule>();
+            builder.RegisterModule<FileSystemWrapperModule>();
         }
     }
 }
