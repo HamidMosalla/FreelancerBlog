@@ -217,12 +217,18 @@ namespace FreelancerBlog
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
+            builder.RegisterType<Mediator>().As<IMediator>().InstancePerLifetimeScope();
+
+            builder.Register<ServiceFactory>(ctx =>
+            {
+                var c = ctx.Resolve<IComponentContext>();
+                return t => c.TryResolve(t, out var o) ? o : null;
+            }).InstancePerLifetimeScope();
+
             var dataAssembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("FreelancerBlog.Data"));
             var servicesAssembly = AssemblyLoadContext.Default.LoadFromAssemblyName(new AssemblyName("FreelancerBlog.Services"));
             builder.RegisterAssemblyTypes(dataAssembly, servicesAssembly, Assembly.GetEntryAssembly()).AsImplementedInterfaces();
 
-            builder.RegisterSource(new ContravariantRegistrationSource());
-            builder.RegisterType<Mediator>().As<IMediator>().InstancePerLifetimeScope();
             builder.RegisterModule<AuthMessageSenderModule>();
             builder.RegisterModule<FreelancerBlogDbContextSeedDataModule>();
             builder.RegisterModule<FileManagerModule>();
