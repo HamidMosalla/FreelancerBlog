@@ -14,7 +14,7 @@ jQuery(function ($) {
     });
 
     //portfolio filter => isotope
-    $(window).load(function () {
+    $(window).on('load', function () {
         var $portfolioSelectors = $('.portfolio-filter >li>a');
 
         if ($portfolioSelectors != 'undefined') {

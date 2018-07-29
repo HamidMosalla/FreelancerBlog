@@ -2,7 +2,7 @@
   "name": "ASP.NET",
   "private": true,
   "dependencies": {
-    "bootstrap": "v4.1.1",
+    "bootstrap": "v3.3.7",
     "jquery": "3.3.1",
     "jquery-validation": "1.17.0",
     "jquery-validation-unobtrusive": "v3.2.10",
@@ -26,7 +26,7 @@
     "fizzy-ui-utils": "v2.0.7"
   },
   "resolutions": {
-    "bootstrap": "v4.1.1",
+    "bootstrap": "v3.3.7",
     "pnotify": "3.2.1",
     "system.js": "0.21.4",
     "spin.js": "4.0.0",
