@@ -19,16 +19,13 @@ namespace FreelancerBlog.Services.Wrappers
             File.Delete(path);
         }
 
-        public async Task SaveAsAsync(IFormFile formFile, string filename, CancellationToken cancellationToken = new CancellationToken())
+        public async Task SaveAsAsync(IFormFile formFile, string fullPath, CancellationToken cancellationToken = new CancellationToken())
         {
             int defaultBufferSize = 80 * 1024;
 
-            if (formFile == null)
-            {
-                throw new ArgumentNullException(nameof(formFile));
-            }
+            if (formFile == null) throw new ArgumentNullException(nameof(formFile));
 
-            using (var fileStream = new FileStream(filename, FileMode.Create))
+            using (var fileStream = new FileStream(fullPath, FileMode.Create))
             {
                 var inputStream = formFile.OpenReadStream();
                 await inputStream.CopyToAsync(fileStream, defaultBufferSize, cancellationToken);
