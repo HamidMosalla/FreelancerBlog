@@ -12,7 +12,9 @@ using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Articles;
 using FreelancerBlog.Core.Services.Shared;
+using FreelancerBlog.ViewModels.Article;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Mvc.JQuery.DataTables;
 using Xunit;
 
@@ -43,6 +45,15 @@ namespace FreelancerBlog.UnitTests.Controllers.Admin
             var result = await _sut.GetArticleTableData(new DataTablesParam());
 
             result.Should().BeOfType<DataTablesResult<ArticleViewModel>>();
+        }
+
+        [Fact]
+        public async Task ManageArticleComment_ShouldReturn_TheCorrectType()
+        {
+            var result = await _sut.ManageArticleComment() as ViewResult;
+
+            result.Should().NotBeNull();
+            result.Model.Should().BeOfType<List<ArticleCommentViewModel>>();
         }
     }
 }
