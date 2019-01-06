@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
-    <PackageReference Include="MailKit" Version="2.1.0.2" />
+    <PackageReference Include="MailKit" Version="2.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.2.0" />
   </ItemGroup>
 
