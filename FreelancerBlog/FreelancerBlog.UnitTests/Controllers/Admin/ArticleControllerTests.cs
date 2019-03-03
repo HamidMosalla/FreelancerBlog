@@ -52,8 +52,12 @@ namespace FreelancerBlog.UnitTests.Controllers.Admin
         {
             var result = await _sut.ManageArticleComment() as ViewResult;
 
+            A.CallTo(() => _mapper.Map<IQueryable<ArticleComment>, List<ArticleCommentViewModel>>(new List<ArticleComment>{ new ArticleComment()}.AsQueryable()))
+                .Returns(new List<ArticleCommentViewModel>());
+
             result.Should().NotBeNull();
-            result.Model.Should().BeOfType<List<ArticleCommentViewModel>>();
+            var resultModel = result.Model as List<ArticleCommentViewModel>;
+            resultModel.Should().NotBeNull();
         }
     }
 }

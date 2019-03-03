@@ -101,10 +101,10 @@ namespace FreelancerBlog.UnitTests.Controllers.Admin
             A.CallTo(() => _mediatorFake.Send(A<ContactByIdQuery>._, A<CancellationToken>._))
                 .Returns(new Contact());
 
-             await _sut.DeleteContact(contactId);
+            await _sut.DeleteContact(contactId);
 
             A.CallTo(() => _mediatorFake.Send(A<DeleteContactCommand>._, A<CancellationToken>._))
-                .MustHaveHappened(Repeated.Exactly.Once);
+                .MustHaveHappened(1, Times.Exactly);
         }
     }
 }
