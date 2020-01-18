@@ -197,15 +197,15 @@ namespace FreelancerBlog
 
             app.UseMvcJQueryDataTables();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(routes =>
             {
-                routes.MapRoute(name: "AreaRoute",
-                template: "{area:exists}/{controller}/{action}/{id?}/{title?}",
+                routes.MapControllerRoute(name: "AreaRoute",
+                pattern: "{area:exists}/{controller}/{action}/{id?}/{title?}",
                 defaults: new { controller = "Home", action = "Index" });
 
-                routes.MapRoute(
+                routes.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}/{title?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}/{title?}");
 
             });
 
