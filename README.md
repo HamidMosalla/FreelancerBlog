@@ -6,5 +6,5 @@ FreelancerBlog is built with **Asp.Net Core 2** as its web framework, **AutoMapp
 It also uses paradigms such as **SOLID**, **Ports and Adapters Architecture**, **CQRS** to achieve more flexibility and increase maintainability.
 
 # What do you need to run it?
-- Visual Studio 2017 Update 3
-- NET Core 2.0 SDK
+- Visual Studio 2019
+- NET Core 3.1.0 SDK
