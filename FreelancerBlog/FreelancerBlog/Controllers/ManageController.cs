@@ -4,7 +4,6 @@ using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.ViewModels.Manage;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

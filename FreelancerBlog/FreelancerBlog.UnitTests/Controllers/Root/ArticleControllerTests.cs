@@ -46,7 +46,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
 
             await _sut.Index();
 
-            A.CallTo(() => _mapperFake.Map<IQueryable<Article>, List<ArticleViewModel>>(articles)).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => _mapperFake.Map<IQueryable<Article>, List<ArticleViewModel>>(articles)).MustHaveHappened(1, Times.Exactly);
         }
 
         [Fact]

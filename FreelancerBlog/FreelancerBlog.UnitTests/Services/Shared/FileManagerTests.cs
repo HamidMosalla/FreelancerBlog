@@ -129,8 +129,8 @@ namespace FreelancerBlog.UnitTests.Services.Shared
             result.Should().NotBeNull();
             result.Should().BeOfType<FileStatus>();
             result.Should().Be(FileStatus.FileNotExist);
-            A.CallTo(() => _pathWrapper.Combine(A<string[]>._)).MustHaveHappened(Repeated.AtLeast.Once);
-            A.CallTo(() => _fileWrapper.Exists(A<string>._)).MustHaveHappened(Repeated.AtLeast.Once);
+            A.CallTo(() => _pathWrapper.Combine(A<string[]>._)).MustHaveHappened(1, FakeItEasy.Times.OrMore);
+            A.CallTo(() => _fileWrapper.Exists(A<string>._)).MustHaveHappened(1, FakeItEasy.Times.OrMore);
         }
 
         [Fact]
@@ -145,9 +145,9 @@ namespace FreelancerBlog.UnitTests.Services.Shared
             result.Should().NotBeNull();
             result.Should().BeOfType<FileStatus>();
             result.Should().Be(FileStatus.DeleteSuccess);
-            A.CallTo(() => _pathWrapper.Combine(A<string[]>._)).MustHaveHappened(Repeated.Exactly.Once);
-            A.CallTo(() => _fileWrapper.Exists(A<string>._)).MustHaveHappened(Repeated.Exactly.Twice);
-            A.CallTo(() => _fileWrapper.Delete(A<string>._)).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => _pathWrapper.Combine(A<string[]>._)).MustHaveHappened(1, FakeItEasy.Times.Exactly);
+            A.CallTo(() => _fileWrapper.Exists(A<string>._)).MustHaveHappened(1, FakeItEasy.Times.Exactly);
+            A.CallTo(() => _fileWrapper.Delete(A<string>._)).MustHaveHappened(1, FakeItEasy.Times.Exactly);
         }
 
         [Fact]
@@ -172,7 +172,7 @@ namespace FreelancerBlog.UnitTests.Services.Shared
             //Act
             var result = sut.DeleteFile("TestFile.txt", new List<string> { "UnitTestFolder" });
 
-            A.CallTo(() => _fileWrapper.Exists(A<string>._)).MustHaveHappened(Repeated.Exactly.Twice);
+            A.CallTo(() => _fileWrapper.Exists(A<string>._)).MustHaveHappened(2, FakeItEasy.Times.Exactly);
         }
 
         [Fact]
@@ -235,7 +235,7 @@ namespace FreelancerBlog.UnitTests.Services.Shared
 
             var result = await sut.UploadFileAsync(_formFile, path);
 
-            A.CallTo(() => _fileSystem.Directory.CreateDirectory(A<string>._)).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => _fileSystem.Directory.CreateDirectory(A<string>._)).MustHaveHappened(1, FakeItEasy.Times.Exactly);
         }
 
         [Fact]
