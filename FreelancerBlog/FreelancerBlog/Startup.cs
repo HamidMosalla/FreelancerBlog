@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
 using System.Reflection;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Autofac.Features.Variance;
 using AutoMapper;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Wrappers;
@@ -20,7 +17,6 @@ using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -28,23 +24,20 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Logging;
-using System.Linq;
 using System.Runtime.Loader;
 using FreelancerBlog.Core.DomainModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Facebook;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
 using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Hosting;
 
 namespace FreelancerBlog
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
@@ -169,7 +162,7 @@ namespace FreelancerBlog
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, FreelancerBlogContextSeedData seeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, FreelancerBlogContextSeedData seeder)
         {
             if (env.IsDevelopment())
             {
