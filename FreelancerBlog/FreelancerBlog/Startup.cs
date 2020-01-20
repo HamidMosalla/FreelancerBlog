@@ -105,7 +105,8 @@ namespace FreelancerBlog
                     {
                         o.LoginPath = new PathString("/Account/Login/");
                         o.AccessDeniedPath = new PathString("/Account/Forbidden/");
-                    }).AddFacebook(o =>
+                    })
+                    .AddFacebook(o =>
                     {
                         o.AppId = Configuration["OAuth:Facebook:AppId"];
                         o.AppSecret = Configuration["OAuth:Facebook:AppSecret"];
@@ -114,7 +115,8 @@ namespace FreelancerBlog
                         //Scope.Add("email"),
                         o.BackchannelHttpHandler = new FacebookBackChannelHandler();
                         o.UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,name,email,first_name,last_name,location";
-                    }).AddGoogle(o =>
+                    })
+                    .AddGoogle(o =>
                     {
                         o.ClientId = Configuration["OAuth:Google:ClientId"];
                         o.ClientSecret = Configuration["OAuth:Google:ClientSecret"];
@@ -128,12 +130,14 @@ namespace FreelancerBlog
                                 return Task.FromResult(0);
                             }
                         };
-                    }).AddMicrosoftAccount(MicrosoftAccountDefaults.AuthenticationScheme, "FreelancerBlog Microsoft OAuth", o =>
+                    })
+                    .AddMicrosoftAccount(MicrosoftAccountDefaults.AuthenticationScheme, "FreelancerBlog Microsoft OAuth", o =>
                     {
                         o.ClientId = Configuration["OAuth:Microsoft:ClientId"];
                         o.ClientSecret = Configuration["OAuth:Microsoft:ClientSecret"];
                         //Scope.Add("wl.emails, wl.basic"),
-                    }).AddTwitter(TwitterDefaults.AuthenticationScheme, "FreelancerBlog Twitter Auth", o =>
+                    })
+                    .AddTwitter(TwitterDefaults.AuthenticationScheme, "FreelancerBlog Twitter Auth", o =>
                     {
                         o.ConsumerKey = Configuration["OAuth:Twitter:ConsumerKey"];
                         o.ConsumerSecret = Configuration["OAuth:Twitter:ConsumerSecret"];
