@@ -90,7 +90,7 @@ namespace FreelancerBlog
 
             services.AddMvcJQueryDataTables();
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddMemoryCache();
 
