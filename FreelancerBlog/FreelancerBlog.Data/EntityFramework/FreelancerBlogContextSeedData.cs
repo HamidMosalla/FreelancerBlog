@@ -8,13 +8,6 @@ namespace FreelancerBlog.Data.EntityFramework
 {
     public class FreelancerBlogContextSeedData
     {
-        private readonly FreelancerBlogContext _context;
-
-        public FreelancerBlogContextSeedData(FreelancerBlogContext context)
-        {
-            _context = context;
-        }
-
         public async void SeedAdminUser()
         {
             var user = new ApplicationUser
@@ -31,24 +24,27 @@ namespace FreelancerBlog.Data.EntityFramework
                 UserGender = "Male"
             };
 
-            var roleStore = new RoleStore<IdentityRole>(_context);
-
-            if (!_context.Roles.Any(r => r.Name == "admin"))
+            using (var _context = new FreelancerBlogContext())
             {
-                await roleStore.CreateAsync(new IdentityRole { Name = "admin", NormalizedName = "admin" });
-            }
+                var roleStore = new RoleStore<IdentityRole>(_context);
 
-            if (!_context.Users.Any(u => u.UserName == user.UserName))
-            {
-                var password = new PasswordHasher<ApplicationUser>();
-                var hashed = password.HashPassword(user, "Mc2^6csQ^U88H5pz");
-                user.PasswordHash = hashed;
-                var userStore = new UserStore<ApplicationUser>(_context);
-                await userStore.CreateAsync(user);
-                await userStore.AddToRoleAsync(user, "admin");
-            }
+                if (!_context.Roles.Any(r => r.Name == "admin"))
+                {
+                    await roleStore.CreateAsync(new IdentityRole { Name = "admin", NormalizedName = "admin" });
+                }
 
-            await _context.SaveChangesAsync();
+                if (!_context.Users.Any(u => u.UserName == user.UserName))
+                {
+                    var password = new PasswordHasher<ApplicationUser>();
+                    var hashed = password.HashPassword(user, "Mc2^6csQ^U88H5pz");
+                    user.PasswordHash = hashed;
+                    var userStore = new UserStore<ApplicationUser>(_context);
+                    await userStore.CreateAsync(user);
+                    await userStore.AddToRoleAsync(user, "admin");
+                }
+
+                await _context.SaveChangesAsync(); 
+            }
         }
     }
 }
