@@ -69,6 +69,11 @@ namespace FreelancerBlog
                 loggingBuilder.AddDebug();
             });
 
+            // find out abo8ut it
+            // AutoValidateAntiforgeryTokenAttribute
+            // IDataProtectionProvider
+            // IDataProtector
+
             services.AddIdentity<ApplicationUser, IdentityRole>(o =>
                 {
                     o.Password.RequireDigit = false;
