@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FakeItEasy;
 using FluentAssertions;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Commands.Data.Contacts;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Services.Shared;

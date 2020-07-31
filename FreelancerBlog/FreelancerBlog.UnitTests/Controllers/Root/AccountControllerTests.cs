@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using FluentAssertions;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
