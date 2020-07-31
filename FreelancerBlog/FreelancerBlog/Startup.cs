@@ -89,9 +89,12 @@ namespace FreelancerBlog
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddMvc()
-                    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                    .AddDataAnnotationsLocalization();
+            services.AddMvc(options =>
+                {
+                    options.EnableEndpointRouting = false;
+                })
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
 
             services.AddMvcJQueryDataTables();
 
@@ -202,19 +205,25 @@ namespace FreelancerBlog
 
             app.UseMvcJQueryDataTables();
 
-            app.UseEndpoints(routes =>
+            app.UseMvc(routes =>
             {
-                routes.MapControllerRoute(name: "AreaRoute",
-                pattern: "{area:exists}/{controller}/{action}/{id?}/{title?}",
-                defaults: new { controller = "Home", action = "Index" });
-
-                routes.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}/{title?}");
-
+                routes.MapRoute("AreaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}/{title?}");
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}/{title?}");
             });
 
-            seeder.SeedAdminUser();
+            //app.UseEndpoints(routes =>
+            //{
+            //    routes.MapControllerRoute(name: "AreaRoute",
+            //    pattern: "{area:exists}/{controller}/{action}/{id?}/{title?}",
+            //    defaults: new { controller = "Home", action = "Index" });
+
+            //    routes.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Home}/{action=Index}/{id?}/{title?}");
+
+            //});
+
+            seeder.SeedAdminUser().GetAwaiter().GetResult();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using FreelancerBlog.Core.DomainModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.EntityFramework
 {
@@ -15,8 +17,10 @@ namespace FreelancerBlog.Data.EntityFramework
             _context = context;
         }
 
-        public async void SeedAdminUser()
+        public async Task SeedAdminUser()
         {
+            await _context.Database.MigrateAsync();
+
             var user = new ApplicationUser
             {
                 UserName = "Xellarix@gmail.com",
