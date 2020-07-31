@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FakeItEasy;
 using FluentAssertions;
-using FreelancerBlog.Controllers;
 using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Queries.Services.SiteOrder;
 using FreelancerBlog.Core.Types;
-using FreelancerBlog.ViewModels.SiteOrder;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using FreelancerBlog.UnitTests.Extensions;
+using FreelancerBlog.Web.Controllers;
 using Xunit;
 
 namespace FreelancerBlog.UnitTests.Controllers.Root

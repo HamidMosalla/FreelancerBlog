@@ -1,4 +1,4 @@
-﻿namespace FreelancerBlog.ViewModels.Manage
+﻿namespace FreelancerBlog.Web.ViewModels.Manage
 {
     public class RemoveLoginViewModel
     {

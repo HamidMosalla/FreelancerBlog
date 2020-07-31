@@ -8,15 +8,14 @@ using AutoMapper;
 using FakeItEasy;
 using FluentAssertions;
 using FreelancerBlog.AutoMapper;
-using FreelancerBlog.Controllers;
 using FreelancerBlog.Core.Commands.Data.Contacts;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.Core.Wrappers;
-using FreelancerBlog.ViewModels.Contact;
-
+using FreelancerBlog.Web.Controllers;
+using FreelancerBlog.Web.ViewModels.Contact;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

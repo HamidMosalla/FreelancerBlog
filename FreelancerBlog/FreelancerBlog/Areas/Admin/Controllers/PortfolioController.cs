@@ -2,18 +2,18 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.Core.Commands.Data.Portfolios;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Enums;
 using FreelancerBlog.Core.Queries.Data.Portfolios;
 using FreelancerBlog.Core.Services.Shared;
+using FreelancerBlog.Web.Areas.Admin.ViewModels.Portfolio;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FreelancerBlog.Areas.Admin.Controllers
+namespace FreelancerBlog.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "admin")]

@@ -2,14 +2,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FreelancerBlog.Areas.Admin.ViewModels.Article;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Articles;
+using FreelancerBlog.Web.Areas.Admin.ViewModels.Article;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FreelancerBlog.ViewComponents
+namespace FreelancerBlog.Web.ViewComponents
 {
     public class HomeFooterBlog : ViewComponent
     {

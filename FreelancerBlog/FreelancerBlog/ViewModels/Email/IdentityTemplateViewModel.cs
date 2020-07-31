@@ -1,4 +1,4 @@
-﻿namespace FreelancerBlog.ViewModels.Email
+﻿namespace FreelancerBlog.Web.ViewModels.Email
 {
     public class IdentityTemplateViewModel
     {

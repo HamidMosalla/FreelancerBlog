@@ -39,7 +39,7 @@
     <ProjectReference Include="..\FreelancerBlog.Core\FreelancerBlog.Core.csproj" />
     <ProjectReference Include="..\FreelancerBlog.Data\FreelancerBlog.Data.csproj" />
     <ProjectReference Include="..\FreelancerBlog.Infrastructure\FreelancerBlog.Infrastructure.csproj" />
-    <ProjectReference Include="..\FreelancerBlog\FreelancerBlog.csproj" />
+    <ProjectReference Include="..\FreelancerBlog\FreelancerBlog.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>

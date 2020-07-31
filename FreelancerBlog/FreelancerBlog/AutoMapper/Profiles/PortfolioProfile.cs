@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.Core.DomainModels;
+using FreelancerBlog.Web.Areas.Admin.ViewModels.Portfolio;
 
-namespace FreelancerBlog.AutoMapper.Profiles
+namespace FreelancerBlog.Web.AutoMapper.Profiles
 {
     public class PortfolioProfile : Profile
     {

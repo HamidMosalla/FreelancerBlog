@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using FreelancerBlog.ViewModels.Article;
+using FreelancerBlog.Web.ViewModels.Article;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FreelancerBlog.ViewComponents
+namespace FreelancerBlog.Web.ViewComponents
 {
     public class ArticleCommentsOnDetailPage : ViewComponent
     {

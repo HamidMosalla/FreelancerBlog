@@ -1,4 +1,4 @@
-﻿using FreelancerBlog.Controllers;
+﻿using FreelancerBlog.Web.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
 using Xunit.Abstractions;

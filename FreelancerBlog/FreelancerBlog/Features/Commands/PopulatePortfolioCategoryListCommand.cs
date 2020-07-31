@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.Core.DomainModels;
+using FreelancerBlog.Web.Areas.Admin.ViewModels.Portfolio;
 using MediatR;
 
-namespace FreelancerBlog.Features.Commands
+namespace FreelancerBlog.Web.Features.Commands
 {
     public class PopulatePortfolioCategoryListCommand : IRequest
     {

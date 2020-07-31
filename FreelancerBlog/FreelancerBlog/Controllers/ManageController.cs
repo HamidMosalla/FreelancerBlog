@@ -2,13 +2,13 @@
 using System.Threading.Tasks;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Services.Shared;
-using FreelancerBlog.ViewModels.Manage;
+using FreelancerBlog.Web.ViewModels.Manage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace FreelancerBlog.Controllers
+namespace FreelancerBlog.Web.Controllers
 {
     [Authorize]
     public class ManageController : Controller

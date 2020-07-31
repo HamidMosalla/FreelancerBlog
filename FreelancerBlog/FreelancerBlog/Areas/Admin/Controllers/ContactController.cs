@@ -2,17 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.Commands.Data.Contacts;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Contacts;
-using FreelancerBlog.ViewModels.Contact;
+using FreelancerBlog.Web.ViewModels.Contact;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace FreelancerBlog.Areas.Admin.Controllers
+namespace FreelancerBlog.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "admin")]

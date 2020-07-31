@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using FreelancerBlog.Core.DomainModels;
 using Microsoft.AspNetCore.Http;
 
-namespace FreelancerBlog.Areas.User.ViewModels.Profile
+namespace FreelancerBlog.Web.Areas.User.ViewModels.Profile
 {
     public class UserProfileViewModel
     {

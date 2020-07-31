@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreelancerBlog", "FreelancerBlog\FreelancerBlog.csproj", "{8CBC61FC-4052-4A00-85BF-3A2A8953C3AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreelancerBlog.Web", "FreelancerBlog\FreelancerBlog.Web.csproj", "{8CBC61FC-4052-4A00-85BF-3A2A8953C3AD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreelancerBlog.Core", "FreelancerBlog.Core\FreelancerBlog.Core.csproj", "{D310980E-6DC4-402A-BEB5-F96B77B6E072}"
 EndProject

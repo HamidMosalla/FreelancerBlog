@@ -2,19 +2,19 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.Core.Commands.Data.ArticleComments;
 using FreelancerBlog.Core.Commands.Data.Articles;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Articles;
 using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Types;
-using FreelancerBlog.Features.Queries;
-using FreelancerBlog.ViewModels.Article;
+using FreelancerBlog.Web.Areas.Admin.ViewModels.Article;
+using FreelancerBlog.Web.Features.Queries;
+using FreelancerBlog.Web.ViewModels.Article;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FreelancerBlog.Controllers
+namespace FreelancerBlog.Web.Controllers
 {
     public class ArticleController : Controller
     {

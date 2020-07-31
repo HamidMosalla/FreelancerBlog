@@ -2,14 +2,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Portfolios;
-using FreelancerBlog.Features.Commands;
+using FreelancerBlog.Web.Areas.Admin.ViewModels.Portfolio;
+using FreelancerBlog.Web.Features.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FreelancerBlog.Controllers
+namespace FreelancerBlog.Web.Controllers
 {
     public class PortfolioController : Controller
     {

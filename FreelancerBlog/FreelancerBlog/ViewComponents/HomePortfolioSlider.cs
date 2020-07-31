@@ -2,13 +2,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FreelancerBlog.Areas.Admin.ViewModels.Portfolio;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Portfolios;
+using FreelancerBlog.Web.Areas.Admin.ViewModels.Portfolio;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FreelancerBlog.ViewComponents
+namespace FreelancerBlog.Web.ViewComponents
 {
     public class HomePortfolioSlider : ViewComponent
     {

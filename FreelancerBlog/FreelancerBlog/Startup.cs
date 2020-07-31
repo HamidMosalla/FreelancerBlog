@@ -2,21 +2,28 @@
 using System.Globalization;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.Loader;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Wrappers;
 using FreelancerBlog.Data.EntityFramework;
 using FreelancerBlog.Infrastructure.DependencyInjection;
 using FreelancerBlog.Services.Shared;
 using FreelancerBlog.Services.Wrappers;
+using FreelancerBlog.Web.Experimental;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -24,16 +31,10 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System.Runtime.Loader;
-using FreelancerBlog.Core.DomainModels;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
-using Microsoft.AspNetCore.Authentication.Twitter;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace FreelancerBlog
+namespace FreelancerBlog.Web
 {
     public class Startup
     {

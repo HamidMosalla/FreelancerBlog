@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using FreelancerBlog.Core.DomainModels;
-using FreelancerBlog.ViewModels.Contact;
+using FreelancerBlog.Web.ViewModels.Contact;
 
-namespace FreelancerBlog.AutoMapper.Profiles
+namespace FreelancerBlog.Web.AutoMapper.Profiles
 {
     public class ContactProfile:Profile
     {

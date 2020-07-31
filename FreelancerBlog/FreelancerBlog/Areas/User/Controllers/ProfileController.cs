@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using FreelancerBlog.Areas.User.ViewModels.Profile;
 using FreelancerBlog.Core.Commands.Data.ApplicationUsers;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Enums;
 using FreelancerBlog.Core.Queries.Data.ApplicationUsers;
 using FreelancerBlog.Core.Services.Shared;
+using FreelancerBlog.Web.Areas.User.ViewModels.Profile;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FreelancerBlog.Areas.User.Controllers
+namespace FreelancerBlog.Web.Areas.User.Controllers
 {
     [Area("User")]
     [Authorize]

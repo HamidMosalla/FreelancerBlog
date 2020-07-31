@@ -1,6 +1,6 @@
 ﻿@using System.Threading.Tasks
-@using FreelancerBlog.ViewModels.Article
-@model ArticleCommentTreeViewModel
+@using FreelancerBlog.Web.ViewModels.Article
+@model FreelancerBlog.Web.ViewModels.Article.ArticleCommentTreeViewModel
 
 @if (Model.Comments.Any(s => s.ArticleCommentParentId == Model.CommentSeed))
 {

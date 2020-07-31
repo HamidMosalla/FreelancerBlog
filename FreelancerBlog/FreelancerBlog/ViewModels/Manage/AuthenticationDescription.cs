@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace FreelancerBlog.ViewModels.Manage
+namespace FreelancerBlog.Web.ViewModels.Manage
 {
     public class AuthenticationDescription
     {

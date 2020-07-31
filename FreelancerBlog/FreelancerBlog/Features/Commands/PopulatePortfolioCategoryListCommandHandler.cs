@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using MediatR;
 
-namespace FreelancerBlog.Features.Commands
+namespace FreelancerBlog.Web.Features.Commands
 {
     public class PopulatePortfolioCategoryListCommandHandler : RequestHandler<PopulatePortfolioCategoryListCommand>
     {

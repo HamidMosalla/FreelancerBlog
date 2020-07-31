@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FreelancerBlog.Core.DomainModels;
 
-namespace FreelancerBlog.ViewModels.Article
+namespace FreelancerBlog.Web.ViewModels.Article
 {
     public class ArticleCommentTreeViewModel
     {

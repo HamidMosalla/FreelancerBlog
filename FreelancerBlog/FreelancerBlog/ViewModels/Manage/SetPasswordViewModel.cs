@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FreelancerBlog.ViewModels.Manage
+namespace FreelancerBlog.Web.ViewModels.Manage
 {
     public class SetPasswordViewModel
     {

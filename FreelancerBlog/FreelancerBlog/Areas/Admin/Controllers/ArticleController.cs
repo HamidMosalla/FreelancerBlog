@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.Core.Commands.Data.ArticleComments;
 using FreelancerBlog.Core.Commands.Data.Articles;
 using FreelancerBlog.Core.Commands.Data.ArticleTags;
@@ -11,14 +10,15 @@ using FreelancerBlog.Core.Queries.Data.ArticleComments;
 using FreelancerBlog.Core.Queries.Data.Articles;
 using FreelancerBlog.Core.Queries.Data.ArticleTags;
 using FreelancerBlog.Core.Services.Shared;
-using FreelancerBlog.ViewModels.Article;
+using FreelancerBlog.Web.Areas.Admin.ViewModels.Article;
+using FreelancerBlog.Web.ViewModels.Article;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Mvc.JQuery.DataTables;
 
-namespace FreelancerBlog.Areas.Admin.Controllers
+namespace FreelancerBlog.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "admin")]

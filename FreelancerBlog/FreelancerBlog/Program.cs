@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
-namespace FreelancerBlog
+namespace FreelancerBlog.Web
 {
     public class Program
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FreelancerBlog.Areas.Admin.ViewModels.Article
+namespace FreelancerBlog.Web.Areas.Admin.ViewModels.Article
 {
     public class ArticleTagViewModel
     {
