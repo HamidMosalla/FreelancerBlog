@@ -90,7 +90,7 @@ namespace FreelancerBlog.Web
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddMvc(options =>
+            services.AddControllersWithViews(options =>
                 {
                     options.EnableEndpointRouting = false;
                 })
@@ -186,6 +186,7 @@ namespace FreelancerBlog.Web
             app.UseStaticFiles();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseSession();
 
@@ -212,16 +213,10 @@ namespace FreelancerBlog.Web
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}/{title?}");
             });
 
-            //app.UseEndpoints(routes =>
+            //app.UseEndpoints(endpoints =>
             //{
-            //    routes.MapControllerRoute(name: "AreaRoute",
-            //    pattern: "{area:exists}/{controller}/{action}/{id?}/{title?}",
-            //    defaults: new { controller = "Home", action = "Index" });
-
-            //    routes.MapControllerRoute(
-            //        name: "default",
-            //        pattern: "{controller=Home}/{action=Index}/{id?}/{title?}");
-
+            //    endpoints.MapHub<ChatHub>("/chat");
+            //    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             //});
 
             seeder.SeedAdminUser().GetAwaiter().GetResult();
