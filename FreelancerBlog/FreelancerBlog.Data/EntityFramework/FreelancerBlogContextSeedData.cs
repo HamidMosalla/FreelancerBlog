@@ -1,15 +1,26 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using FreelancerBlog.Core.DomainModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace FreelancerBlog.Data.EntityFramework
 {
     public class FreelancerBlogContextSeedData
     {
-        public async void SeedAdminUser()
+        private readonly FreelancerBlogContext _context;
+
+        public FreelancerBlogContextSeedData(FreelancerBlogContext context)
         {
+            _context = context;
+        }
+
+        public async Task SeedAdminUser()
+        {
+            await _context.Database.MigrateAsync();
+
             var user = new ApplicationUser
             {
                 UserName = "Xellarix@gmail.com",
@@ -24,27 +35,24 @@ namespace FreelancerBlog.Data.EntityFramework
                 UserGender = "Male"
             };
 
-            using (var _context = new FreelancerBlogContext())
+            var roleStore = new RoleStore<IdentityRole>(_context);
+
+            if (!_context.Roles.Any(r => r.Name == "admin"))
             {
-                var roleStore = new RoleStore<IdentityRole>(_context);
-
-                if (!_context.Roles.Any(r => r.Name == "admin"))
-                {
-                    await roleStore.CreateAsync(new IdentityRole { Name = "admin", NormalizedName = "admin" });
-                }
-
-                if (!_context.Users.Any(u => u.UserName == user.UserName))
-                {
-                    var password = new PasswordHasher<ApplicationUser>();
-                    var hashed = password.HashPassword(user, "Mc2^6csQ^U88H5pz");
-                    user.PasswordHash = hashed;
-                    var userStore = new UserStore<ApplicationUser>(_context);
-                    await userStore.CreateAsync(user);
-                    await userStore.AddToRoleAsync(user, "admin");
-                }
-
-                await _context.SaveChangesAsync(); 
+                await roleStore.CreateAsync(new IdentityRole { Name = "admin", NormalizedName = "admin" });
             }
+
+            if (!_context.Users.Any(u => u.UserName == user.UserName))
+            {
+                var password = new PasswordHasher<ApplicationUser>();
+                var hashed = password.HashPassword(user, "Mc2^6csQ^U88H5pz");
+                user.PasswordHash = hashed;
+                var userStore = new UserStore<ApplicationUser>(_context);
+                await userStore.CreateAsync(user);
+                await userStore.AddToRoleAsync(user, "admin");
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

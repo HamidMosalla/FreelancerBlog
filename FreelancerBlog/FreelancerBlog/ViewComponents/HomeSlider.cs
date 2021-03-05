@@ -2,14 +2,13 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FreelancerBlog.Areas.Admin.ViewModels.SlideShow;
-using FreelancerBlog.AutoMapper;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.SlideShows;
+using FreelancerBlog.Web.Areas.Admin.ViewModels.SlideShow;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FreelancerBlog.ViewComponents
+namespace FreelancerBlog.Web.ViewComponents
 {
     public class HomeSlider : ViewComponent
     {

@@ -1,26 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.Loader;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using Autofac.Features.Variance;
 using AutoMapper;
+using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Wrappers;
 using FreelancerBlog.Data.EntityFramework;
 using FreelancerBlog.Infrastructure.DependencyInjection;
 using FreelancerBlog.Services.Shared;
 using FreelancerBlog.Services.Wrappers;
+using FreelancerBlog.Web.Experimental;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
 using Microsoft.AspNetCore.Authentication.OAuth;
+using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -28,23 +31,14 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyModel;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Runtime.Loader;
-using FreelancerBlog.Core.DomainModels;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Facebook;
-using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
-using Microsoft.AspNetCore.Authentication.Twitter;
-using Microsoft.AspNetCore.Identity;
 
-namespace FreelancerBlog
+namespace FreelancerBlog.Web
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             // Set up configuration sources.
             var builder = new ConfigurationBuilder()
@@ -69,6 +63,18 @@ namespace FreelancerBlog
         {
             services.AddDbContext<FreelancerBlogContext>(options => options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
 
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
+                loggingBuilder.AddConsole();
+                loggingBuilder.AddDebug();
+            });
+
+            // find out abo8ut it
+            // AutoValidateAntiforgeryTokenAttribute
+            // IDataProtectionProvider
+            // IDataProtector
+
             services.AddIdentity<ApplicationUser, IdentityRole>(o =>
                 {
                     o.Password.RequireDigit = false;
@@ -84,9 +90,12 @@ namespace FreelancerBlog
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddMvc()
-                    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                    .AddDataAnnotationsLocalization();
+            services.AddControllersWithViews(options =>
+                {
+                    options.EnableEndpointRouting = false;
+                })
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
 
             services.AddMvcJQueryDataTables();
 
@@ -166,11 +175,8 @@ namespace FreelancerBlog
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, FreelancerBlogContextSeedData seeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, FreelancerBlogContextSeedData seeder)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
             {
                 app.UseAspNetCoreExceptionHandler();
@@ -184,6 +190,7 @@ namespace FreelancerBlog
             app.UseStaticFiles();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseSession();
 
@@ -206,17 +213,17 @@ namespace FreelancerBlog
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(name: "AreaRoute",
-                template: "{area:exists}/{controller}/{action}/{id?}/{title?}",
-                defaults: new { controller = "Home", action = "Index" });
-
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}/{title?}");
-
+                routes.MapRoute("AreaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}/{title?}");
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}/{title?}");
             });
 
-            seeder.SeedAdminUser();
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapHub<ChatHub>("/chat");
+            //    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            //});
+
+            seeder.SeedAdminUser().GetAwaiter().GetResult();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

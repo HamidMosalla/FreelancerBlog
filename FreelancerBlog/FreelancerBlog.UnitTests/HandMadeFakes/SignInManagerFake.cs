@@ -21,7 +21,8 @@ namespace FreelancerBlog.UnitTests.HandMadeFakes
               A.Fake< IUserClaimsPrincipalFactory<ApplicationUser>>(),
               A.Fake<IOptions<IdentityOptions>>(),
               A.Fake<ILogger<SignInManager<ApplicationUser>>>(),
-              A.Fake<IAuthenticationSchemeProvider>()
+              A.Fake<IAuthenticationSchemeProvider>(),
+              A.Fake<IUserConfirmation<ApplicationUser>>()
             )
         {
             _signInResult = signInResult;
@@ -33,7 +34,8 @@ namespace FreelancerBlog.UnitTests.HandMadeFakes
             A.Fake<IUserClaimsPrincipalFactory<ApplicationUser>>(),
             A.Fake<IOptions<IdentityOptions>>(),
             A.Fake<ILogger<SignInManager<ApplicationUser>>>(),
-            A.Fake<IAuthenticationSchemeProvider>()
+            A.Fake<IAuthenticationSchemeProvider>(),
+              A.Fake<IUserConfirmation<ApplicationUser>>()
               )
         {
             _signInResult = signInResult;

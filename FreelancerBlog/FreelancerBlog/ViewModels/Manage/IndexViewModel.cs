@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-namespace FreelancerBlog.ViewModels.Manage
+namespace FreelancerBlog.Web.ViewModels.Manage
 {
     public class IndexViewModel
     {

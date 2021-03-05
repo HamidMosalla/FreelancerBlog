@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace FreelancerBlog.ViewModels.Contact
+namespace FreelancerBlog.Web.ViewModels.Contact
 {
     public class ContactViewModel
     {

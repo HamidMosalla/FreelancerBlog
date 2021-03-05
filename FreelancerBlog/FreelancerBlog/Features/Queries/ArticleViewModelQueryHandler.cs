@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.ArticleTags;
+using FreelancerBlog.Web.Areas.Admin.ViewModels.Article;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
-namespace FreelancerBlog.Features.Queries
+namespace FreelancerBlog.Web.Features.Queries
 {
     public class ArticleViewModelQueryHandler : IRequestHandler<ArticleViewModelQuery, ArticleViewModel>
     {

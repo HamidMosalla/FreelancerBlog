@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FakeItEasy;
 using FluentAssertions;
-using FreelancerBlog.Areas.Admin.ViewModels.Article;
-using FreelancerBlog.Controllers;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Data.Articles;
+using FreelancerBlog.Web.Areas.Admin.ViewModels.Article;
+using FreelancerBlog.Web.Controllers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Xunit;
@@ -46,7 +46,7 @@ namespace FreelancerBlog.UnitTests.Controllers.Root
 
             await _sut.Index();
 
-            A.CallTo(() => _mapperFake.Map<IQueryable<Article>, List<ArticleViewModel>>(articles)).MustHaveHappened(Repeated.Exactly.Once);
+            A.CallTo(() => _mapperFake.Map<IQueryable<Article>, List<ArticleViewModel>>(articles)).MustHaveHappened(1, Times.Exactly);
         }
 
         [Fact]

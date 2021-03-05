@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using FreelancerBlog.Core.DomainModels;
 
-namespace FreelancerBlog.ViewModels.Article
+namespace FreelancerBlog.Web.ViewModels.Article
 {
     public class ArticleCommentViewModel
     {

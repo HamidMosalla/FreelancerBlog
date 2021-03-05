@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace FreelancerBlog.ViewModels.Manage
+namespace FreelancerBlog.Web.ViewModels.Manage
 {
     public class ConfigureTwoFactorViewModel
     {

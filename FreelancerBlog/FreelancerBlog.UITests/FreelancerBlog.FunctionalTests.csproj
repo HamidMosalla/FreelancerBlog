@@ -11,18 +11,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="FluentAssertions" Version="5.8.0" />
-    <PackageReference Include="GenFu" Version="1.5.6" />
-    <PackageReference Include="Moq" Version="4.12.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\FreelancerBlog.Core\FreelancerBlog.Core.csproj" />
-    <ProjectReference Include="..\FreelancerBlog.Infrastructure\FreelancerBlog.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="GenFu" Version="1.6.0" />
+    <PackageReference Include="Moq" Version="4.14.5" />
   </ItemGroup>
 
 </Project>

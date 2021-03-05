@@ -2,12 +2,12 @@ using System;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Data.EntityFramework;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace FreelancerBlog.UnitTests.Database
 {
@@ -42,7 +42,7 @@ namespace FreelancerBlog.UnitTests.Database
                 services.AddSingleton<IHttpContextAccessor>(h => new HttpContextAccessor { HttpContext = context });
 
                 // Setup hosting environment
-                IHostingEnvironment hostingEnvironment = new HostingEnvironment();
+                var hostingEnvironment = new HostingEnvironment();
                 hostingEnvironment.EnvironmentName = "Development";
                 services.AddSingleton(x => hostingEnvironment);
 

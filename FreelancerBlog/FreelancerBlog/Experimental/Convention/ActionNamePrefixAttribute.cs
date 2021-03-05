@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 
-namespace FreelancerBlog.Experimental.Convention
+namespace FreelancerBlog.Web.Experimental.Convention
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class ActionNamePrefixAttribute : Attribute, IActionModelConvention

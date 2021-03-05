@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FreelancerBlog.ViewModels.SiteOrder
+namespace FreelancerBlog.Web.ViewModels.SiteOrder
 {
     public class SiteOrderViewModel
     {

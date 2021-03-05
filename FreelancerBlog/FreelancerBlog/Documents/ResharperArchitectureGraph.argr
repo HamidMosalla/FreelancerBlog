@@ -1,0 +1,29 @@
+<ArchitectureGraph>
+  <Module Identifier="8CBC61FC-4052-4A00-85BF-3A2A8953C3AD" Name="FreelancerBlog" />
+  <Module Identifier="D310980E-6DC4-402A-BEB5-F96B77B6E072" Name="FreelancerBlog.Core" />
+  <Module Identifier="1445D6F1-688B-422C-83A0-4C17BC57E0F8" Name="FreelancerBlog.Infrastructure" />
+  <Module Identifier="09668EBB-4029-44B1-B08D-D6937E54D5C3" Name="FreelancerBlog.Data" />
+  <Module Identifier="8053C5DB-8C41-4E51-B21E-FFACE5031F5D" Name="FreelancerBlog.Services" />
+  <Module Identifier="A983C7D9-E9B7-48A6-B22E-DA7A83710BC6" Name="FreelancerBlog.IntegrationTests" />
+  <Module Identifier="05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0" Name="FreelancerBlog.UnitTests" />
+  <Module Identifier="F4953E18-F779-44C0-B2CC-878176118F41" Name="FreelancerBlog.UITests" />
+  <Reference Identifier="8CBC61FC-4052-4A00-85BF-3A2A8953C3AD/r:FreelancerBlog.Core" SourceId="8CBC61FC-4052-4A00-85BF-3A2A8953C3AD" Name="FreelancerBlog.Core" TargetId="D310980E-6DC4-402A-BEB5-F96B77B6E072" />
+  <Reference Identifier="1445D6F1-688B-422C-83A0-4C17BC57E0F8/r:FreelancerBlog.Core" SourceId="1445D6F1-688B-422C-83A0-4C17BC57E0F8" Name="FreelancerBlog.Core" TargetId="D310980E-6DC4-402A-BEB5-F96B77B6E072" />
+  <Reference Identifier="09668EBB-4029-44B1-B08D-D6937E54D5C3/r:FreelancerBlog.Core" SourceId="09668EBB-4029-44B1-B08D-D6937E54D5C3" Name="FreelancerBlog.Core" TargetId="D310980E-6DC4-402A-BEB5-F96B77B6E072" />
+  <Reference Identifier="1445D6F1-688B-422C-83A0-4C17BC57E0F8/r:FreelancerBlog.Data" SourceId="1445D6F1-688B-422C-83A0-4C17BC57E0F8" Name="FreelancerBlog.Data" TargetId="09668EBB-4029-44B1-B08D-D6937E54D5C3" />
+  <Reference Identifier="8053C5DB-8C41-4E51-B21E-FFACE5031F5D/r:FreelancerBlog.Core" SourceId="8053C5DB-8C41-4E51-B21E-FFACE5031F5D" Name="FreelancerBlog.Core" TargetId="D310980E-6DC4-402A-BEB5-F96B77B6E072" />
+  <Reference Identifier="8053C5DB-8C41-4E51-B21E-FFACE5031F5D/r:FreelancerBlog.Data" SourceId="8053C5DB-8C41-4E51-B21E-FFACE5031F5D" Name="FreelancerBlog.Data" TargetId="09668EBB-4029-44B1-B08D-D6937E54D5C3" />
+  <Reference Identifier="1445D6F1-688B-422C-83A0-4C17BC57E0F8/r:FreelancerBlog.Services" SourceId="1445D6F1-688B-422C-83A0-4C17BC57E0F8" Name="FreelancerBlog.Services" TargetId="8053C5DB-8C41-4E51-B21E-FFACE5031F5D" />
+  <Reference Identifier="8CBC61FC-4052-4A00-85BF-3A2A8953C3AD/r:FreelancerBlog.Infrastructure" SourceId="8CBC61FC-4052-4A00-85BF-3A2A8953C3AD" Name="FreelancerBlog.Infrastructure" TargetId="1445D6F1-688B-422C-83A0-4C17BC57E0F8" />
+  <Reference Identifier="8CBC61FC-4052-4A00-85BF-3A2A8953C3AD/r:FreelancerBlog.Data" SourceId="8CBC61FC-4052-4A00-85BF-3A2A8953C3AD" Name="FreelancerBlog.Data" TargetId="09668EBB-4029-44B1-B08D-D6937E54D5C3" />
+  <Reference Identifier="8CBC61FC-4052-4A00-85BF-3A2A8953C3AD/r:FreelancerBlog.Services" SourceId="8CBC61FC-4052-4A00-85BF-3A2A8953C3AD" Name="FreelancerBlog.Services" TargetId="8053C5DB-8C41-4E51-B21E-FFACE5031F5D" />
+  <Reference Identifier="A983C7D9-E9B7-48A6-B22E-DA7A83710BC6/r:FreelancerBlog.Core" SourceId="A983C7D9-E9B7-48A6-B22E-DA7A83710BC6" Name="FreelancerBlog.Core" TargetId="D310980E-6DC4-402A-BEB5-F96B77B6E072" />
+  <Reference Identifier="A983C7D9-E9B7-48A6-B22E-DA7A83710BC6/r:FreelancerBlog.Infrastructure" SourceId="A983C7D9-E9B7-48A6-B22E-DA7A83710BC6" Name="FreelancerBlog.Infrastructure" TargetId="1445D6F1-688B-422C-83A0-4C17BC57E0F8" />
+  <Reference Identifier="A983C7D9-E9B7-48A6-B22E-DA7A83710BC6/r:FreelancerBlog.Data" SourceId="A983C7D9-E9B7-48A6-B22E-DA7A83710BC6" Name="FreelancerBlog.Data" TargetId="09668EBB-4029-44B1-B08D-D6937E54D5C3" />
+  <Reference Identifier="A983C7D9-E9B7-48A6-B22E-DA7A83710BC6/r:FreelancerBlog.Services" SourceId="A983C7D9-E9B7-48A6-B22E-DA7A83710BC6" Name="FreelancerBlog.Services" TargetId="8053C5DB-8C41-4E51-B21E-FFACE5031F5D" />
+  <Reference Identifier="05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0/r:FreelancerBlog.Core" SourceId="05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0" Name="FreelancerBlog.Core" TargetId="D310980E-6DC4-402A-BEB5-F96B77B6E072" />
+  <Reference Identifier="05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0/r:FreelancerBlog.Data" SourceId="05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0" Name="FreelancerBlog.Data" TargetId="09668EBB-4029-44B1-B08D-D6937E54D5C3" />
+  <Reference Identifier="05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0/r:FreelancerBlog.Infrastructure" SourceId="05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0" Name="FreelancerBlog.Infrastructure" TargetId="1445D6F1-688B-422C-83A0-4C17BC57E0F8" />
+  <Reference Identifier="05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0/r:FreelancerBlog" SourceId="05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0" Name="FreelancerBlog" TargetId="8CBC61FC-4052-4A00-85BF-3A2A8953C3AD" />
+  <Reference Identifier="05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0/r:FreelancerBlog.Services" SourceId="05CBEE7D-7D8A-46DB-8142-B3C6DA3A85A0" Name="FreelancerBlog.Services" TargetId="8053C5DB-8C41-4E51-B21E-FFACE5031F5D" />
+</ArchitectureGraph>

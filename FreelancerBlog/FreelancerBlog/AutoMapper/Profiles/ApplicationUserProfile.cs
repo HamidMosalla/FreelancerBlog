@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using FreelancerBlog.Areas.User.ViewModels.Profile;
 using FreelancerBlog.Core.DomainModels;
+using FreelancerBlog.Web.Areas.User.ViewModels.Profile;
 
-namespace FreelancerBlog.AutoMapper.Profiles
+namespace FreelancerBlog.Web.AutoMapper.Profiles
 {
     public class ApplicationUserProfile : Profile
     {

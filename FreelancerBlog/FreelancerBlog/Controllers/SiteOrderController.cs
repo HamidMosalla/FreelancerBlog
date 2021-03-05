@@ -5,11 +5,11 @@ using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Queries.Services.SiteOrder;
 using FreelancerBlog.Core.Types;
-using FreelancerBlog.ViewModels.SiteOrder;
+using FreelancerBlog.Web.ViewModels.SiteOrder;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FreelancerBlog.Controllers
+namespace FreelancerBlog.Web.Controllers
 {
     public class SiteOrderController : Controller
     {

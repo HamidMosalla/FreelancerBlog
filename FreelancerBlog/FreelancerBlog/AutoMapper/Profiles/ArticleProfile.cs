@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.Core.DomainModels;
-using FreelancerBlog.ViewModels.Article;
+using FreelancerBlog.Web.Areas.Admin.ViewModels.Article;
+using FreelancerBlog.Web.ViewModels.Article;
 
-namespace FreelancerBlog.AutoMapper.Profiles
+namespace FreelancerBlog.Web.AutoMapper.Profiles
 {
     public class ArticleProfile : Profile
     {

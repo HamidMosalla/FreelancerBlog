@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using FreelancerBlog.Core.DomainModels;
-using FreelancerBlog.ViewModels.SiteOrder;
+using FreelancerBlog.Web.ViewModels.SiteOrder;
 
-namespace FreelancerBlog.AutoMapper.Profiles
+namespace FreelancerBlog.Web.AutoMapper.Profiles
 {
     public class SiteOrderProfile : Profile
     {

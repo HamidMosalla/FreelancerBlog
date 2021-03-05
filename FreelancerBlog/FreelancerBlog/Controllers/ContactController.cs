@@ -4,11 +4,11 @@ using FreelancerBlog.Core.Commands.Data.Contacts;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Types;
-using FreelancerBlog.ViewModels.Contact;
+using FreelancerBlog.Web.ViewModels.Contact;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FreelancerBlog.Controllers
+namespace FreelancerBlog.Web.Controllers
 {
     public class ContactController : Controller
     {

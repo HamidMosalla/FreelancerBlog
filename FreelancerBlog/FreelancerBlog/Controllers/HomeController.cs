@@ -1,8 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace FreelancerBlog.Controllers
+namespace FreelancerBlog.Web.Controllers
 {
     public class HomeController : Controller
     {

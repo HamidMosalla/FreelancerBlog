@@ -1,9 +1,9 @@
 ﻿using System.Security.Claims;
-using FreelancerBlog.Areas.Admin.ViewModels.Article;
 using FreelancerBlog.Core.DomainModels;
+using FreelancerBlog.Web.Areas.Admin.ViewModels.Article;
 using MediatR;
 
-namespace FreelancerBlog.Features.Queries
+namespace FreelancerBlog.Web.Features.Queries
 {
     public class ArticleViewModelQuery : IRequest<ArticleViewModel>
     {

@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 
-namespace FreelancerBlog.Experimental.Convention
+namespace FreelancerBlog.Web.Experimental.Convention
 {
     public class UserAgentAttribute : Attribute, IActionConstraint
     {

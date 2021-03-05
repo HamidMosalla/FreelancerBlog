@@ -1,22 +1,19 @@
-﻿using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using FreelancerBlog.Core.DomainModels;
 using FreelancerBlog.Core.Queries.Services.Shared;
 using FreelancerBlog.Core.Services.Shared;
 using FreelancerBlog.Core.Types;
 using FreelancerBlog.Core.Wrappers;
-using FreelancerBlog.ViewModels.Account;
-using FreelancerBlog.ViewModels.Email;
+using FreelancerBlog.Web.ViewModels.Account;
+using FreelancerBlog.Web.ViewModels.Email;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace FreelancerBlog.Controllers
+namespace FreelancerBlog.Web.Controllers
 {
     [Authorize]
     public class AccountController : Controller

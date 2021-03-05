@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FreelancerBlog.ViewModels.Account
+namespace FreelancerBlog.Web.ViewModels.Account
 {
     public class LoginViewModel
     {

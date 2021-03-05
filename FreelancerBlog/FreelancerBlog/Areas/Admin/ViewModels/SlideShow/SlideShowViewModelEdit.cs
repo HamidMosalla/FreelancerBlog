@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-namespace FreelancerBlog.Areas.Admin.ViewModels.SlideShow
+namespace FreelancerBlog.Web.Areas.Admin.ViewModels.SlideShow
 {
     public class SlideShowViewModelEdit
     {

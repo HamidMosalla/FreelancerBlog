@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
-namespace FreelancerBlog.Experimental
+namespace FreelancerBlog.Web.Experimental
 {
     public class HttpsOnlyAttribute : Attribute, IAuthorizationFilter
     {
